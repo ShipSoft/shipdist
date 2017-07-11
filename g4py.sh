@@ -45,6 +45,6 @@ module-whatis "ALICE Modulefile for $PKGNAME $PKGVERSION-@@PKGREVISION@$PKGHASH@
 # Dependencies
 module load BASE/1.0 ROOT/$ROOT_VERSION-$ROOT_REVISION ${GEANT4_VERSION:+GEANT4/$GEANT4_VERSION-$GEANT4_REVISION} XercesC/$XERCESC_VERSION-$XERCESC_REVISION boost/$BOOST_VERSION-$BOOST_REVISION
 # Our environment
-setenv PYTHONPATH $SOURCEDIR/environments/g4py/lib:$SOURCEDIR/environments/g4py/lib/examples:$SOURCEDIR/environments/g4py/lib/tests
-$([[ ${ARCHITECTURE:0:3} == osx ]] && echo "prepend-path DYLD_LIBRARY_PATH $SOURCEDIR/lib")
+setenv PYTHONPATH \$::env(BASEDIR)/lib:\$::env(BASEDIR)/lib/examples:\$::env(BASEDIR)/lib/tests
+$([[ ${ARCHITECTURE:0:3} == osx ]] && echo "prepend-path DYLD_LIBRARY_PATH \$::env(BASEDIR)/lib")
 EoF
