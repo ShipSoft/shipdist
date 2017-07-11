@@ -8,7 +8,7 @@ build_requires:
   - CMake
 source: https://github.com/AliceO2Group/FlpPrototype
 version: "%(tag_basename)s"
-tag: v0.3.0
+tag: v0.4.4
 incremental_recipe: |
   make ${JOBS:+-j$JOBS} install
   mkdir -p $INSTALLROOT/etc/modulefiles && rsync -a --delete etc/modulefiles/ $INSTALLROOT/etc/modulefiles
@@ -65,6 +65,7 @@ module load BASE/1.0                                                            
             Configuration/$CONFIGURATION_VERSION-$CONFIGURATION_REVISION                        
 
 # Our environment
+setenv FLPPROTO_ROOT \$::env(BASEDIR)/$PKGNAME/\$version
 prepend-path PATH \$::env(BASEDIR)/$PKGNAME/\$version/bin
 prepend-path LD_LIBRARY_PATH \$::env(BASEDIR)/$PKGNAME/\$version/lib
 $([[ ${ARCHITECTURE:0:3} == osx ]] && echo "prepend-path DYLD_LIBRARY_PATH \$::env(BASEDIR)/$PKGNAME/\$version/lib")

@@ -27,7 +27,8 @@ incremental_recipe: |
     ln -sf $BUILDDIR/compile_commands.json $DEVEL_SOURCES/compile_commands.json
   fi
   if [[ $ALIBUILD_O2_TESTS ]]; then
-    make test
+    export O2_ROOT=$INSTALLROOT
+    CTEST_OUTPUT_ON_FAILURE=1 make test
   fi
 valid_defaults:
   - o2
@@ -119,5 +120,6 @@ EoF
 mkdir -p $INSTALLROOT/etc/modulefiles && rsync -a --delete etc/modulefiles/ $INSTALLROOT/etc/modulefiles
 
 if [[ $ALIBUILD_O2_TESTS ]]; then
-  make test
+  export O2_ROOT=$INSTALLROOT
+  CTEST_OUTPUT_ON_FAILURE=1 make test
 fi
