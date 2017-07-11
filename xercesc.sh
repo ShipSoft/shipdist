@@ -24,7 +24,7 @@ proc ModulesHelp { } {
 set version $PKGVERSION-@@PKGREVISION@$PKGHASH@@
 module-whatis "ALICE Modulefile for $PKGNAME $PKGVERSION-@@PKGREVISION@$PKGHASH@@"
 # Dependencies
-module load BASE/1.0 ROOT/$ROOT_VERSION-$ROOT_REVISION
+module load BASE/1.0
 # Our environment
 setenv XERCESC_ROOT \$::env(BASEDIR)/$PKGNAME/\$version
 prepend-path PATH \$::env(XERCESC_ROOT)/bin
