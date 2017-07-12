@@ -1,7 +1,7 @@
 package: G4PY
 version: "%(tag_basename)s%(defaults_upper)s"
-tag: v10.3.1
-source: https://github.com/PMunkes/geant4
+source: https://github.com/alisw/geant4
+tag: v4.10.01.p03
 requires:
   - GEANT4
   - Python-modules
