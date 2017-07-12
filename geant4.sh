@@ -47,7 +47,7 @@ make ${JOBS+-j $JOBS}
 make install
 
 #Get data file versions:
-. $INSTALLROOT/bin/geant4.sh
+source $INSTALLROOT/bin/geant4.sh
 
 G4LEVELGAMMADATA_NAME=`basename "$G4LEVELGAMMADATA"`
 G4RADIOACTIVEDATA_NAME=`basename "$G4RADIOACTIVEDATA"`
