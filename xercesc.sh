@@ -2,8 +2,6 @@ package: XercesC
 version: v3.1.4
 source: https://github.com/PMunkes/XercesC
 tag: v3.1.4
-env:
-  XERCESC_INST_DIR: "$XERCESCINST"
 ---
 #!/bin/sh
 
