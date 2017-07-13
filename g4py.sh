@@ -16,11 +16,11 @@ env:
   G4PYINSTALL: "$G4PY_ROOT"
 ---
 #!/bin/bash -e
-cp -a $SOURCEDIR/environments/g4py/* $INSTALLROOT
+rsync -a $SOURCEDIR/environments/g4py/* $INSTALLROOT
 cmake $INSTALLROOT                               \
       -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}     \
       -DBoost_NO_SYSTEM_PATHS=TRUE               \
-      -DCMAKE_INSTALL_PREFIX:PATH="$INSTALLROOT" \
+      -DCMAKE_INSTALL_PREFIX="$INSTALLROOT" \
       -DBOOST_ROOT=${BOOST_ROOT}                 \
       -DXERCESC_ROOT_DIR=${XERCESC_ROOT}         \
       -DBoost_NO_BOOST_CMAKE=TRUE
