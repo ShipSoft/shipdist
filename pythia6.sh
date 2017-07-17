@@ -16,6 +16,11 @@ make ${JOBS+-j$JOBS}
 make install
 tar -c lib include | tar -x -C $INSTALLROOT 
 
+cd $INSTALLROOT/lib/
+ln -s libpythia6.so libPythia6.so
+cd $BUILDROOT/pythia6
+
+
 # Modulefile
 MODULEDIR="$INSTALLROOT/etc/modulefiles"
 MODULEFILE="$MODULEDIR/$PKGNAME"
