@@ -16,7 +16,7 @@ rsync -a $SOURCEDIR/* .
 
 ./configure --with-hepmc=$HEPMC_ROOT --with-pythia8=$PYTHIA_ROOT --with-tauola=$TAUOLAPP_ROOT --prefix=$INSTALLROOT CFLAGS="$CFLAGS" CXXFLAGS="$CFLAGS"
 
-make ${JOBS+-j $JOBS}
+make 
 make install
 
 # Modulefile
