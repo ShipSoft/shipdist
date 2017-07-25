@@ -14,7 +14,7 @@ env:
 ---
 #!/bin/bash -e
 cmake "$SOURCEDIR"                             \
-  -DCMAKE_CMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} \
+  -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}       \
   -DGeant4VMC_USE_VGM=ON                       \
   -DCMAKE_INSTALL_LIBDIR=lib                   \
   -DCMAKE_INSTALL_PREFIX="$INSTALLROOT"
