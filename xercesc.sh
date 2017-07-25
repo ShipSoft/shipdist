@@ -4,6 +4,7 @@ source: https://github.com/PMunkes/XercesC
 tag: v3.1.4
 env:
   XERCESC_INST_DIR: "$XERCESCINST"
+  XERCESCROOT: "$XERCESC_ROOT"
 ---
 #!/bin/sh
 
@@ -27,6 +28,7 @@ module-whatis "ALICE Modulefile for $PKGNAME $PKGVERSION-@@PKGREVISION@$PKGHASH@
 module load BASE/1.0 ROOT/$ROOT_VERSION-$ROOT_REVISION
 # Our environment
 setenv XERCESC_ROOT \$::env(BASEDIR)/$PKGNAME/\$version
+setenv XERCESCROOT \$::env(XERCESC_ROOT)
 prepend-path PATH \$::env(XERCESC_ROOT)/bin
 prepend-path LD_LIBRARY_PATH \$::env(XERCESC_ROOT)/lib
 $([[ ${ARCHITECTURE:0:3} == osx ]] && echo "prepend-path DYLD_LIBRARY_PATH \$::env(XERCESC_ROOT)/lib")
