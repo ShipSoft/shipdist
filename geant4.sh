@@ -29,7 +29,7 @@ cmake $SOURCEDIR                                    \
   -DCMAKE_CXX_FLAGS="-fPIC"                         \
   -DCMAKE_INSTALL_PREFIX:PATH="$INSTALLROOT"        \
   -DCMAKE_INSTALL_LIBDIR="lib"                      \
-  -DCMAKE_BUILD_TYPE=RelWithDebInfo                 \
+  -DCMAKE_BUILD_TYPE=$CMAKE_BUILD_TYPE              \
   -DGEANT4_BUILD_TLS_MODEL:STRING="global-dynamic"  \
   -DGEANT4_ENABLE_TESTING=OFF                       \
   -DBUILD_SHARED_LIBS=ON                            \
