@@ -14,7 +14,9 @@ export  HEPMCLOCATION="$HEPMC_ROOT"
 
 rsync -a $SOURCEDIR/* .
 
-./configure --with-hepmc=$HEPMC_ROOT --with-pythia8=$PYTHIA_ROOT --with-tauola=$TAUOLAPP_ROOT --prefix=$INSTALLROOT CFLAGS="$CFLAGS" CXXFLAGS="$CFLAGS"
+./configure --enable-debug --with-hepmc=$HEPMC_ROOT --with-pythia8=$PYTHIA_ROOT --with-tauola=$TAUOLAPP_ROOT --prefix=$INSTALLROOT CFLAGS="$CFLAGS" CXXFLAGS="$CFLAGS"
+
+mkdir lib
 
 make 
 make install
