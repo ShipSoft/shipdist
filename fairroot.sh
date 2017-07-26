@@ -42,12 +42,18 @@ case $ARCHITECTURE in
   *) SONAME=so ;;
 esac
 
+if ["$GEANT4_ROOTx" != "x"]
+then
+    source $GEANT4_ROOT/bin/geant4.sh}
+fi
+
 cmake $SOURCEDIR                                                 \
       -DMACOSX_RPATH=OFF                                         \
       -DCMAKE_CXX_FLAGS="$CXXFLAGS"                              \
-      -DCMAKE_BUILD_TYPE=RelWithDebInfo                          \
+      -DCMAKE_BUILD_TYPE=$CMAKE_BUILD_TYPE                       \
       -DROOTSYS=$ROOTSYS                                         \
       -DROOT_CONFIG_SEARCHPATH=$ROOT_ROOT/bin                    \
+      ${NANOMSG_ROOT:+-DUSE_NANOMSG=true}                        \
       ${NANOMSG_ROOT:+-DNANOMSG_DIR=$NANOMSG_ROOT}               \
       -DPythia6_LIBRARY_DIR=$PYTHIA6_ROOT/lib                    \
       -DGeant3_DIR=$GEANT3_ROOT                                  \
@@ -55,13 +61,15 @@ cmake $SOURCEDIR                                                 \
       -DBUILD_EXAMPLES=OFF                                       \
       ${GEANT4_ROOT:+-DGeant4_DIR=$GEANT4_ROOT}                  \
       -DFAIRROOT_MODULAR_BUILD=ON                                \
+      ${CMAKE_VERBOSE_MAKEFILE:+-DCMAKE_VERBOSE_MAKEFILE=ON}     \
       ${DDS_ROOT:+-DDDS_PATH=$DDS_ROOT}                          \
       ${ZEROMQ_ROOT:+-DZEROMQ_ROOT=$ZEROMQ_ROOT}                 \
+      ${ZEROMQ_ROOT:+-DZMQ_DIR=$ZEROMQ_ROOT}     \
       ${BOOST_ROOT:+-DBOOST_ROOT=$BOOST_ROOT}                    \
       ${BOOST_ROOT:+-DBOOST_INCLUDEDIR=$BOOST_ROOT/include}      \
       ${BOOST_ROOT:+-DBOOST_LIBRARYDIR=$BOOST_ROOT/lib}          \
       ${GSL_ROOT:+-DGSL_DIR=$GSL_ROOT}                           \
-      -DGTEST_ROOT=$GOOGLETEST_ROOT                              \
+      -DGTEST_DIR=$GOOGLETEST_ROOT                              \
       -DPROTOBUF_INCLUDE_DIR=$PROTOBUF_ROOT/include              \
       -DPROTOBUF_PROTOC_EXECUTABLE=$PROTOBUF_ROOT/bin/protoc     \
       -DPROTOBUF_LIBRARY=$PROTOBUF_ROOT/lib/libprotobuf.$SONAME  \
@@ -69,9 +77,11 @@ cmake $SOURCEDIR                                                 \
 
 # Limit the number of build processes to avoid exahusting memory when building
 # on smaller machines.
-JOBS=$((${JOBS:-1}*2/5))
 [[ $JOBS -gt 0 ]] || JOBS=1
-make -j$JOBS install
+JOBS=$((${JOBS:-1}*2/4))
+make -j$JOBS
+make test
+make install
 
 # Modulefile
 MODULEDIR="$INSTALLROOT/etc/modulefiles"
