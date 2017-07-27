@@ -8,6 +8,7 @@ env:
   XERCESCROOT: "$XERCESC_ROOT"
 ---
 #!/bin/sh
+
 $SOURCEDIR/configure --prefix=$INSTALLROOT CFLAGS="$CFLAGS" CXXFLAGS="$CFLAGS"
 make ${JOBS+-j $JOBS}
 make install
