@@ -77,7 +77,7 @@ proc ModulesHelp { } {
 set version $PKGVERSION-@@PKGREVISION@$PKGHASH@@
 module-whatis "ALICE Modulefile for $PKGNAME $PKGVERSION-@@PKGREVISION@$PKGHASH@@"
 # Dependencies
-module load BASE/1.0
+module load BASE/1.0 ${XERCESC_ROOT:+XercesC/$XERCESC_VERSION-$XERCESC_REVISION}
 # Our environment
 set osname [uname sysname]
 setenv GEANT4_ROOT \$::env(BASEDIR)/$PKGNAME/\$version
