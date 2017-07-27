@@ -42,9 +42,9 @@ case $ARCHITECTURE in
   *) SONAME=so ;;
 esac
 
-if ["$GEANT4_ROOTx" != "x"]
+if [[ ! -z $GEANT4_ROOT ]]
 then
-    source $GEANT4_ROOT/bin/geant4.sh}
+    source "${GEANT4_ROOT}/bin/geant4.sh"
 fi
 
 cmake $SOURCEDIR                                                 \
