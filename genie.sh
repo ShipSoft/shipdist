@@ -1,6 +1,6 @@
 package: GENIE
 version: "%(tag_basename)s"
-tag: "v2.10.0-ship1"
+tag: fairshipdev
 source: https://github.com/PMunkes/GENIE
 requires:
   - GCC-Toolchain
