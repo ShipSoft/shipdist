@@ -26,7 +26,9 @@ cmake $INSTALLROOT                               \
       -DBoost_NO_BOOST_CMAKE=TRUE
 
 make ${JOBS+-j $JOBS}
+source $GEANT4_ROOT/bin/geant4.sh
 make ${JOBS+-j $JOBS} install
+ctest
 
 
 
