@@ -33,8 +33,8 @@ $BUILDDIR/configure --prefix=$INSTALLROOT \
 		    --with-log4cpp-lib=$LOG4CPP_ROOT/lib/\
 		    CXXFLAGS="$CXXFLAGS" CFLAGS="$CFLAGS"
 
-make  CXXFLAGS="$CXXFLAGS" CFLAGS="$CFLAG"
-make install CXXFLAGS="$CXXFLAGS" CFLAGS="$CFLAG"
+make 
+make install
 
 # Modulefile
 MODULEDIR="$INSTALLROOT/etc/modulefiles"
@@ -51,6 +51,7 @@ module-whatis "ALICE Modulefile for $PKGNAME $PKGVERSION-@@PKGREVISION@$PKGHASH@
 # Dependencies
 module load BASE/1.0 ROOT/$ROOT_VERSION-$ROOT_REVISION pythia6/$PYTHIA6_VERSION-$PYTHIA6_REVISION lhapdf5/$LHAPDF5_VERSION-$LHAPDF5_REVISION log4cpp/$LOG4CPP_VERSION-$LOG4CPP_REVISION GSL/$GSL_VERSION-$GSL_REVISION
 # Our environment
-setenv $GENIE \$::env(GENIE_ROOT)
+setenv GENIE_ROOT \$::env(BASEDIR)/$PKGNAME/\$version
+setenv GENIE \$::env(GENIE_ROOT)
 $([[ ${ARCHITECTURE:0:3} == osx ]] && echo "prepend-path DYLD_LIBRARY_PATH \$::env(TAUOLA_ROOT)/lib")
 EoF
