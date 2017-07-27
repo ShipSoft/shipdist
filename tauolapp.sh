@@ -16,7 +16,7 @@ rsync -a $SOURCEDIR/* .
 
 ./configure --with-hepmc=$HEPMC_ROOT --with-lhapdf=$LHAPDF5_ROOT --with-pythia8=$PYTHIA_ROOT --prefix=$INSTALLROOT CFLAGS="$CFLAGS" CXXFLAGS="$CFLAGS"
 
-make ${JOBS+-j $JOBS}
+make 
 make install
 
 # Modulefile
@@ -32,8 +32,10 @@ proc ModulesHelp { } {
 set version $PKGVERSION-@@PKGREVISION@$PKGHASH@@
 module-whatis "ALICE Modulefile for $PKGNAME $PKGVERSION-@@PKGREVISION@$PKGHASH@@"
 # Dependencies
-module load BASE/1.0 ROOT/$ROOT_VERSION-$ROOT_REVISION pythia/$PYTHIA_VERSION-$PYHIA_REVISION HepMC/$HEPMC_VERSION-$HEPMC_REVISION lhapdf5/$LHAPDF5_VERSION-$LHADPF5_REVISION
+module load BASE/1.0 ROOT/$ROOT_VERSION-$ROOT_REVISION pythia/$PYTHIA_VERSION-$PYTHIA_REVISION HepMC/$HEPMC_VERSION-$HEPMC_REVISION lhapdf5/$LHAPDF5_VERSION-$LHAPDF5_REVISION
 # Our environment
 setenv TAUOLA_ROOT \$::env(BASEDIR)/$PKGNAME/\$version
 $([[ ${ARCHITECTURE:0:3} == osx ]] && echo "prepend-path DYLD_LIBRARY_PATH \$::env(TAUOLA_ROOT)/lib")
 EoF
+
+cat $MODULEFILE
