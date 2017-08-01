@@ -63,7 +63,7 @@ overrides:
     source: https://github.com/PMunkes/geant4_vmc
   G4PY:
     version: "%(tag_basename)s"
-    tag: v10.3.1-ship2
+    tag: v10.3.1-ship3
     source: https://github.com/PMunkes/geant4
   lhapdf5:
     source: https://github.com/PMunkes/LHAPDF
