@@ -1,7 +1,7 @@
 package: FairShip
-version: dev
+version: master
 source: https://github.com/ShipSoft/FairShip
-tag: dev
+tag: master
 requires:
   - generators
   - simulation
@@ -44,14 +44,10 @@ cmake $SOURCEDIR                                                 \
       -DCMAKE_BUILD_TYPE=$CMAKE_BUILD_TYPE                       \
       -DROOTSYS=$ROOTSYS                                         \
       -DROOT_CONFIG_SEARCHPATH=$ROOT_ROOT/bin                    \
-      ${NANOMSG_ROOT:+-DUSE_NANOMSG=true}                        \
-      ${NANOMSG_ROOT:+-DNANOMSG_DIR=$NANOMSG_ROOT}               \
       -DPythia6_LIBRARY_DIR=$PYTHIA6_ROOT/lib                    \
       -DGeant3_DIR=$GEANT3_ROOT                                  \
       -DDISABLE_GO=ON                                            \
       -DBUILD_EXAMPLES=OFF                                       \
-      ${GEANT4_ROOT:+-DGeant4_DIR=$GEANT4_ROOT}                  \
-      -DFAIRROOT_MODULAR_BUILD=ON                                \
       ${CMAKE_VERBOSE_MAKEFILE:+-DCMAKE_VERBOSE_MAKEFILE=ON}     \
       ${DDS_ROOT:+-DDDS_PATH=$DDS_ROOT}                          \
       ${ZEROMQ_ROOT:+-DZEROMQ_ROOT=$ZEROMQ_ROOT}                 \
