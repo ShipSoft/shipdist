@@ -15,7 +15,8 @@ env:
 #/bin/bash -ex
 export GENIE="$BUILDDIR"
 
-cp --reflink=auto -aR $SOURCEDIR/* .
+rsync -a $SOURCEDIR/* $BUILDDIR
+ls -alh $BUILDDIR
 $BUILDDIR/configure --prefix=$INSTALLROOT \
 		    --enable-lhapdf \
 		    --enable-validation-tools \
@@ -35,6 +36,10 @@ $BUILDDIR/configure --prefix=$INSTALLROOT \
 
 make 
 make install
+
+# make command does not work, do it by hand
+rsync -a lib/* $INSTALLROOT/lib
+rsync -a bin/* $INSTALLROOT/bin
 
 # Modulefile
 MODULEDIR="$INSTALLROOT/etc/modulefiles"
