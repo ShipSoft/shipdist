@@ -44,6 +44,7 @@ cmake $SOURCEDIR                                                 \
       -DCMAKE_BUILD_TYPE=$CMAKE_BUILD_TYPE                       \
       -DROOTSYS=$ROOTSYS                                         \
       -DROOT_CONFIG_SEARCHPATH=$ROOT_ROOT/bin                    \
+      -DEVTGENPATH=$EVTGEN_ROOT                                  \
       -DPythia6_LIBRARY_DIR=$PYTHIA6_ROOT/lib                    \
       -DGeant3_DIR=$GEANT3_ROOT                                  \
       -DDISABLE_GO=ON                                            \
