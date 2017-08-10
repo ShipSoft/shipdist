@@ -43,9 +43,9 @@ overrides:
     prefer_system_check: |
       which cmake && case `cmake --version | sed -e 's/.* //' | cut -d. -f1,2,3 | head -n1` in [0-2]*|3.[0-7].*) exit 1 ;; esac
   FairRoot:
-    source: https://github.com/PMunkes/FairRoot
-    version: fairshipdev
-    tag: fairshipdev
+    source: https://github.com/FairRootGroup/FairRoot
+    version: dev
+    tag: dev
   GEANT4:
     version: "%(tag_basename)s"
     tag: fairshipdev
@@ -74,7 +74,8 @@ overrides:
       GEANT4_INSTALL: "$GEANT4_ROOT"
   pythia:
     version: "%(tag_basename)s%(defaults_upper)s"
-    source: https://github.com/alisw/pythia8
+    source: https://github.com/PMunkes/pythia8
+    tag: master
     requires:
       - lhapdf5
       - HepMC
@@ -87,6 +88,7 @@ overrides:
       - pythia
       - PHOTOSPP
       - GENIE
+      - EvtGen
   evtGen:
     tag: fairshipdev
   pythia6:
