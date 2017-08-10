@@ -26,8 +26,8 @@ cmake $INSTALLROOT                               \
       -DXERCESC_ROOT_DIR=${XERCESC_ROOT}         \
       -DBoost_NO_BOOST_CMAKE=TRUE
 
-make  VERBOSE=1
-make ${JOBS+-j $JOBS} install
+make ${JOBS:+-j $JOBS}
+make install
 ctest
 
 
@@ -48,6 +48,6 @@ module-whatis "ALICE Modulefile for $PKGNAME $PKGVERSION-@@PKGREVISION@$PKGHASH@
 module load BASE/1.0 ROOT/$ROOT_VERSION-$ROOT_REVISION ${GEANT4_VERSION:+GEANT4/$GEANT4_VERSION-$GEANT4_REVISION} XercesC/$XERCESC_VERSION-$XERCESC_REVISION boost/$BOOST_VERSION-$BOOST_REVISION
 # Our environment
 setenv G4PY_ROOT \$::env(BASEDIR)/$PKGNAME/\$version
-setenv PYTHONPATH \$::env(G4PY_ROOT)/lib:\$::env(G4PY_ROOT)/lib/examples:\$::env(G4PY_ROOT)/lib/tests
+setenv PYTHONPATH \$::env(G4PY_ROOT)/lib:\$::env(G4PY_ROOT)/lib/g4py:\$::env(G4PY_ROOT)/lib/Geant4:\$::env(G4PY_ROOT)/lib/examples:\$::env(G4PY_ROOT)/lib/tests
 $([[ ${ARCHITECTURE:0:3} == osx ]] && echo "prepend-path DYLD_LIBRARY_PATH \$::env(G4PY_ROOT)/lib")
 EoF
