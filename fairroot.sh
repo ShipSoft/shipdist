@@ -84,6 +84,11 @@ make -j$JOBS
 make test
 make install
 
+#Get current hash
+cd $SOURCEDIR
+FAIRROOT_HASH=$(git rev-parse HEAD)
+cd $BUILDDIR
+
 # Modulefile
 MODULEDIR="$INSTALLROOT/etc/modulefiles"
 MODULEFILE="$MODULEDIR/$PKGNAME"
@@ -112,6 +117,7 @@ module load BASE/1.0                                                            
             ${GCC_TOOLCHAIN_ROOT:+GCC-Toolchain/$GCC_TOOLCHAIN_VERSION-$GCC_TOOLCHAIN_REVISION}
 # Our environment
 setenv FAIRROOT_ROOT \$::env(BASEDIR)/$PKGNAME/\$version
+setenv FAIRROOT_HASH $FAIRROOT_HASH
 setenv VMCWORKDIR \$::env(FAIRROOT_ROOT)/share/fairbase/examples
 setenv GEOMPATH \$::env(VMCWORKDIR)/common/geometry
 setenv CONFIG_DIR \$::env(VMCWORKDIR)/common/gconfig
