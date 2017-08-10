@@ -10,7 +10,7 @@ requires:
   - log4cpp
   - GSL
 env:
-  GENIE: "$GENIE_ROOT"
+  GENIE: "$GENIE_ROOT/genie"
 ---  
 #/bin/bash -ex
 export GENIE="$BUILDDIR"
@@ -31,15 +31,21 @@ $BUILDDIR/configure --prefix=$INSTALLROOT \
 		    --with-lhapdf-lib=$LHAPDF5_ROOT/lib/ \
 		    --with-lhapdf-inc=$LHAPDF5_ROOT/include/ \
 		    --with-log4cpp-inc=$LOG4CPP_ROOT/include/ \
-		    --with-log4cpp-lib=$LOG4CPP_ROOT/lib/\
-		    CXXFLAGS="$CXXFLAGS" CFLAGS="$CFLAGS"
+		    --with-log4cpp-lib=$LOG4CPP_ROOT/lib/
 
-make 
+
+make CXXFLAGS="-Wall $CXXFLAGS" CFLAGS="-Wall $CFLAGS"
 make install
 
 # make command does not work, do it by hand
-rsync -a lib/* $INSTALLROOT/lib
-rsync -a bin/* $INSTALLROOT/bin
+mkdir -p $INSTALLROOT/genie/lib
+rsync -a lib/* $INSTALLROOT/genie/lib
+mkdir -p $INSTALLROOT/genie/bin
+rsync -a bin/* $INSTALLROOT/genie/bin
+mkdir -p $INSTALLROOT/genie/data
+rsync -a data/* $INSTALLROOT/genie/data
+mkdir -p $INSTALLROOT/genie/src
+rsync -a src/* $INSTALLROOT/genie/src
 
 # Modulefile
 MODULEDIR="$INSTALLROOT/etc/modulefiles"
@@ -57,6 +63,7 @@ module-whatis "ALICE Modulefile for $PKGNAME $PKGVERSION-@@PKGREVISION@$PKGHASH@
 module load BASE/1.0 ROOT/$ROOT_VERSION-$ROOT_REVISION pythia6/$PYTHIA6_VERSION-$PYTHIA6_REVISION lhapdf5/$LHAPDF5_VERSION-$LHAPDF5_REVISION log4cpp/$LOG4CPP_VERSION-$LOG4CPP_REVISION GSL/$GSL_VERSION-$GSL_REVISION
 # Our environment
 setenv GENIE_ROOT \$::env(BASEDIR)/$PKGNAME/\$version
-setenv GENIE \$::env(GENIE_ROOT)
-$([[ ${ARCHITECTURE:0:3} == osx ]] && echo "prepend-path DYLD_LIBRARY_PATH \$::env(TAUOLA_ROOT)/lib")
+setenv GENIE \$::env(GENIE_ROOT)/genie
+prepend-path LD_LIBRARY_PATH \$::env(GENIE_ROOT)/lib
+$([[ ${ARCHITECTURE:0:3} == osx ]] && echo "prepend-path DYLD_LIBRARY_PATH \$::env(GENIE_ROOT)/lib")
 EoF
