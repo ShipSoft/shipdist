@@ -43,9 +43,8 @@ overrides:
     prefer_system_check: |
       which cmake && case `cmake --version | sed -e 's/.* //' | cut -d. -f1,2,3 | head -n1` in [0-2]*|3.[0-7].*) exit 1 ;; esac
   FairRoot:
-    source: https://github.com/FairRootGroup/FairRoot
     version: dev
-    tag: dev
+    tag: c22d09ef43f41a1cafad6d0aa4a08cbc4b8c8706
   GEANT4:
     version: "%(tag_basename)s"
     tag: fairshipdev

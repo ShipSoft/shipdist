@@ -59,7 +59,7 @@ cmake $SOURCEDIR                                                 \
       -DPythia6_LIBRARY_DIR=$PYTHIA6_ROOT/lib                    \
       -DGeant3_DIR=$GEANT3_ROOT                                  \
       -DDISABLE_GO=ON                                            \
-      -DBUILD_EXAMPLES=OFF                                       \
+      -DBUILD_EXAMPLES=ON                                        \
       ${GEANT4_ROOT:+-DGeant4_DIR=$GEANT4_ROOT}                  \
       -DFAIRROOT_MODULAR_BUILD=ON                                \
       ${CMAKE_VERBOSE_MAKEFILE:+-DCMAKE_VERBOSE_MAKEFILE=ON}     \
@@ -70,7 +70,9 @@ cmake $SOURCEDIR                                                 \
       ${BOOST_ROOT:+-DBOOST_INCLUDEDIR=$BOOST_ROOT/include}      \
       ${BOOST_ROOT:+-DBOOST_LIBRARYDIR=$BOOST_ROOT/lib}          \
       ${GSL_ROOT:+-DGSL_DIR=$GSL_ROOT}                           \
-      -DGTEST_DIR=$GOOGLETEST_ROOT                              \
+      ${MESSAGEPACK_ROOT:+-DMSGPACK_ROOT=${MESSAGEPACK_ROOT}}    \
+      -DGTEST_DIR=$GOOGLETEST_ROOT                               \
+      -DGTEST_ROOT=$GOOGLETEST_ROOT                              \
       -DPROTOBUF_INCLUDE_DIR=$PROTOBUF_ROOT/include              \
       -DPROTOBUF_PROTOC_EXECUTABLE=$PROTOBUF_ROOT/bin/protoc     \
       -DPROTOBUF_LIBRARY=$PROTOBUF_ROOT/lib/libprotobuf.$SONAME  \
