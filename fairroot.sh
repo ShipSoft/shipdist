@@ -43,15 +43,12 @@ case $ARCHITECTURE in
   *) SONAME=so ;;
 esac
 
-if [[ ! -z $GEANT4_ROOT ]]
-then
-    source "${GEANT4_ROOT}/bin/geant4.sh"
-fi
 
 cmake $SOURCEDIR                                                 \
       -DMACOSX_RPATH=OFF                                         \
       -DCMAKE_CXX_FLAGS="$CXXFLAGS"                              \
       -DCMAKE_BUILD_TYPE=$CMAKE_BUILD_TYPE                       \
+      -DUSE_PATH_INFO=ON                                         \
       -DROOTSYS=$ROOTSYS                                         \
       -DROOT_CONFIG_SEARCHPATH=$ROOT_ROOT/bin                    \
       ${NANOMSG_ROOT:+-DUSE_NANOMSG=true}                        \
@@ -80,13 +77,14 @@ cmake $SOURCEDIR                                                 \
 
 # Limit the number of build processes to avoid exahusting memory when building
 # on smaller machines.
-[[ $JOBS -gt 0 ]] || JOBS=1
+[[ $JOBS -gt 1 ]] || JOBS=2
 JOBS=$((${JOBS:-1}*2/4))
 make -j$JOBS
-make test
+#On Fedora (and Centos 7) some tests hang after completion due to wait() not returning.
+#make test
 make install
 
-#Get current hash
+#Get current git hash, needed by FairShip
 cd $SOURCEDIR
 FAIRROOT_HASH=$(git rev-parse HEAD)
 cd $BUILDDIR
