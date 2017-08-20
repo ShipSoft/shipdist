@@ -2,6 +2,8 @@ package: XercesC
 version: v3.1.4
 source: https://github.com/PMunkes/XercesC
 tag: v3.1.4
+build_requires:
+  - GCC-Toolchain:(?!osx)
 env:
   XERCESC_INST_DIR: "$XERCESC_ROOT"
   XERCESCINST: "$XERCESC_ROOT"
