@@ -8,9 +8,9 @@ build_requires:
   - CMake
   - "Xcode:(osx.*)"
 env:
-  G4INSTALL: "$GEANT4_ROOT"
-  G4INSTALL_DATA: "$GEANT4_ROOT/share/Geant4-10.1.3"
-  G4SYSTEM: "$(uname)-g++"
+  G4INSTALL:                "$GEANT4_ROOT"
+  G4INSTALL_DATA:           "$GEANT4_ROOT/share/Geant4-10.1.3"
+  G4SYSTEM:                 "$(uname)-g++"
   G4LEVELGAMMADATA:         "$GEANT4_ROOT/share/Geant4-10.1.3/data/PhotonEvaporation3.1"
   G4RADIOACTIVEDATA:        "$GEANT4_ROOT/share/Geant4-10.1.3/data/RadioactiveDecay4.2"
   G4LEDATA:                 "$GEANT4_ROOT/share/Geant4-10.1.3/data/G4EMLOW6.41"
@@ -45,6 +45,8 @@ cmake $SOURCEDIR                                    \
 
 make ${JOBS+-j $JOBS}
 make install
+
+ln -s lib $INSTALLROOT/lib64
 
 #Get data file versions:
 source $INSTALLROOT/bin/geant4.sh

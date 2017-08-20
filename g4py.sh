@@ -17,19 +17,21 @@ env:
 ---
 #!/bin/bash -e
 rsync -a $SOURCEDIR/environments/g4py/* $INSTALLROOT
-source $GEANT4_ROOT/bin/geant4.sh
+
 cmake $INSTALLROOT                               \
       -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}     \
       -DBoost_NO_SYSTEM_PATHS=TRUE               \
-      -DCMAKE_INSTALL_PREFIX="$INSTALLROOT" \
+      -DCMAKE_INSTALL_PREFIX="$INSTALLROOT"      \
       -DBOOST_ROOT=${BOOST_ROOT}                 \
       -DXERCESC_ROOT_DIR=${XERCESC_ROOT}         \
+      -DCMAKE_VERBOSE_MAKEFILE=TRUE              \
       -DBoost_NO_BOOST_CMAKE=TRUE
 
 make ${JOBS:+-j $JOBS}
 make install
 ctest
 
+ln -s lib64 $INSTALLROOT/lib
 
 
 # Modulefile
