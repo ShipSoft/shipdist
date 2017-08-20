@@ -31,6 +31,8 @@ overrides:
       - Python-modules
       - pythia
       - pythia6
+  gSOAP:
+    tag: "v2.8.45"
   GSL:
     prefer_system_check: |
       printf "#include \"gsl/gsl_version.h\"\n#define GSL_V GSL_MAJOR_VERSION * 100 + GSL_MINOR_VERSION\n# if (GSL_V < 116)\n#error \"Cannot use system's gsl. Notice we only support versions from 1.16 (included)\"\n#endif\nint main(){}" | gcc  -I$(brew --prefix gsl)/include -xc++ - -o /dev/null
@@ -57,6 +59,19 @@ overrides:
     env:
       G4INSTALL: "$GEANT4_ROOT"
       G4SYSTEM: "$(uname)-g++"
+      G4VERSION: "Geant4-10.3.1"
+      G4INSTALL_DATA: "$GEANT4_ROOT/share/Geant4-10.3.1/data"
+      G4ABLADATA:               "$GEANT4_ROOT/share/Geant4-10.3.1/data/G4ABLA3.0"
+      G4LEDATA:                 "$GEANT4_ROOT/share/Geant4-10.3.1/data/G4EMLOW6.50"
+      G4ENSDFSTATEDATA:         "$GEANT4_ROOT/share/Geant4-10.3.1/data/G4ENSDFSTATE2.1"
+      G4NeutronHPCrossSections: "$GEANT4_ROOT/share/Geant4-10.3.1/data/G4NDL4.5"
+      G4NEUTRONHPDATA:          "$GEANT4_ROOT/share/Geant4-10.3.1/data/G4NDL4.5"
+      G4NEUTRONXSDATA:          "$GEANT4_ROOT/share/Geant4-10.3.1/data/G4NEUTRONXS1.4"
+      G4PIIDATA:                "$GEANT4_ROOT/share/Geant4-10.3.1/data/G4PII1.3"
+      G4SAIDXSDATA:             "$GEANT4_ROOT/share/Geant4-10.3.1/data/G4SAIDDATA1.1"
+      G4LEVELGAMMADATA:         "$GEANT4_ROOT/share/Geant4-10.3.1/data/PhotonEvaporation4.3.2"
+      G4RADIOACTIVEDATA:        "$GEANT4_ROOT/share/Geant4-10.3.1/data/RadioactiveDecay5.1.1"
+      G4REALSURFACEDATA:        "$GEANT4_ROOT/share/Geant4-10.3.1/data/RealSurface1.0"
   GEANT4_VMC:
     version: "%(tag_basename)s"
     tag: fairshipdev
