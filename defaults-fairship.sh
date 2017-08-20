@@ -7,6 +7,11 @@ env:
 overrides:
   autotools:
     tag: v1.5.0
+  OpenSSL:
+    version:  "v1.0.2l"
+    tag: v1.0.2l    
+    prefer_system_check: |
+      if [ `uname` = Darwin ]; then test -d `brew --prefix openssl || echo /dev/nope` || exit 1; fi; printf "#include <openssl/opensslv.h> \n#if (OPENSSL_VERSION_NUMBER > 0x10100000L)\n#error \"System's OpenSSL cannot be used: we need OpenSSL<1.1. We are going to compile our own version.\"\n#endif\n" | c++ -x c++ - -I`brew --prefix openssl`/include -c -o /dev/null || exit 1
   boost:
     version:  "%(tag_basename)s"
     tag: "v1.64.0-alice1"
