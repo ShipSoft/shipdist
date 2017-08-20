@@ -33,11 +33,6 @@ case $ARCHITECTURE in
   *) SONAME=so ;;
 esac
 
-if [[ ! -z $GEANT4_ROOT ]]
-then
-    source "${GEANT4_ROOT}/bin/geant4.sh"
-fi
-
 rsync -a $SOURCEDIR/* $INSTALLROOT/
 
 cmake $INSTALLROOT                                               \
