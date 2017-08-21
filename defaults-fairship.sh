@@ -53,6 +53,8 @@ overrides:
     source: https://github.com/PMunkes/FairRoot
     version: fairshipdevdev
     tag: fairshipdev
+    incremental_recipe: |
+      [[ $JOBS -gt 1 ]] || JOBS=2;JOBS=$((${JOBS:-1}*2/4));make -j$JOBS;make install
   GEANT4:
     version: "%(tag_basename)s"
     tag: fairshipdev
