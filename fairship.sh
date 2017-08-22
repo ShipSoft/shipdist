@@ -1,6 +1,6 @@
 package: FairShip
 version: master
-source: https://github.com/ShipSoft/FairShip
+source: https://github.com/PMunkes/FairShip
 tag: master
 requires:
   - generators
@@ -8,9 +8,53 @@ requires:
   - FairRoot
   - GENIE
   - PHOTOSPP
+  - EvtGen
   - G4PY
 build_requires:
   - googletest
+incremental_recipe: |
+  make ${JOBS:+-j$JOBS}
+  make test
+  make install
+  rsync -a $BUILDIR/bin $INSTALLROOT/
+  #Get the current git hash
+  cd $SOURCEDIR
+  FAIRSHIP_HASH=$(git rev-parse HEAD)
+  cd $BUILDDIR
+  # Modulefile
+  MODULEDIR="$INSTALLROOT/etc/modulefiles"
+  MODULEFILE="$MODULEDIR/$PKGNAME"
+  mkdir -p "$MODULEDIR"
+  cat > "$MODULEFILE" <<EoF
+  #%Module1.0
+  proc ModulesHelp { } {
+    global version
+    puts stderr "ALICE Modulefile for $PKGNAME $PKGVERSION-@@PKGREVISION@$PKGHASH@@"
+  }
+  set version $PKGVERSION-@@PKGREVISION@$PKGHASH@@
+  module-whatis "ALICE Modulefile for $PKGNAME $PKGVERSION-@@PKGREVISION@$PKGHASH@@"
+  # Dependencies
+  module load BASE/1.0                                                          \\
+            ${GENIE_VERSION:+GENIE/$GENIE_VERSION-$GENIE_REVISION}              \\
+            ${G4PY_VERSION:+G4PY/$G4PY_VERSION-$G4PY_REVISION}                  \\
+            ${PHOTOSPP_VERSION:+PHOTOSPP/$PHOTOSPP_VERSION-$PHOTOSPP_REVISION}  \\
+            ${EVTGEN_VERSION:+EvtGen/$EVTGEN_VERSION-$EVTGEN_REVISION}          \\
+            FairRoot/$FAIRROOT_VERSION-$FAIRROOT_REVISION                       
+  # Our environment
+  setenv FAIRSHIP_ROOT \$::env(BASEDIR)/$PKGNAME/\$version
+  setenv FAIRSHIP \$::env(FAIRSHIP_ROOT)
+  setenv FAIRSHIP_HASH $FAIRSHIP_HASH
+  setenv VMCWORKDIR \$::env(FAIRSHIP)
+  setenv GEOMPATH \$::env(FAIRSHIP)/geometry
+  setenv CONFIG_DIR \$::env(FAIRSHIP)/gconfig
+  prepend-path PATH \$::env(FAIRSHIP_ROOT)/bin
+  prepend-path LD_LIBRARY_PATH \$::env(FAIRSHIP_ROOT)/lib
+  setenv FAIRLIBDIR \$::env(FAIRSHIP_ROOT)/lib
+  prepend-path ROOT_INCLUDE_PATH \$::env(FAIRSHIP_ROOT)/include
+  prepend-path PYTHONPATH \$::env(FAIRSHIP_ROOT)/python
+  append-path PYTHONPATH \$::env(FAIRSHIP_ROOT)/Developments/track_pattern_recognition
+  $([[ ${ARCHITECTURE:0:3} == osx ]] && echo "prepend-path DYLD_LIBRARY_PATH \$::env(FAIRSHIP_ROOT)/lib")
+  EoF
 ---
 #!/bin/sh
 
@@ -35,7 +79,7 @@ esac
 
 rsync -a $SOURCEDIR/* $INSTALLROOT/
 
-cmake $INSTALLROOT                                               \
+cmake $SOURCEDIR                                                 \
       -DFAIRBASE="$FAIRROOT_ROOT/share/fairbase"                 \
       -DFAIRROOTPATH="$FAIRROOT_ROOT"                            \
       -DCMAKE_CXX_FLAGS="$CXXFLAGS"                              \
@@ -107,3 +151,5 @@ prepend-path PYTHONPATH \$::env(FAIRSHIP_ROOT)/python
 append-path PYTHONPATH \$::env(FAIRSHIP_ROOT)/Developments/track_pattern_recognition
 $([[ ${ARCHITECTURE:0:3} == osx ]] && echo "prepend-path DYLD_LIBRARY_PATH \$::env(FAIRSHIP_ROOT)/lib")
 EoF
+
+

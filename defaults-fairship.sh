@@ -54,7 +54,45 @@ overrides:
     version: fairshipdevdev
     tag: fairshipdev
     incremental_recipe: |
-      [[ $JOBS -gt 1 ]] || JOBS=2;JOBS=$((${JOBS:-1}*2/4));make -j$JOBS;make install
+      make -j$JOBS;make install; MODULEDIR="$INSTALLROOT/etc/modulefiles"
+      MODULEFILE="$MODULEDIR/$PKGNAME"
+      mkdir -p "$MODULEDIR"
+      cd $SOURCEDIR
+      FAIRROOT_HASH=$(git rev-parse HEAD)
+      cd $BUILDDIR
+      cat > "$MODULEFILE" <<EoF
+      #%Module1.0
+      proc ModulesHelp { } {
+      global version
+      puts stderr "ALICE Modulefile for $PKGNAME $PKGVERSION-@@PKGREVISION@$PKGHASH@@"
+      }
+      set version $PKGVERSION-@@PKGREVISION@$PKGHASH@@
+      module-whatis "ALICE Modulefile for $PKGNAME $PKGVERSION-@@PKGREVISION@$PK      GHASH@@"
+      # Dependencies
+      module load BASE/1.0                                                                            \\
+            ${GEANT3_VERSION:+GEANT3/$GEANT3_VERSION-$GEANT3_REVISION}                          \\
+            ${GEANT4_VMC_VERSION:+GEANT4_VMC/$GEANT4_VMC_VERSION-$GEANT4_VMC_REVISION}          \\
+            ${PROTOBUF_VERSION:+protobuf/$PROTOBUF_VERSION-$PROTOBUF_REVISION}                  \\
+            ${PYTHIA6_VERSION:+pythia6/$PYTHIA6_VERSION-$PYTHIA6_REVISION}                      \\
+            ${PYTHIA_VERSION:+pythia/$PYTHIA_VERSION-$PYTHIA_REVISION}                          \\
+            ${VGM_VERSION:+vgm/$VGM_VERSION-$VGM_REVISION}                                      \\
+            ${BOOST_VERSION:+boost/$BOOST_VERSION-$BOOST_REVISION}                              \\
+            ROOT/$ROOT_VERSION-$ROOT_REVISION                                                   \\
+            ${ZEROMQ_VERSION:+ZeroMQ/$ZEROMQ_VERSION-$ZEROMQ_REVISION}                          \\
+            ${NANOMSG_VERSION:+nanomsg/$NANOMSG_VERSION-$NANOMSG_REVISION}                      \\
+            ${DDS_ROOT:+DDS/$DDS_VERSION-$DDS_REVISION}                                         \\
+            ${GCC_TOOLCHAIN_ROOT:+GCC-Toolchain/$GCC_TOOLCHAIN_VERSION-$GCC_TOOLCHAIN_REVISION}
+      # Our environment
+      setenv FAIRROOT_ROOT \$::env(BASEDIR)/$PKGNAME/\$version
+      setenv FAIRROOT_HASH $FAIRROOT_HASH
+      setenv VMCWORKDIR \$::env(FAIRROOT_ROOT)/share/fairbase/examples
+      setenv GEOMPATH \$::env(VMCWORKDIR)/common/geometry
+      setenv CONFIG_DIR \$::env(VMCWORKDIR)/common/gconfig
+      prepend-path PATH \$::env(FAIRROOT_ROOT)/bin
+      prepend-path LD_LIBRARY_PATH \$::env(FAIRROOT_ROOT)/lib
+      prepend-path ROOT_INCLUDE_PATH \$::env(FAIRROOT_ROOT)/include
+      $([[ ${ARCHITECTURE:0:3} == osx ]] && echo "prepend-path DYLD_LIBRARY_PATH      \$::env(FAIRROOT_ROOT)/lib")
+      EoF
   GEANT4:
     version: "%(tag_basename)s"
     tag: fairshipdev
@@ -104,13 +142,6 @@ overrides:
       - boost
   vgm:
     tag: "4.4"
-  generators:
-    requires:  
-      - pythia6
-      - pythia
-      - PHOTOSPP
-      - GENIE
-      - EvtGen
   evtGen:
     tag: fairshipdev
   pythia6:
