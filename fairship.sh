@@ -13,6 +13,7 @@ requires:
 build_requires:
   - googletest
 incremental_recipe: |
+  rsync -a $SOURCEDIR/* $INSTALLROOT/
   make ${JOBS:+-j$JOBS}
   make test
   make install
