@@ -11,7 +11,7 @@ rsync -a $SOURCEDIR/* .
 ./configure          --prefix=$INSTALLROOT  \
 		     --enable-shared \
 		     --enable-static \
-		      CXX="g++" CC="gcc"
+		      CXX="g++" CC="gcc" CXXFLAGS="$CFLAGS"
 make ${JOBS+-j$JOBS}
 make install
 
