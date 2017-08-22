@@ -10,8 +10,9 @@ rsync -a $SOURCEDIR/* .
 ./autogen.sh
 ./configure          --prefix=$INSTALLROOT  \
 		     --enable-shared \
-		     --enable-static 
-make ${JOBS+-j$JOBS} CXXFLAGS="-fPIC -g -O2"
+		     --enable-static \
+		      CXX="gcc"
+make ${JOBS+-j$JOBS}
 make install
 
 # Modulefile support
