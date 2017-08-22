@@ -18,6 +18,7 @@ env:
   VMCWORKDIR: "$FAIRROOT_ROOT/share/fairbase/examples"
   GEOMPATH:   "$FAIRROOT_ROOT/share/fairbase/examples/common/geometry"
   CONFIG_DIR: "$FAIRROOT_ROOT/share/fairbase/examples/common/gconfig"
+  FAIRROOTPATH: "$FAIRROOT_ROOT"
 prepend_path:
   ROOT_INCLUDE_PATH: "$FAIRROOT_ROOT/include"
 ---
@@ -46,21 +47,26 @@ cmake $SOURCEDIR                                                 \
       -DMACOSX_RPATH=OFF                                         \
       -DCMAKE_CXX_FLAGS="$CXXFLAGS"                              \
       ${CMAKE_BUILD_TYPE:+-DCMAKE_BUILD_TYPE=$CMAKE_BUILD_TYPE}  \
+      -DUSE_PATH_INFO=ON                                         \
       -DROOTSYS=$ROOTSYS                                         \
       -DROOT_CONFIG_SEARCHPATH=$ROOT_ROOT/bin                    \
+      ${NANOMSG_ROOT:+-DUSE_NANOMSG=true}                        \
       ${NANOMSG_ROOT:+-DNANOMSG_DIR=$NANOMSG_ROOT}               \
       -DPythia6_LIBRARY_DIR=$PYTHIA6_ROOT/lib                    \
       -DGeant3_DIR=$GEANT3_ROOT                                  \
       -DDISABLE_GO=ON                                            \
-      -DBUILD_EXAMPLES=OFF                                       \
+      -DBUILD_EXAMPLES=ON                                        \
       ${GEANT4_ROOT:+-DGeant4_DIR=$GEANT4_ROOT}                  \
       -DFAIRROOT_MODULAR_BUILD=ON                                \
+      ${CMAKE_VERBOSE_MAKEFILE:+-DCMAKE_VERBOSE_MAKEFILE=ON}     \
       ${DDS_ROOT:+-DDDS_PATH=$DDS_ROOT}                          \
       ${ZEROMQ_ROOT:+-DZEROMQ_ROOT=$ZEROMQ_ROOT}                 \
+      ${ZEROMQ_ROOT:+-DZMQ_DIR=$ZEROMQ_ROOT}                     \
       ${BOOST_ROOT:+-DBOOST_ROOT=$BOOST_ROOT}                    \
       ${BOOST_ROOT:+-DBOOST_INCLUDEDIR=$BOOST_ROOT/include}      \
       ${BOOST_ROOT:+-DBOOST_LIBRARYDIR=$BOOST_ROOT/lib}          \
       ${GSL_ROOT:+-DGSL_DIR=$GSL_ROOT}                           \
+      ${MESSAGEPACK_ROOT:+-DMSGPACK_ROOT=${MESSAGEPACK_ROOT}}    \
       -DGTEST_ROOT=$GOOGLETEST_ROOT                              \
       -DPROTOBUF_INCLUDE_DIR=$PROTOBUF_ROOT/include              \
       -DPROTOBUF_PROTOC_EXECUTABLE=$PROTOBUF_ROOT/bin/protoc     \
@@ -69,9 +75,14 @@ cmake $SOURCEDIR                                                 \
 
 # Limit the number of build processes to avoid exahusting memory when building
 # on smaller machines.
-JOBS=$((${JOBS:-1}*2/5))
-[[ $JOBS -gt 0 ]] || JOBS=1
+[[ $JOBS -gt 1 ]] || JOBS=2
+JOBS=$((${JOBS:-1}*2/4))
 make -j$JOBS install
+
+#Get current git hash, needed by FairShip
+cd $SOURCEDIR
+export FAIRROOT_HASH=$(git rev-parse HEAD)
+cd $BUILDDIR
 
 # Modulefile
 MODULEDIR="$INSTALLROOT/etc/modulefiles"
@@ -101,6 +112,7 @@ module load BASE/1.0                                                            
             ${GCC_TOOLCHAIN_ROOT:+GCC-Toolchain/$GCC_TOOLCHAIN_VERSION-$GCC_TOOLCHAIN_REVISION}
 # Our environment
 setenv FAIRROOT_ROOT \$::env(BASEDIR)/$PKGNAME/\$version
+setenv FAIRROOT_HASH $FAIRROOT_HASH
 setenv VMCWORKDIR \$::env(FAIRROOT_ROOT)/share/fairbase/examples
 setenv GEOMPATH \$::env(VMCWORKDIR)/common/geometry
 setenv CONFIG_DIR \$::env(VMCWORKDIR)/common/gconfig
