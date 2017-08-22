@@ -11,7 +11,7 @@ rsync -a $SOURCEDIR/* .
 ./configure          --prefix=$INSTALLROOT  \
 		     --enable-shared \
 		     --enable-static 
-make ${JOBS+-j$JOBS}
+make ${JOBS+-j$JOBS} CXXFLAGS="-fPIC -g -O2"
 make install
 
 # Modulefile support
