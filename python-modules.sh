@@ -54,7 +54,7 @@ for X in "mock==1.0.0"         \
          "metakernel==0.14.0"  \
          "pyyaml"
 do
-  pip install --user $X
+  python -m pip install --user $X
 done
 unset PYTHONUSERBASE
 
