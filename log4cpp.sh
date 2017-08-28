@@ -6,6 +6,8 @@ requires:
   - GCC-Toolchain:(?!osx)
 build_requires:
   - autotools
+env:
+  LOG4_ROOT: "$LOG4CPP_ROOT"
 ---
 #!/bin/bash -ex
 rsync -a $SOURCEDIR/* .
@@ -32,7 +34,7 @@ module-whatis "ALICE Modulefile for $PKGNAME $PKGVERSION-@@PKGREVISION@$PKGHASH@
 # Dependencies
 module load BASE/1.0
 # Our environment
-setenv LOG4_ROOT \$::env(BASEDIR)/$PKGNAME/\$version
-prepend-path PATH \$::env(LOG4_ROOT)/bin
-prepend-path LD_LIBRARY_PATH \$::env(LOG4_ROOT)/lib
+setenv LOG4CPP_ROOT \$::env(BASEDIR)/$PKGNAME/\$version
+prepend-path PATH \$::env(LOG4CPP_ROOT)/bin
+prepend-path LD_LIBRARY_PATH \$::env(LOG4CPP_ROOT)/lib
 EoF
