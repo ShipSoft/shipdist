@@ -18,6 +18,9 @@ overrides:
     requires:
       - "GCC-Toolchain:(?!osx)"
       - Python
+  package: XRootD
+    version: "%(tag_basename)s"
+    tag: v4.5.0
   GCC-Toolchain:
     tag: v6.2.0-alice1
     prefer_system_check: |
