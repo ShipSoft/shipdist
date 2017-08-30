@@ -89,7 +89,8 @@ else
         ${ALIEN_RUNTIME_ROOT:+-Dalien=ON}                         \
         ${ALIEN_RUNTIME_ROOT:+-DALIEN_DIR=$ALIEN_RUNTIME_ROOT}    \
         ${ALIEN_RUNTIME_ROOT:+-DMONALISA_DIR=$ALIEN_RUNTIME_ROOT} \
-        ${XROOTD_ROOT:+-DXROOTD_ROOT_DIR=$ALIEN_RUNTIME_ROOT}     \
+        ${XROOTD_ROOT:+-DXROOTD_ROOT_DIR=$XROOTD_ROOT}            \
+	${ALIEN_RUNTIME_ROOT:+-DXROOTD_ROOT_DIR=$ALIEN_RUNTIME_ROOT}\
         ${CXX11:+-Dcxx11=ON}                                      \
         ${CXX14:+-Dcxx14=ON}                                      \
         -Dfreetype=ON                                             \

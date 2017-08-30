@@ -5,7 +5,7 @@ env:
   CFLAGS: "-fPIC -g -O2"
   CMAKE_BUILD_TYPE: "RELWITHDEBINFO"
 disable:
-  - xalienfs
+  - AliEn-Runtime
 overrides:
   autotools:
     tag: v1.5.0
@@ -32,12 +32,21 @@ overrides:
     tag: "v6-08-02"
     source: https://github.com/root-mirror/root
     requires:
-      - AliEn-Runtime:(?!.*ppc64)
       - GSL
       - opengl:(?!osx)
       - Xdevel:(?!osx)
       - FreeType:(?!osx)
       - Python-modules
+      - zlib
+      - libxml2
+      - "OpenSSL:(?!osx)"
+      - "osx-system-openssl:(osx.*)"
+      - AliEn-CAs
+      - gSOAP
+      - MonALISA-gSOAP-client
+      - ApMon-CPP
+      - XRootD
+      - UUID
       - pythia
       - pythia6
   gSOAP:
