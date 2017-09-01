@@ -62,7 +62,8 @@ cmake $SOURCEDIR                                                 \
       ${CMAKE_VERBOSE_MAKEFILE:+-DCMAKE_VERBOSE_MAKEFILE=ON}     \
       ${DDS_ROOT:+-DDDS_PATH=$DDS_ROOT}                          \
       ${ZEROMQ_ROOT:+-DZEROMQ_ROOT=$ZEROMQ_ROOT}                 \
-      ${ZEROMQ_ROOT:+-DZMQ_DIR=$ZEROMQ_ROOT}     \
+      ${ZEROMQ_ROOT:+-DZMQ_DIR=$ZEROMQ_ROOT}                     \
+      ${BOOST_ROOT:+-DBoost_NO_SYSTEM_PATHS=TRUE}                \
       ${BOOST_ROOT:+-DBOOST_ROOT=$BOOST_ROOT}                    \
       ${BOOST_ROOT:+-DBOOST_INCLUDEDIR=$BOOST_ROOT/include}      \
       ${BOOST_ROOT:+-DBOOST_LIBRARYDIR=$BOOST_ROOT/lib}          \
