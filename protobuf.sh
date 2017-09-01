@@ -6,6 +6,7 @@ build_requires:
  - "GCC-Toolchain:(?!osx)"
 prefer_system: "(?!slc5)"
 prefer_system_check: |
+  which protoc || { echo "protoc missing"; exit 1; }
   printf "#include \"google/protobuf/any.h\"\nint main(){}" | c++ -I$(brew --prefix protobuf)/include -Wno-deprecated-declarations -xc++ - -o /dev/null
 ---
 
