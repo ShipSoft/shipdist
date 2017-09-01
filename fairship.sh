@@ -13,7 +13,7 @@ requires:
 build_requires:
   - googletest
 incremental_recipe: |
-  rsync -a $SOURCEDIR/* $INSTALLROOT/
+  rsync -ar $SOURCEDIR/ $INSTALLROOT/
   make ${JOBS:+-j$JOBS}
   make test
   make install
@@ -78,7 +78,7 @@ case $ARCHITECTURE in
   *) SONAME=so ;;
 esac
 
-rsync -a $SOURCEDIR/* $INSTALLROOT/
+rsync -a $SOURCEDIR/ $INSTALLROOT/
 
 cmake $SOURCEDIR                                                 \
       -DFAIRBASE="$FAIRROOT_ROOT/share/fairbase"                 \
