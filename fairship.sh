@@ -104,6 +104,7 @@ cmake $SOURCEDIR                                                 \
       ${BOOST_ROOT:+-DBOOST_ROOT=$BOOST_ROOT}                    \
       ${BOOST_ROOT:+-DBOOST_INCLUDEDIR=$BOOST_ROOT/include}      \
       ${BOOST_ROOT:+-DBOOST_LIBRARYDIR=$BOOST_ROOT/lib}          \
+      ${BOOST_ROOT:+-DBoost_NO_SYSTEM=TRUE}                      \
       ${GSL_ROOT:+-DGSL_DIR=$GSL_ROOT}                           \
       -DCMAKE_INSTALL_PREFIX=$INSTALLROOT
 
