@@ -7,6 +7,8 @@ requires:
   - pythia
   - Tauolapp
   - PHOTOSPP
+env:
+  EVTGENDATA: "$EVTGEN_ROOT/share"
 ---
 #!/bin/sh
 
