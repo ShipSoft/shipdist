@@ -32,7 +32,7 @@ overrides:
       which cc && test -f $(dirname $(which cc))/c++ && printf "#define GCCVER ((__GNUC__ << 16)+(__GNUC_MINOR__ << 8)+(__GNUC_PATCHLEVEL__))\n#if (GCCVER < 0x060000 || GCCVER > 0x070000)\n#error \"System's GCC cannot be used: we need GCC 6.X. We are going to compile our own version.\"\n#endif\n" | cc -xc++ - -c -o /dev/null
   ROOT:
     tag: "v6-08-04-ship1"
-    source: https://github.com/PMunkes/root
+    source: https://github.com/ShipSoft/root
     requires:
       - GSL
       - opengl:(?!osx)
@@ -109,7 +109,7 @@ overrides:
   GEANT4:
     version: "%(tag_basename)s"
     tag: fairshipdev
-    source: https://github.com/PMunkes/geant4
+    source: https://github.com/ShipSoft/geant4
     requires:
       - "GCC-Toolchain:(?!osx)"
       - opengl
@@ -133,28 +133,21 @@ overrides:
   GEANT4_VMC:
     version: "%(tag_basename)s"
     tag: fairshipdev
-    source: https://github.com/PMunkes/geant4_vmc
+    source: https://github.com/ShipSoft/geant4_vmc
   G4PY:
     version: "%(tag_basename)s"
     tag: fairshipdev
-    source: https://github.com/PMunkes/geant4
+    source: https://github.com/ShipSoft/geant4
   lhapdf5:
-    source: https://github.com/PMunkes/LHAPDF
+    source: https://github.com/ShipSoft/LHAPDF
     version: "%(tag_basename)s"
     tag: v5.9.1-ship1
     env:
       LHAPATH: "$LHAPDF_ROOT/share/LHAPDF"
       GEANT4_INSTALL: "$GEANT4_ROOT"
-  lhapdf:
-    source: http://www.hepforge.org/archive/lhapdf
-    version: "v6.2.1"
-    tag: v6.2.1-ship1
-    env:
-      LHAPATH: "$LHAPDF_ROOT/share/LHAPDF"
-      GEANT4_INSTALL: "$GEANT4_ROOT"
   pythia:
     version: "%(tag_basename)s%(defaults_upper)s"
-    source: https://github.com/PMunkes/pythia8
+    source: https://github.com/ShipSoft/pythia8
     tag: master
     requires:
       - lhapdf
@@ -165,10 +158,10 @@ overrides:
   evtGen:
     tag: fairshipdev
   pythia6:
-    source: https://github.com/PMunkes/pythia6
+    source: https://github.com/ShipSoft/pythia6
     tag: v6.4.28-ship1
   GEANT3:
-    source: https://github.com/PMunkes/GEANT3
+    source: https://github.com/ShipSoft/geant3
     tag: master  
 ---
 # This file is included in any build recipe and it's only used to set

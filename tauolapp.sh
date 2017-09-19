@@ -1,6 +1,6 @@
 package: Tauolapp
 version: "%(tag_basename)s-ship%(defaults_upper)s"
-source: https://github.com/PMunkes/Tauolapp
+source: https://github.com/ShipSoft/Tauolapp
 tag: v1.1.5
 requires:
   - HepMC

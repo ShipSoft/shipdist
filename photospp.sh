@@ -1,6 +1,6 @@
 package: PHOTOSPP
 version: "%(tag_basename)s-ship%(defaults_upper)s"
-source: https://github.com/PMunkes/PHOTOSPP
+source: https://github.com/ShipSoft/PHOTOSPP
 tag: v3.61
 requires:
   - HepMC

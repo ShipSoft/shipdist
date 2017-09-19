@@ -1,7 +1,7 @@
 package: GENIE
 version: "%(tag_basename)s"
 tag: fairshipdev
-source: https://github.com/PMunkes/GENIE
+source: https://github.com/ShipSoft/GENIE
 requires:
   - GCC-Toolchain
   - ROOT

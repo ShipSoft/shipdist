@@ -1,6 +1,6 @@
 package: FairShip
 version: master
-source: https://github.com/PMunkes/FairShip
+source: https://github.com/ShipSoft/FairShip
 tag: master
 requires:
   - generators
