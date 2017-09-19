@@ -1,7 +1,7 @@
 package: XercesC
 version: v3.1.4
-source: https://github.com/PMunkes/XercesC
-tag: v3.1.4
+source: https://apache.googlesource.com/xerces-c
+tag: Xerces-C_3_1_4
 build_requires:
   - GCC-Toolchain:(?!osx)
 env:
@@ -10,7 +10,10 @@ env:
   XERCESCROOT: "$XERCESC_ROOT"
 ---
 #!/bin/sh
-
+cd $SOURCEDIR
+autoreconf -i
+cd - 
+echo "command $SOURCEDIR configure --prefix $INSTALLROOT CFLAGS $CFLAGS CXXFLAGS=$CFLAGS"
 $SOURCEDIR/configure --prefix=$INSTALLROOT CFLAGS="$CFLAGS" CXXFLAGS="$CFLAGS"
 make ${JOBS+-j $JOBS}
 make install

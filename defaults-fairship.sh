@@ -118,18 +118,18 @@ overrides:
       G4INSTALL: "$GEANT4_ROOT"
       G4SYSTEM: "$(uname)-g++"
       G4VERSION: "Geant4-10.3.1"
-      G4INSTALL_DATA: "$GEANT4_ROOT/share/Geant4-10.3.1/data"
-      G4ABLADATA:               "$GEANT4_ROOT/share/Geant4-10.3.1/data/G4ABLA3.0"
-      G4LEDATA:                 "$GEANT4_ROOT/share/Geant4-10.3.1/data/G4EMLOW6.50"
-      G4ENSDFSTATEDATA:         "$GEANT4_ROOT/share/Geant4-10.3.1/data/G4ENSDFSTATE2.1"
-      G4NeutronHPCrossSections: "$GEANT4_ROOT/share/Geant4-10.3.1/data/G4NDL4.5"
-      G4NEUTRONHPDATA:          "$GEANT4_ROOT/share/Geant4-10.3.1/data/G4NDL4.5"
-      G4NEUTRONXSDATA:          "$GEANT4_ROOT/share/Geant4-10.3.1/data/G4NEUTRONXS1.4"
-      G4PIIDATA:                "$GEANT4_ROOT/share/Geant4-10.3.1/data/G4PII1.3"
-      G4SAIDXSDATA:             "$GEANT4_ROOT/share/Geant4-10.3.1/data/G4SAIDDATA1.1"
-      G4LEVELGAMMADATA:         "$GEANT4_ROOT/share/Geant4-10.3.1/data/PhotonEvaporation4.3.2"
-      G4RADIOACTIVEDATA:        "$GEANT4_ROOT/share/Geant4-10.3.1/data/RadioactiveDecay5.1.1"
-      G4REALSURFACEDATA:        "$GEANT4_ROOT/share/Geant4-10.3.1/data/RealSurface1.0"
+      G4INSTALL_DATA: "$GEANT4_ROOT/share/$G4VERSION/data"
+      G4ABLADATA:               "$GEANT4_ROOT/share/$G4VERSION/data/G4ABLA3.0"
+      G4LEDATA:                 "$GEANT4_ROOT/share/$G4VERSION/data/G4EMLOW6.50"
+      G4ENSDFSTATEDATA:         "$GEANT4_ROOT/share/$G4VERSION/data/G4ENSDFSTATE2.1"
+      G4NeutronHPCrossSections: "$GEANT4_ROOT/share/$G4VERSION/data/G4NDL4.5"
+      G4NEUTRONHPDATA:          "$GEANT4_ROOT/share/$G4VERSION/data/G4NDL4.5"
+      G4NEUTRONXSDATA:          "$GEANT4_ROOT/share/$G4VERSION/data/G4NEUTRONXS1.4"
+      G4PIIDATA:                "$GEANT4_ROOT/share/$G4VERSION/data/G4PII1.3"
+      G4SAIDXSDATA:             "$GEANT4_ROOT/share/$G4VERSION/data/G4SAIDDATA1.1"
+      G4LEVELGAMMADATA:         "$GEANT4_ROOT/share/$G4VERSION/data/PhotonEvaporation4.3.2"
+      G4RADIOACTIVEDATA:        "$GEANT4_ROOT/share/$G4VERSION/data/RadioactiveDecay5.1.1"
+      G4REALSURFACEDATA:        "$GEANT4_ROOT/share/$G4VERSION/data/RealSurface1.0"
   GEANT4_VMC:
     version: "%(tag_basename)s"
     tag: fairshipdev
@@ -145,12 +145,19 @@ overrides:
     env:
       LHAPATH: "$LHAPDF_ROOT/share/LHAPDF"
       GEANT4_INSTALL: "$GEANT4_ROOT"
+  lhapdf:
+    source: http://www.hepforge.org/archive/lhapdf
+    version: "v6.2.1"
+    tag: v6.2.1-ship1
+    env:
+      LHAPATH: "$LHAPDF_ROOT/share/LHAPDF"
+      GEANT4_INSTALL: "$GEANT4_ROOT"
   pythia:
     version: "%(tag_basename)s%(defaults_upper)s"
     source: https://github.com/PMunkes/pythia8
     tag: master
     requires:
-      - lhapdf5
+      - lhapdf
       - HepMC
       - boost
   vgm:

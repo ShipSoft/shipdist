@@ -11,6 +11,7 @@ requires:
   - boost
   - protobuf
   - DDS
+  - go
   - "GCC-Toolchain:(?!osx)"
 build_requires:
   - googletest
@@ -43,19 +44,17 @@ case $ARCHITECTURE in
   *) SONAME=so ;;
 esac
 
-
 cmake $SOURCEDIR                                                 \
       -DMACOSX_RPATH=OFF                                         \
       -DCMAKE_CXX_FLAGS="$CXXFLAGS"                              \
       -DCMAKE_BUILD_TYPE=$CMAKE_BUILD_TYPE                       \
       -DUSE_PATH_INFO=ON                                         \
       -DROOTSYS=$ROOTSYS                                         \
-      -DROOT_CONFIG_SEARCHPATH=$ROOT_ROOT/bin                    \
+      -DROOT_DIR=$ROOT_ROOT                                      \
       ${NANOMSG_ROOT:+-DUSE_NANOMSG=true}                        \
       ${NANOMSG_ROOT:+-DNANOMSG_DIR=$NANOMSG_ROOT}               \
       -DPythia6_LIBRARY_DIR=$PYTHIA6_ROOT/lib                    \
       -DGeant3_DIR=$GEANT3_ROOT                                  \
-      -DDISABLE_GO=ON                                            \
       -DBUILD_EXAMPLES=ON                                        \
       ${GEANT4_ROOT:+-DGeant4_DIR=$GEANT4_ROOT}                  \
       -DFAIRROOT_MODULAR_BUILD=ON                                \

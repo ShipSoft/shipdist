@@ -10,6 +10,7 @@ requires:
   - PHOTOSPP
   - EvtGen
   - G4PY
+  - ROOT
 build_requires:
   - googletest
 incremental_recipe: |
@@ -57,7 +58,7 @@ incremental_recipe: |
   $([[ ${ARCHITECTURE:0:3} == osx ]] && echo "prepend-path DYLD_LIBRARY_PATH \$::env(FAIRSHIP_ROOT)/lib")
   EoF
 ---
-#!/bin/sh
+#!/bin/sh${GENIE_VERSION:+GENIE/$GENIE_VERSION-$GENIE_REVISION}   
 
 # Making sure people do not have SIMPATH set when they build fairroot.
 # Unfortunately SIMPATH seems to be hardcoded in a bunch of places in
@@ -87,6 +88,7 @@ cmake $SOURCEDIR                                                 \
       -DCMAKE_BUILD_TYPE=$CMAKE_BUILD_TYPE                       \
       -DROOTSYS=$ROOTSYS                                         \
       -DROOT_CONFIG_SEARCHPATH=$ROOT_ROOT/bin                    \
+      -DROOT_DIR=$ROOT_ROOT                                      \
       -DHEPMC_DIR=$HEPMC_ROOT                                    \
       -DHEPMC_INCLUDE_DIR=$HEPMC_ROOT/include/HepMC              \
       -DEVTGENPATH=$EVTGEN_ROOT                                  \
