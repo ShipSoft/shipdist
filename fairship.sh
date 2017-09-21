@@ -92,9 +92,11 @@ cmake $SOURCEDIR                                                 \
       -DHEPMC_DIR=$HEPMC_ROOT                                    \
       -DHEPMC_INCLUDE_DIR=$HEPMC_ROOT/include/HepMC              \
       -DEVTGENPATH=$EVTGEN_ROOT                                  \
-      -DEVTGEN_INCLUDE_DIR=$EVTGEN_ROOT/include/EvtGen           \
+      -DEVTGEN_INCLUDE_DIR=$EVTGEN_ROOT/include                  \
+      -DEVTGEN_LIBRARY_DIR=$EVTGEN_ROOT/lib                      \
       -DPythia6_LIBRARY_DIR=$PYTHIA6_ROOT/lib                    \
       -DPYTHIA8_DIR=$PYTHIA_ROOT                                 \
+      -DPYTHIA8_INCLUDE_DIR=$PYTHIA_ROOT/include                 \
       -DGEANT3_PATH=$GEANT3_ROOT                                 \
       -DGEANT3_LIB=$GEANT3_ROOT/lib                              \
       -DGEANT4_ROOT=$GEANT4_ROOT                                 \

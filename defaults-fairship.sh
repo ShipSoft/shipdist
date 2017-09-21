@@ -150,7 +150,7 @@ overrides:
     source: https://github.com/ShipSoft/pythia8
     tag: master
     requires:
-      - lhapdf
+      - lhapdf5
       - HepMC
       - boost
   vgm:
