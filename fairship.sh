@@ -7,9 +7,9 @@ requires:
   - simulation
   - FairRoot
   - GENIE
+  - GEANT4
   - PHOTOSPP
   - EvtGen
-  - G4PY
   - ROOT
 build_requires:
   - googletest
@@ -37,8 +37,8 @@ incremental_recipe: |
   module-whatis "ALICE Modulefile for $PKGNAME $PKGVERSION-@@PKGREVISION@$PKGHASH@@"
   # Dependencies
   module load BASE/1.0                                                          \\
+            ${GEANT4_VERSION:+GEANT4/$GEANT4_VERSION-$GEANT4_REVISION}          \\
             ${GENIE_VERSION:+GENIE/$GENIE_VERSION-$GENIE_REVISION}              \\
-            ${G4PY_VERSION:+G4PY/$G4PY_VERSION-$G4PY_REVISION}                  \\
             ${PHOTOSPP_VERSION:+PHOTOSPP/$PHOTOSPP_VERSION-$PHOTOSPP_REVISION}  \\
             ${EVTGEN_VERSION:+EvtGen/$EVTGEN_VERSION-$EVTGEN_REVISION}          \\
             FairRoot/$FAIRROOT_VERSION-$FAIRROOT_REVISION                       
@@ -53,6 +53,8 @@ incremental_recipe: |
   prepend-path LD_LIBRARY_PATH \$::env(FAIRSHIP_ROOT)/lib
   setenv FAIRLIBDIR \$::env(FAIRSHIP_ROOT)/lib
   prepend-path ROOT_INCLUDE_PATH \$::env(FAIRSHIP_ROOT)/include
+  append-path ROOT_INCLUDE_PATH \$::env(GEANT4_ROOT)/include
+  append-path ROOT_INCLUDE_PATH \$::env(GEANT4_ROOT)/include/Geant4
   prepend-path PYTHONPATH \$::env(FAIRSHIP_ROOT)/python
   append-path PYTHONPATH \$::env(FAIRSHIP_ROOT)/Developments/track_pattern_recognition
   $([[ ${ARCHITECTURE:0:3} == osx ]] && echo "prepend-path DYLD_LIBRARY_PATH \$::env(FAIRSHIP_ROOT)/lib")
@@ -137,8 +139,8 @@ set version $PKGVERSION-@@PKGREVISION@$PKGHASH@@
 module-whatis "ALICE Modulefile for $PKGNAME $PKGVERSION-@@PKGREVISION@$PKGHASH@@"
 # Dependencies
 module load BASE/1.0                                                            \\
+            ${GEANT4_VERSION:+GEANT4/$GEANT4_VERSION-$GEANT4_REVISION}          \\
             ${GENIE_VERSION:+GENIE/$GENIE_VERSION-$GENIE_REVISION}              \\
-            ${G4PY_VERSION:+G4PY/$G4PY_VERSION-$G4PY_REVISION}                  \\
             ${PHOTOSPP_VERSION:+PHOTOSPP/$PHOTOSPP_VERSION-$PHOTOSPP_REVISION}  \\
             ${EVTGEN_VERSION:+EvtGen/$EVTGEN_VERSION-$EVTGEN_REVISION}          \\
             FairRoot/$FAIRROOT_VERSION-$FAIRROOT_REVISION                       
@@ -153,6 +155,8 @@ prepend-path PATH \$::env(FAIRSHIP_ROOT)/bin
 prepend-path LD_LIBRARY_PATH \$::env(FAIRSHIP_ROOT)/lib
 setenv FAIRLIBDIR \$::env(FAIRSHIP_ROOT)/lib
 prepend-path ROOT_INCLUDE_PATH \$::env(FAIRSHIP_ROOT)/include
+append-path ROOT_INCLUDE_PATH \$::env(GEANT4_ROOT)/include
+append-path ROOT_INCLUDE_PATH \$::env(GEANT4_ROOT)/include/Geant4
 prepend-path PYTHONPATH \$::env(FAIRSHIP_ROOT)/python
 append-path PYTHONPATH \$::env(FAIRSHIP_ROOT)/Developments/track_pattern_recognition
 $([[ ${ARCHITECTURE:0:3} == osx ]] && echo "prepend-path DYLD_LIBRARY_PATH \$::env(FAIRSHIP_ROOT)/lib")

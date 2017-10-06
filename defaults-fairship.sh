@@ -8,12 +8,15 @@ disable:
   - AliEn-Runtime
   - MonALISA-gSOAP-client
   - AliEn-CAs
+  - ApMon-CPP
+  - DDS
 overrides:
   autotools:
     tag: v1.5.0
   OpenSSL:
     version:  "v1.0.2l"
     tag: v1.0.2l    
+    source: https://github.com/ShipSoft/FairShip-openssl
     prefer_system_check: |
       if [ `uname` = Darwin ]; then test -d `brew --prefix openssl || echo /dev/nope` || exit 1; fi; printf "#include <openssl/opensslv.h> \n#if (OPENSSL_VERSION_NUMBER > 0x10100000L)\n#error \"System's OpenSSL cannot be used: we need OpenSSL<1.1. We are going to compile our own version.\"\n#endif\n" | c++ -x c++ - -I`brew --prefix openssl`/include -c -o /dev/null || exit 1
   boost:
@@ -22,16 +25,17 @@ overrides:
     requires:
       - "GCC-Toolchain:(?!osx)"
       - Python
-  XRootD:
-    tag: v4.5.0
   GCC-Toolchain:
     tag: v6.2.0-alice1
     prefer_system_check: |
       set -e
       which gfortran || { echo "gfortran missing"; exit 1; }
       which cc && test -f $(dirname $(which cc))/c++ && printf "#define GCCVER ((__GNUC__ << 16)+(__GNUC_MINOR__ << 8)+(__GNUC_PATCHLEVEL__))\n#if (GCCVER < 0x060000 || GCCVER > 0x070000)\n#error \"System's GCC cannot be used: we need GCC 6.X. We are going to compile our own version.\"\n#endif\n" | cc -xc++ - -c -o /dev/null
+  XRootD:
+    tag: v4.6.1
   ROOT:
-    tag: "v6-08-04-ship1"
+    version: "%(tag_basename)s"
+    tag: "v6-10-06-ship"
     source: https://github.com/ShipSoft/root
     requires:
       - GSL
@@ -43,15 +47,12 @@ overrides:
       - libxml2
       - "OpenSSL:(?!osx)"
       - "osx-system-openssl:(osx.*)"
-      - gSOAP
-      - ApMon-CPP
       - XRootD
-      - UUID
       - pythia
       - pythia6
-  gSOAP:
-    tag: "v2.8.45"
   GSL:
+    source: https://github.com/ShipSoft/gsl
+    tag: "gsl-2.1-ship"
     prefer_system_check: |
       printf "#include \"gsl/gsl_version.h\"\n#define GSL_V GSL_MAJOR_VERSION * 100 + GSL_MINOR_VERSION\n# if (GSL_V < 116)\n#error \"Cannot use system's gsl. Notice we only support versions from 1.16 (included)\"\n#endif\nint main(){}" | gcc  -I$(brew --prefix gsl)/include -xc++ - -o /dev/null
   protobuf:
@@ -63,9 +64,9 @@ overrides:
     prefer_system_check: |
       which cmake && case `cmake --version | sed -e 's/.* //' | cut -d. -f1,2,3 | head -n1` in [0-2]*|3.[0-7].*) exit 1 ;; esac
   FairRoot:
-    source: https://github.com/PMunkes/FairRoot
-    version: fairshipdevdev
-    tag: fairshipdev
+    source: https://github.com/ShipSoft/FairRoot
+    version: "%(tag_basename)s"
+    tag: Oct17-ship
     incremental_recipe: |
       make -j$JOBS;make install; MODULEDIR="$INSTALLROOT/etc/modulefiles"
       MODULEFILE="$MODULEDIR/$PKGNAME"
@@ -93,7 +94,6 @@ overrides:
             ROOT/$ROOT_VERSION-$ROOT_REVISION                                                   \\
             ${ZEROMQ_VERSION:+ZeroMQ/$ZEROMQ_VERSION-$ZEROMQ_REVISION}                          \\
             ${NANOMSG_VERSION:+nanomsg/$NANOMSG_VERSION-$NANOMSG_REVISION}                      \\
-            ${DDS_ROOT:+DDS/$DDS_VERSION-$DDS_REVISION}                                         \\
             ${GCC_TOOLCHAIN_ROOT:+GCC-Toolchain/$GCC_TOOLCHAIN_VERSION-$GCC_TOOLCHAIN_REVISION}
       # Our environment
       setenv FAIRROOT_ROOT \$::env(BASEDIR)/$PKGNAME/\$version
@@ -106,10 +106,14 @@ overrides:
       prepend-path ROOT_INCLUDE_PATH \$::env(FAIRROOT_ROOT)/include
       $([[ ${ARCHITECTURE:0:3} == osx ]] && echo "prepend-path DYLD_LIBRARY_PATH      \$::env(FAIRROOT_ROOT)/lib")
       EoF
+  log4cpp:
+    version: "%(tag_basename)s"
+    tag: REL_1_1_1_Nov_26_2013
+    source: https://github.com/ShipSoft/log4cpp
   GEANT4:
     version: "%(tag_basename)s"
-    tag: fairshipdev
-    source: https://github.com/ShipSoft/geant4
+    tag: v10.3.2
+    source: https://github.com/geant4/geant4.git
     requires:
       - "GCC-Toolchain:(?!osx)"
       - opengl
@@ -117,7 +121,7 @@ overrides:
     env:
       G4INSTALL: "$GEANT4_ROOT"
       G4SYSTEM: "$(uname)-g++"
-      G4VERSION: "Geant4-10.3.1"
+      G4VERSION: "Geant4-10.3.2"
       G4INSTALL_DATA: "$GEANT4_ROOT/share/$G4VERSION/data"
       G4ABLADATA:               "$GEANT4_ROOT/share/$G4VERSION/data/G4ABLA3.0"
       G4LEDATA:                 "$GEANT4_ROOT/share/$G4VERSION/data/G4EMLOW6.50"
@@ -132,12 +136,8 @@ overrides:
       G4REALSURFACEDATA:        "$GEANT4_ROOT/share/$G4VERSION/data/RealSurface1.0"
   GEANT4_VMC:
     version: "%(tag_basename)s"
-    tag: fairshipdev
-    source: https://github.com/ShipSoft/geant4_vmc
-  G4PY:
-    version: "%(tag_basename)s"
-    tag: fairshipdev
-    source: https://github.com/ShipSoft/geant4
+    tag: Oct17-ship-2
+    source: https://github.com/ShipSoft/geant4_vmc.git
   lhapdf5:
     source: https://github.com/ShipSoft/LHAPDF
     version: "%(tag_basename)s"
@@ -145,24 +145,39 @@ overrides:
     env:
       LHAPATH: "$LHAPDF_ROOT/share/LHAPDF"
       GEANT4_INSTALL: "$GEANT4_ROOT"
+  GENIE:
+    tag: v2.12.6-ship
   pythia:
-    version: "%(tag_basename)s%(defaults_upper)s"
+    version: "%(tag_basename)s"
     source: https://github.com/ShipSoft/pythia8
-    tag: master
+    tag: v8226-ship
     requires:
       - lhapdf5
       - HepMC
       - boost
   vgm:
+    version: "%(tag_basename)s"
     tag: "4.4"
   evtGen:
-    tag: fairshipdev
+    version: "%(tag_basename)s"
+    source: https://github.com/ShipSoft/evtgen
+    tag: R01-06-00-ship
+  PHOTOSPP:
+    version: "%(tag_basename)s"
+    source: https://github.com/ShipSoft/PHOTOSPP
+    tag: v3.61
+  Tauolapp:
+    version: "%(tag_basename)s"
+    source: https://github.com/ShipSoft/Tauolapp
+    tag: v1.1.5
   pythia6:
+    version: "%(tag_basename)s"
     source: https://github.com/ShipSoft/pythia6
     tag: v6.4.28-ship1
   GEANT3:
+    version: "%(tag_basename)s"
     source: https://github.com/ShipSoft/geant3
-    tag: master  
+    tag: v3.2.1-ship
 ---
 # This file is included in any build recipe and it's only used to set
 # environment variables. Which file to actually include can be defined by the
