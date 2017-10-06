@@ -155,6 +155,10 @@ overrides:
       - lhapdf5
       - HepMC
       - boost
+  HepMC
+   version: "%(tag_basename)s"
+   source: https://github.com/alisw/hepmc
+   tag: alice/v2.06.09
   vgm:
     version: "%(tag_basename)s"
     tag: "4.4"
