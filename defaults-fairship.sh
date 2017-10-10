@@ -13,12 +13,6 @@ disable:
 overrides:
   autotools:
     tag: v1.5.0
-  OpenSSL:
-    version:  "v1.0.2l"
-    tag: v1.0.2l    
-    source: https://github.com/ShipSoft/FairShip-openssl
-    prefer_system_check: |
-      if [ `uname` = Darwin ]; then test -d `brew --prefix openssl || echo /dev/nope` || exit 1; fi; printf "#include <openssl/opensslv.h> \n#if (OPENSSL_VERSION_NUMBER > 0x10100000L)\n#error \"System's OpenSSL cannot be used: we need OpenSSL<1.1. We are going to compile our own version.\"\n#endif\n" | c++ -x c++ - -I`brew --prefix openssl`/include -c -o /dev/null || exit 1
   boost:
     version:  "%(tag_basename)s"
     tag: "v1.64.0-alice1"
@@ -51,8 +45,9 @@ overrides:
       - pythia
       - pythia6
   GSL:
-    source: https://github.com/ShipSoft/gsl
-    tag: "gsl-2.1-ship"
+    version: "v1.16%(defaults_upper)s"
+    source: https://github.com/alisw/gsl
+    tag: "release-1-16"
     prefer_system_check: |
       printf "#include \"gsl/gsl_version.h\"\n#define GSL_V GSL_MAJOR_VERSION * 100 + GSL_MINOR_VERSION\n# if (GSL_V < 116)\n#error \"Cannot use system's gsl. Notice we only support versions from 1.16 (included)\"\n#endif\nint main(){}" | gcc  -I$(brew --prefix gsl)/include -xc++ - -o /dev/null
   protobuf:
@@ -155,10 +150,6 @@ overrides:
       - lhapdf5
       - HepMC
       - boost
-  HepMC:
-   version: "%(tag_basename)s"
-   source: https://github.com/alisw/hepmc
-   tag: alice/v2.06.09
   vgm:
     version: "%(tag_basename)s"
     tag: "4.4"

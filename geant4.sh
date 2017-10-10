@@ -41,6 +41,7 @@ cmake $SOURCEDIR                                    \
   -DGEANT4_USE_G3TOG4=ON                            \
   -DGEANT4_INSTALL_DATA=ON                          \
   -DGEANT4_USE_SYSTEM_EXPAT=OFF                     \
+  -DGEANT4_USE_QT=ON                                \
   ${XERCESC_ROOT:+-DGEANT4_USE_OPENGL_X11=ON -DGEANT4_USE_GDML=ON -DXERCESC_ROOT_DIR=$XERCESC_ROOT}
 
 make ${JOBS+-j $JOBS}
