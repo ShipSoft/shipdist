@@ -145,7 +145,7 @@ overrides:
   pythia:
     version: "%(tag_basename)s"
     source: https://github.com/ShipSoft/pythia8
-    tag: v8226-ship
+    tag: v8230-ship
     requires:
       - lhapdf5
       - HepMC
@@ -164,7 +164,7 @@ overrides:
   Tauolapp:
     version: "%(tag_basename)s"
     source: https://github.com/ShipSoft/Tauolapp
-    tag: v1.1.5
+    tag: v1.1.5-ship
   pythia6:
     version: "%(tag_basename)s"
     source: https://github.com/ShipSoft/pythia6
