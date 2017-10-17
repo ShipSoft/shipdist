@@ -18,7 +18,7 @@ incremental_recipe: |
   make ${JOBS:+-j$JOBS}
   make test
   make install
-  rsync -a $BUILDIR/bin $INSTALLROOT/
+  rsync -a $BUILDDIR/bin $INSTALLROOT/
   #Get the current git hash
   cd $SOURCEDIR
   FAIRSHIP_HASH=$(git rev-parse HEAD)
@@ -118,7 +118,7 @@ make ${JOBS:+-j$JOBS}
 make test
 make install
 
-rsync -a $BUILDIR/bin $INSTALLROOT/
+rsync -a $BUILDDIR/bin $INSTALLROOT/
 
 #Get the current git hash
 cd $SOURCEDIR
