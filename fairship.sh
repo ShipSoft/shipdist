@@ -45,6 +45,7 @@ incremental_recipe: |
   # Our environment
   setenv FAIRSHIP_ROOT \$::env(BASEDIR)/$PKGNAME/\$version
   setenv FAIRSHIP \$::env(FAIRSHIP_ROOT)
+  setenv EOSSHIP "root://eoslhcb.cern.ch/"
   setenv FAIRSHIP_HASH $FAIRSHIP_HASH
   setenv VMCWORKDIR \$::env(FAIRSHIP)
   setenv GEOMPATH \$::env(FAIRSHIP)/geometry
@@ -147,6 +148,7 @@ module load BASE/1.0                                                            
 # Our environment
 setenv FAIRSHIP_ROOT \$::env(BASEDIR)/$PKGNAME/\$version
 setenv FAIRSHIP \$::env(FAIRSHIP_ROOT)
+setenv EOSSHIP "root://eoslhcb.cern.ch/"
 setenv FAIRSHIP_HASH $FAIRSHIP_HASH
 setenv VMCWORKDIR \$::env(FAIRSHIP)
 setenv GEOMPATH \$::env(FAIRSHIP)/geometry
