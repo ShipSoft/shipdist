@@ -52,7 +52,7 @@ for X in "mock==1.0.0"         \
          "ipykernel==4.5.0"    \
          "notebook==4.2.3"     \
          "metakernel==0.14.0"  \
-         "scipy=0.17.1"        \
+         "scipy==0.17.1"        \
          "pyyaml"
 do
   python -m pip install --user $X
