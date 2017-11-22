@@ -159,6 +159,12 @@ setenv FAIRLIBDIR \$::env(FAIRSHIP_ROOT)/lib
 prepend-path ROOT_INCLUDE_PATH \$::env(FAIRSHIP_ROOT)/include
 append-path ROOT_INCLUDE_PATH \$::env(GEANT4_ROOT)/include
 append-path ROOT_INCLUDE_PATH \$::env(GEANT4_ROOT)/include/Geant4
+append-path ROOT_INCLUDE_PATH \$::env(GEANT4_ROOT)/include
+append-path ROOT_INCLUDE_PATH \$::env(GEANT4_ROOT)/include/Geant4
+append-path ROOT_INCLUDE_PATH \$::env(PYTHIA_ROOT)/include
+append-path ROOT_INCLUDE_PATH \$::env(PYTHIA_ROOT)/include/Pythia8
+append-path ROOT_INCLUDE_PATH \$::env(GEANT4_VMC_ROOT)/include
+append-path ROOT_INCLUDE_PATH \$::env(GEANT4_VMC_ROOT)/include/geant4vmc
 prepend-path PYTHONPATH \$::env(FAIRSHIP_ROOT)/python
 append-path PYTHONPATH \$::env(FAIRSHIP_ROOT)/Developments/track_pattern_recognition
 $([[ ${ARCHITECTURE:0:3} == osx ]] && echo "prepend-path DYLD_LIBRARY_PATH \$::env(FAIRSHIP_ROOT)/lib")
