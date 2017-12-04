@@ -40,12 +40,15 @@ make install
 # make command does not work, do it by hand
 mkdir -p $INSTALLROOT/genie/lib
 rsync -a lib/* $INSTALLROOT/genie/lib
+rsync -a src/*/*.pcm  $INSTALLROOT/genie/lib
 mkdir -p $INSTALLROOT/genie/bin
 rsync -a bin/* $INSTALLROOT/genie/bin
 mkdir -p $INSTALLROOT/genie/data
 rsync -a data/* $INSTALLROOT/genie/data
 mkdir -p $INSTALLROOT/genie/src
 rsync -a src/* $INSTALLROOT/genie/src
+mkdir -p $INSTALLROOT/genie/inc
+rsync -a src/*/*.h $INSTALLROOT/genie/inc
 
 # Modulefile
 MODULEDIR="$INSTALLROOT/etc/modulefiles"
@@ -65,5 +68,6 @@ module load BASE/1.0 ROOT/$ROOT_VERSION-$ROOT_REVISION pythia6/$PYTHIA6_VERSION-
 setenv GENIE_ROOT \$::env(BASEDIR)/$PKGNAME/\$version
 setenv GENIE \$::env(GENIE_ROOT)/genie
 prepend-path LD_LIBRARY_PATH \$::env(GENIE_ROOT)/lib
+prepend-path ROOT_INCLUDE_PATH \$::env(GENIE_ROOT)/genie/inc
 $([[ ${ARCHITECTURE:0:3} == osx ]] && echo "prepend-path DYLD_LIBRARY_PATH \$::env(GENIE_ROOT)/lib")
 EoF

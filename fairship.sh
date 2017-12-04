@@ -19,6 +19,8 @@ incremental_recipe: |
   make test
   make install
   rsync -a $BUILDDIR/bin $INSTALLROOT/
+  # to be sure all header files are there
+  rsync -a $INSTALLROOT/*/*.h $INSTALLROOT/include
   #Get the current git hash
   cd $SOURCEDIR
   FAIRSHIP_HASH=$(git rev-parse HEAD)
@@ -56,6 +58,10 @@ incremental_recipe: |
   prepend-path ROOT_INCLUDE_PATH \$::env(FAIRSHIP_ROOT)/include
   append-path ROOT_INCLUDE_PATH \$::env(GEANT4_ROOT)/include
   append-path ROOT_INCLUDE_PATH \$::env(GEANT4_ROOT)/include/Geant4
+  append-path ROOT_INCLUDE_PATH \$::env(PYTHIA_ROOT)/include
+  append-path ROOT_INCLUDE_PATH \$::env(PYTHIA_ROOT)/include/Pythia8
+  append-path ROOT_INCLUDE_PATH \$::env(GEANT4_VMC_ROOT)/include
+  append-path ROOT_INCLUDE_PATH \$::env(GEANT4_VMC_ROOT)/include/geant4vmc
   prepend-path PYTHONPATH \$::env(FAIRSHIP_ROOT)/python
   append-path PYTHONPATH \$::env(FAIRSHIP_ROOT)/Developments/track_pattern_recognition
   $([[ ${ARCHITECTURE:0:3} == osx ]] && echo "prepend-path DYLD_LIBRARY_PATH \$::env(FAIRSHIP_ROOT)/lib")
@@ -120,6 +126,8 @@ make test
 make install
 
 rsync -a $BUILDDIR/bin $INSTALLROOT/
+# to be sure all header files are there
+rsync -a $INSTALLROOT/*/*.h $INSTALLROOT/include
 
 #Get the current git hash
 cd $SOURCEDIR
@@ -157,8 +165,6 @@ prepend-path PATH \$::env(FAIRSHIP_ROOT)/bin
 prepend-path LD_LIBRARY_PATH \$::env(FAIRSHIP_ROOT)/lib
 setenv FAIRLIBDIR \$::env(FAIRSHIP_ROOT)/lib
 prepend-path ROOT_INCLUDE_PATH \$::env(FAIRSHIP_ROOT)/include
-append-path ROOT_INCLUDE_PATH \$::env(GEANT4_ROOT)/include
-append-path ROOT_INCLUDE_PATH \$::env(GEANT4_ROOT)/include/Geant4
 append-path ROOT_INCLUDE_PATH \$::env(GEANT4_ROOT)/include
 append-path ROOT_INCLUDE_PATH \$::env(GEANT4_ROOT)/include/Geant4
 append-path ROOT_INCLUDE_PATH \$::env(PYTHIA_ROOT)/include
