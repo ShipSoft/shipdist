@@ -45,6 +45,8 @@ mkdir -p $INSTALLROOT/genie/bin
 rsync -a bin/* $INSTALLROOT/genie/bin
 mkdir -p $INSTALLROOT/genie/data
 rsync -a data/* $INSTALLROOT/genie/data
+mkdir -p $INSTALLROOT/genie/config
+rsync -a config/* $INSTALLROOT/genie/config
 mkdir -p $INSTALLROOT/genie/src
 rsync -a src/* $INSTALLROOT/genie/src
 mkdir -p $INSTALLROOT/genie/inc
@@ -67,7 +69,8 @@ module load BASE/1.0 ROOT/$ROOT_VERSION-$ROOT_REVISION pythia6/$PYTHIA6_VERSION-
 # Our environment
 setenv GENIE_ROOT \$::env(BASEDIR)/$PKGNAME/\$version
 setenv GENIE \$::env(GENIE_ROOT)/genie
-prepend-path LD_LIBRARY_PATH \$::env(GENIE_ROOT)/lib
+prepend-path LD_LIBRARY_PATH \$::env(GENIE_ROOT)/genie/lib
 prepend-path ROOT_INCLUDE_PATH \$::env(GENIE_ROOT)/genie/inc
 $([[ ${ARCHITECTURE:0:3} == osx ]] && echo "prepend-path DYLD_LIBRARY_PATH \$::env(GENIE_ROOT)/lib")
+append-path PATH \$::env(GENIE_ROOT)/genie/bin 
 EoF
