@@ -45,7 +45,7 @@ incremental_recipe: |
             ${EVTGEN_VERSION:+EvtGen/$EVTGEN_VERSION-$EVTGEN_REVISION}          \\
             FairRoot/$FAIRROOT_VERSION-$FAIRROOT_REVISION                       
   # Our environment
-  setenv EOSSHIP root://eoslhcb.cern.ch/
+  setenv EOSSHIP root://eospublic.cern.ch/
   setenv FAIRSHIP_ROOT \$::env(BASEDIR)/$PKGNAME/\$version
   setenv FAIRSHIP \$::env(FAIRSHIP_ROOT)
   setenv FAIRSHIP_HASH $FAIRSHIP_HASH
@@ -154,7 +154,7 @@ module load BASE/1.0                                                            
             ${EVTGEN_VERSION:+EvtGen/$EVTGEN_VERSION-$EVTGEN_REVISION}          \\
             FairRoot/$FAIRROOT_VERSION-$FAIRROOT_REVISION                       
 # Our environment
-setenv EOSSHIP root://eoslhcb.cern.ch/
+setenv EOSSHIP root://eospublic.cern.ch/
 setenv FAIRSHIP_ROOT \$::env(BASEDIR)/$PKGNAME/\$version
 setenv FAIRSHIP \$::env(FAIRSHIP_ROOT)
 setenv FAIRSHIP_HASH $FAIRSHIP_HASH
