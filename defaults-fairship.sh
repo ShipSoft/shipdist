@@ -29,7 +29,7 @@ overrides:
     tag: v4.6.1
   ROOT:
     version: "%(tag_basename)s"
-    tag: "v6-10-06-ship"
+    tag: "v6-12-04-ship"
     source: https://github.com/ShipSoft/root
     requires:
       - GSL
@@ -131,7 +131,7 @@ overrides:
       G4REALSURFACEDATA:        "$GEANT4_ROOT/share/$G4VERSION/data/RealSurface1.0"
   GEANT4_VMC:
     version: "%(tag_basename)s"
-    tag: Oct17-ship-2
+    tag: v3-6-ship
     source: https://github.com/ShipSoft/geant4_vmc.git
   lhapdf5:
     source: https://github.com/ShipSoft/LHAPDF
