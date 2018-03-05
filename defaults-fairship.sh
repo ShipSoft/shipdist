@@ -29,7 +29,7 @@ overrides:
     tag: v4.6.1
   ROOT:
     version: "%(tag_basename)s"
-    tag: "v6-12-04-ship"
+    tag: "v6-12-06-ship"
     source: https://github.com/ShipSoft/root
     requires:
       - GSL
