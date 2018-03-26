@@ -11,9 +11,9 @@ requires:
   - PHOTOSPP
   - EvtGen
   - ROOT
+  - madgraph5
 build_requires:
   - googletest
-  - madgraph5
 incremental_recipe: |
   rsync -ar $SOURCEDIR/ $INSTALLROOT/
   make ${JOBS:+-j$JOBS}
