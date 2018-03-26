@@ -173,6 +173,9 @@ overrides:
     version: "%(tag_basename)s"
     source: https://github.com/ShipSoft/geant3
     tag: v3.2.1-ship
+  madgraph5:
+    version: "%(tag_basename)s"
+    tag: v2.6.1-ship
 ---
 # This file is included in any build recipe and it's only used to set
 # environment variables. Which file to actually include can be defined by the
