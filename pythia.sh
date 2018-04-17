@@ -5,6 +5,7 @@ requires:
   - lhapdf
   - HepMC
   - boost
+  - Python
 tag: v8223
 env:
   PYTHIA8DATA: "$PYTHIA_ROOT/share/Pythia8/xmldoc"
@@ -19,9 +20,12 @@ case $ARCHITECTURE in
   ;;
 esac
 
+PYTHON_INCLUDE=`echo "{$(python-config --includes)//-I}" | cut -d ' ' -f 1 | cut -c 4-`
+
 ./configure --prefix=$INSTALLROOT \
             --enable-shared \
             --with-hepmc2=${HEPMC_ROOT} \
+            --with-python-include=${PYTHON_INCLUDE} \
             ${LHAPDF_ROOT:+--with-lhapdf6="$LHAPDF_ROOT"} \
             ${BOOST_ROOT:+--with-boost="$BOOST_ROOT"}
 
@@ -55,5 +59,6 @@ setenv PYTHIA8DATA \$::env(PYTHIA_ROOT)/share/Pythia8/xmldoc
 setenv PYTHIA8 \$::env(BASEDIR)/$PKGNAME/\$version
 prepend-path PATH \$::env(PYTHIA_ROOT)/bin
 prepend-path LD_LIBRARY_PATH \$::env(PYTHIA_ROOT)/lib
+prepend-path PYTHONPATH \$::env(PYTHIA_ROOT)/lib
 $([[ ${ARCHITECTURE:0:3} == osx ]] && echo "prepend-path DYLD_LIBRARY_PATH \$::env(PYTHIA_ROOT)/lib")
 EoF
