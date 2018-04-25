@@ -17,7 +17,7 @@ cmake ${SOURCEDIR}                           \
 make ${JOBS+-j$JOBS}
 make install
 
-ln -s $INSTALLROOT/lib/libpythia6.so $INSTALLROOT/lib/libPythia6.so
+cp $INSTALLROOT/lib/libpythia6.so $INSTALLROOT/lib/libPythia6.so
 
 # Modulefile
 MODULEDIR="$INSTALLROOT/etc/modulefiles"
