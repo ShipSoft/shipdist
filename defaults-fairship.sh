@@ -26,7 +26,7 @@ overrides:
       which gfortran || { echo "gfortran missing"; exit 1; }
       which cc && test -f $(dirname $(which cc))/c++ && printf "#define GCCVER ((__GNUC__ << 16)+(__GNUC_MINOR__ << 8)+(__GNUC_PATCHLEVEL__))\n#if (GCCVER < 0x060000 || GCCVER > 0x090000)\n#error \"System's GCC cannot be used: we need GCC 6.X. We are going to compile our own version.\"\n#endif\n" | cc -xc++ - -c -o /dev/null
   XRootD:
-    tag: v4.6.1
+    tag: v4.8.3
   ROOT:
     version: "%(tag_basename)s"
     tag: "v6-13-02-ship"
