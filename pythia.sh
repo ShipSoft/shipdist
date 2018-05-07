@@ -23,8 +23,8 @@ esac
             --enable-shared \
             --with-hepmc2=${HEPMC_ROOT} \
             --with-lhapdf5-lib=${LHAPDF5_ROOT}/lib --with-lhapdf5-include=${LHAPDF5_ROOT}/include  \
-           # ${LHAPDF_ROOT:+--with-lhapdf6="$LHAPDF_ROOT"} \
             ${BOOST_ROOT:+--with-boost="$BOOST_ROOT"}
+           # ${LHAPDF_ROOT:+--with-lhapdf6="$LHAPDF_ROOT"}
 
 if [[ $ARCHITECTURE =~ "slc5.*" ]]; then
     ln -s LHAPDF5.h include/Pythia8Plugins/LHAPDF5.cc
