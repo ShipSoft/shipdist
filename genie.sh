@@ -52,6 +52,8 @@ rsync -a src/* $INSTALLROOT/genie/src
 mkdir -p $INSTALLROOT/genie/inc
 rsync -a src/*/*.h $INSTALLROOT/genie/inc
 
+cp $INSTALLROOT/genie/data/evgen/pdfs/GRV98lo_patched.LHgrid $LHAPDF5_ROOT/share/lhapdf
+
 # Modulefile
 MODULEDIR="$INSTALLROOT/etc/modulefiles"
 MODULEFILE="$MODULEDIR/$PKGNAME"
