@@ -19,6 +19,8 @@ overrides:
     requires:
       - "GCC-Toolchain:(?!osx)"
       - Python
+    prefer_system_check: |
+     printf "#include \"boost/version.hpp\"\n# if (BOOST_VERSION < 106400)\n#error \"Cannot use system's boost. Boost > 1.64.00 required.\"\n#endif\nint main(){}" | gcc -I$(brew --prefix boost)/include -xc++ - -o /dev/null
   GCC-Toolchain:
     tag: v6.2.0-alice1
     prefer_system_check: |
@@ -55,7 +57,7 @@ overrides:
     tag: "v3.0.2"
   CMake:
     version: "%(tag_basename)s"
-    tag: "v3.8.2"
+    tag: "v3.9.1"
     prefer_system_check: |
       which cmake && case `cmake --version | sed -e 's/.* //' | cut -d. -f1,2,3 | head -n1` in [0-2]*|3.[0-7].*) exit 1 ;; esac
   FairRoot:
