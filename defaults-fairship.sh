@@ -31,7 +31,7 @@ overrides:
     tag: v4.8.3
   ROOT:
     version: "%(tag_basename)s"
-    tag: "v6-13-02-ship"
+    tag: "v6-14-00-ship"
     source: https://github.com/ShipSoft/root
     requires:
       - GSL
@@ -63,7 +63,7 @@ overrides:
   FairRoot:
     source: https://github.com/ShipSoft/FairRoot
     version: "%(tag_basename)s"
-    tag: Oct17-ship
+    tag: May30-ship
     incremental_recipe: |
       make -j$JOBS;make install; MODULEDIR="$INSTALLROOT/etc/modulefiles"
       MODULEFILE="$MODULEDIR/$PKGNAME"
