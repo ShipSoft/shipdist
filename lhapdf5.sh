@@ -11,6 +11,8 @@ requires:
 
 rsync -a --exclude '**/.git' $SOURCEDIR/ ./
 
+export FFLAGS=--std=legacy
+
 ./configure --prefix=$INSTALLROOT
 
 make ${JOBS+-j $JOBS} all

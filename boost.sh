@@ -1,14 +1,14 @@
 package: boost
 version: "%(tag_basename)s%(defaults_upper)s"
 source: https://github.com/alisw/boost.git
-tag: v1.59.0
+tag: v1.64.0
 requires:
  - "GCC-Toolchain:(?!osx)"
 build_requires:
  - "bz2"
 prefer_system: (?!slc5)
 prefer_system_check: |
-  printf "#include \"boost/version.hpp\"\n# if (BOOST_VERSION < 105900)\n#error \"Cannot use system's boost. Boost > 1.59.00 required.\"\n#endif\nint main(){}" | gcc -I$(brew --prefix boost)/include -xc++ - -o /dev/null
+  printf "#include \"boost/version.hpp\"\n# if (BOOST_VERSION < 106400)\n#error \"Cannot use system's boost. Boost > 1.64.00 required.\"\n#endif\nint main(){}" | gcc -I$(brew --prefix boost)/include -xc++ - -o /dev/null
 ---
 #!/bin/bash -e
 
