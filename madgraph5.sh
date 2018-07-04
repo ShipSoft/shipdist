@@ -9,8 +9,8 @@ tag: master
 ---
 #!/bin/bash -e
 
-curl -O -L https://launchpad.net/mg5amcnlo/2.0/2.6.x/+download/MG5_aMC_v2.6.2.tar.gz
-tar -xf MG5_aMC_v2.6.2.tar.gz -C ./ --strip 1
+curl -O -L https://launchpad.net/mg5amcnlo/2.0/2.6.x/+download/MG5_aMC_v2.6.3.2.tar.gz
+tar -xf MG5_aMC_v2.6.3.2.tar.gz -C ./ --strip 1
 
 echo "pythia8_path = ${PYTHIA_ROOT}" >> ./input/mg5_configuration.txt
 
