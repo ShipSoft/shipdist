@@ -1,6 +1,6 @@
 package: madgraph5
 version: "%(tag_basename)s%(defaults_upper)s"
-source: https://github.com/DaniilSu/madgraph5
+source: https://github.com/ShipSoft/madgraph5
 requires:
   - GCC-Toolchain
   - pythia
