@@ -1,20 +1,17 @@
 package: madgraph5
 version: "%(tag_basename)s%(defaults_upper)s"
-source: https://github.com/shir994/madgraph5
+source: https://github.com/ShipSoft/madgraph5
 requires:
   - GCC-Toolchain
   - pythia
-tag: master
+tag: v2.6.3.2
 
 ---
 #!/bin/bash -e
 
-curl -O -L https://launchpad.net/mg5amcnlo/2.0/2.6.x/+download/MG5_aMC_v2.6.3.2.tar.gz
-tar -xf MG5_aMC_v2.6.3.2.tar.gz -C ./ --strip 1
+echo "pythia8_path = ${PYTHIA_ROOT}" >> $SOURCEDIR/input/mg5_configuration.txt
 
-echo "pythia8_path = ${PYTHIA_ROOT}" >> ./input/mg5_configuration.txt
-
-rsync -ar $BUILDDIR/ $INSTALLROOT/
+rsync -ar $SOURCEDIR/ $INSTALLROOT/
 
 # Modulefile
 MODULEDIR="$INSTALLROOT/etc/modulefiles"
