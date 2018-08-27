@@ -2,6 +2,10 @@ package: go
 version: v1.7.3
 source: https://github.com/golang/go
 tag: go1.7.3
+prefer_system: .*
+prefer_system_check: |
+    go list -f '{{context.ReleaseTags}}' runtime | grep go1.7;
+     if [ $? -ne 0 ]; then printf "go not found, install go >= 1.7 to avoid recompile it"; exit 1; fi
 ---
 #!/bin/sh
 

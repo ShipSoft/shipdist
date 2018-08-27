@@ -5,14 +5,18 @@ source: https://github.com/alisw/vgm.git
 requires:
   - ROOT
   - GEANT4
+  - XercesC
 build_requires:
   - CMake
 ---
 #!/bin/bash -e
 cmake "$SOURCEDIR" \
   -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} \
-  -DCMAKE_INSTALL_LIBDIR="lib"                 \
-  -DCMAKE_INSTALL_PREFIX="$INSTALLROOT"
+  -DCMAKE_INSTALL_LIBDIR="lib"           \
+  -DCMAKE_INSTALL_PREFIX="$INSTALLROOT"  \
+  -DWITH_EXAMPLES=OFF                \
+  -DWITH_TEST=OFF                     \
+  -DBUILD_SHARED_LIBS=OFF
 
 make ${JOBS+-j $JOBS} install
 

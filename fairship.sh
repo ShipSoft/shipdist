@@ -11,7 +11,6 @@ requires:
   - PHOTOSPP
   - EvtGen
   - ROOT
-  - madgraph5
 build_requires:
   - googletest
 incremental_recipe: |
@@ -105,6 +104,8 @@ cmake $SOURCEDIR                                                 \
       -DEVTGENPATH=$EVTGEN_ROOT                                  \
       -DEVTGEN_INCLUDE_DIR=$EVTGEN_ROOT/include                  \
       -DEVTGEN_LIBRARY_DIR=$EVTGEN_ROOT/lib                      \
+      ${PYTHON_ROOT:+-DPYTHON_LIBRARY=$PYTHON_ROOT/lib}          \
+      ${PYTHON_ROOT:+-DPYTHON_INCLUDE_DIR=$PYTHON_ROOT/include/python2.7} \
       -DPythia6_LIBRARY_DIR=$PYTHIA6_ROOT/lib                    \
       -DPYTHIA8_DIR=$PYTHIA_ROOT                                 \
       -DPYTHIA8_INCLUDE_DIR=$PYTHIA_ROOT/include                 \
@@ -154,7 +155,7 @@ module load BASE/1.0                                                            
             ${GENIE_VERSION:+GENIE/$GENIE_VERSION-$GENIE_REVISION}              \\
             ${PHOTOSPP_VERSION:+PHOTOSPP/$PHOTOSPP_VERSION-$PHOTOSPP_REVISION}  \\
             ${EVTGEN_VERSION:+EvtGen/$EVTGEN_VERSION-$EVTGEN_REVISION}          \\
-            FairRoot/$FAIRROOT_VERSION-$FAIRROOT_REVISION                       \\
+            ${FAIRROOT_VERSION:+FairRoot/$FAIRROOT_VERSION-$FAIRROOT_REVISION}	\\
             ${MADGRAPH5_VERSION:+madgraph5/$MADGRAPH5_VERSION-$MADGRAPH5_REVISION}
 # Our environment
 setenv EOSSHIP root://eospublic.cern.ch/
@@ -178,5 +179,3 @@ prepend-path PYTHONPATH \$::env(FAIRSHIP_ROOT)/python
 append-path PYTHONPATH \$::env(FAIRSHIP_ROOT)/Developments/track_pattern_recognition
 $([[ ${ARCHITECTURE:0:3} == osx ]] && echo "prepend-path DYLD_LIBRARY_PATH \$::env(FAIRSHIP_ROOT)/lib")
 EoF
-
-
