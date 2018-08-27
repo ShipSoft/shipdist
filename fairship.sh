@@ -11,7 +11,6 @@ requires:
   - PHOTOSPP
   - EvtGen
   - ROOT
-  - madgraph5
 build_requires:
   - googletest
 incremental_recipe: |
