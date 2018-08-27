@@ -12,6 +12,7 @@ requires:
   - EvtGen
   - ROOT
   - madgraph5
+  - ControlHost
 build_requires:
   - googletest
 incremental_recipe: |
@@ -45,7 +46,8 @@ incremental_recipe: |
             ${PHOTOSPP_VERSION:+PHOTOSPP/$PHOTOSPP_VERSION-$PHOTOSPP_REVISION}  \\
             ${EVTGEN_VERSION:+EvtGen/$EVTGEN_VERSION-$EVTGEN_REVISION}          \\
             FairRoot/$FAIRROOT_VERSION-$FAIRROOT_REVISION			\\
-            ${MADGRAPH5_VERSION:+madgraph5/$MADGRAPH5_VERSION-$MADGRAPH5_REVISION}
+            ${MADGRAPH5_VERSION:+madgraph5/$MADGRAPH5_VERSION-$MADGRAPH5_REVISION} \\
+            ${CONTROLHOST_VERSION:+ControlHost/$CONTROLHOST_VERSION-$CONTROLHOST_REVISION}
   # Our environment
   setenv EOSSHIP root://eospublic.cern.ch/
   setenv FAIRSHIP_ROOT \$::env(BASEDIR)/$PKGNAME/\$version
@@ -155,7 +157,8 @@ module load BASE/1.0                                                            
             ${PHOTOSPP_VERSION:+PHOTOSPP/$PHOTOSPP_VERSION-$PHOTOSPP_REVISION}  \\
             ${EVTGEN_VERSION:+EvtGen/$EVTGEN_VERSION-$EVTGEN_REVISION}          \\
             FairRoot/$FAIRROOT_VERSION-$FAIRROOT_REVISION                       \\
-            ${MADGRAPH5_VERSION:+madgraph5/$MADGRAPH5_VERSION-$MADGRAPH5_REVISION}
+            ${MADGRAPH5_VERSION:+madgraph5/$MADGRAPH5_VERSION-$MADGRAPH5_REVISION} \\
+            ${CONTROLHOST_VERSION:+ControlHost/$CONTROLHOST_VERSION-$CONTROLHOST_REVISION}
 # Our environment
 setenv EOSSHIP root://eospublic.cern.ch/
 setenv FAIRSHIP_ROOT \$::env(BASEDIR)/$PKGNAME/\$version
