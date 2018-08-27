@@ -6,13 +6,11 @@ requires:
   - libpng
 build_requires:
   - curl
-env:
-  SSL_CERT_FILE: "$(env PYTHONPATH=$PYTHON_MODULES_ROOT/lib/python$(python -c \"import distutils.sysconfig; print(distutils.sysconfig.get_python_version())\")/site-packages:$PYTHONPATH python -c \"import certifi; print certifi.where()\")"
 prepend_path:
   PYTHONPATH: $PYTHON_MODULES_ROOT/lib/python2.7/site-packages:$PYTHONPATH
 prefer_system: (?!slc5)
 prefer_system_check:
-  python -c 'import matplotlib,numpy, scipy, certifi,IPython,ipywidgets,ipykernel,notebook.notebookapp,metakernel,yaml,sklearn';
+  python -c 'import matplotlib,numpy, scipy, certifi,IPython,ipywidgets,ipykernel,notebook.notebookapp,metakernel,yaml,sklearn,six';
   if [ $? -ne 0 ]; then printf "Required Python modules are missing. You can install them with pip (better as root):\n  pip install matplotlib numpy certifi ipython ipywidgets ipykernel notebook metakernel pyyaml\n"; exit 1; fi
 ---
 #!/bin/bash -ex
@@ -32,6 +30,7 @@ If you want to avoid this please install the following modules (pip recommended)
   - metakernel
   - pyyaml
   - scikit-learn
+  - six
 
 EoF
 fi
@@ -45,52 +44,27 @@ export PYVER=$(python -c 'import distutils.sysconfig; print(distutils.sysconfig.
 # Install as much as possible with pip. Packages are installed one by one as we
 # are not sure that pip exits with nonzero in case one of the packages failed.
 export PYTHONUSERBASE=$INSTALLROOT
-for X in "pip==9.0.3"          \
-         "mock==1.0.0"         \
-         "numpy==1.9.2"        \
-         "certifi==2015.9.6.2" \
-         "ipython==5.1.0"      \
-         "ipywidgets==5.2.2"   \
-         "ipykernel==4.5.0"    \
-         "notebook==4.2.3"     \
-         "metakernel==0.14.0"  \
-         "scipy==0.17.1"        \
+for X in "pip==19.1.1"          \
+         "mock==1.3.0"          \
+         "numpy==1.16.4"        \
+         "certifi==2019.6.16"   \
+         "ipython==5.8.0"       \
+         "ipywidgets==5.2.3"    \
+         "ipykernel==4.10.0"    \
+         "notebook==4.4.1"      \
+         "metakernel==0.24.2"   \
+         "scipy==1.2.2"         \
          "scikit-learn==0.19.1" \
+         "matplotlib==2.2.4"    \
+         "six"                  \
          "pyyaml"
 do
   python -m pip install --user $X
 done
 unset PYTHONUSERBASE
 
-# Install matplotlib (quite tricky)
-MATPLOTLIB_VER="1.4.3"
-MATPLOTLIB_URL="https://github.com/matplotlib/matplotlib/archive/v$MATPLOTLIB_VER.tar.gz"
-curl -Lo matplotlib.tgz $MATPLOTLIB_URL
-tar xzf matplotlib.tgz
-cd matplotlib-$MATPLOTLIB_VER
-cat > setup.cfg <<EOF
-[directories]
-basedirlist  = ${FREETYPE_ROOT:+$PWD/fake_freetype_root,$FREETYPE_ROOT,}${LIBPNG_ROOT:+$LIBPNG_ROOT,}${ZLIB_ROOT:+$ZLIB_ROOT,}/usr/X11R6,$(freetype-config --prefix),$(libpng-config --prefix)
-[gui_support]
-gtk = False
-gtkagg = False
-tkagg = False
-wxagg = False
-macosx = False
-EOF
-
-# matplotlib wants include files in <PackageRoot>/include, but this is not the
-# case for FreeType: let's fix it
-if [[ $FREETYPE_ROOT ]]; then
-  mkdir fake_freetype_root
-  ln -nfs $FREETYPE_ROOT/include/freetype2 fake_freetype_root/include
-fi
-perl -p -i -e "s|'darwin': \['/usr/local/'|'darwin': ['$INSTALLROOT'|g" setupext.py
-
-mkdir -p $INSTALLROOT/{lib,lib64}/python$PYVER/site-packages
-python setup.py build
-PYTHONPATH=$INSTALLROOT/lib64/python$PYVER/site-packages:$INSTALLROOT/lib/python$PYVER/site-packages:$PYTHONPATH \
-  python setup.py install --prefix $INSTALLROOT
+# Test if matplotlib can be loaded
+env PYTHONPATH="$INSTALLROOT/lib/python2.7/site-packages" python -c 'import matplotlib'
 
 # Remove unneeded stuff
 rm -rvf $INSTALLROOT/share            \
@@ -130,5 +104,4 @@ prepend-path LD_LIBRARY_PATH $::env(PYTHON_MODULES_ROOT)/lib
 $([[ ${ARCHITECTURE:0:3} == osx ]] && echo "prepend-path DYLD_LIBRARY_PATH $::env(PYTHON_MODULES_ROOT)/lib64" && \
                                       echo "prepend-path DYLD_LIBRARY_PATH $::env(PYTHON_MODULES_ROOT)/lib")
 prepend-path PYTHONPATH $::env(PYTHON_MODULES_ROOT)/lib/python$PYVER/site-packages
-setenv SSL_CERT_FILE  [exec python -c "import certifi; print certifi.where()"]
 EoF
