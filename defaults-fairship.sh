@@ -135,13 +135,6 @@ overrides:
     version: "%(tag_basename)s"
     tag: v3-6-ship
     source: https://github.com/ShipSoft/geant4_vmc.git
-  lhapdf5:
-    source: https://github.com/ShipSoft/LHAPDF
-    version: "%(tag_basename)s"
-    tag: v5.9.1-ship1
-    env:
-      LHAPATH: "$LHAPDF_ROOT/share/LHAPDF"
-      GEANT4_INSTALL: "$GEANT4_ROOT"
   GENIE:
     tag: v2.12.6-ship
   pythia:
