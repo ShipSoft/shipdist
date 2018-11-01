@@ -1,7 +1,7 @@
 package: lhapdf5
-tag: alice/v5.9.1-patches
+tag: v5.9.1-ship2
 version: "%(tag_basename)s%(defaults_upper)s"
-source: https://github.com/DaniilSu/LHAPDF.git
+source: https://github.com/ShipSoft/LHAPDF.git
 env:
   LHAPATH: "$LHAPDF5_ROOT/share/lhapdf"
 requires:
@@ -18,14 +18,14 @@ export FFLAGS=--std=legacy
 make ${JOBS+-j $JOBS} all
 make install
 
-PDFSETS="cteq6l cteq6ll CT10 CT10nlo MSTW2008nnlo EPS09LOR_208 EPS09NLOR_208 cteq66a cteq66a0 cteq4m"
-pushd $INSTALLROOT/share/lhapdf
-  $INSTALLROOT/bin/lhapdf-getdata --repo=https://www.hepforge.org/archive/lhapdf/pdfsets/5.9.1 $PDFSETS
-  # Check if PDF sets were really installed
-  for P in $PDFSETS; do
-    ls ${P}*
-  done
-popd
+#PDFSETS="cteq6l cteq6ll CT10 CT10nlo MSTW2008nnlo EPS09LOR_208 EPS09NLOR_208 cteq66a cteq66a0 cteq4m"
+#pushd $INSTALLROOT/share/lhapdf
+#  $INSTALLROOT/bin/lhapdf-getdata --repo=https://www.hepforge.org/archive/lhapdf/pdfsets/5.9.1 $PDFSETS
+#  # Check if PDF sets were really installed
+#  for P in $PDFSETS; do
+#    ls ${P}*
+#  done
+#popd
 
 # Modulefile
 MODULEDIR="$INSTALLROOT/etc/modulefiles"
