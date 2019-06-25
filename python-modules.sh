@@ -54,53 +54,55 @@ for X in "pip==19.1.1"          \
          "ipykernel==4.10.0"    \
          "notebook==4.4.1"      \
          "metakernel==0.24.2"   \
-         "scipy==1.3.0"         \
-         "scikit-learn==0.21.1" \
+         "scipy==1.2.2"         \
+         "scikit-learn==0.20.3" \
+         "matplotlib==2.2.4"    \
          "pyyaml"
 do
   python -m pip install --user $X
 done
 unset PYTHONUSERBASE
 
-# Install matplotlib (quite tricky)
-MATPLOTLIB_TAG="3.0.3"
-if [[ $ARCHITECTURE != slc* ]]; then
-  # Simply get it via pip in most cases
-  env PYTHONUSERBASE=$INSTALLROOT pip install --user "matplotlib==$MATPLOTLIB_TAG"
-else
-
-  # We are on a RHEL-compatible OS. We compile it ourselves, and link it to our dependencies
-
-  # Check if we can enable the Tk interface
-  python -c 'import _tkinter' && MATPLOTLIB_TKAGG=True || MATPLOTLIB_TKAGG=False
-  MATPLOTLIB_URL="https://github.com/matplotlib/matplotlib/archive/v${MATPLOTLIB_TAG}.tar.gz"  # note the "v"
-  curl -SsL "$MATPLOTLIB_URL" | tar xzf -
-  cd matplotlib-*
-  cat > setup.cfg <<EOF
-[directories]
-basedirlist  = ${FREETYPE_ROOT:+$PWD/fake_freetype_root,$FREETYPE_ROOT,}${LIBPNG_ROOT:+$LIBPNG_ROOT,}${ZLIB_ROOT:+$ZLIB_ROOT,}/usr/X11R6,$(freetype-config --prefix),$(libpng-config --prefix)
-[gui_support]
-gtk = False
-gtkagg = False
-tkagg = $MATPLOTLIB_TKAGG
-wxagg = False
-macosx = False
-EOF
-
-  # matplotlib wants include files in <PackageRoot>/include, but this is not the case for FreeType
-  if [[ $FREETYPE_ROOT ]]; then
-    mkdir fake_freetype_root
-    ln -nfs $FREETYPE_ROOT/include/freetype2 fake_freetype_root/include
-  fi
-
-  export PYTHONPATH="$INSTALLROOT/lib/python/site-packages"
-    python setup.py build
-    python setup.py install --prefix "$INSTALLROOT"
-  unset PYTHONPATH
-fi
+#
+## Install matplotlib (quite tricky)
+#MATPLOTLIB_TAG="2.2.4"
+#if [[ $ARCHITECTURE != slc* ]]; then
+#  # Simply get it via pip in most cases
+#  env PYTHONUSERBASE=$INSTALLROOT pip install --user "matplotlib==$MATPLOTLIB_TAG"
+#else
+#
+#  # We are on a RHEL-compatible OS. We compile it ourselves, and link it to our dependencies
+#
+#  # Check if we can enable the Tk interface
+#  python -c 'import _tkinter' && MATPLOTLIB_TKAGG=True || MATPLOTLIB_TKAGG=False
+#  MATPLOTLIB_URL="https://github.com/matplotlib/matplotlib/archive/v${MATPLOTLIB_TAG}.tar.gz"  # note the "v"
+#  curl -SsL "$MATPLOTLIB_URL" | tar xzf -
+#  cd matplotlib-*
+#  cat > setup.cfg <<EOF
+#[directories]
+#basedirlist  = ${FREETYPE_ROOT:+$PWD/fake_freetype_root,$FREETYPE_ROOT,}${LIBPNG_ROOT:+$LIBPNG_ROOT,}${ZLIB_ROOT:+$ZLIB_ROOT,}/usr/X11R6,$(freetype-config --prefix),$(libpng-config --prefix)
+#[gui_support]
+#gtk = False
+#gtkagg = False
+#tkagg = $MATPLOTLIB_TKAGG
+#wxagg = False
+#macosx = False
+#EOF
+#
+#  # matplotlib wants include files in <PackageRoot>/include, but this is not the case for FreeType
+#  if [[ $FREETYPE_ROOT ]]; then
+#    mkdir fake_freetype_root
+#    ln -nfs $FREETYPE_ROOT/include/freetype2 fake_freetype_root/include
+#  fi
+#
+#  export PYTHONPATH="$INSTALLROOT/lib/python2.7/site-packages"
+#    python setup.py build
+#    python setup.py install --prefix "$INSTALLROOT"
+#  unset PYTHONPATH
+#fi
 
 # Test if matplotlib can be loaded
-env PYTHONPATH="$INSTALLROOT/lib/python/site-packages" python -c 'import matplotlib'
+env PYTHONPATH="$INSTALLROOT/lib/python2.7/site-packages" python -c 'import matplotlib'
 
 # Remove unneeded stuff
 rm -rvf $INSTALLROOT/share            \
