@@ -46,6 +46,10 @@ overrides:
       - XRootD
       - pythia
       - pythia6
+    build_requires:
+      - CMake
+      - "Xcode:(osx.*)"
+      - libxml2
   GSL:
     version: "v1.16%(defaults_upper)s"
     source: https://github.com/alisw/gsl
