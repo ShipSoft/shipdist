@@ -11,7 +11,6 @@ requires:
 build_requires:
  - curl
 env:
-  SSL_CERT_FILE: "$(export PATH=$PYTHON_ROOT/bin:$PATH; export LD_LIBRARY_PATH=$PYTHON_ROOT/lib:$LD_LIBRARY_PATH; python -c \"import certifi; print certifi.where()\")"
   PYTHONHOME: "$PYTHON_ROOT"
 prefer_system: (?!slc5)
 prefer_system_check:
