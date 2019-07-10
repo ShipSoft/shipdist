@@ -182,6 +182,9 @@ overrides:
     version: "%(tag_basename)s"
     source: https://github.com/ShipSoft/pythia6
     tag: v6.4.28-ship1
+    prefer_system_check: |
+      ls $PYTHIA6_ROOT/lib/libpythia6.so > /dev/null && \
+      ls $PYTHIA6_ROOT/lib/libPythia6.so > /dev/null
   GEANT3:
     version: "%(tag_basename)s"
     source: https://github.com/ShipSoft/geant3
