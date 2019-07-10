@@ -68,6 +68,11 @@ overrides:
     source: https://github.com/ShipSoft/FairRoot
     version: "%(tag_basename)s"
     tag: May30-ship
+    prefer_system_check: |
+      ls $FAIRROOT_ROOT/ > /dev/null && \
+      ls $FAIRROOT_ROOT/lib > /dev/null && \
+      ls $FAIRROOT_ROOT/include > /dev/null && \
+      grep v-14.03 $FAIRROOT_ROOT/include/FairVersion.h
     incremental_recipe: |
       make -j$JOBS;make install; MODULEDIR="$INSTALLROOT/etc/modulefiles"
       MODULEFILE="$MODULEDIR/$PKGNAME"
