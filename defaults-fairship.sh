@@ -156,6 +156,15 @@ overrides:
     version: "%(tag_basename)s"
     source: https://github.com/ShipSoft/evtgen
     tag: R01-06-00-ship
+    prefer_system_check: |
+      ls $EVTGEN_ROOT/include > /dev/null && \
+      ls $EVTGEN_ROOT/lib > /dev/null && \
+      ls $EVTGEN_ROOT/lib/libEvtGenExternal.so > /dev/null && \
+      ls $EVTGEN_ROOT/lib/libEvtGen.so > /dev/null && \
+      ls $EVTGEN_ROOT/include/EvtGen > /dev/null && \
+      ls $EVTGEN_ROOT/include/EvtGenBase > /dev/null && \
+      ls $EVTGEN_ROOT/include/EvtGenExternal > /dev/null && \
+      ls $EVTGEN_ROOT/include/EvtGenModels > /dev/null
   PHOTOSPP:
     version: "%(tag_basename)s"
     source: https://github.com/ShipSoft/PHOTOSPP
