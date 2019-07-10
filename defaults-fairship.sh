@@ -189,6 +189,19 @@ overrides:
     version: "%(tag_basename)s"
     source: https://github.com/ShipSoft/geant3
     tag: v3.2.1-ship-patch-TVMC
+  HepMC:
+    prefer_system_check: |
+      ls $HEPMC_ROOT/lib > /dev/null && \
+      ls $HEPMC_ROOT/lib/libHepMC.so > /dev/null && \
+      ls $HEPMC_ROOT/lib/libHepMC.so.4 > /dev/null && \
+      ls $HEPMC_ROOT/lib/libHepMC.a > /dev/null && \
+      ls $HEPMC_ROOT/lib/libHepMCfio.so > /dev/null && \
+      ls $HEPMC_ROOT/lib/libHepMCfio.so.4 > /dev/null && \
+      ls $HEPMC_ROOT/lib/libHepMCfio.a > /dev/null && \
+      ls $HEPMC_ROOT/include > /dev/null && \
+      ls $HEPMC_ROOT/include/HepMC > /dev/null && \
+      ls $HEPMC_ROOT/include/HepMC/HepMCDefs.h > /dev/null && \
+      grep "2.06" $HEPMC_ROOT/include/HepMC/HepMCDefs.h > /dev/null
 ---
 # This file is included in any build recipe and it's only used to set
 # environment variables. Which file to actually include can be defined by the
