@@ -12,7 +12,7 @@ prepend_path:
   PYTHONPATH: $PYTHON_MODULES_ROOT/lib/python2.7/site-packages:$PYTHONPATH
 prefer_system: (?!slc5)
 prefer_system_check:
-  python -c 'import matplotlib,numpy, scipy, certifi,IPython,ipywidgets,ipykernel,notebook.notebookapp,metakernel,yaml,sklearn';
+  python -c 'import matplotlib,numpy, scipy, certifi,IPython,ipywidgets,ipykernel,notebook.notebookapp,metakernel,yaml,sklearn,six';
   if [ $? -ne 0 ]; then printf "Required Python modules are missing. You can install them with pip (better as root):\n  pip install matplotlib numpy certifi ipython ipywidgets ipykernel notebook metakernel pyyaml\n"; exit 1; fi
 ---
 #!/bin/bash -ex
@@ -32,6 +32,7 @@ If you want to avoid this please install the following modules (pip recommended)
   - metakernel
   - pyyaml
   - scikit-learn
+  - six
 
 EoF
 fi
@@ -56,6 +57,7 @@ for X in "pip==19.1.1"          \
          "metakernel==0.24.2"   \
          "scipy==1.3.0"         \
          "scikit-learn==0.21.1" \
+         "six"                  \
          "pyyaml"
 do
   python -m pip install --user $X
