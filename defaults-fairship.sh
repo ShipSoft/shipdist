@@ -233,6 +233,17 @@ overrides:
       ls $VGM_ROOT/lib/libGeant4GM.a > /dev/null && \
       ls $VGM_ROOT/lib/libRootGM.a > /dev/null && \
       ls $VGM_ROOT/lib/libXmlVGM.a > /dev/null
+  XercesC:
+    prefer_system_check: |
+      ls $XERCESC_ROOT/ > /dev/null && \
+      ls $XERCESC_ROOT/bin > /dev/null && \
+      ls $XERCESC_ROOT/include > /dev/null && \
+      ls $XERCESC_ROOT/include/xercesc/ > /dev/null && \
+      ls $XERCESC_ROOT/lib > /dev/null && \
+      ls $XERCESC_ROOT/lib/libxerces-c-3.1.so > /dev/null && \
+      ls $XERCESC_ROOT/lib/libxerces-c.a > /dev/null && \
+      ls $XERCESC_ROOT/lib/libxerces-c.la > /dev/null && \
+      ls $XERCESC_ROOT/lib/libxerces-c.so > /dev/null
 
 ---
 # This file is included in any build recipe and it's only used to set
