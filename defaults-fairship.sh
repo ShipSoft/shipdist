@@ -217,7 +217,22 @@ overrides:
       ls $LHAPDF5_ROOT/lib/libLHAPDF.a > /dev/null && \
       ls $LHAPDF5_ROOT/lib64/python2.7/site-packages/lhapdf.py > /dev/null && \
       ls $LHAPDF5_ROOT/share/lhapdf > /dev/null 
-
+  vgm:
+    prefer_system_check: |
+      ls $VGM_ROOT/ > /dev/null && \
+      ls $VGM_ROOT/include > /dev/null && \
+      ls $VGM_ROOT/include/BaseVGM > /dev/null && \
+      ls $VGM_ROOT/include/ClhepVGM > /dev/null && \
+      ls $VGM_ROOT/include/Geant4GM > /dev/null && \
+      ls $VGM_ROOT/include/RootGM > /dev/null && \
+      ls $VGM_ROOT/include/VGM > /dev/null && \
+      ls $VGM_ROOT/include/XmlVGM > /dev/null && \
+      ls $VGM_ROOT/lib > /dev/null && \
+      ls $VGM_ROOT/lib/libBaseVGM.a > /dev/null && \
+      ls $VGM_ROOT/lib/libClhepVGM.a > /dev/null && \
+      ls $VGM_ROOT/lib/libGeant4GM.a > /dev/null && \
+      ls $VGM_ROOT/lib/libRootGM.a > /dev/null && \
+      ls $VGM_ROOT/lib/libXmlVGM.a > /dev/null
 
 ---
 # This file is included in any build recipe and it's only used to set
