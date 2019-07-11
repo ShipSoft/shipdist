@@ -244,6 +244,14 @@ overrides:
       ls $XERCESC_ROOT/lib/libxerces-c.a > /dev/null && \
       ls $XERCESC_ROOT/lib/libxerces-c.la > /dev/null && \
       ls $XERCESC_ROOT/lib/libxerces-c.so > /dev/null
+  GEANT3:
+    prefer_system_check: |
+      ls $GEANT3_ROOT/ > /dev/null && \
+      ls $GEANT3_ROOT/include > /dev/null && \
+      ls $GEANT3_ROOT/include/TGeant3 > /dev/null && \
+      ls $GEANT3_ROOT/include/TGeant3/TGeant3.h > /dev/null && \
+      ls $GEANT3_ROOT/lib64/libgeant321.so > /dev/null && \
+      true
 
 ---
 # This file is included in any build recipe and it's only used to set
