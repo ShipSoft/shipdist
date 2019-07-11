@@ -138,6 +138,15 @@ overrides:
     version: "%(tag_basename)s"
     tag: v10.3.2
     source: https://github.com/geant4/geant4.git
+    prefer_system_check: |
+      ls $GEANT4_ROOT/bin > /dev/null && \
+      ls $GEANT4_ROOT/bin/geant4-config > /dev/null && \
+      ls $GEANT4_ROOT/bin/geant4.csh > /dev/null && \
+      ls $GEANT4_ROOT/bin/geant4.sh > /dev/null && \
+      ls $GEANT4_ROOT/include > /dev/null && \
+      ls $GEANT4_ROOT/include/Geant4 > /dev/null && \
+      ls $GEANT4_ROOT/lib/ > /dev/null && \
+      true
     requires:
       - "GCC-Toolchain:(?!osx)"
       - opengl
