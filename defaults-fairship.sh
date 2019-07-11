@@ -315,7 +315,17 @@ overrides:
       ls $GEANT3_ROOT/include/TGeant3/TGeant3.h > /dev/null && \
       ls $GEANT3_ROOT/lib64/libgeant321.so > /dev/null && \
       true
-
+  googletest:
+    prefer_system_check: |
+      ls $GOOGLETEST_ROOT/ > /dev/null && \
+      ls $GOOGLETEST_ROOT/include > /dev/null && \
+      ls $GOOGLETEST_ROOT/include/gmock > /dev/null && \
+      ls $GOOGLETEST_ROOT/include/gtest > /dev/null && \
+      ls $GOOGLETEST_ROOT/lib/libgmock.a > /dev/null && \
+      ls $GOOGLETEST_ROOT/lib/libgmock_main.a > /dev/null && \
+      ls $GOOGLETEST_ROOT/lib/libgtest.a > /dev/null && \
+      ls $GOOGLETEST_ROOT/lib/libgtest_main.a > /dev/null && \
+      true
 ---
 # This file is included in any build recipe and it's only used to set
 # environment variables. Which file to actually include can be defined by the
