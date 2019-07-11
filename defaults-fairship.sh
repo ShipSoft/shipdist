@@ -182,6 +182,15 @@ overrides:
       true
   GENIE:
     tag: v2.12.6-ship
+    prefer_system_check: |
+      ls $GENIE_ROOT/genie > /dev/null && \
+      ls $GENIE_ROOT/genie/bin > /dev/null && \
+      ls $GENIE_ROOT/genie/config > /dev/null && \
+      ls $GENIE_ROOT/genie/data > /dev/null && \
+      ls $GENIE_ROOT/genie/inc > /dev/null && \
+      ls $GENIE_ROOT/genie/lib > /dev/null && \
+      ls $GENIE_ROOT/genie/src > /dev/null && \
+      true
   pythia:
     version: "%(tag_basename)s"
     source: https://github.com/ShipSoft/pythia8
