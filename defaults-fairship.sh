@@ -181,6 +181,16 @@ overrides:
       - lhapdf5
       - HepMC
       - boost
+    prefer_system_check: |
+      ls $PYTHIA_ROOT/bin > /dev/null && \
+      ls $PYTHIA_ROOT/bin/pythia8-config > /dev/null && \
+      ls $PYTHIA_ROOT/include/ > /dev/null && \
+      ls $PYTHIA_ROOT/include/Pythia8 > /dev/null && \
+      ls $PYTHIA_ROOT/include/Pythia8Plugins > /dev/null && \
+      ls $PYTHIA_ROOT/lib/libpythia8.a > /dev/null && \
+      ls $PYTHIA_ROOT/lib/libpythia8lhapdf5.so > /dev/null && \
+      ls $PYTHIA_ROOT/lib/libpythia8.so > /dev/null && \
+      true
   vgm:
     version: "%(tag_basename)s"
     tag: "4.4"
