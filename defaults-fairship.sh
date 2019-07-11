@@ -176,6 +176,16 @@ overrides:
     version: "%(tag_basename)s"
     source: https://github.com/ShipSoft/PHOTOSPP
     tag: v3.61
+    prefer_system_check: |
+      ls $PHOTOSPP_ROOT/ > /dev/null && \
+      ls $PHOTOSPP_ROOT/include/Photos > /dev/null && \
+      ls $PHOTOSPP_ROOT/lib > /dev/null && \
+      ls $PHOTOSPP_ROOT/lib/libPhotospp.a > /dev/null && \
+      ls $PHOTOSPP_ROOT/lib/libPhotosppHEPEVT.so > /dev/null && \
+      ls $PHOTOSPP_ROOT/lib/libPhotosppHepMC.so.1.0.0 > /dev/null && \
+      ls $PHOTOSPP_ROOT/lib/libPhotospp.so > /dev/null && \
+      true
+
   Tauolapp:
     version: "%(tag_basename)s"
     source: https://github.com/ShipSoft/Tauolapp
