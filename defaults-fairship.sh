@@ -162,6 +162,15 @@ overrides:
     version: "%(tag_basename)s"
     tag: v3-6-ship
     source: https://github.com/ShipSoft/geant4_vmc.git
+    prefer_system_check: |
+      ls $GEANT4_VMC_ROOT/bin > /dev/null && \
+      ls $GEANT4_VMC_ROOT/lib/libg4root.so > /dev/null && \
+      ls $GEANT4_VMC_ROOT/lib/libgeant4vmc.so> /dev/null && \
+      ls $GEANT4_VMC_ROOT/lib/libmtroot.so > /dev/null && \
+      ls $GEANT4_VMC_ROOT/include/g4root > /dev/null && \
+      ls $GEANT4_VMC_ROOT/include/geant4vmc > /dev/null && \
+      ls $GEANT4_VMC_ROOT/include/mtroot > /dev/null && \
+      true
   GENIE:
     tag: v2.12.6-ship
   pythia:
