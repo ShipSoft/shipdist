@@ -51,6 +51,22 @@ overrides:
       - CMake
       - "Xcode:(osx.*)"
       - libxml2
+    prefer_system_check: |
+      ls $ROOT_ROOT/aclocal > /dev/null && \
+      ls $ROOT_ROOT/bin > /dev/null && \
+      ls $ROOT_ROOT/cmake > /dev/null && \
+      ls $ROOT_ROOT/config > /dev/null && \
+      ls $ROOT_ROOT/emacs > /dev/null && \
+      ls $ROOT_ROOT/etc > /dev/null && \
+      ls $ROOT_ROOT/fonts > /dev/null && \
+      ls $ROOT_ROOT/geom > /dev/null && \
+      ls $ROOT_ROOT/icons > /dev/null && \
+      ls $ROOT_ROOT/include > /dev/null && \
+      ls $ROOT_ROOT/lib > /dev/null && \
+      ls $ROOT_ROOT/macros > /dev/null && \
+      ls $ROOT_ROOT/man > /dev/null && \
+      ls $ROOT_ROOT/tmva > /dev/null && \
+      true
   GSL:
     version: "v1.16%(defaults_upper)s"
     source: https://github.com/alisw/gsl
