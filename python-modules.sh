@@ -53,8 +53,8 @@ for X in "pip==19.1.1"          \
          "ipykernel==4.10.0"    \
          "notebook==4.4.1"      \
          "metakernel==0.24.2"   \
-         "scipy==1.3.0"         \
-         "scikit-learn==0.21.1" \
+         "scipy==1.2.2"         \
+         "scikit-learn==0.19.1" \
          "six"                  \
          "pyyaml"
 do
