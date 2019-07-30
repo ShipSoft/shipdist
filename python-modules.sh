@@ -6,7 +6,6 @@ requires:
   - libpng
 build_requires:
   - curl
-env:
 prepend_path:
   PYTHONPATH: $PYTHON_MODULES_ROOT/lib/python2.7/site-packages:$PYTHONPATH
 prefer_system: (?!slc5)
