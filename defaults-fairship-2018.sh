@@ -11,6 +11,8 @@ disable:
   - ApMon-CPP
   - DDS
 overrides:
+  FairShip:
+    tag: "SHiP-2018"
   autotools:
     tag: v1.5.0
   boost:
@@ -31,8 +33,9 @@ overrides:
   XRootD:
     tag: v4.8.3
   ROOT:
-    tag: "v6-18-00"
-    source: https://github.com/root-project/root
+    version: "%(tag_basename)s"
+    tag: "v6-14-00-ship"
+    source: https://github.com/ShipSoft/root
     requires:
       - GSL
       - opengl:(?!osx)
@@ -51,6 +54,7 @@ overrides:
       - "Xcode:(osx.*)"
       - libxml2
     prefer_system_check: |
+      ls $ROOT_ROOT/aclocal > /dev/null && \
       ls $ROOT_ROOT/bin > /dev/null && \
       ls $ROOT_ROOT/cmake > /dev/null && \
       ls $ROOT_ROOT/config > /dev/null && \
@@ -63,6 +67,7 @@ overrides:
       ls $ROOT_ROOT/lib > /dev/null && \
       ls $ROOT_ROOT/macros > /dev/null && \
       ls $ROOT_ROOT/man > /dev/null && \
+      ls $ROOT_ROOT/tmva > /dev/null && \
       true
   GSL:
     version: "v1.16%(defaults_upper)s"
@@ -302,8 +307,8 @@ overrides:
       ls $XERCESC_ROOT/lib/libxerces-c.so > /dev/null
   GEANT3:
     version: "%(tag_basename)s"
-    source: https://github.com/vmc-project/geant3
-    tag: v2-7
+    source: https://github.com/ShipSoft/geant3
+    tag: v3.2.1-ship-patch-TVMC
     prefer_system_check: |
       ls $GEANT3_ROOT/ > /dev/null && \
       ls $GEANT3_ROOT/include > /dev/null && \
