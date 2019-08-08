@@ -1,11 +1,11 @@
 package: libxml2
-version: v2.9.3
-source: https://git.gnome.org/browse/libxml2
+version: "%(tag_basename)s"
 tag: v2.9.3
 build_requires:
   - autotools
   - zlib
   - "GCC-Toolchain:(?!osx)"
+source: https://gitlab.gnome.org/GNOME/libxml2.git
 prefer_system: "(?!slc5)"
 prefer_system_check: |
   xml2-config --version;
@@ -33,7 +33,7 @@ proc ModulesHelp { } {
 set version $PKGVERSION-@@PKGREVISION@$PKGHASH@@
 module-whatis "ALICE Modulefile for $PKGNAME $PKGVERSION-@@PKGREVISION@$PKGHASH@@"
 # Dependencies
-module load BASE/1.0
+module load BASE/1.0 ${ZLIB_VERSION:+zlib/$ZLIB_VERSION-$ZLIB_REVISION}
 # Our environment
 setenv LIBXML2_VERSION \$version
 setenv LIBXML2_ROOT \$::env(BASEDIR)/$PKGNAME/\$::env(LIBXML2_VERSION)

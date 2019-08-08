@@ -11,7 +11,6 @@ requires:
   - PHOTOSPP
   - EvtGen
   - ROOT
-  - madgraph5
 build_requires:
   - googletest
 incremental_recipe: |
@@ -69,7 +68,7 @@ incremental_recipe: |
   $([[ ${ARCHITECTURE:0:3} == osx ]] && echo "prepend-path DYLD_LIBRARY_PATH \$::env(FAIRSHIP_ROOT)/lib")
   EoF
 ---
-#!/bin/sh${GENIE_VERSION:+GENIE/$GENIE_VERSION-$GENIE_REVISION}   
+#!/bin/sh
 
 # Making sure people do not have SIMPATH set when they build fairroot.
 # Unfortunately SIMPATH seems to be hardcoded in a bunch of places in

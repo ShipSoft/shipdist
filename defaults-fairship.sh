@@ -3,7 +3,7 @@ version: v1
 env:
   CXXFLAGS: "-fPIC -g -O2 -std=c++11"
   CFLAGS: "-fPIC -g -O2"
-  CMAKE_BUILD_TYPE: "RELWITHDEBINFO"
+  CMAKE_BUILD_TYPE: "RELEASE"
 disable:
   - AliEn-Runtime
   - MonALISA-gSOAP-client
@@ -19,17 +19,19 @@ overrides:
     requires:
       - "GCC-Toolchain:(?!osx)"
       - Python
+    prefer_system_check: |
+     printf "#include \"boost/version.hpp\"\n# if (BOOST_VERSION < 106400)\n#error \"Cannot use system's boost. Boost > 1.64.00 required.\"\n#endif\nint main(){}" | gcc -I$(brew --prefix boost)/include -xc++ - -o /dev/null
   GCC-Toolchain:
     tag: v6.2.0-alice1
     prefer_system_check: |
       set -e
       which gfortran || { echo "gfortran missing"; exit 1; }
-      which cc && test -f $(dirname $(which cc))/c++ && printf "#define GCCVER ((__GNUC__ << 16)+(__GNUC_MINOR__ << 8)+(__GNUC_PATCHLEVEL__))\n#if (GCCVER < 0x060000 || GCCVER > 0x080000)\n#error \"System's GCC cannot be used: we need GCC 6.X. We are going to compile our own version.\"\n#endif\n" | cc -xc++ - -c -o /dev/null
+      which cc && test -f $(dirname $(which cc))/c++ && printf "#define GCCVER ((__GNUC__ << 16)+(__GNUC_MINOR__ << 8)+(__GNUC_PATCHLEVEL__))\n#if (GCCVER < 0x060000 || GCCVER > 0x090000)\n#error \"System's GCC cannot be used: we need GCC 6.X. We are going to compile our own version.\"\n#endif\n" | cc -xc++ - -c -o /dev/null
   XRootD:
-    tag: v4.6.1
+    tag: v4.8.3
   ROOT:
     version: "%(tag_basename)s"
-    tag: "v6-12-06-ship"
+    tag: "v6-14-00-ship"
     source: https://github.com/ShipSoft/root
     requires:
       - GSL
@@ -55,13 +57,13 @@ overrides:
     tag: "v3.0.2"
   CMake:
     version: "%(tag_basename)s"
-    tag: "v3.8.2"
+    tag: "v3.9.4"
     prefer_system_check: |
       which cmake && case `cmake --version | sed -e 's/.* //' | cut -d. -f1,2,3 | head -n1` in [0-2]*|3.[0-7].*) exit 1 ;; esac
   FairRoot:
     source: https://github.com/ShipSoft/FairRoot
     version: "%(tag_basename)s"
-    tag: Oct17-ship
+    tag: May30-ship
     incremental_recipe: |
       make -j$JOBS;make install; MODULEDIR="$INSTALLROOT/etc/modulefiles"
       MODULEFILE="$MODULEDIR/$PKGNAME"
@@ -133,13 +135,6 @@ overrides:
     version: "%(tag_basename)s"
     tag: v3-6-ship
     source: https://github.com/ShipSoft/geant4_vmc.git
-  lhapdf5:
-    source: https://github.com/ShipSoft/LHAPDF
-    version: "%(tag_basename)s"
-    tag: v5.9.1-ship1
-    env:
-      LHAPATH: "$LHAPDF_ROOT/share/LHAPDF"
-      GEANT4_INSTALL: "$GEANT4_ROOT"
   GENIE:
     tag: v2.12.6-ship
   pythia:
@@ -172,7 +167,7 @@ overrides:
   GEANT3:
     version: "%(tag_basename)s"
     source: https://github.com/ShipSoft/geant3
-    tag: v3.2.1-ship
+    tag: v3.2.1-ship-patch-TVMC
 ---
 # This file is included in any build recipe and it's only used to set
 # environment variables. Which file to actually include can be defined by the

@@ -12,7 +12,7 @@ prepend_path:
   PYTHONPATH: $PYTHON_MODULES_ROOT/lib/python2.7/site-packages:$PYTHONPATH
 prefer_system: (?!slc5)
 prefer_system_check:
-  python -c 'import matplotlib,numpy, scipy, certifi,IPython,ipywidgets,ipykernel,notebook.notebookapp,metakernel,yaml';
+  python -c 'import matplotlib,numpy, scipy, certifi,IPython,ipywidgets,ipykernel,notebook.notebookapp,metakernel,yaml,sklearn';
   if [ $? -ne 0 ]; then printf "Required Python modules are missing. You can install them with pip (better as root):\n  pip install matplotlib numpy certifi ipython ipywidgets ipykernel notebook metakernel pyyaml\n"; exit 1; fi
 ---
 #!/bin/bash -ex
@@ -31,6 +31,7 @@ If you want to avoid this please install the following modules (pip recommended)
   - notebook
   - metakernel
   - pyyaml
+  - scikit-learn
 
 EoF
 fi
@@ -44,16 +45,17 @@ export PYVER=$(python -c 'import distutils.sysconfig; print(distutils.sysconfig.
 # Install as much as possible with pip. Packages are installed one by one as we
 # are not sure that pip exits with nonzero in case one of the packages failed.
 export PYTHONUSERBASE=$INSTALLROOT
-for X in "pip==9.0.3"          \
-         "mock==1.0.0"         \
-         "numpy==1.9.2"        \
-         "certifi==2015.9.6.2" \
-         "ipython==5.1.0"      \
-         "ipywidgets==5.2.2"   \
-         "ipykernel==4.5.0"    \
-         "notebook==4.2.3"     \
-         "metakernel==0.14.0"  \
-         "scipy==0.17.1"        \
+for X in "pip==19.1.1"          \
+         "mock==1.3.0"          \
+         "numpy==1.16.4"        \
+         "certifi==2019.6.16"   \
+         "ipython==5.8.0"       \
+         "ipywidgets==5.2.3"    \
+         "ipykernel==4.10.0"    \
+         "notebook==4.4.1"      \
+         "metakernel==0.24.2"   \
+         "scipy==1.3.0"         \
+         "scikit-learn==0.21.1" \
          "pyyaml"
 do
   python -m pip install --user $X
@@ -61,34 +63,44 @@ done
 unset PYTHONUSERBASE
 
 # Install matplotlib (quite tricky)
-MATPLOTLIB_VER="1.4.3"
-MATPLOTLIB_URL="http://downloads.sourceforge.net/project/matplotlib/matplotlib/matplotlib-${MATPLOTLIB_VER}/matplotlib-${MATPLOTLIB_VER}.tar.gz"
-curl -Lo matplotlib.tgz $MATPLOTLIB_URL
-tar xzf matplotlib.tgz
-cd matplotlib-$MATPLOTLIB_VER
-cat > setup.cfg <<EOF
+MATPLOTLIB_TAG="3.0.3"
+if [[ $ARCHITECTURE != slc* ]]; then
+  # Simply get it via pip in most cases
+  env PYTHONUSERBASE=$INSTALLROOT pip install --user "matplotlib==$MATPLOTLIB_TAG"
+else
+
+  # We are on a RHEL-compatible OS. We compile it ourselves, and link it to our dependencies
+
+  # Check if we can enable the Tk interface
+  python -c 'import _tkinter' && MATPLOTLIB_TKAGG=True || MATPLOTLIB_TKAGG=False
+  MATPLOTLIB_URL="https://github.com/matplotlib/matplotlib/archive/v${MATPLOTLIB_TAG}.tar.gz"  # note the "v"
+  curl -SsL "$MATPLOTLIB_URL" | tar xzf -
+  cd matplotlib-*
+  cat > setup.cfg <<EOF
 [directories]
 basedirlist  = ${FREETYPE_ROOT:+$PWD/fake_freetype_root,$FREETYPE_ROOT,}${LIBPNG_ROOT:+$LIBPNG_ROOT,}${ZLIB_ROOT:+$ZLIB_ROOT,}/usr/X11R6,$(freetype-config --prefix),$(libpng-config --prefix)
 [gui_support]
 gtk = False
 gtkagg = False
-tkagg = False
+tkagg = $MATPLOTLIB_TKAGG
 wxagg = False
 macosx = False
 EOF
 
-# matplotlib wants include files in <PackageRoot>/include, but this is not the
-# case for FreeType: let's fix it
-if [[ $FREETYPE_ROOT ]]; then
-  mkdir fake_freetype_root
-  ln -nfs $FREETYPE_ROOT/include/freetype2 fake_freetype_root/include
-fi
-perl -p -i -e "s|'darwin': \['/usr/local/'|'darwin': ['$INSTALLROOT'|g" setupext.py
+  # matplotlib wants include files in <PackageRoot>/include, but this is not the case for FreeType
+  if [[ $FREETYPE_ROOT ]]; then
+    mkdir fake_freetype_root
+    ln -nfs $FREETYPE_ROOT/include/freetype2 fake_freetype_root/include
+  fi
 
-mkdir -p $INSTALLROOT/{lib,lib64}/python$PYVER/site-packages
-python setup.py build
-PYTHONPATH=$INSTALLROOT/lib64/python$PYVER/site-packages:$INSTALLROOT/lib/python$PYVER/site-packages:$PYTHONPATH \
-  python setup.py install --prefix $INSTALLROOT
+  export PYTHONPATH="$INSTALLROOT/lib/python/site-packages"
+    python setup.py build
+    python setup.py install --prefix "$INSTALLROOT"
+  unset PYTHONPATH
+fi
+
+# Test if matplotlib can be loaded
+env PYTHONPATH="$INSTALLROOT/lib/python/site-packages" python -c 'import matplotlib'
 
 # Remove unneeded stuff
 rm -rvf $INSTALLROOT/share            \
