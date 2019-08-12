@@ -7,7 +7,7 @@ requires:
 build_requires:
   - curl
 prepend_path:
-  PYTHONPATH: $PYTHON_MODULES_ROOT/lib/python2.7/site-packages:$PYTHONPATH
+  PYTHONPATH: $PYTHON_MODULES_ROOT/lib/python3.6/site-packages:$PYTHONPATH
 prefer_system: (?!slc5)
 prefer_system_check:
   python -c 'import matplotlib,numpy, scipy, certifi,IPython,ipywidgets,ipykernel,notebook.notebookapp,metakernel,yaml,sklearn,six';
@@ -57,14 +57,16 @@ for X in "pip==19.1.1"          \
          "scikit-learn==0.19.1" \
          "matplotlib==2.2.4"    \
          "six"                  \
-         "pyyaml"
+         "future"               \
+         "pyyaml"               \
+         "alibuild"
 do
   python -m pip install --user $X
 done
 unset PYTHONUSERBASE
 
 # Test if matplotlib can be loaded
-env PYTHONPATH="$INSTALLROOT/lib/python2.7/site-packages" python -c 'import matplotlib'
+env PYTHONPATH="$INSTALLROOT/lib/python3.6/site-packages" python -c 'import matplotlib'
 
 # Remove unneeded stuff
 rm -rvf $INSTALLROOT/share            \
