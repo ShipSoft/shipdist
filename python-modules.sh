@@ -57,6 +57,7 @@ for X in "pip==19.1.1"          \
          "scikit-learn==0.19.1" \
          "matplotlib==2.2.4"    \
          "six"                  \
+         "future"               \
          "pyyaml"
 do
   python -m pip install --user $X
