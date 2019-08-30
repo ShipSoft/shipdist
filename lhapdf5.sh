@@ -3,7 +3,7 @@ tag: v5.9.1-ship2
 version: "%(tag_basename)s"
 source: https://github.com/ShipSoft/LHAPDF.git
 env:
-  LHAPATH: "$LHAPDF_ROOT/share/LHAPDF"
+  LHAPATH: "$LHAPDF5_ROOT/share/lhapdf"
   GEANT4_INSTALL: "$GEANT4_ROOT"
 requires:
  - "GCC-Toolchain:(?!osx)"
