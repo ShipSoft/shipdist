@@ -114,7 +114,7 @@ done
 env PATH="$INSTALLROOT/bin:$PATH" \
     LD_LIBRARY_PATH="$INSTALLROOT/lib:$LD_LIBRARY_PATH" \
     PYTHONHOME="$INSTALLROOT" \
-    python3 -c 'import _tkinter'
+    python3 -c 'import tkinter'
 
 # Modulefile
 MODULEDIR="$INSTALLROOT/etc/modulefiles"
