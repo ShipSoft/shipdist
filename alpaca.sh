@@ -1,4 +1,4 @@
-# an alpaca recipe based on the one from FairROOT
+# an alpaca recipe based on pythia6.sh, phythia.sh and protobuf.sh
 package: alpaca
 tag: master
 version: v1.1
