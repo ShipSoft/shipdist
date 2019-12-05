@@ -1,4 +1,4 @@
-# a pythia6 recipe based on the one from FairROOT
+# an alpaca recipe based on the one from FairROOT
 package: alpaca
 tag: master
 version: v1.1
