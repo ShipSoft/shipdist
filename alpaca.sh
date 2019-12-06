@@ -23,6 +23,7 @@ proc ModulesHelp { } {
   global version
   puts stderr "ALICE Modulefile for $PKGNAME"
 }
+set version $PKGVERSION-@@PKGREVISION@$PKGHASH@@
 module-whatis "ALICE Modulefile for $PKGNAME"
 # Dependencies
 module load BASE/1.0
