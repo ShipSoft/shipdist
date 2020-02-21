@@ -75,6 +75,7 @@ cmake $SOURCEDIR                                                 \
       -DPROTOBUF_LIBRARY=$PROTOBUF_ROOT/lib/libprotobuf.$SONAME  \
       -DCMAKE_INSTALL_PREFIX=$INSTALLROOT
 
+
 # Limit the number of build processes to avoid exahusting memory when building
 # on smaller machines.
 [[ $JOBS -gt 1 ]] || JOBS=2
