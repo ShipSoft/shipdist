@@ -193,7 +193,7 @@ overrides:
     source: https://github.com/ShipSoft/pythia8
     tag: v8230-ship
     requires:
-      - lhapdf5
+      - lhapdf
       - HepMC
       - boost
     prefer_system_check: |
