@@ -13,17 +13,17 @@ env:
 case $ARCHITECTURE in
   osx*)
     # If we preferred system tools, we need to make sure we can pick them up.
-    [[ ! $AUTOTOOLS_ROOT ]] && PATH=$PATH:`brew --prefix gettext`/bin
+    [[ ! $AUTOTOOLS_ROOT ]] && PATH=$PATH:$(brew --prefix gettext)/bin
   ;;
   *)
     EXTRA_LD_FLAGS="-Wl,--no-as-needed"
   ;;
 esac
 
-rsync -a --exclude '**/.git' $SOURCEDIR/ ./
+rsync -a --exclude '**/.git' "$SOURCEDIR"/ ./
 
 autoreconf -ivf
-./configure --prefix=$INSTALLROOT
+./configure --prefix="$INSTALLROOT"
 
 make ${JOBS+-j $JOBS} all
 make install
@@ -32,8 +32,8 @@ PDFSETS="cteq6l1 MMHT2014lo68cl MMHT2014nlo68cl"
 #$INSTALLROOT/bin/lhapdf install $PDFSETS
 # Check if PDF sets were really installed
 for P in $PDFSETS; do
-  curl http://lhapdfsets.web.cern.ch/lhapdfsets/current/$P.tar.gz | tar xz -C $INSTALLROOT/share/LHAPDF
-  ls $INSTALLROOT/share/LHAPDF/$P
+  curl http://lhapdfsets.web.cern.ch/lhapdfsets/current/"$P".tar.gz | tar xz -C "$INSTALLROOT"/share/LHAPDF
+  ls "$INSTALLROOT"/share/LHAPDF/"$P"
 done
 
 # Modulefile
