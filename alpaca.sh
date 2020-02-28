@@ -12,8 +12,8 @@ env:
 #!/bin/sh
 rsync -a $SOURCEDIR/* .
 make
-cp -rf * $ALPACA/
-cp -rf * $INSTALLROOT
+#cp -r * $ALPACA/
+cp -r * $INSTALLROOT
 # Modulefile
 MODULEDIR="$INSTALLROOT/etc/modulefiles"
 MODULEFILE="$MODULEDIR/$PKGNAME"
