@@ -14,6 +14,7 @@ requires:
 build_requires:
   - CMake
   - "Xcode:(osx.*)"
+  - Python
 env:
   ROOTSYS: "$ROOT_ROOT"
 prepend_path:
@@ -123,6 +124,9 @@ else
         -Dvdt=ON                                                  \
         -Dbuiltin_vdt=ON                                          \
         -Dvmc=ON                                                  \
+        ${PYTHON_ROOT:+-DPYTHON_EXECUTABLE=$PYTHONHOME/bin/python} \
+        ${PYTHON_ROOT:+-DPYTHON_INCLUDE_DIR=$PYTHONHOME/include/python3.6m} \
+        ${PYTHON_ROOT:+-DPYTHON_LIBRARY=$PYTHONHOME/lib/libpython3.6m.so} \
         -DCMAKE_PREFIX_PATH="$FREETYPE_ROOT;$SYS_OPENSSL_ROOT;$GSL_ROOT;$ALIEN_RUNTIME_ROOT;$PYTHON_ROOT;$PYTHON_MODULES_ROOT"
   FEATURES="builtin_pcre mathmore xml ssl opengl minuit2 http gdml ${PYTHIA_ROOT:+pythia8}
             pythia6 roofit soversion vdt ${CXX11:+cxx11} ${CXX14:+cxx14} ${XROOTD_ROOT:+xrootd}
