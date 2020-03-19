@@ -1,7 +1,6 @@
 package: XercesC
 version: v3.1.4
 source: https://github.com/apache/xerces-c
-tag: Xerces-C_3_1_4
 build_requires:
   - GCC-Toolchain:(?!osx)
 env:
