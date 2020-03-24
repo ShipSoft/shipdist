@@ -59,6 +59,10 @@ for X in "pip==19.1.1"          \
          "six"                  \
          "future"               \
          "pyyaml"               \
+	 "pymongo==3.10.1"      \
+	 "pytest==4.6.9"        \
+	 "pylint==1.9.5"        \
+	 "mongoengine==0.19.1"  \
          "alibuild"
 do
   python -m pip install --user $X
