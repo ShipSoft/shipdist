@@ -12,6 +12,7 @@ env:
 #!/bin/sh
 rsync -a $SOURCEDIR/* .
 make
+cp -r bin src doc $INSTALLROOT
 
 # Modulefile
 MODULEDIR="$INSTALLROOT/etc/modulefiles"
