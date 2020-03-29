@@ -11,6 +11,7 @@ env:
 ---
 #!/bin/sh
 rsync -a $SOURCEDIR/* .
+mkdir -p bin/{evrecs,outputs}
 make
 cp -r bin src doc $INSTALLROOT
 
