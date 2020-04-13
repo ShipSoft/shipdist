@@ -4,6 +4,7 @@ env:
   CXXFLAGS: "-fPIC -g -O2 -std=c++11"
   CFLAGS: "-fPIC -g -O2"
   CMAKE_BUILD_TYPE: "RELEASE"
+  CMAKE_CXX_STANDARD: 11
 disable:
   - AliEn-Runtime
   - MonALISA-gSOAP-client
@@ -31,7 +32,7 @@ overrides:
   XRootD:
     tag: v4.8.3
   ROOT:
-    tag: "v6-18-00"
+    tag: "v6-20-04"
     source: https://github.com/root-project/root
     requires:
       - GSL
