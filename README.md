@@ -1,139 +1,88 @@
-# alidist
-Recipes to build ALICE SW
+# shipdist
 
-# Guidelines for commit messages
+Recipes to build `FairShip` and it's dependencies using `aliBuild`
 
-- Keep the first line of the commit below 50 chars
-- Leave the second line empty
-- Try to keep the lines after the third below 72 chars
-- Use some imperative verb as first word of the first line
-- Do not end the first line with a full-stop (i. e. `.`)
-- Make sure you squash / cleanup your commits when it makes sense (e.g. if they are really one the fix of the other). Keep history clean.
+## General information
 
-Example:
+For general documentation, please refer to the `alisw/alibuild` documentation pages.
 
+### Defaults
+
+Defaults in use:
+
+- `fairship`: Default for use with `FairShip/master`
+- `fairship-2018`: Default for use with `FairShip/muflux` and legacy branches
+
+### Troubleshooting tips
+
+#### `aliDoctor`
+
+#### `aliDeps`
+
+#### `aliBuild init` and local development packages
+
+## Platform specific information
+
+Information for different platforms available below.
+
+If you are working on a platform that is not listed below, `containers/toolbox` or `docker` can be used to conveniently set up a working environment with e.g. Fedora.
+
+### With CVMFS
+
+On platforms which can use CVMFS, most dependencies can be used form CVMFS and don't need to be built locally. Information to follow.
+
+### Ubuntu 18.04.X
+
+Known to work. Information to follow.
+
+### CERN CentOS 7
+
+Known to work. Tested on `lxplus7` and base of official container image. Information to follow.
+
+### Fedora 30
+
+Confirmed to work. Tested using `container/toolbox`.
+
+#### Dependencies
+
+#### Local Packages
+
+The following packages are used from the system:
+
+- `zlib`
+- `autotools`
+- `GCC-Toolchain`
+- `Python`
+- `libxml2`
+- `Python-modules`
+- `FreeType`
+
+Everything else is used from `aliBuild`/`shipdist`.
+
+### Fedora 31
+
+Tested using `container/toolbox`.
+
+#### Dependencies
+
+```bash
+sudo dnf install -y mysql-devel curl-devel bzip2-devel auto{conf,make} texinfo gettext{,-devel} libtool freetype-devel libpng-devel sqlite{,-devel}  ncurses-devel mesa-libGLU-devel libX11-devel libXpm-devel libXext-devel libXft-devel libxml2-devel motif{,-devel} kernel-devel pciutils-devel kmod-devel bison flex perl-ExtUtils-Embed environment-modules gcc-{gfortran,c++} swig make krb5-{workstation,devel}
 ```
-Fix issue in Geant4
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-commodo consequat.
-```
+#### Local Packages
 
-# Guidelines for contributing recipes
+The following packages are used from the system:
 
-- Keep things simple (but concise).
-- Use 2 spaces to indent them.
-- Try avoid "fix typo" commits and squash history whenever makes sense.
-- Avoid touching $SOURCEDIR. If your recipe needs to compile in source, first copy them to $BUILDIR via:
+- `libpng`
+- `libxml2`
+- `sqlite`
+- `GCC-Toolchain`
+- `autotools`
+- `FreeType`
+- `zlib`
 
-```
-rsync -a $SOURCEDIR ./
-```
+### macOS
 
-# Guidelines for handling externals sources
+Known to **NOT** work, but there is interest to make it work.
 
-Whenever you need to build a new external, you should consider the following:
-
-  - If a Git / GitHub mirror exists, and no patches are required, use it for the
-    package source.
-  - If a Git / GitHub repository exists and you need to patch it, fork it, decide a
-    fork point, possibly based on a tag or eventually a commit hash, and create a branch
-    in your fork called `alice/<fork-point>`. This can be done with:
- 
-        git checkout -b alice/<fork-point> <fork-point>
-
-    patches should be applied on such a branch.
-  - If no git repository is available, or if mirroring the whole repository is
-    not desirable, create a repository with a `master` branch. On the master
-    branch import relevant released tarballs, one commit per tarball. Make sure
-    you tag the commit with the tag of the tarball. E.g.:
-
-        git clone https://github.com/alisw/mysoft
-        curl -O https://mysoftware.com/mysoft-version.tar.gz
-        tar xzvf mysoft-version.tar.gz
-        rsync -a --delete --exclude '**/.git' mysoft-version/ mysoft/
-        cd mysoft
-        git add -A .
-        git commit -a -m 'Import https://mysoftware.com/mysoft-<version>.tar.gz'
-        git tag <version>
-
-    In case you need to add a patch on top of a tarball, create a branch with:
-
-        git checkout -b alice/<version> <version>
-
-    and add your patches on such a branch.
-  - Do not create extra branches unless you do need to patch the original sources.
-
-Moreover try to keep the package name (as specified inside the recipe
-in the `package` field of the header) and the repository name the same,
-including capitalization.
-
-# PWGMM owned packages
-
-The following packages have been agreed to be under PWGMM ownership and will require its signoff to be deployed in production.
-
-- aligenerators
-- crmc
-- epos
-- epos-test
-- hepmc
-- jewel
-- lhapdf
-- lhapdf5
-- powheg
-- pythia
-- pythia6
-- rivet
-- rivet-test
-- sherpa
-- thepeg
-- thepeg-test
-- yoda
-
-Plus any of their dependencies.
-
-# Some instructions for working with a VM from CERN openstack
-
-Assuming the user has read the openstack instructions and created a virtual machine.
-## CC7 - x86_64
-  - on lxplus, login to your newly created virtual machine with your key: ssh -i .ssh/yourkey root@yourVM.cern.ch
-  - create your user: adduser yourUserName, passwd yourUserName, usermod -a -G wheel yourUserName
-  - logoff and logon with your user
-  ```bash
-  - sudo yum group install "Software Development Workstation (CERN Recommended Setup)"
-  - sudo yum install environment-modules
-  - sudo yum install python-pip
-  - sudo pip install --upgrade pip
-  - sudo pip install alibuild
-  - mkdir SNDBUILD, cd SNDBUILD
-  - git clone https://github.com/SND-LHC/sndsw
-  - git clone https://github.com/SND-LHC/snddist
-  - aliBuild build sndsw -c snddist
-  - alienv enter sndsw/latest 
-  - for openGL / eventDisplay: export LIBGL_ALWAYS_INDIRECT=1
-  ```
-  
-  ## C8 - x86_64
-  - on lxplus, login to your newly created virtual machine with your key: ssh -i .ssh/yourkey root@yourVM.cern.ch
-  - create your user: adduser yourUserName, passwd yourUserName, usermod -a -G wheel yourUserName
-  - modify /etc/ssh/sshd_config: # PasswordAuthentication no 
-    - sudo vim /etc/ssh/sshd_config, escape :wq! sudo service sshd restart
-  - logoff and logon with your user
-  ```bash
-  - sudo yum group install "Software Development Workstation (CERN Recommended Setup)"
-  - sudo yum install texinfo
-  - sudo dnf install libfabric-devel
-  - sudo pip3 install alibuild
-  - sudo ln -s /usr/bin/python3 /usr/bin/python
-  - mkdir SNDBUILD, cd SNDBUILD
-  - git clone https://github.com/SND-LHC/sndsw
-  - git clone https://github.com/SND-LHC/snddist
-  - aliBuild build sndsw -c snddist
-  - alienv enter sndsw/latest 
-  - for openGL / eventDisplay: export LIBGL_ALWAYS_INDIRECT=1
-  
-
-   
-
+Please write to the `ship-software` egroup, if you are interested in helping.
