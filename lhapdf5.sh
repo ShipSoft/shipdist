@@ -10,21 +10,23 @@ requires:
 ---
 #!/bin/bash -ex
 
-rsync -a --exclude '**/.git' $SOURCEDIR/ ./
+rsync -a --exclude '**/.git' "$SOURCEDIR"/ ./
 
 export FFLAGS=--std=legacy
+PYTHON=$(command -v python2) && export PYTHON
 
-./configure --prefix=$INSTALLROOT
+./configure --prefix="$INSTALLROOT"
 
 make ${JOBS+-j $JOBS} all
 make install
 
 PDFSETS="cteq6l cteq6ll CT10 CT10nlo MSTW2008nnlo EPS09LOR_208 EPS09NLOR_208 cteq66a cteq66a0 cteq4m"
-pushd $INSTALLROOT/share/lhapdf
-  $INSTALLROOT/bin/lhapdf-getdata --repo=https://www.hepforge.org/archive/lhapdf/pdfsets/5.9.1 $PDFSETS
+pushd "$INSTALLROOT"/share/lhapdf
+  # shellcheck disable=SC2086
+  python2 "$INSTALLROOT"/bin/lhapdf-getdata --repo=https://www.hepforge.org/archive/lhapdf/pdfsets/5.9.1 $PDFSETS
   # Check if PDF sets were really installed
   for P in $PDFSETS; do
-    ls ${P}*
+    ls "${P}"*
   done
 popd
 
