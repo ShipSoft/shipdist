@@ -10,8 +10,8 @@ prepend_path:
   PYTHONPATH: $PYTHON_MODULES_ROOT/lib/python3.6/site-packages:$PYTHONPATH
 prefer_system: (?!slc5)
 prefer_system_check:
-  python -c 'import matplotlib,numpy, scipy, certifi,IPython,ipywidgets,ipykernel,notebook.notebookapp,metakernel,yaml,sklearn,six';
-  if [ $? -ne 0 ]; then printf "Required Python modules are missing. You can install them with pip (better as root):\n  pip install matplotlib numpy certifi ipython ipywidgets ipykernel notebook metakernel pyyaml\n"; exit 1; fi
+  python -c 'import matplotlib,numpy,scipy,certifi,IPython,ipywidgets,ipykernel,notebook.notebookapp,metakernel,yaml,sklearn,six,pymongo,mongoengine,pytest,pylint';
+  if [ $? -ne 0 ]; then printf "Required Python modules are missing. You can install them with pip (better as root):\n  pip install matplotlib numpy certifi ipython ipywidgets ipykernel notebook metakernel pyyaml pymongo mongoengine pytest pylint\n"; exit 1; fi
 ---
 #!/bin/bash -ex
 
@@ -29,9 +29,16 @@ If you want to avoid this please install the following modules (pip recommended)
   - notebook
   - metakernel
   - pyyaml
+  - scipy
   - scikit-learn
   - six
-
+  - mock
+  - future
+  - pymongo
+  - mongoengine
+  - pytest
+  - pylint
+  - alibuild
 EoF
 fi
 
@@ -59,10 +66,10 @@ for X in "pip==19.1.1"          \
          "six"                  \
          "future"               \
          "pyyaml"               \
-	 "pymongo==3.10.1"      \
-	 "pytest==4.6.9"        \
-	 "pylint==1.9.5"        \
-	 "mongoengine==0.19.1"  \
+         "pymongo==3.10.1"      \
+         "pytest==4.6.9"        \
+         "pylint==1.9.5"        \
+         "mongoengine==0.19.1"  \
          "alibuild"
 do
   python -m pip install --user $X
