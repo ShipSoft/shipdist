@@ -11,7 +11,7 @@ requires:
   - PHOTOSPP
   - EvtGen
   - ROOT
-#  - alpaca
+  - alpaca
 build_requires:
   - googletest
 incremental_recipe: |
