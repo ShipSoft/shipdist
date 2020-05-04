@@ -10,8 +10,8 @@ prepend_path:
   PYTHONPATH: $PYTHON_MODULES_ROOT/lib/python3.6/site-packages:$PYTHONPATH
 prefer_system: (?!slc5)
 prefer_system_check:
-  python -c 'import matplotlib,numpy,scipy,certifi,IPython,ipywidgets,ipykernel,notebook.notebookapp,metakernel,yaml,sklearn,six,pymongo,mongoengine,pytest,pylint';
-  if [ $? -ne 0 ]; then printf "Required Python modules are missing. You can install them with pip (better as root):\n  pip install matplotlib numpy certifi ipython ipywidgets ipykernel notebook metakernel pyyaml pymongo mongoengine pytest pylint\n"; exit 1; fi
+  python3 -c 'import matplotlib,numpy,scipy,certifi,IPython,ipywidgets,ipykernel,notebook.notebookapp,metakernel,yaml,sklearn,six,pymongo,mongoengine,pytest,pylint';
+  if [ $? -ne 0 ]; then printf "Required Python modules are missing. You can install them with pip3:\n  pip3 install matplotlib numpy certifi ipython ipywidgets ipykernel notebook metakernel pyyaml pymongo mongoengine pytest pylint\n"; exit 1; fi
 ---
 #!/bin/bash -ex
 
@@ -46,7 +46,7 @@ fi
 unset PYTHONPATH
 
 # The X.Y in pythonX.Y
-export PYVER=$(python -c 'import distutils.sysconfig; print(distutils.sysconfig.get_python_version())')
+export PYVER=$(python3 -c 'import distutils.sysconfig; print(distutils.sysconfig.get_python_version())')
 
 # Install as much as possible with pip. Packages are installed one by one as we
 # are not sure that pip exits with nonzero in case one of the packages failed.
@@ -72,12 +72,12 @@ for X in "pip==19.1.1"          \
          "mongoengine==0.19.1"  \
          "alibuild"
 do
-  python -m pip install --user $X
+  python3 -m pip install --user $X
 done
 unset PYTHONUSERBASE
 
 # Test if matplotlib can be loaded
-env PYTHONPATH="$INSTALLROOT/lib/python3.6/site-packages" python -c 'import matplotlib'
+env PYTHONPATH="$INSTALLROOT/lib/python3.6/site-packages" python3 -c 'import matplotlib'
 
 # Remove unneeded stuff
 rm -rvf $INSTALLROOT/share            \
