@@ -9,9 +9,13 @@ build_requires:
 prepend_path:
   PYTHONPATH: $PYTHON_MODULES_ROOT/lib/python3.6/site-packages:$PYTHONPATH
 prefer_system: (?!slc5)
-prefer_system_check:
-  python3 -c 'import matplotlib,numpy,scipy,certifi,IPython,ipywidgets,ipykernel,notebook.notebookapp,metakernel,sklearn,six,pymongo,mongoengine,pytest,pylint';
-  if [ $? -ne 0 ]; then printf "Required Python modules are missing. You can install them with pip3:\n  pip3 install matplotlib numpy certifi ipython ipywidgets ipykernel notebook metakernel pymongo mongoengine pytest pylint\n"; exit 1; fi
+prefer_system_check: |
+  python3 -c 'import matplotlib,numpy,scipy,certifi,IPython,ipywidgets,ipykernel,notebook.notebookapp,metakernel,sklearn,six,pymongo,mongoengine,pytest,pylint'
+  if [ $? -ne 0 ]
+  then
+      printf "Required Python modules are missing. You can install them with pip3:\n  pip3 install matplotlib numpy certifi ipython ipywidgets ipykernel notebook metakernel pymongo mongoengine pytest pylint\n"
+      exit 1
+  fi
 ---
 #!/bin/bash -ex
 
