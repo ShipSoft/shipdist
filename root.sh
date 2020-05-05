@@ -39,8 +39,8 @@ unset ROOTSYS
 COMPILER_CC=cc
 COMPILER_CXX=c++
 COMPILER_LD=c++
-[[ "$CXXFLAGS" == *'-std=c++11'* ]] && CXX11=1 || true
-[[ "$CXXFLAGS" == *'-std=c++14'* ]] && CXX14=1 || true
+[[ "$CMAKE_CXX_STANDARD" == '11' ]] && CXX11=1 || true
+[[ "$CMAKE_CXX_STANDARD" == '14' ]] && CXX14=1 || true
 
 case $ARCHITECTURE in
   osx*)
@@ -93,8 +93,7 @@ else
         ${ALIEN_RUNTIME_ROOT:+-DMONALISA_DIR=$ALIEN_RUNTIME_ROOT} \
         ${XROOTD_ROOT:+-DXROOTD_ROOT_DIR=$XROOTD_ROOT}            \
 	${ALIEN_RUNTIME_ROOT:+-DXROOTD_ROOT_DIR=$ALIEN_RUNTIME_ROOT}\
-        ${CXX11:+-Dcxx11=ON}                                      \
-        ${CXX14:+-Dcxx14=ON}                                      \
+	-DCMAKE_CXX_STANDARD=$CMAKE_CXX_STANDARD                  \
         -Dfreetype=ON                                             \
         -Dbuiltin_freetype=OFF                                    \
         -Dpcre=OFF                                                \
