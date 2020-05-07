@@ -1,7 +1,6 @@
 package: log4cpp
-version: "%(tag_basename)s%(defaults_upper)s"
-tag: REL_1_1_1_Nov_26_2013
-source: https://github.com/ShipSoft/log4cpp
+source: https://git.code.sf.net/p/log4cpp/codegit
+version: master
 requires:
   - GCC-Toolchain:(?!osx)
 build_requires:

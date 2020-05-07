@@ -132,10 +132,6 @@ overrides:
       prepend-path ROOT_INCLUDE_PATH \$::env(FAIRROOT_ROOT)/include
       $([[ ${ARCHITECTURE:0:3} == osx ]] && echo "prepend-path DYLD_LIBRARY_PATH      \$::env(FAIRROOT_ROOT)/lib")
       EoF
-  log4cpp:
-    version: "%(tag_basename)s"
-    tag: REL_1_1_1_Nov_26_2013
-    source: https://github.com/ShipSoft/log4cpp
   GEANT4:
     version: "%(tag_basename)s"
     tag: v10.3.2
