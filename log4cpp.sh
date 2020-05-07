@@ -1,7 +1,6 @@
 package: log4cpp
-version: "%(tag_basename)s%(defaults_upper)s"
-tag: REL_1_1_1_Nov_26_2013
-source: https://github.com/ShipSoft/log4cpp
+source: https://git.code.sf.net/p/log4cpp/codegit
+version: master
 requires:
   - GCC-Toolchain:(?!osx)
 build_requires:
@@ -13,9 +12,7 @@ env:
 rsync -a $SOURCEDIR/* .
 ./autogen.sh
 ./configure          --prefix=$INSTALLROOT  \
-		     --enable-shared \
-		     --enable-static \
-		      CXX="g++" CC="gcc" CXXFLAGS="$CFLAGS"
+		     --enable-shared
 make ${JOBS+-j$JOBS}
 make install
 
