@@ -12,9 +12,7 @@ env:
 rsync -a $SOURCEDIR/* .
 ./autogen.sh
 ./configure          --prefix=$INSTALLROOT  \
-		     --enable-shared \
-		     --enable-static \
-		      CXX="g++" CC="gcc" CXXFLAGS="$CFLAGS"
+		     --enable-shared
 make ${JOBS+-j$JOBS}
 make install
 
