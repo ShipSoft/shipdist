@@ -93,7 +93,7 @@ grep -IlRE '#!.*python' $INSTALLROOT/bin | \
 # Test whether we can load Python modules (this is not obvious as some of them
 # do not indicate some of their dependencies and break at runtime).
 PYTHONPATH=$INSTALLROOT/lib64/python$PYVER/site-packages:$INSTALLROOT/lib/python$PYVER/site-packages:$PYTHONPATH \
-  python -c "import matplotlib,numpy,certifi,IPython,ipywidgets,ipykernel,notebook.notebookapp,metakernel,yaml"
+  python3 -c 'import matplotlib,numpy,scipy,certifi,IPython,ipywidgets,ipykernel,notebook.notebookapp,metakernel,sklearn,six,pymongo,mongoengine,pytest,pylint'
 
 # Modulefile
 MODULEDIR="$INSTALLROOT/etc/modulefiles"
