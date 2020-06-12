@@ -1,6 +1,6 @@
 package: log4cpp
 source: https://git.code.sf.net/p/log4cpp/codegit
-version: master
+version: 1b9f8f7c031d6947c7468d54bc1da4b2f414558d
 requires:
   - GCC-Toolchain:(?!osx)
 build_requires:
