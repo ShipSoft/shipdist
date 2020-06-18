@@ -12,6 +12,9 @@ requires:
 
 rsync -a --exclude '**/.git' "$SOURCEDIR"/ ./
 
+# Point to right python version, if unversioned python exists
+command -v python >/dev/null 2>&1 && command -v python2 >/dev/null 2>&1 && PYTHON=$(command -v python2) && export PYTHON
+
 export FFLAGS=--std=legacy
 
 ./configure --prefix="$INSTALLROOT"
