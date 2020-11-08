@@ -6,6 +6,7 @@ requires:
   - generators
   - simulation
   - FairRoot
+  - FairLogger
   - GENIE
   - GEANT4
   - PHOTOSPP
@@ -91,10 +92,13 @@ case $ARCHITECTURE in
 esac
 
 rsync -a $SOURCEDIR/ $INSTALLROOT/
-
+echo "run cmake $FAIRROOT_ROOT | $GEANT4_VMC_ROOT"
 cmake $SOURCEDIR                                                 \
       -DFAIRBASE="$FAIRROOT_ROOT/share/fairbase"                 \
       -DFAIRROOTPATH="$FAIRROOT_ROOT"                            \
+      -DFAIRROOT_INCLUDE_DIR="$FAIRROOT_ROOT/include"            \
+      -DFAIRROOT_LIBRARY_DIR="$FAIRROOT_ROOT/lib"            \
+      -DFMT_INCLUDE_DIR="$FMT_ROOT/include"            \
       -DCMAKE_CXX_FLAGS="$CXXFLAGS"                              \
       -DCMAKE_BUILD_TYPE=$CMAKE_BUILD_TYPE                       \
       -DROOTSYS=$ROOTSYS                                         \
@@ -105,6 +109,7 @@ cmake $SOURCEDIR                                                 \
       -DEVTGENPATH=$EVTGEN_ROOT                                  \
       -DEVTGEN_INCLUDE_DIR=$EVTGEN_ROOT/include                  \
       -DEVTGEN_LIBRARY_DIR=$EVTGEN_ROOT/lib                      \
+      -DFAIRROOTPATH=$FAIRROOT_ROOT                              \
       ${PYTHON_ROOT:+-DPYTHON_LIBRARY=$PYTHON_ROOT/lib}          \
       ${PYTHON_ROOT:+-DPYTHON_INCLUDE_DIR=$PYTHON_ROOT/include/python3.6m/} \
       -DPythia6_LIBRARY_DIR=$PYTHIA6_ROOT/lib                    \
@@ -113,7 +118,9 @@ cmake $SOURCEDIR                                                 \
       -DGEANT3_PATH=$GEANT3_ROOT                                 \
       -DGEANT3_LIB=$GEANT3_ROOT/lib                              \
       -DGEANT4_ROOT=$GEANT4_ROOT                                 \
+      -DGEANT4_INCLUDE_DIR=$GEANT4_ROOT/include/Geant4           \
       -DGEANT4_VMC_ROOT=$GEANT4_VMC_ROOT                         \
+      -DGEANT4_VMC_INCLUDE_DIR=$GEANT4_VMC_ROOT/include/geant4vmc          \
       -DVGM_ROOT=$VGM_ROOT                                       \
       -DGENIE_ROOT=$GENIE_ROOT                                   \
       -DLHAPDF_ROOT="$LHAPDF_ROOT/share/lhapdf"                \
@@ -123,7 +130,7 @@ cmake $SOURCEDIR                                                 \
       ${BOOST_ROOT:+-DBOOST_LIBRARYDIR=$BOOST_ROOT/lib}          \
       ${BOOST_ROOT:+-DBoost_NO_SYSTEM=TRUE}                      \
       ${GSL_ROOT:+-DGSL_DIR=$GSL_ROOT}                           \
-      -DCMAKE_INSTALL_PREFIX=$INSTALLROOT
+      -DCMAKE_INSTALL_PREFIX=$INSTALLROOT                
 
 make ${JOBS:+-j$JOBS}
 make test
