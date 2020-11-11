@@ -27,8 +27,7 @@ set version $PKGVERSION-@@PKGREVISION@$PKGHASH@@
 module-whatis "ALICE Modulefile for $PKGNAME $PKGVERSION-@@PKGREVISION@$PKGHASH@@"
 # Dependencies
 module load BASE/1.0                                                   \\
-	    ${PYTHIA_VERSION:+pythia/$PYTHIA_VERSION-$PYTHIA_REVISION} \\
-	    lhapdf5/${LHAPDF5_VERSION}-${LHAPDF5_REVISION}
+	    ${PYTHIA_VERSION:+pythia/$PYTHIA_VERSION-$PYTHIA_REVISION}
 # Our environment
 setenv MADGRAPH_ROOT \$::env(BASEDIR)/$PKGNAME/\$version
 prepend-path PATH \$::env(MADGRAPH_ROOT)/bin
