@@ -143,7 +143,7 @@ overrides:
     source: https://github.com/ShipSoft/pythia8
     tag: v8230-ship
     requires:
-      - lhapdf5
+      - lhapdf
       - HepMC
       - boost
     prefer_system_check: |
@@ -153,7 +153,7 @@ overrides:
       ls $PYTHIA_ROOT/include/Pythia8 > /dev/null && \
       ls $PYTHIA_ROOT/include/Pythia8Plugins > /dev/null && \
       ls $PYTHIA_ROOT/lib/libpythia8.a > /dev/null && \
-      ls $PYTHIA_ROOT/lib/libpythia8lhapdf5.so > /dev/null && \
+      ls $PYTHIA_ROOT/lib/libpythia8lhapdf.so > /dev/null && \
       ls $PYTHIA_ROOT/lib/libpythia8.so > /dev/null && \
       true
   vgm:
@@ -210,19 +210,14 @@ overrides:
       ls $HEPMC_ROOT/include/HepMC > /dev/null && \
       ls $HEPMC_ROOT/include/HepMC/HepMCDefs.h > /dev/null && \
       grep "2.06" $HEPMC_ROOT/include/HepMC/HepMCDefs.h > /dev/null
-  lhapdf5:
+  lhapdf:
     prefer_system_check: |
-      ls $LHAPDF5_ROOT/ > /dev/null && \
-      ls $LHAPDF5_ROOT/bin > /dev/null && \
-      ls $LHAPDF5_ROOT/include > /dev/null && \
-      ls $LHAPDF5_ROOT/include/LHAPDF > /dev/null && \
-      ls $LHAPDF5_ROOT/lib > /dev/null && \
-      ls $LHAPDF5_ROOT/lib/libLHAPDF.so > /dev/null && \
-      ls $LHAPDF5_ROOT/lib/libLHAPDF.so.0 > /dev/null && \
-      ls $LHAPDF5_ROOT/lib/libLHAPDF.la > /dev/null && \
-      ls $LHAPDF5_ROOT/lib/libLHAPDF.a > /dev/null && \
-      ls $LHAPDF5_ROOT/lib64/python2.7/site-packages/lhapdf.py > /dev/null && \
-      ls $LHAPDF5_ROOT/share/lhapdf > /dev/null 
+      ls $LHAPDF_ROOT/ > /dev/null && \
+      ls $LHAPDF_ROOT/bin > /dev/null && \
+      ls $LHAPDF_ROOT/include > /dev/null && \
+      ls $LHAPDF_ROOT/include/LHAPDF > /dev/null && \
+      ls $LHAPDF_ROOT/lib > /dev/null && \
+      ls $LHAPDF_ROOT/share/lhapdf > /dev/null
   vgm:
     prefer_system_check: |
       ls $VGM_ROOT/ > /dev/null && \

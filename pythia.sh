@@ -22,15 +22,8 @@ esac
 ./configure --prefix=$INSTALLROOT \
             --enable-shared \
             --with-hepmc2=${HEPMC_ROOT} \
-            --with-lhapdf5-lib=${LHAPDF5_ROOT}/lib --with-lhapdf5-include=${LHAPDF5_ROOT}/include  \
-            ${BOOST_ROOT:+--with-boost="$BOOST_ROOT"}
-           # ${LHAPDF_ROOT:+--with-lhapdf6="$LHAPDF_ROOT"}
-
-if [[ $ARCHITECTURE =~ "slc5.*" ]]; then
-    ln -s LHAPDF5.h include/Pythia8Plugins/LHAPDF5.cc
-    ln -s LHAPDF6.h include/Pythia8Plugins/LHAPDF6.cc
-    sed -i -e 's#\$(CXX) -x c++ \$< -o \$@ -c -MD -w -I\$(LHAPDF\$\*_INCLUDE) \$(CXX_COMMON)#\$(CXX) -x c++ \$(<:.h=.cc) -o \$@ -c -MD -w -I\$(LHAPDF\$\*_INCLUDE) \$(CXX_COMMON)#' Makefile
-fi
+            ${BOOST_ROOT:+--with-boost="$BOOST_ROOT"} \
+            ${LHAPDF_ROOT:+--with-lhapdf6="$LHAPDF_ROOT"}
 
 make ${JOBS+-j $JOBS}
 make install
