@@ -1,6 +1,6 @@
 package: FairRoot
 version: "%(short_hash)s"
-tag: "v18.4.1"
+tag: "v18.4.2"
 source: https://github.com/FairRootGroup/FairRoot
 requires:
   - generators
@@ -39,7 +39,6 @@ case $ARCHITECTURE in
 esac
 
 [[ $BOOST_ROOT ]] && BOOST_NO_SYSTEM_PATHS=ON || BOOST_NO_SYSTEM_PATHS=OFF
-
 cmake $SOURCEDIR                                                                            \
       ${CMAKE_GENERATOR:+-G "$CMAKE_GENERATOR"}                                             \
       ${MACOSX_RPATH:+-DMACOSX_RPATH=${MACOSX_RPATH}}                                       \
@@ -48,10 +47,10 @@ cmake $SOURCEDIR                                                                
       -DROOTSYS=$ROOTSYS                                                                    \
       -DROOT_CONFIG_SEARCHPATH=$ROOT_ROOT/bin                                               \
       -DPythia6_LIBRARY_DIR=$PYTHIA6_ROOT/lib                                               \
-      ${YAML_CPP_ROOT:+-DYAML_CPP_ROOT=${YAML_CPP_ROOT}} \
+      ${YAML_CPP_ROOT:+-DYAML_CPP_ROOT=$YAML_CPP_ROOT}                                      \
       -DGeant3_DIR=$GEANT3_ROOT                                                             \
       -DDISABLE_GO=ON                                                                       \
-      -DBUILD_EXAMPLES=ON                                                                  \
+      -DBUILD_EXAMPLES=ON                                                                   \
       ${GEANT4_ROOT:+-DGeant4_DIR=$GEANT4_ROOT}                                             \
       -DFAIRROOT_MODULAR_BUILD=ON                                                           \
       ${DDS_ROOT:+-DDDS_PATH=$DDS_ROOT}                                                     \
@@ -90,6 +89,7 @@ set version $PKGVERSION-@@PKGREVISION@$PKGHASH@@
 module-whatis "ALICE Modulefile for $PKGNAME $PKGVERSION-@@PKGREVISION@$PKGHASH@@"
 # Dependencies
 module load BASE/1.0                                                                            \\
+            ${YAML_CPP_REVISION:+yaml-cpp/$YAML_CPP_VERSION-$YAML_CPP_REVISION}                  \\
             ${FAIRLOGGER_REVISION:+FairLogger/$FAIRLOGGER_VERSION-$FAIRLOGGER_REVISION}         \\
             ${FAIRMQ_REVISION:+FairMQ/$FAIRMQ_VERSION-$FAIRMQ_REVISION}                         \\
             ${GEANT3_REVISION:+GEANT3/$GEANT3_VERSION-$GEANT3_REVISION}                         \\
