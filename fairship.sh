@@ -116,7 +116,7 @@ cmake $SOURCEDIR                                                 \
       -DGEANT4_VMC_ROOT=$GEANT4_VMC_ROOT                         \
       -DVGM_ROOT=$VGM_ROOT                                       \
       -DGENIE_ROOT=$GENIE_ROOT                                   \
-      -DLHAPDF5_ROOT="$LHAPDF5_ROOT/share/lhapdf"                \
+      -DLHAPDF_ROOT="$LHAPDF_ROOT/share/lhapdf"                \
       ${CMAKE_VERBOSE_MAKEFILE:+-DCMAKE_VERBOSE_MAKEFILE=ON}     \
       ${BOOST_ROOT:+-DBOOST_ROOT=$BOOST_ROOT}                    \
       ${BOOST_ROOT:+-DBOOST_INCLUDEDIR=$BOOST_ROOT/include}      \
