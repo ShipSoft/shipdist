@@ -1,18 +1,18 @@
 package: GCC-Toolchain
 version: "%(tag_basename)s"
+tag: v7.3.0-alice2
 source: https://github.com/alisw/gcc-toolchain
-tag: v4.9.3-alice3
 prepend_path:
   "LD_LIBRARY_PATH": "$GCC_TOOLCHAIN_ROOT/lib64"
-  "DYLD_LIBRARY_PATH": "$GCC_TOOLCHAIN_ROOT/lib64"
 build_requires:
  - autotools
  - yacc-like
+ - make
 prefer_system: .*
 prefer_system_check: |
   set -e
   which gfortran || { echo "gfortran missing"; exit 1; }
-  which cc && test -f $(dirname $(which cc))/c++ && printf "#define GCCVER ((__GNUC__ << 16)+(__GNUC_MINOR__ << 8)+(__GNUC_PATCHLEVEL__))\n#if (GCCVER < 0x040800) || ((GCCVER >= 0x050000) && (GCCVER < 0x050300)) || (GCCVER >= 0x060000)\n#error \"System's GCC cannot be used: we need 4.8, 4.9 or 5.X (with the exception of 5.0 to 5.2). We are going to compile our own version.\"\n#endif\n" | cc -xc++ - -c -o /dev/null 
+  which cc && test -f $(dirname $(which cc))/c++ && printf "#define GCCVER ((__GNUC__ << 16)+(__GNUC_MINOR__ << 8)+(__GNUC_PATCHLEVEL__))\n#if (GCCVER < 0x070300)\n#error \"System's GCC cannot be used: we need at least GCC 7.X. We are going to compile our own version.\"\n#endif\n" | cc -xc++ - -c -o /dev/null
 ---
 #!/bin/bash -e
 
@@ -100,7 +100,6 @@ popd
 # From now on, use own linker and GCC
 export PATH="$INSTALLROOT/bin:$PATH"
 export LD_LIBRARY_PATH="$INSTALLROOT/lib64:$INSTALLROOT/lib:$LD_LIBRARY_PATH"
-export DYLD_LIBRARY_PATH="$INSTALLROOT/lib64:$INSTALLROOT/lib:$DYLD_LIBRARY_PATH"
 hash -r
 
 # Test own linker and own GCC
@@ -115,6 +114,7 @@ mkdir build-gdb
 pushd build-gdb
   ../gdb/configure --prefix="$INSTALLROOT"                \
                    ${MARCH:+--build=$MARCH --host=$MARCH} \
+                   --without-python                       \
                    --disable-multilib
   make ${JOBS:+-j$JOBS} MAKEINFO=":"
   make install MAKEINFO=":"
@@ -144,7 +144,7 @@ module load BASE/1.0
 regexp -- "^(.*)/.*\$" [module-info name] dummy mod_name
 if { "\$mod_name" == "GCC-Toolchain" } {
   module load Toolchain/GCC-${PKGVERSION//-*}
-  if { [is-loaded Toolchain] } { break }
+  if { [is-loaded Toolchain] } { continue }
   set base_path \$::env(BASEDIR)
 } else {
   # Loading Toolchain: autodetect prefix
@@ -154,10 +154,8 @@ if { "\$mod_name" == "GCC-Toolchain" } {
   set base_path \$base_path/Packages
 }
 # Our environment
-setenv GCC_TOOLCHAIN_ROOT \$base_path/GCC-Toolchain/\$version
-prepend-path LD_LIBRARY_PATH \$::env(GCC_TOOLCHAIN_ROOT)/lib
-$([[ ${ARCHITECTURE:0:3} == osx ]] && echo "prepend-path DYLD_LIBRARY_PATH \$::env(GCC_TOOLCHAIN_ROOT)/lib")
-prepend-path LD_LIBRARY_PATH \$::env(GCC_TOOLCHAIN_ROOT)/lib64
-$([[ ${ARCHITECTURE:0:3} == osx ]] && echo "prepend-path DYLD_LIBRARY_PATH \$::env(GCC_TOOLCHAIN_ROOT)/lib64")
-prepend-path PATH \$::env(GCC_TOOLCHAIN_ROOT)/bin
+set GCC_TOOLCHAIN_ROOT \$base_path/GCC-Toolchain/\$version
+prepend-path LD_LIBRARY_PATH \$GCC_TOOLCHAIN_ROOT/lib
+prepend-path LD_LIBRARY_PATH \$GCC_TOOLCHAIN_ROOT/lib64
+prepend-path PATH \$GCC_TOOLCHAIN_ROOT/bin
 EoF
