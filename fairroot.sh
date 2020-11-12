@@ -74,6 +74,11 @@ for DIR in source sink field event sim steer; do
   ln -nfs ../include $INSTALLROOT/include/$DIR
 done
 
+#Get current git hash, needed by FairShip
+cd $SOURCEDIR
+FAIRROOT_HASH=$(git rev-parse HEAD)
+cd $BUILDDIR
+
 # Modulefile
 MODULEDIR="$INSTALLROOT/etc/modulefiles"
 MODULEFILE="$MODULEDIR/$PKGNAME"
@@ -105,6 +110,7 @@ module load BASE/1.0                                                            
             ${GCC_TOOLCHAIN_REVISION:+GCC-Toolchain/$GCC_TOOLCHAIN_VERSION-$GCC_TOOLCHAIN_REVISION}
 # Our environment
 set FAIRROOT_ROOT \$::env(BASEDIR)/$PKGNAME/\$version
+setenv FAIRROOT_HASH $FAIRROOT_HASH
 setenv VMCWORKDIR \$FAIRROOT_ROOT/share/fairbase/examples
 setenv GEOMPATH \$::env(VMCWORKDIR)/common/geometry
 setenv CONFIG_DIR \$::env(VMCWORKDIR)/common/gconfig

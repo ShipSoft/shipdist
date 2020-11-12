@@ -82,16 +82,22 @@ overrides:
       which cmake && case `cmake --version | sed -e 's/.* //' | cut -d. -f1,2,3 | head -n1` in [0-2]*|3.[0-7].*) exit 1 ;; esac
   FairRoot:
     tag: "v18.4.2"
-    incremental_recipe: |
-      cd $SOURCEDIR
-      FAIRROOT_HASH=$(git rev-parse HEAD)
-      cd $BUILDDIR
-      setenv FAIRROOT_HASH $FAIRROOT_HASH
-      echo "??? $FAIRROOT_HASH"
+    prefer_system_check: |
+      ls $FAIRROOT_ROOT/ > /dev/null && \
+      ls $FAIRROOT_ROOT/lib > /dev/null && \
+      ls $FAIRROOT_ROOT/include > /dev/null && \
   FairMQ:
     tag: "v1.4.25"
+    prefer_system_check: |
+      ls $FAIRMQ_ROOT/ > /dev/null && \
+      ls $FAIRMQ_ROOT/lib > /dev/null && \
+      ls $FAIRMQ_ROOT/include > /dev/null && \
   FairLogger:
     tag: "v1.9.0"
+    prefer_system_check: |
+      ls $FAIRLogger_ROOT/ > /dev/null && \
+      ls $FAIRLogger_ROOT/lib > /dev/null && \
+      ls $FAIRLogger_ROOT/include > /dev/null && \
   GEANT4:
     version: "%(tag_basename)s"
     tag: v10.6.2
