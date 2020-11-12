@@ -16,7 +16,7 @@ overrides:
     tag: v1.6.3
   boost:
     version:  "%(tag_basename)s"
-    tag: "v1.64.0-alice1"
+    tag: "v1.72.0"
     requires:
       - "GCC-Toolchain:(?!osx)"
       - Python
@@ -24,7 +24,7 @@ overrides:
      printf "#include \"boost/version.hpp\"\n# if (BOOST_VERSION < 106400)\n#error \"Cannot use system's boost. Boost > 1.64.00 required.\"\n#endif\nint main(){}" \
      | gcc -I$BOOST_ROOT/include -xc++ - -o /dev/null
   GCC-Toolchain:
-    tag: v6.2.0-alice1
+    tag: v7.3.0-alice2
     prefer_system_check: |
       set -e
       which gfortran || { echo "gfortran missing"; exit 1; }
