@@ -81,7 +81,7 @@ overrides:
     prefer_system_check: |
       which cmake && case `cmake --version | sed -e 's/.* //' | cut -d. -f1,2,3 | head -n1` in [0-2]*|3.[0-7].*) exit 1 ;; esac
   FairRoot:
-    tag: "v18.4.1"
+    tag: "v18.4.2"
     incremental_recipe: |
       cd $SOURCEDIR
       FAIRROOT_HASH=$(git rev-parse HEAD)
