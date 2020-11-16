@@ -90,15 +90,15 @@ case $ARCHITECTURE in
   ;;
   *) SONAME=so ;;
 esac
-
+echo "fairlogger 1 $FAIRLOGGER_ROOT 2 $FAIRLOGGER_INCLUDE_DIR"
 rsync -a $SOURCEDIR/ $INSTALLROOT/
-echo "run cmake $FAIRROOT_ROOT | $GEANT4_VMC_ROOT"
 cmake $SOURCEDIR                                                 \
       -DFAIRBASE="$FAIRROOT_ROOT/share/fairbase"                 \
       -DFAIRROOTPATH="$FAIRROOT_ROOT"                            \
       -DFAIRROOT_INCLUDE_DIR="$FAIRROOT_ROOT/include"            \
-      -DFAIRROOT_LIBRARY_DIR="$FAIRROOT_ROOT/lib"            \
-      -DFMT_INCLUDE_DIR="$FMT_ROOT/include"            \
+      -DFAIRROOT_LIBRARY_DIR="$FAIRROOT_ROOT/lib"                \
+      -DFAIRLOGGER_INCLUDE_DIR="$FAIRLOGGER_ROOT/include"        \
+      -DFMT_INCLUDE_DIR="$FMT_ROOT/include"                      \
       -DCMAKE_CXX_FLAGS="$CXXFLAGS"                              \
       -DCMAKE_BUILD_TYPE=$CMAKE_BUILD_TYPE                       \
       -DROOTSYS=$ROOTSYS                                         \
@@ -109,7 +109,6 @@ cmake $SOURCEDIR                                                 \
       -DEVTGENPATH=$EVTGEN_ROOT                                  \
       -DEVTGEN_INCLUDE_DIR=$EVTGEN_ROOT/include                  \
       -DEVTGEN_LIBRARY_DIR=$EVTGEN_ROOT/lib                      \
-      -DFAIRROOTPATH=$FAIRROOT_ROOT                              \
       ${PYTHON_ROOT:+-DPYTHON_LIBRARY=$PYTHON_ROOT/lib}          \
       ${PYTHON_ROOT:+-DPYTHON_INCLUDE_DIR=$PYTHON_ROOT/include/python3.6m/} \
       -DPythia6_LIBRARY_DIR=$PYTHIA6_ROOT/lib                    \
