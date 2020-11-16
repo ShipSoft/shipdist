@@ -86,6 +86,7 @@ overrides:
       ls $FAIRROOT_ROOT/ > /dev/null && \
       ls $FAIRROOT_ROOT/lib > /dev/null && \
       ls $FAIRROOT_ROOT/include > /dev/null && \
+      grep v18.4.2 $FAIRROOT_ROOT/include/FairVersion.h
   FairMQ:
     tag: "v1.4.25"
     prefer_system_check: |
@@ -95,9 +96,10 @@ overrides:
   FairLogger:
     tag: "v1.9.0"
     prefer_system_check: |
-      ls $FAIRLogger_ROOT/ > /dev/null && \
-      ls $FAIRLogger_ROOT/lib > /dev/null && \
-      ls $FAIRLogger_ROOT/include > /dev/null && \
+      ls $FAIRLOGGER_ROOT/ > /dev/null && \
+      ls $FAIRLOGGER_ROOT/lib > /dev/null && \
+      ls $FAIRLOGGER_ROOT/include/fairlogger > /dev/null && \
+      grep 1.9.0 $FAIRLOGGER_ROOT/include/fairlogger/Version.h
   GEANT4:
     version: "%(tag_basename)s"
     tag: v10.6.2
@@ -133,6 +135,15 @@ overrides:
   GEANT4_VMC:
     version: "%(tag_basename)s"
     tag: v5-0-p5
+    prefer_system_check: |
+      ls $GEANT4_VMC_ROOT/bin > /dev/null && \
+      ls $GEANT4_VMC_ROOT/lib/libg4root.so > /dev/null && \
+      ls $GEANT4_VMC_ROOT/lib/libgeant4vmc.so> /dev/null && \
+      ls $GEANT4_VMC_ROOT/lib/libmtroot.so > /dev/null && \
+      ls $GEANT4_VMC_ROOT/include/g4root > /dev/null && \
+      ls $GEANT4_VMC_ROOT/include/geant4vmc > /dev/null && \
+      ls $GEANT4_VMC_ROOT/include/mtroot > /dev/null && \
+      true
   GENIE:
     tag: v2.12.6-ship
     prefer_system_check: |
@@ -143,6 +154,11 @@ overrides:
       ls $GENIE_ROOT/genie/inc > /dev/null && \
       ls $GENIE_ROOT/genie/lib > /dev/null && \
       ls $GENIE_ROOT/genie/src > /dev/null && \
+      true
+  alpaca:
+    version: v1.1
+    prefer_system_check: |
+      ls $ALPACA/bin > /dev/null && \
       true
   pythia:
     version: "%(tag_basename)s"
@@ -159,7 +175,7 @@ overrides:
       ls $PYTHIA_ROOT/include/Pythia8 > /dev/null && \
       ls $PYTHIA_ROOT/include/Pythia8Plugins > /dev/null && \
       ls $PYTHIA_ROOT/lib/libpythia8.a > /dev/null && \
-      ls $PYTHIA_ROOT/lib/libpythia8lhapdf.so > /dev/null && \
+      ls $PYTHIA_ROOT/lib/libpythia8lhapdf6.so > /dev/null && \
       ls $PYTHIA_ROOT/lib/libpythia8.so > /dev/null && \
       true
   vgm:
@@ -191,7 +207,6 @@ overrides:
       ls $PHOTOSPP_ROOT/lib/libPhotosppHepMC.so.1.0.0 > /dev/null && \
       ls $PHOTOSPP_ROOT/lib/libPhotospp.so > /dev/null && \
       true
-
   Tauolapp:
     version: "%(tag_basename)s"
     source: https://github.com/ShipSoft/Tauolapp
