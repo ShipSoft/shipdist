@@ -81,6 +81,7 @@ overrides:
     prefer_system_check: |
       which cmake && case `cmake --version | sed -e 's/.* //' | cut -d. -f1,2,3 | head -n1` in [0-2]*|3.[0-7].*) exit 1 ;; esac
   FairRoot:
+    version: "%(tag_basename)s"
     tag: "v18.4.2"
     prefer_system_check: |
       ls $FAIRROOT_ROOT/ > /dev/null && \
@@ -88,12 +89,14 @@ overrides:
       ls $FAIRROOT_ROOT/include > /dev/null && \
       grep v18.4.2 $FAIRROOT_ROOT/include/FairVersion.h
   FairMQ:
+    version: "%(tag_basename)s"
     tag: "v1.4.25"
     prefer_system_check: |
       ls $FAIRMQ_ROOT/ > /dev/null && \
       ls $FAIRMQ_ROOT/lib > /dev/null && \
       ls $FAIRMQ_ROOT/include > /dev/null && \
   FairLogger:
+    version: "%(tag_basename)s"
     tag: "v1.9.0"
     prefer_system_check: |
       ls $FAIRLOGGER_ROOT/ > /dev/null && \

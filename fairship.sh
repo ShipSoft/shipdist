@@ -45,7 +45,7 @@ incremental_recipe: |
             ${GENIE_VERSION:+GENIE/$GENIE_VERSION-$GENIE_REVISION}              \\
             ${PHOTOSPP_VERSION:+PHOTOSPP/$PHOTOSPP_VERSION-$PHOTOSPP_REVISION}  \\
             ${EVTGEN_VERSION:+EvtGen/$EVTGEN_VERSION-$EVTGEN_REVISION}          \\
-            FairRoot/$FAIRROOT_VERSION-$FAIRROOT_REVISION			\\
+            ${FAIRROOT_VERSION:+FairRoot/$FAIRROOT_REVISION			\\
             ${MADGRAPH5_VERSION:+madgraph5/$MADGRAPH5_VERSION-$MADGRAPH5_REVISION}
   # Our environment
   setenv EOSSHIP root://eospublic.cern.ch/
@@ -90,7 +90,6 @@ case $ARCHITECTURE in
   ;;
   *) SONAME=so ;;
 esac
-echo "fairlogger 1 $FAIRLOGGER_ROOT 2 $FAIRLOGGER_INCLUDE_DIR"
 rsync -a $SOURCEDIR/ $INSTALLROOT/
 cmake $SOURCEDIR                                                 \
       -DFAIRBASE="$FAIRROOT_ROOT/share/fairbase"                 \
