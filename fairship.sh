@@ -104,34 +104,21 @@ cmake $SOURCEDIR                                                 \
       -DCMAKE_CXX_FLAGS="$CXXFLAGS"                              \
       -DCMAKE_BUILD_TYPE=$CMAKE_BUILD_TYPE                       \
       -DROOTSYS=$ROOTSYS                                         \
-      -DROOT_CONFIG_SEARCHPATH=$ROOT_ROOT/bin                    \
       -DROOT_DIR=$ROOT_ROOT                                      \
       -DHEPMC_DIR=$HEPMC_ROOT                                    \
       -DHEPMC_INCLUDE_DIR=$HEPMC_ROOT/include/HepMC              \
-      -DEVTGENPATH=$EVTGEN_ROOT                                  \
       -DEVTGEN_INCLUDE_DIR=$EVTGEN_ROOT/include                  \
       -DEVTGEN_LIBRARY_DIR=$EVTGEN_ROOT/lib                      \
       ${PYTHON_ROOT:+-DPYTHON_LIBRARY=$PYTHON_ROOT/lib}          \
       ${PYTHON_ROOT:+-DPYTHON_INCLUDE_DIR=$PYTHON_ROOT/include/python3.6m/} \
-      -DPythia6_LIBRARY_DIR=$PYTHIA6_ROOT/lib                    \
       -DPYTHIA8_DIR=$PYTHIA_ROOT                                 \
       -DPYTHIA8_INCLUDE_DIR=$PYTHIA_ROOT/include                 \
-      -DGEANT3_PATH=$GEANT3_ROOT                                 \
-      -DGEANT3_LIB=$GEANT3_ROOT/lib                              \
       -DGEANT4_ROOT=$GEANT4_ROOT                                 \
       -DGEANT4_INCLUDE_DIR=$GEANT4_ROOT/include/Geant4           \
-      -DGEANT4_VMC_ROOT=$GEANT4_VMC_ROOT                         \
-      -DGEANT4_VMC_INCLUDE_DIR=$GEANT4_VMC_ROOT/include/geant4vmc          \
-      -DVGM_ROOT=$VGM_ROOT                                       \
-      -DGENIE_ROOT=$GENIE_ROOT                                   \
-      -DLHAPDF_ROOT="$LHAPDF_ROOT/share/lhapdf"                \
+      -DGEANT4_VMC_INCLUDE_DIR=$GEANT4_VMC_ROOT/include/geant4vmc \
       ${CMAKE_VERBOSE_MAKEFILE:+-DCMAKE_VERBOSE_MAKEFILE=ON}     \
       ${BOOST_ROOT:+-DBOOST_ROOT=$BOOST_ROOT}                    \
-      ${BOOST_ROOT:+-DBOOST_INCLUDEDIR=$BOOST_ROOT/include}      \
-      ${BOOST_ROOT:+-DBOOST_LIBRARYDIR=$BOOST_ROOT/lib}          \
-      ${BOOST_ROOT:+-DBoost_NO_SYSTEM=TRUE}                      \
-      ${GSL_ROOT:+-DGSL_DIR=$GSL_ROOT}                           \
-      -DCMAKE_INSTALL_PREFIX=$INSTALLROOT                
+      -DCMAKE_INSTALL_PREFIX=$INSTALLROOT
 
 make ${JOBS:+-j$JOBS}
 make test
