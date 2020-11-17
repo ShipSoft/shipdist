@@ -1,10 +1,10 @@
 package: defaults-fairship
 version: v1
 env:
-  CXXFLAGS: "-fPIC -g -O2 -std=c++11"
+  CXXFLAGS: "-fPIC -g -O2 -std=c++17"
   CFLAGS: "-fPIC -g -O2"
   CMAKE_BUILD_TYPE: "RELEASE"
-  CMAKE_CXX_STANDARD: 11
+  CMAKE_CXX_STANDARD: 17
 disable:
   - AliEn-Runtime
   - MonALISA-gSOAP-client
@@ -13,10 +13,10 @@ disable:
   - DDS
 overrides:
   autotools:
-    tag: v1.5.0
+    tag: v1.6.3
   boost:
     version:  "%(tag_basename)s"
-    tag: "v1.64.0-alice1"
+    tag: "v1.70.0"
     requires:
       - "GCC-Toolchain:(?!osx)"
       - Python
@@ -24,15 +24,15 @@ overrides:
      printf "#include \"boost/version.hpp\"\n# if (BOOST_VERSION < 106400)\n#error \"Cannot use system's boost. Boost > 1.64.00 required.\"\n#endif\nint main(){}" \
      | gcc -I$BOOST_ROOT/include -xc++ - -o /dev/null
   GCC-Toolchain:
-    tag: v6.2.0-alice1
+    tag: v7.3.0-alice2
     prefer_system_check: |
       set -e
       which gfortran || { echo "gfortran missing"; exit 1; }
       which cc && test -f $(dirname $(which cc))/c++ && printf "#define GCCVER ((__GNUC__ << 16)+(__GNUC_MINOR__ << 8)+(__GNUC_PATCHLEVEL__))\n#if (GCCVER < 0x060000 || GCCVER > 0x100000)\n#error \"System's GCC cannot be used: we need GCC 6.X. We are going to compile our own version.\"\n#endif\n" | cc -xc++ - -c -o /dev/null
   XRootD:
-    tag: v4.8.3
+    tag: v4.12.1
   ROOT:
-    tag: "v6-20-06"
+    tag: "v6-22-02"
     source: https://github.com/root-project/root
     requires:
       - GSL
@@ -74,63 +74,38 @@ overrides:
        | gcc  -I"$GSL_ROOT/include" -xc++ - -o /dev/null
   protobuf:
     version: "%(tag_basename)s"
-    tag: "v3.0.2"
+    tag: "v3.12.3"
   CMake:
     version: "%(tag_basename)s"
-    tag: "v3.9.4"
+    tag: "v3.18.2"
     prefer_system_check: |
       which cmake && case `cmake --version | sed -e 's/.* //' | cut -d. -f1,2,3 | head -n1` in [0-2]*|3.[0-7].*) exit 1 ;; esac
   FairRoot:
-    source: https://github.com/ShipSoft/FairRoot
     version: "%(tag_basename)s"
-    tag: May30-ship
+    tag: "v18.4.2"
     prefer_system_check: |
       ls $FAIRROOT_ROOT/ > /dev/null && \
       ls $FAIRROOT_ROOT/lib > /dev/null && \
       ls $FAIRROOT_ROOT/include > /dev/null && \
-      grep v-14.03 $FAIRROOT_ROOT/include/FairVersion.h
-    incremental_recipe: |
-      make -j$JOBS;make install; MODULEDIR="$INSTALLROOT/etc/modulefiles"
-      MODULEFILE="$MODULEDIR/$PKGNAME"
-      mkdir -p "$MODULEDIR"
-      cd $SOURCEDIR
-      FAIRROOT_HASH=$(git rev-parse HEAD)
-      cd $BUILDDIR
-      cat > "$MODULEFILE" <<EoF
-      #%Module1.0
-      proc ModulesHelp { } {
-      global version
-      puts stderr "ALICE Modulefile for $PKGNAME $PKGVERSION-@@PKGREVISION@$PKGHASH@@"
-      }
-      set version $PKGVERSION-@@PKGREVISION@$PKGHASH@@
-      module-whatis "ALICE Modulefile for $PKGNAME $PKGVERSION-@@PKGREVISION@$PK      GHASH@@"
-      # Dependencies
-      module load BASE/1.0                                                                            \\
-            ${GEANT3_VERSION:+GEANT3/$GEANT3_VERSION-$GEANT3_REVISION}                          \\
-            ${GEANT4_VMC_VERSION:+GEANT4_VMC/$GEANT4_VMC_VERSION-$GEANT4_VMC_REVISION}          \\
-            ${PROTOBUF_VERSION:+protobuf/$PROTOBUF_VERSION-$PROTOBUF_REVISION}                  \\
-            ${PYTHIA6_VERSION:+pythia6/$PYTHIA6_VERSION-$PYTHIA6_REVISION}                      \\
-            ${PYTHIA_VERSION:+pythia/$PYTHIA_VERSION-$PYTHIA_REVISION}                          \\
-            ${VGM_VERSION:+vgm/$VGM_VERSION-$VGM_REVISION}                                      \\
-            ${BOOST_VERSION:+boost/$BOOST_VERSION-$BOOST_REVISION}                              \\
-            ROOT/$ROOT_VERSION-$ROOT_REVISION                                                   \\
-            ${ZEROMQ_VERSION:+ZeroMQ/$ZEROMQ_VERSION-$ZEROMQ_REVISION}                          \\
-            ${NANOMSG_VERSION:+nanomsg/$NANOMSG_VERSION-$NANOMSG_REVISION}                      \\
-            ${GCC_TOOLCHAIN_ROOT:+GCC-Toolchain/$GCC_TOOLCHAIN_VERSION-$GCC_TOOLCHAIN_REVISION}
-      # Our environment
-      setenv FAIRROOT_ROOT \$::env(BASEDIR)/$PKGNAME/\$version
-      setenv FAIRROOT_HASH $FAIRROOT_HASH
-      setenv VMCWORKDIR \$::env(FAIRROOT_ROOT)/share/fairbase/examples
-      setenv GEOMPATH \$::env(VMCWORKDIR)/common/geometry
-      setenv CONFIG_DIR \$::env(VMCWORKDIR)/common/gconfig
-      prepend-path PATH \$::env(FAIRROOT_ROOT)/bin
-      prepend-path LD_LIBRARY_PATH \$::env(FAIRROOT_ROOT)/lib
-      prepend-path ROOT_INCLUDE_PATH \$::env(FAIRROOT_ROOT)/include
-      $([[ ${ARCHITECTURE:0:3} == osx ]] && echo "prepend-path DYLD_LIBRARY_PATH      \$::env(FAIRROOT_ROOT)/lib")
-      EoF
+      grep v18.4.2 $FAIRROOT_ROOT/include/FairVersion.h
+  FairMQ:
+    version: "%(tag_basename)s"
+    tag: "v1.4.25"
+    prefer_system_check: |
+      ls $FAIRMQ_ROOT/ > /dev/null && \
+      ls $FAIRMQ_ROOT/lib > /dev/null && \
+      ls $FAIRMQ_ROOT/include > /dev/null && \
+  FairLogger:
+    version: "%(tag_basename)s"
+    tag: "v1.9.0"
+    prefer_system_check: |
+      ls $FAIRLOGGER_ROOT/ > /dev/null && \
+      ls $FAIRLOGGER_ROOT/lib > /dev/null && \
+      ls $FAIRLOGGER_ROOT/include/fairlogger > /dev/null && \
+      grep 1.9.0 $FAIRLOGGER_ROOT/include/fairlogger/Version.h
   GEANT4:
     version: "%(tag_basename)s"
-    tag: v10.3.2
+    tag: v10.6.2
     source: https://github.com/geant4/geant4.git
     prefer_system_check: |
       ls $GEANT4_ROOT/bin > /dev/null && \
@@ -146,25 +121,23 @@ overrides:
       - opengl
       - XercesC
     env:
-      G4INSTALL: "$GEANT4_ROOT"
-      G4SYSTEM: "$(uname)-g++"
-      G4VERSION: "Geant4-10.3.2"
-      G4INSTALL_DATA: "$GEANT4_ROOT/share/$G4VERSION/data"
-      G4ABLADATA:               "$GEANT4_ROOT/share/$G4VERSION/data/G4ABLA3.0"
-      G4LEDATA:                 "$GEANT4_ROOT/share/$G4VERSION/data/G4EMLOW6.50"
-      G4ENSDFSTATEDATA:         "$GEANT4_ROOT/share/$G4VERSION/data/G4ENSDFSTATE2.1"
-      G4NeutronHPCrossSections: "$GEANT4_ROOT/share/$G4VERSION/data/G4NDL4.5"
-      G4NEUTRONHPDATA:          "$GEANT4_ROOT/share/$G4VERSION/data/G4NDL4.5"
-      G4NEUTRONXSDATA:          "$GEANT4_ROOT/share/$G4VERSION/data/G4NEUTRONXS1.4"
-      G4PIIDATA:                "$GEANT4_ROOT/share/$G4VERSION/data/G4PII1.3"
-      G4SAIDXSDATA:             "$GEANT4_ROOT/share/$G4VERSION/data/G4SAIDDATA1.1"
-      G4LEVELGAMMADATA:         "$GEANT4_ROOT/share/$G4VERSION/data/PhotonEvaporation4.3.2"
-      G4RADIOACTIVEDATA:        "$GEANT4_ROOT/share/$G4VERSION/data/RadioactiveDecay5.1.1"
-      G4REALSURFACEDATA:        "$GEANT4_ROOT/share/$G4VERSION/data/RealSurface1.0"
+     G4INSTALL : $GEANT4_ROOT
+     G4DATASEARCHOPT : "-mindepth 2 -maxdepth 4 -type d -wholename"
+     G4ABLADATA : "`find ${G4INSTALL} $G4DATASEARCHOPT '*data*G4ABLA*'`"  ## v10.4.px only
+     G4ENSDFSTATEDATA : "`find ${G4INSTALL} $G4DATASEARCHOPT '*data*G4ENSDFSTATE*'`"
+     G4INCLDATA : "`find ${G4INSTALL} $G4DATASEARCHOPT '*data*G4INCL*'`"  ## v10.5.px only
+     G4LEDATA : "`find ${G4INSTALL} $G4DATASEARCHOPT '*data*G4EMLOW*'`"
+     G4LEVELGAMMADATA : "`find ${G4INSTALL} $G4DATASEARCHOPT '*data*PhotonEvaporation*'`"
+     G4NEUTRONHPDATA : "`find ${G4INSTALL} $G4DATASEARCHOPT '*data*G4NDL*'`"
+     G4NEUTRONXSDATA : "`find ${G4INSTALL} $G4DATASEARCHOPT '*data*G4NEUTRONXS*'`"   ## v10.4.px only
+     G4PARTICLEXSDATA : "`find ${G4INSTALL} $G4DATASEARCHOPT '*data*G4PARTICLEXS*'`"   ## v10.5.px only
+     G4PIIDATA : "`find ${G4INSTALL} $G4DATASEARCHOPT '*data*G4PII*'`"
+     G4RADIOACTIVEDATA : "`find ${G4INSTALL} $G4DATASEARCHOPT '*data*RadioactiveDecay*'`"
+     G4REALSURFACEDATA : "`find ${G4INSTALL} $G4DATASEARCHOPT '*data*RealSurface*'`"
+     G4SAIDXSDATA : "`find ${G4INSTALL} $G4DATASEARCHOPT  '*data*G4SAIDDATA*'`"
   GEANT4_VMC:
     version: "%(tag_basename)s"
-    tag: v3-6-ship
-    source: https://github.com/ShipSoft/geant4_vmc.git
+    tag: v5-0-p5
     prefer_system_check: |
       ls $GEANT4_VMC_ROOT/bin > /dev/null && \
       ls $GEANT4_VMC_ROOT/lib/libg4root.so > /dev/null && \
@@ -185,6 +158,11 @@ overrides:
       ls $GENIE_ROOT/genie/lib > /dev/null && \
       ls $GENIE_ROOT/genie/src > /dev/null && \
       true
+  alpaca:
+    version: v1.1
+    prefer_system_check: |
+      ls $ALPACA/bin > /dev/null && \
+      true
   pythia:
     version: "%(tag_basename)s"
     source: https://github.com/ShipSoft/pythia8
@@ -200,7 +178,7 @@ overrides:
       ls $PYTHIA_ROOT/include/Pythia8 > /dev/null && \
       ls $PYTHIA_ROOT/include/Pythia8Plugins > /dev/null && \
       ls $PYTHIA_ROOT/lib/libpythia8.a > /dev/null && \
-      ls $PYTHIA_ROOT/lib/libpythia8lhapdf.so > /dev/null && \
+      ls $PYTHIA_ROOT/lib/libpythia8lhapdf6.so > /dev/null && \
       ls $PYTHIA_ROOT/lib/libpythia8.so > /dev/null && \
       true
   vgm:
@@ -232,7 +210,6 @@ overrides:
       ls $PHOTOSPP_ROOT/lib/libPhotosppHepMC.so.1.0.0 > /dev/null && \
       ls $PHOTOSPP_ROOT/lib/libPhotospp.so > /dev/null && \
       true
-
   Tauolapp:
     version: "%(tag_basename)s"
     source: https://github.com/ShipSoft/Tauolapp

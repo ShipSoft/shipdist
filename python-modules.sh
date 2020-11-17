@@ -10,10 +10,10 @@ prepend_path:
   PYTHONPATH: $PYTHON_MODULES_ROOT/lib/python3.6/site-packages:$PYTHONPATH
 prefer_system: (?!slc5)
 prefer_system_check: |
-  python3 -c 'import matplotlib,numpy,scipy,certifi,IPython,ipywidgets,ipykernel,notebook.notebookapp,metakernel,sklearn,six,pymongo,mongoengine,pytest,pylint'
+  python3 -c 'import matplotlib,numpy,scipy,certifi,IPython,ipywidgets,ipykernel,notebook.notebookapp,metakernel,sklearn,six,pymongo,mongoengine,pytest,pylint,yaml'
   if [ $? -ne 0 ]
   then
-      printf "Required Python modules are missing. You can install them with pip3:\n  pip3 install matplotlib numpy certifi ipython ipywidgets ipykernel notebook metakernel pymongo mongoengine pytest pylint\n"
+      printf "Required Python modules are missing. You can install them with pip3:\n  pip3 install matplotlib numpy certifi ipython ipywidgets ipykernel notebook metakernel pymongo mongoengine pytest pylint yaml\n"
       exit 1
   fi
 ---
@@ -41,6 +41,7 @@ If you want to avoid this please install the following modules (pip recommended)
   - mongoengine
   - pytest
   - pylint
+  - yaml
 EoF
 fi
 
@@ -70,6 +71,7 @@ for X in "pip==19.1.1"          \
          "pymongo==3.10.1"      \
          "pytest==4.6.9"        \
          "pylint==1.9.5"        \
+         "PyYAML==5.1"          \
          "mongoengine==0.19.1"
 do
   python3 -m pip install --user $X
