@@ -1,5 +1,5 @@
 package: lhapdf5
-tag: v5.9.1-ship2
+tag: v5.9.1-ship3
 version: "%(tag_basename)s"
 source: https://github.com/ShipSoft/LHAPDF.git
 env:

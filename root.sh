@@ -39,8 +39,18 @@ unset ROOTSYS
 COMPILER_CC=cc
 COMPILER_CXX=c++
 COMPILER_LD=c++
-[[ "$CMAKE_CXX_STANDARD" == '11' ]] && CXX11=1 || true
-[[ "$CMAKE_CXX_STANDARD" == '14' ]] && CXX14=1 || true
+case $PKGVERSION in
+  v6-20*) 
+     [[ "$CXXFLAGS" == *'-std=c++11'* ]] && CMAKE_CXX_STANDARD=11 || true
+     [[ "$CXXFLAGS" == *'-std=c++14'* ]] && CMAKE_CXX_STANDARD=14 || true
+     [[ "$CXXFLAGS" == *'-std=c++17'* ]] && CMAKE_CXX_STANDARD=17 || true
+  ;;
+  *)
+    [[ "$CXXFLAGS" == *'-std=c++11'* ]] && CXX11=1 || true
+    [[ "$CXXFLAGS" == *'-std=c++14'* ]] && CXX14=1 || true
+    [[ "$CXXFLAGS" == *'-std=c++17'* ]] && CXX17=1 || true
+  ;;
+esac
 
 case $ARCHITECTURE in
   osx*)
