@@ -32,8 +32,8 @@ overrides:
   XRootD:
     tag: v4.12.1
   ROOT:
-    tag: "v6-22-02"
-    source: https://github.com/root-project/root
+    tag: "ship-v6-22-02"
+    source: https://github.com/ThomasRuf/root
     requires:
       - GSL
       - opengl:(?!osx)
