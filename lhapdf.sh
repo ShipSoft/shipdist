@@ -32,7 +32,7 @@ PDFSETS="cteq6l1 MMHT2014lo68cl MMHT2014nlo68cl"
 #$INSTALLROOT/bin/lhapdf install $PDFSETS
 # Check if PDF sets were really installed
 for P in $PDFSETS; do
-  curl https://lhapdfsets.web.cern.ch/lhapdfsets/current/"$P".tar.gz | tar xz -C "$INSTALLROOT"/share/LHAPDF
+  curl -L https://lhapdfsets.web.cern.ch/lhapdfsets/current/"$P".tar.gz | tar xz -C "$INSTALLROOT"/share/LHAPDF
   ls "$INSTALLROOT"/share/LHAPDF/"$P"
 done
 
