@@ -1,4 +1,4 @@
-package: defaults-fairship
+package: defaults-release
 version: v1
 env:
   CXXFLAGS: "-fPIC -g -O2 -std=c++17"
