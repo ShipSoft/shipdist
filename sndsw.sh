@@ -50,7 +50,9 @@ incremental_recipe: |
   # Our environment
   setenv EOSSHIP root://eospublic.cern.ch/
   setenv SNDSW_ROOT \$::env(BASEDIR)/$PKGNAME/\$version
+  setenv FAIRSHIP \$::env(SNDSW_ROOT)
   setenv SNDSW_HASH $SNDSW_HASH
+  setenv FAIRSHIP_HASH \$::env(SNDSW_HASH)
   setenv VMCWORKDIR \$::env(SNDSW_ROOT)
   setenv GEOMPATH \$::env(SNDSW_ROOT)/geometry
   setenv CONFIG_DIR \$::env(SNDSW_ROOT)/gconfig
@@ -156,7 +158,9 @@ module load BASE/1.0                                                            
 # Our environment
 setenv EOSSHIP root://eospublic.cern.ch/
 setenv SNDSW_ROOT \$::env(BASEDIR)/$PKGNAME/\$version
+setenv FAIRSHIP \$::env(SNDSW_ROOT)
 setenv SNDSW_HASH $SNDSW_HASH
+setenv FAIRSHIP_HASH \$::env(SNDSW_HASH)
 setenv VMCWORKDIR \$::env(SNDSW_ROOT)
 setenv GEOMPATH \$::env(SNDSW_ROOT)/geometry
 setenv CONFIG_DIR \$::env(SNDSW_ROOT)/gconfig
