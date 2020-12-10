@@ -148,7 +148,7 @@ overrides:
       ls $GEANT4_VMC_ROOT/include/mtroot > /dev/null && \
       true
   GENIE:
-    tag: v2.12.6-ship
+    tag: v2.12.6-ship2021
     prefer_system_check: |
       ls $GENIE_ROOT/genie > /dev/null && \
       ls $GENIE_ROOT/genie/bin > /dev/null && \
@@ -242,6 +242,19 @@ overrides:
       ls $LHAPDF_ROOT/include/LHAPDF > /dev/null && \
       ls $LHAPDF_ROOT/lib > /dev/null && \
       ls $LHAPDF_ROOT/share/lhapdf > /dev/null
+  lhapdf5:
+    prefer_system_check: |
+      ls $LHAPDF5_ROOT/ > /dev/null && \
+      ls $LHAPDF5_ROOT/bin > /dev/null && \
+      ls $LHAPDF5_ROOT/include > /dev/null && \
+      ls $LHAPDF5_ROOT/include/LHAPDF > /dev/null && \
+      ls $LHAPDF5_ROOT/lib > /dev/null && \
+      ls $LHAPDF5_ROOT/lib/libLHAPDF.so > /dev/null && \
+      ls $LHAPDF5_ROOT/lib/libLHAPDF.so.0 > /dev/null && \
+      ls $LHAPDF5_ROOT/lib/libLHAPDF.la > /dev/null && \
+      ls $LHAPDF5_ROOT/lib/libLHAPDF.a > /dev/null && \
+      ls $LHAPDF5_ROOT/lib64/python2.7/site-packages/lhapdf.py > /dev/null && \
+      ls $LHAPDF5_ROOT/share/lhapdf > /dev/null 
   vgm:
     prefer_system_check: |
       ls $VGM_ROOT/ > /dev/null && \
