@@ -72,6 +72,7 @@ for X in "pip==19.1.1"          \
          "pytest==4.6.9"        \
          "pylint==1.9.5"        \
          "PyYAML==5.1"          \
+         "requests==2.25.0"     \
          "mongoengine==0.19.1"
 do
   python3 -m pip install --user $X
