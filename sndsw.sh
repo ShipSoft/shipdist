@@ -93,11 +93,8 @@ case $ARCHITECTURE in
 esac
 rsync -a $SOURCEDIR/ $INSTALLROOT/
 
-export FAIRROOTPATH="$FAIRROOT_ROOT"
-
 cmake $SOURCEDIR                                                 \
       -DFAIRBASE="$FAIRROOT_ROOT/share/fairbase"                 \
-      -DFAIRROOTPATH="$FAIRROOTPATH"                             \
       -DFAIRROOT_INCLUDE_DIR="$FAIRROOT_ROOT/include"            \
       -DFAIRROOT_LIBRARY_DIR="$FAIRROOT_ROOT/lib"                \
       -DFAIRLOGGER_INCLUDE_DIR="$FAIRLOGGER_ROOT/include"        \
