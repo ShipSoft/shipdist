@@ -16,6 +16,7 @@ env:
   VMCWORKDIR: "$FAIRROOT_ROOT/share/fairbase/examples"
   GEOMPATH:   "$FAIRROOT_ROOT/share/fairbase/examples/common/geometry"
   CONFIG_DIR: "$FAIRROOT_ROOT/share/fairbase/examples/common/gconfig"
+  FAIRROOTPATH: "$FAIRROOT_ROOT"
 prepend_path:
   ROOT_INCLUDE_PATH: "$FAIRROOT_ROOT/include"
 ---
@@ -110,6 +111,7 @@ module load BASE/1.0                                                            
             ${GCC_TOOLCHAIN_REVISION:+GCC-Toolchain/$GCC_TOOLCHAIN_VERSION-$GCC_TOOLCHAIN_REVISION}
 # Our environment
 set FAIRROOT_ROOT \$::env(BASEDIR)/$PKGNAME/\$version
+set FAIRROOTPATH \$::env(BASEDIR)/$PKGNAME/\$version
 setenv FAIRROOT_HASH $FAIRROOT_HASH
 setenv VMCWORKDIR \$FAIRROOT_ROOT/share/fairbase/examples
 setenv GEOMPATH \$::env(VMCWORKDIR)/common/geometry
