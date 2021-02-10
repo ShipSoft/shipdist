@@ -25,7 +25,7 @@ cmake $SOURCEDIR                                                 \
       ${BOOST_ROOT:+-DBOOST_ROOT=$BOOST_ROOT}                    \
       ${OFI_ROOT:+-DOFI_ROOT=$OFI_ROOT}                          \
       -DBUILD_SHARED_LIBS=ON                                     \
-      -DBUILD_TESTING=ON
+      -DBUILD_TESTING=OFF
 
 
 cmake --build . --target install ${JOBS:+-- -j$JOBS}
@@ -53,5 +53,4 @@ prepend-path LD_LIBRARY_PATH \$ASIOFI_ROOT/lib
 EoF
 MODULEDIR="$INSTALLROOT/etc/modulefiles"
 mkdir -p $MODULEDIR && rsync -a --delete etc/modulefiles/ $MODULEDIR
-
 
