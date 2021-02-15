@@ -13,7 +13,7 @@ prefer_system_check: |
   python3 -c 'import matplotlib,numpy,scipy,certifi,IPython,ipywidgets,ipykernel,notebook.notebookapp,metakernel,sklearn,six,pymongo,mongoengine,pytest,pylint,yaml'
   if [ $? -ne 0 ]
   then
-      printf "Required Python modules are missing. You can install them with pip3:\n  pip3 install matplotlib numpy certifi ipython ipywidgets ipykernel notebook metakernel pymongo mongoengine pytest pylint yaml\n"
+      printf "Required Python modules are missing. You can install them with pip3:\n  pip3 install matplotlib numpy scipy certifi ipython ipywidgets ipykernel notebook metakernel scikit-learn six pymongo mongoengine pytest pylint pyyaml\n"
       exit 1
   fi
 ---
@@ -41,7 +41,7 @@ If you want to avoid this please install the following modules (pip recommended)
   - mongoengine
   - pytest
   - pylint
-  - yaml
+  - pyyaml
 EoF
 fi
 
