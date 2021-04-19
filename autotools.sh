@@ -49,6 +49,7 @@ fi
 
 # m4 -- requires: nothing special
 pushd m4*
+  sed -i '1 i @documentencoding ISO-8859-1' doc/m4.texi
   $USE_AUTORECONF && autoreconf -ivf
   ./configure --disable-dependency-tracking --prefix $INSTALLROOT
   make ${JOBS+-j $JOBS}
