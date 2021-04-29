@@ -54,9 +54,9 @@ export PYVER=$(python3 -c 'import distutils.sysconfig; print(distutils.sysconfig
 # Install as much as possible with pip. Packages are installed one by one as we
 # are not sure that pip exits with nonzero in case one of the packages failed.
 export PYTHONUSERBASE=$INSTALLROOT
-for X in "pip==19.1.1"          \
+for X in "pip==21.1"          \
          "mock==1.3.0"          \
-         "numpy==1.16.4"        \
+         "numpy==1.16.5"        \
          "certifi==2019.6.16"   \
          "ipython==5.8.0"       \
          "ipywidgets==5.2.3"    \
@@ -64,13 +64,13 @@ for X in "pip==19.1.1"          \
          "notebook==4.4.1"      \
          "metakernel==0.24.2"   \
          "scipy==1.2.2"         \
-         "scikit-learn==0.19.1" \
+         "scikit-learn==0.24.1" \
          "matplotlib==2.2.4"    \
          "six"                  \
          "future"               \
          "pymongo==3.10.1"      \
          "pytest==4.6.9"        \
-         "pylint==1.9.5"        \
+         "pylint==2.0.1"        \
          "PyYAML==5.1"          \
          "requests==2.25.0"     \
          "mongoengine==0.19.1"
