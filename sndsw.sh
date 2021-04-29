@@ -51,6 +51,7 @@ incremental_recipe: |
   setenv EOSSHIP root://eospublic.cern.ch/
   setenv SNDSW_ROOT \$::env(BASEDIR)/$PKGNAME/\$version
   setenv FAIRSHIP \$::env(SNDSW_ROOT)
+  setenv FAIRSHIP_ROOT \$::env(SNDSW_ROOT)
   setenv SNDSW_HASH $SNDSW_HASH
   setenv FAIRSHIP_HASH \$::env(SNDSW_HASH)
   setenv VMCWORKDIR \$::env(SNDSW_ROOT)
@@ -157,6 +158,7 @@ module load BASE/1.0                                                            
 setenv EOSSHIP root://eospublic.cern.ch/
 setenv SNDSW_ROOT \$::env(BASEDIR)/$PKGNAME/\$version
 setenv FAIRSHIP \$::env(SNDSW_ROOT)
+setenv FAIRSHIP_ROOT \$::env(SNDSW_ROOT)
 setenv SNDSW_HASH $SNDSW_HASH
 setenv FAIRSHIP_HASH \$::env(SNDSW_HASH)
 setenv VMCWORKDIR \$::env(SNDSW_ROOT)
