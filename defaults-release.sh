@@ -148,7 +148,7 @@ overrides:
       ls $GEANT4_VMC_ROOT/include/mtroot > /dev/null && \
       true
   GENIE:
-    tag: v2.12.6-ship2021
+    tag: R-3_00_06
     prefer_system_check: |
       ls $GENIE_ROOT/genie > /dev/null && \
       ls $GENIE_ROOT/genie/bin > /dev/null && \

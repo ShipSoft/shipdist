@@ -1,7 +1,7 @@
 package: GENIE
-version: "%(tag_basename)s"
-tag: fairshipdev
-source: https://github.com/ShipSoft/GENIE
+version: v3.0.6
+tag: R-3_00_06
+source: https://github.com/GENIE-MC/Generator.git
 requires:
   - GCC-Toolchain
   - ROOT
@@ -9,6 +9,7 @@ requires:
   - pythia6
   - log4cpp
   - GSL
+  - libxml2
 env:
   GENIE: "$GENIE_ROOT/genie"
   PATH: "$PATH:$GENIE_ROOT/genie/bin"
@@ -33,6 +34,8 @@ $BUILDDIR/configure --prefix=$INSTALLROOT \
       		    --with-pythia6-lib=$PYTHIA6_ROOT/lib/ \
 		    --with-lhapdf-lib=$LHAPDF5_ROOT/lib/ \
 		    --with-lhapdf-inc=$LHAPDF5_ROOT/include/ \
+		    --with-libxml2-lib=$LIBXML2_ROOT/lib/ \
+		    --with-libxml2-inc=$LIBXML2_ROOT/include/libxml2 \
 		    --with-log4cpp-inc=$LOG4CPP_ROOT/include/ \
 		    --with-log4cpp-lib=$LOG4CPP_ROOT/lib/
 
@@ -43,7 +46,7 @@ make install
 # make command does not work, do it by hand
 mkdir -p $INSTALLROOT/genie/lib
 rsync -a lib/* $INSTALLROOT/genie/lib
-rsync -a src/*/*.pcm  $INSTALLROOT/genie/lib
+rsync -a src/*/*/*.pcm  $INSTALLROOT/genie/lib
 mkdir -p $INSTALLROOT/genie/bin
 rsync -a bin/* $INSTALLROOT/genie/bin
 mkdir -p $INSTALLROOT/genie/data
@@ -53,7 +56,7 @@ rsync -a config/* $INSTALLROOT/genie/config
 mkdir -p $INSTALLROOT/genie/src
 rsync -a src/* $INSTALLROOT/genie/src
 mkdir -p $INSTALLROOT/genie/inc
-rsync -a src/*/*.h $INSTALLROOT/genie/inc
+rsync -a src/*/*/*.h $INSTALLROOT/genie/inc
 
 cp $INSTALLROOT/genie/data/evgen/pdfs/GRV98lo_patched.LHgrid $LHAPDF5_ROOT/share/lhapdf
 
@@ -70,7 +73,7 @@ proc ModulesHelp { } {
 set version $PKGVERSION-@@PKGREVISION@$PKGHASH@@
 module-whatis "ALICE Modulefile for $PKGNAME $PKGVERSION-@@PKGREVISION@$PKGHASH@@"
 # Dependencies
-module load BASE/1.0 ROOT/$ROOT_VERSION-$ROOT_REVISION pythia6/$PYTHIA6_VERSION-$PYTHIA6_REVISION lhapdf5/$LHAPDF5_VERSION-$LHAPDF5_REVISION log4cpp/$LOG4CPP_VERSION-$LOG4CPP_REVISION ${GSL_VERSION:+GSL/$GSL_VERSION-$GSL_REVISION}
+module load BASE/1.0 ROOT/$ROOT_VERSION-$ROOT_REVISION pythia6/$PYTHIA6_VERSION-$PYTHIA6_REVISION lhapdf5/$LHAPDF5_VERSION-$LHAPDF5_REVISION log4cpp/$LOG4CPP_VERSION-$LOG4CPP_REVISION libxml2/$LIBXML2_VERSION-$LIBXML2_REVISION ${GSL_VERSION:+GSL/$GSL_VERSION-$GSL_REVISION}
 # Our environment
 setenv GENIE_ROOT \$::env(BASEDIR)/$PKGNAME/\$version
 setenv GENIE \$::env(GENIE_ROOT)/genie
