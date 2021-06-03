@@ -93,3 +93,23 @@ The following packages have been agreed to be under PWGMM ownership and will req
 - yoda
 
 Plus any of their dependencies.
+
+# Some instructions for working with a VM from CERN openstack
+
+Assuming the user has read the openstack instructions and created a virtual machine.
+## CC7 - x86_64
+  - on lxplus, login to your newly created virtual machine with your key: ssh -v -i .ssh/yourkey root@yourVM.cern.ch
+  - create your user: adduser yourUserName, passwd yourUserName, usermod -a -G wheel yourUserName
+  - logoff and logon with your user
+  ```bash
+  - sudo yum group install "Software Development Workstation (CERN Recommended Setup)"
+  - sudo yum install python-pip
+  - pip install --upgrade pip
+  - mkdir SNDBUILD, cd SNDBUILD
+  - git clone https://github.com/SND-LHC/sndsw
+  - git clone https://github.com/SND-LHC/snddist
+  - aliBuild build sndsw -c snddist
+
+  ```
+   
+
