@@ -98,18 +98,42 @@ Plus any of their dependencies.
 
 Assuming the user has read the openstack instructions and created a virtual machine.
 ## CC7 - x86_64
-  - on lxplus, login to your newly created virtual machine with your key: ssh -v -i .ssh/yourkey root@yourVM.cern.ch
+  - on lxplus, login to your newly created virtual machine with your key: ssh -i .ssh/yourkey root@yourVM.cern.ch
   - create your user: adduser yourUserName, passwd yourUserName, usermod -a -G wheel yourUserName
   - logoff and logon with your user
   ```bash
   - sudo yum group install "Software Development Workstation (CERN Recommended Setup)"
+  - sudo yum install environment-modules
   - sudo yum install python-pip
-  - pip install --upgrade pip
+  - sudo pip install --upgrade pip
+  - sudo pip install alibuild
   - mkdir SNDBUILD, cd SNDBUILD
   - git clone https://github.com/SND-LHC/sndsw
   - git clone https://github.com/SND-LHC/snddist
   - aliBuild build sndsw -c snddist
-
+  - alienv enter sndsw/latest 
+  - for openGL / eventDisplay: export LIBGL_ALWAYS_INDIRECT=1
   ```
+  
+  ## C8 - x86_64
+  - on lxplus, login to your newly created virtual machine with your key: ssh -i .ssh/yourkey root@yourVM.cern.ch
+  - create your user: adduser yourUserName, passwd yourUserName, usermod -a -G wheel yourUserName
+  - modify /etc/ssh/sshd_config: # PasswordAuthentication no 
+    - sudo vim /etc/ssh/sshd_config, escape :wq! sudo service sshd restart
+  - logoff and logon with your user
+  ```bash
+  - sudo yum group install "Software Development Workstation (CERN Recommended Setup)"
+  - sudo yum install texinfo
+  - sudo dnf install libfabric-devel
+  - sudo pip3 install alibuild
+  - sudo ln -s /usr/bin/python3 /usr/bin/python
+  - mkdir SNDBUILD, cd SNDBUILD
+  - git clone https://github.com/SND-LHC/sndsw
+  - git clone https://github.com/SND-LHC/snddist
+  - aliBuild build sndsw -c snddist
+  - alienv enter sndsw/latest 
+  - for openGL / eventDisplay: export LIBGL_ALWAYS_INDIRECT=1
+  
+
    
 
