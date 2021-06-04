@@ -1,7 +1,8 @@
 package: GENIE
 version: v3.0.6
 tag: R-3_00_06
-source: https://github.com/GENIE-MC/Generator.git
+#source: https://github.com/GENIE-MC/Generator.git
+source: https://github.com/siilieva/GENIEv3.0.6.git
 requires:
   - GCC-Toolchain
   - ROOT
@@ -79,6 +80,7 @@ setenv GENIE_ROOT \$::env(BASEDIR)/$PKGNAME/\$version
 setenv GENIE \$::env(GENIE_ROOT)/genie
 prepend-path LD_LIBRARY_PATH \$::env(GENIE_ROOT)/genie/lib
 prepend-path ROOT_INCLUDE_PATH \$::env(GENIE_ROOT)/genie/inc
+prepend-path ROOT_INCLUDE_PATH \$::env(GENIE_ROOT)/genie/src
 $([[ ${ARCHITECTURE:0:3} == osx ]] && echo "prepend-path DYLD_LIBRARY_PATH \$::env(GENIE_ROOT)/lib")
 append-path PATH \$::env(GENIE_ROOT)/genie/bin 
 EoF
