@@ -32,8 +32,8 @@ overrides:
   XRootD:
     tag: v4.12.1
   ROOT:
-    tag: "ship-v6-22-02"
-    source: https://github.com/ThomasRuf/root
+    tag: "v6-24-00"
+    source: https://github.com/root-project/root
     requires:
       - GSL
       - opengl:(?!osx)
@@ -137,7 +137,7 @@ overrides:
      G4SAIDXSDATA : "`find ${G4INSTALL} $G4DATASEARCHOPT  '*data*G4SAIDDATA*'`"
   GEANT4_VMC:
     version: "%(tag_basename)s"
-    tag: v5-0-p5
+    tag: v5-2
     prefer_system_check: |
       ls $GEANT4_VMC_ROOT/bin > /dev/null && \
       ls $GEANT4_VMC_ROOT/lib/libg4root.so > /dev/null && \
