@@ -79,7 +79,8 @@ overrides:
     version: "%(tag_basename)s"
     tag: "v3.18.2"
     prefer_system_check: |
-      which cmake && case `cmake --version | sed -e 's/.* //' | cut -d. -f1,2,3 | head -n1` in [0-2]*|3.[0-7].*) exit 1 ;; esac
+      verge() { [[  "$1" = "`echo -e "$1\n$2" | sort -V | head -n1`" ]]; }
+      type cmake && verge 3.18.2 `cmake --version | sed -e 's/.* //' | cut -d. -f1,2,3`
   FairRoot:
     version: "%(tag_basename)s"
     tag: "v18.4.2"
@@ -111,7 +112,7 @@ overrides:
       ls $GEANT4_ROOT/bin > /dev/null && \
       ls $GEANT4_ROOT/bin/geant4-config > /dev/null && \
       ls $GEANT4_ROOT/bin/geant4.csh > /dev/null && \
-      ls $GEANT4_ROOT/bin/geant4.sh > /dev/null && \
+      ls $GEANT4i_ROOT/bin/geant4.sh > /dev/null && \
       ls $GEANT4_ROOT/include > /dev/null && \
       ls $GEANT4_ROOT/include/Geant4 > /dev/null && \
       ls $GEANT4_ROOT/lib/ > /dev/null && \

@@ -1,6 +1,6 @@
 package: FairMQ
 version: "%(tag_basename)s"
-tag: v1.4.25
+tag: v1.4.38
 source: https://github.com/FairRootGroup/FairMQ
 requires:
  - boost
@@ -8,11 +8,10 @@ requires:
  - ZeroMQ
  - "DDS:(?!osx)"
  - asiofi
- - flatbuffers
 build_requires:
+ - flatbuffers
  - CMake
  - "GCC-Toolchain:(?!osx)"
- - googletest
 incremental_recipe: |
   cmake --build . --target install ${JOBS:+-- -j$JOBS}
   mkdir -p $INSTALLROOT/etc/modulefiles && rsync -a --delete etc/modulefiles/ $INSTALLROOT/etc/modulefiles
@@ -36,11 +35,10 @@ case $ARCHITECTURE in
   ;;
 esac
 cmake $SOURCEDIR                                                 \
-      ${CMAKE_CXX_STANDARD:+-DCMAKE_CXX_STANDARD=$CMAKE_CXX_STANDARD}        \
+      ${CXXSTD:+-DCMAKE_CXX_STANDARD=$CXXSTD}                    \
       ${CXX_COMPILER:+-DCMAKE_CXX_COMPILER=$CXX_COMPILER}        \
       ${CMAKE_BUILD_TYPE:+-DCMAKE_BUILD_TYPE=$CMAKE_BUILD_TYPE}  \
       -DCMAKE_INSTALL_PREFIX=$INSTALLROOT                        \
-      ${GOOGLETEST_ROOT:+-DGTEST_ROOT=$GOOGLETEST_ROOT}          \
       ${BOOST_ROOT:+-DBOOST_ROOT=$BOOST_ROOT}                    \
       ${BOOST_ROOT:+-DBoost_NO_BOOST_CMAKE=ON}                   \
       ${FAIRLOGGER_ROOT:+-DFAIRLOGGER_ROOT=$FAIRLOGGER_ROOT}     \
@@ -54,7 +52,6 @@ cmake $SOURCEDIR                                                 \
       ${DDS_ROOT:+-DBUILD_DDS_PLUGIN=ON}                         \
       ${DDS_ROOT:+-DBUILD_SDK_COMMANDS=ON}                       \
       ${DDS_ROOT:+-DBUILD_SDK=ON}                                \
-      -DBUILD_NANOMSG_TRANSPORT=OFF                              \
       ${BUILD_OFI:+-DBUILD_OFI_TRANSPORT=ON}                     \
       -DBUILD_EXAMPLES=ON                                        \
       -DBUILD_TESTING=${ALIBUILD_FAIRMQ_TESTS:-OFF}              \
@@ -97,4 +94,3 @@ prepend-path ROOT_INCLUDE_PATH \$FAIRMQ_ROOT/include/fairmq
 EoF
 MODULEDIR="$INSTALLROOT/etc/modulefiles"
 mkdir -p $MODULEDIR && rsync -a --delete etc/modulefiles/ $MODULEDIR
-
