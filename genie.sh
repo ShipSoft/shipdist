@@ -2,7 +2,7 @@ package: GENIE
 version: v3.0.6
 tag: R-3_00_06
 #source: https://github.com/GENIE-MC/Generator.git
-source: https://github.com/siilieva/GENIEv3.0.6.git
+source: https://github.com/SND-LHC/GENIEv3.0.6.git
 requires:
   - GCC-Toolchain
   - ROOT
