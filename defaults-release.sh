@@ -90,7 +90,7 @@ overrides:
       grep v18.4.2 $FAIRROOT_ROOT/include/FairVersion.h
   FairMQ:
     version: "%(tag_basename)s"
-    tag: "v1.4.25"
+    tag: "v1.4.38"
     prefer_system_check: |
       ls $FAIRMQ_ROOT/ > /dev/null && \
       ls $FAIRMQ_ROOT/lib > /dev/null && \
