@@ -54,8 +54,8 @@ export PYVER=$(python3 -c 'import distutils.sysconfig; print(distutils.sysconfig
 # Install as much as possible with pip. Packages are installed one by one as we
 # are not sure that pip exits with nonzero in case one of the packages failed.
 export PYTHONUSERBASE=$INSTALLROOT
-for X in "pip==21.1"          \
-         "mock==1.3.0"          \
+python3 -m pip install --upgrade pip
+for X in "mock==1.3.0"          \
          "numpy==1.16.5"        \
          "certifi==2019.6.16"   \
          "ipython==5.8.0"       \
@@ -77,6 +77,9 @@ for X in "pip==21.1"          \
 do
   python3 -m pip install --user $X
 done
+
+# for some unknown reason lib directory created with access only for user
+chmod -R 755 $PYTHONUSERBASE/lib
 unset PYTHONUSERBASE
 
 # Test if matplotlib can be loaded
