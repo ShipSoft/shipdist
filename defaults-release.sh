@@ -112,7 +112,7 @@ overrides:
       ls $GEANT4_ROOT/bin > /dev/null && \
       ls $GEANT4_ROOT/bin/geant4-config > /dev/null && \
       ls $GEANT4_ROOT/bin/geant4.csh > /dev/null && \
-      ls $GEANT4i_ROOT/bin/geant4.sh > /dev/null && \
+      ls $GEANT4_ROOT/bin/geant4.sh > /dev/null && \
       ls $GEANT4_ROOT/include > /dev/null && \
       ls $GEANT4_ROOT/include/Geant4 > /dev/null && \
       ls $GEANT4_ROOT/lib/ > /dev/null && \
