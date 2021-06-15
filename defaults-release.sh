@@ -106,7 +106,7 @@ overrides:
       grep 1.9.0 $FAIRLOGGER_ROOT/include/fairlogger/Version.h
   GEANT4:
     version: "%(tag_basename)s"
-    tag: v10.6.2
+    tag: v10.7.2
     source: https://github.com/geant4/geant4.git
     prefer_system_check: |
       ls $GEANT4_ROOT/bin > /dev/null && \
@@ -138,7 +138,7 @@ overrides:
      G4SAIDXSDATA : "`find ${G4INSTALL} $G4DATASEARCHOPT  '*data*G4SAIDDATA*'`"
   GEANT4_VMC:
     version: "%(tag_basename)s"
-    tag: v5-2
+    tag: v5-3
     prefer_system_check: |
       ls $GEANT4_VMC_ROOT/bin > /dev/null && \
       ls $GEANT4_VMC_ROOT/lib/libg4root.so > /dev/null && \
