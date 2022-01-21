@@ -67,8 +67,11 @@ incremental_recipe: |
   append-path ROOT_INCLUDE_PATH \$::env(PYTHIA_ROOT)/include/Pythia8
   append-path ROOT_INCLUDE_PATH \$::env(GEANT4_VMC_ROOT)/include
   append-path ROOT_INCLUDE_PATH \$::env(GEANT4_VMC_ROOT)/include/geant4vmc
+  append-path ROOT_INCLUDE_PATH \$::env(SNDSW_ROOT)/genfit/core/include
+
   prepend-path PYTHONPATH \$::env(SNDSW_ROOT)/python
-  append-path PYTHONPATH \$::env(SNDSW_ROOT)/Developments/track_pattern_recognition
+  append-path PYTHONPATH \$::env(SNDSW_ROOT)/shipLHC/scripts
+  append-path PYTHONPATH \$::env(SNDSW_ROOT)/shipLHC/rawData
   $([[ ${ARCHITECTURE:0:3} == osx ]] && echo "prepend-path DYLD_LIBRARY_PATH \$::env(SNDSW_ROOT)/lib")
   EoF
 ---
