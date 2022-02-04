@@ -116,6 +116,7 @@ cmake $SOURCEDIR                                                 \
       ${PYTHON_ROOT:+-DPYTHON_INCLUDE_DIR=$PYTHON_ROOT/include/python3.6m/} \
       -DPYTHIA8_DIR=$PYTHIA_ROOT                                 \
       -DPYTHIA8_INCLUDE_DIR=$PYTHIA_ROOT/include                 \
+      -DXROOTD_INCLUDE_DIR=$XROOTD_ROOT/include/xrootd                 \
       -DGEANT4_ROOT=$GEANT4_ROOT                                 \
       -DGEANT4_INCLUDE_DIR=$GEANT4_ROOT/include/Geant4           \
       -DGEANT4_VMC_INCLUDE_DIR=$GEANT4_VMC_ROOT/include/geant4vmc \
