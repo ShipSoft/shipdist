@@ -132,7 +132,6 @@ else
         -Dshadowpw=OFF                                            \
         -Dvdt=ON                                                  \
         -Dbuiltin_vdt=ON                                          \
-        -Dvmc=ON                                                  \
         ${PYTHON_ROOT:+-DPYTHON_EXECUTABLE=$PYTHONHOME/bin/python} \
         ${PYTHON_ROOT:+-DPYTHON_INCLUDE_DIR=$PYTHONHOME/include/python3.6m} \
         ${PYTHON_ROOT:+-DPYTHON_LIBRARY=$PYTHONHOME/lib/libpython3.6m.so} \

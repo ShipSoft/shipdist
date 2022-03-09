@@ -12,6 +12,7 @@ requires:
   - PHOTOSPP
   - EvtGen
   - ROOT
+  - VMC
   - alpaca
 build_requires:
   - googletest

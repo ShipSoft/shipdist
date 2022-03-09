@@ -32,7 +32,7 @@ overrides:
   XRootD:
     tag: v5.3.1
   ROOT:
-    tag: "v6-24-00"
+    tag: "v6-26-00"
     source: https://github.com/root-project/root
     requires:
       - GSL
@@ -138,7 +138,7 @@ overrides:
      G4SAIDXSDATA : "`find ${G4INSTALL} $G4DATASEARCHOPT  '*data*G4SAIDDATA*'`"
   GEANT4_VMC:
     version: "%(tag_basename)s"
-    tag: v5-3
+    tag: v5-4
     prefer_system_check: |
       ls $GEANT4_VMC_ROOT/bin > /dev/null && \
       ls $GEANT4_VMC_ROOT/lib/libg4root.so > /dev/null && \
@@ -147,6 +147,12 @@ overrides:
       ls $GEANT4_VMC_ROOT/include/g4root > /dev/null && \
       ls $GEANT4_VMC_ROOT/include/geant4vmc > /dev/null && \
       ls $GEANT4_VMC_ROOT/include/mtroot > /dev/null && \
+      true
+  VMC:
+    version: "%(tag_basename)s"
+    tag: v1-1-p1
+    prefer_system_check: |
+      ls $VMC_ROOT/bin > /dev/null && \
       true
   GENIE:
     tag: R-3_00_06
@@ -210,7 +216,7 @@ overrides:
       ls $PHOTOSPP_ROOT/lib/libPhotosppHEPEVT.so > /dev/null && \
       ls $PHOTOSPP_ROOT/lib/libPhotosppHepMC.so.1.0.0 > /dev/null && \
       ls $PHOTOSPP_ROOT/lib/libPhotospp.so > /dev/null && \
-      true
+      trueroot 
   Tauolapp:
     version: "%(tag_basename)s"
     source: https://github.com/ShipSoft/Tauolapp
@@ -286,7 +292,7 @@ overrides:
   GEANT3:
     version: "%(tag_basename)s"
     source: https://github.com/vmc-project/geant3
-    tag: v2-7
+    tag: v3-9
     prefer_system_check: |
       ls $GEANT3_ROOT/ > /dev/null && \
       ls $GEANT3_ROOT/include > /dev/null && \
