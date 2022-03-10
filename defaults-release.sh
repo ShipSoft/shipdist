@@ -152,7 +152,7 @@ overrides:
     version: "%(tag_basename)s"
     tag: v1-1-p1
     prefer_system_check: |
-      ls $VMC_ROOT/bin > /dev/null && \
+      ls $VMC_ROOT/include > /dev/null && \
       true
   GENIE:
     tag: R-3_00_06
@@ -216,7 +216,7 @@ overrides:
       ls $PHOTOSPP_ROOT/lib/libPhotosppHEPEVT.so > /dev/null && \
       ls $PHOTOSPP_ROOT/lib/libPhotosppHepMC.so.1.0.0 > /dev/null && \
       ls $PHOTOSPP_ROOT/lib/libPhotospp.so > /dev/null && \
-      trueroot 
+      true
   Tauolapp:
     version: "%(tag_basename)s"
     source: https://github.com/ShipSoft/Tauolapp
