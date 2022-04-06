@@ -248,7 +248,7 @@ overrides:
       ls $LHAPDF_ROOT/include > /dev/null && \
       ls $LHAPDF_ROOT/include/LHAPDF > /dev/null && \
       ls $LHAPDF_ROOT/lib > /dev/null && \
-      ls $LHAPDF_ROOT/share/lhapdf > /dev/null
+      ls $LHAPDF_ROOT/share/LHAPDF > /dev/null
   lhapdf5:
     prefer_system_check: |
       ls $LHAPDF5_ROOT/ > /dev/null && \
