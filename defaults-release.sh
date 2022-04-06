@@ -165,6 +165,12 @@ overrides:
       ls $GENIE_ROOT/genie/lib > /dev/null && \
       ls $GENIE_ROOT/genie/src > /dev/null && \
       true
+  log4cpp:
+    tag: 1b9f8f7c031d6947c7468d54bc1da4b2f414558d
+    prefer_system_check: | 
+      ls $LOG4CPP_ROOT/include/ > /dev/null && \
+      ls $LOG4CPP_ROOT/lib/ > /dev/null && \
+      true
   alpaca:
     version: v1.1
     prefer_system_check: |
