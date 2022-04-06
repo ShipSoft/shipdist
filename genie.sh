@@ -1,8 +1,7 @@
 package: GENIE
-version: v3.0.6
-tag: R-3_00_06
-#source: https://github.com/GENIE-MC/Generator.git
-source: https://github.com/SND-LHC/GENIEv3.0.6.git
+version: v3.2.0
+tag: R-3_02_00
+source: https://github.com/GENIE-MC/Generator.git
 requires:
   - GCC-Toolchain
   - ROOT
@@ -24,11 +23,12 @@ rsync -a $SOURCEDIR/* $BUILDDIR
 ls -alh $BUILDDIR
 $BUILDDIR/configure --prefix=$INSTALLROOT \
 		    --enable-lhapdf6 \
+                    --enable-fnal \
 		    --enable-validation-tools \
 		    --enable-test \
-		    --enable-numi\
-		    --enable-atmo \
-		    --enable-nucleon-decay \
+                    --enable-boosted-dark-matter \
+                    --enable-neutral-heavy-lepton \
+                    --enable-dark-neutrino \
 		    --enable-rwght \
 		    --enable-pyhia6 \
 		    --enable-mathmore \

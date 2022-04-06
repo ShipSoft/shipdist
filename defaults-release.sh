@@ -155,7 +155,7 @@ overrides:
       ls $VMC_ROOT/include > /dev/null && \
       true
   GENIE:
-    tag: R-3_00_06
+    tag: R-3_02_00
     prefer_system_check: |
       ls $GENIE_ROOT/genie > /dev/null && \
       ls $GENIE_ROOT/genie/bin > /dev/null && \
