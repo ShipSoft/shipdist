@@ -5,9 +5,6 @@ requires :
 ---
 #/bin/bash -ex
 
-# TEMP TEMP TEMP. REMOVE.
-export LHAPATH=/afs/cern.ch/work/c/cvilela/private/snd_genie_integration/lhapdftemp/
-
 # This needs write access to $GENIE_ROOT/genie/data/ so run it during build. Very annoying.
 gmkhedissf --tune GHE19_00b_00_000
 mkdir -p $GENIE_ROOT/genie/data/evgen/photon-sf/

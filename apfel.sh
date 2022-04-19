@@ -13,13 +13,6 @@ rsync -a $SOURCEDIR/* $BUILDDIR
 
 $BUILDDIR/configure --prefix=${INSTALLROOT}
 
-# THIS IS VERY VERY HORRIBLE, JUST FOR TESTING. MAKE SURE TO REMOVE BEFORE COMMIT!!!
-sed -i "s&/home/trufsnd/SNDBUILD/sw/slc7_x86-64/lhapdf/v6.2.3-local2/&${LHAPDF_ROOT}/&g" ${BUILDDIR}/Makefile
-sed -i "s&/home/trufsnd/SNDBUILD/sw/slc7_x86-64/lhapdf/v6.2.3-local2/&${LHAPDF_ROOT}/&g" ${BUILDDIR}/*/Makefile
-sed -i "s&/home/trufsnd/SNDBUILD/sw/slc7_x86-64/lhapdf/v6.2.3-local2/&${LHAPDF_ROOT}/&g" ${BUILDDIR}/*/*/Makefile
-sed -i "s&os.popen('lhapdf-config --libdir').read()&os.environ[\"LHAPDF_ROOT\"]+'/lib'&g" ${BUILDDIR}/pywrap/setup.py
-# END HORIBLENESS
-
 make
 make install
 
