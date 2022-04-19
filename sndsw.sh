@@ -8,7 +8,6 @@ requires:
   - FairRoot
   - FairLogger
   - GENIE
-  - GENIE_HEDIS_SF
   - GEANT4
   - PHOTOSPP
   - EvtGen

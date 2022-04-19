@@ -165,11 +165,6 @@ overrides:
       ls $GENIE_ROOT/genie/lib > /dev/null && \
       ls $GENIE_ROOT/genie/src > /dev/null && \
       true
-  GENIE_HEDIS_SF:
-    tag: v1
-    prefer_system_check: |
-      ls $GENIE_ROOT/genie/data/evgen/hedis-sf/GHE19_00b_00_000/ > /dev/null && \
-      true
   log4cpp:
     tag: 1b9f8f7c031d6947c7468d54bc1da4b2f414558d
     prefer_system_check: | 
