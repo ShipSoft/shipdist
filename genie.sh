@@ -24,8 +24,8 @@ rsync -a $SOURCEDIR/* $BUILDDIR
 ls -alh $BUILDDIR
 $BUILDDIR/configure --prefix=$INSTALLROOT \
 		    --enable-lhapdf6 \
-                    --enable-apfel \
-                    --enable-fnal \
+		    --enable-apfel \
+		    --enable-fnal \
 		    --enable-validation-tools \
 		    --enable-test \
 		    --enable-boosted-dark-matter \
