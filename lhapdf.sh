@@ -28,7 +28,7 @@ autoreconf -ivf
 make ${JOBS+-j $JOBS} all
 make install
 
-PDFSETS="cteq6l1 MMHT2014lo68cl MMHT2014nlo68cl"
+PDFSETS="cteq6l1 MMHT2014lo68cl MMHT2014nlo68cl HERAPDF15NLO_EIG NNPDF31_nnlo_as_0118_luxqed NNPDF31_nnlo_as_0118"
 #$INSTALLROOT/bin/lhapdf install $PDFSETS
 # Check if PDF sets were really installed
 for P in $PDFSETS; do

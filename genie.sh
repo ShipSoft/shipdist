@@ -6,6 +6,7 @@ requires:
   - GCC-Toolchain
   - ROOT
   - lhapdf
+  - apfel
   - pythia6
   - log4cpp
   - GSL
@@ -14,7 +15,7 @@ env:
   GENIE: "$GENIE_ROOT/genie"
   PATH: "$PATH:$GENIE_ROOT/genie/bin"
   LD_LIBRARY_PATH: "$LD_LIBRARY_PATH:$GENIE_ROOT/genie/lib"
-  ROOT_INCLUDE_PATH: "$ROOT_INCLUDE_PATH:$GENIE_ROOT/genie/inc"
+  ROOT_INCLUDE_PATH: "$ROOT_INCLUDE_PATH:$GENIE_ROOT/genie/inc:$GENIE_ROOT/genie/src"
 ---  
 #/bin/bash -ex
 export GENIE="$BUILDDIR"
@@ -23,6 +24,7 @@ rsync -a $SOURCEDIR/* $BUILDDIR
 ls -alh $BUILDDIR
 $BUILDDIR/configure --prefix=$INSTALLROOT \
 		    --enable-lhapdf6 \
+                    --enable-apfel \
                     --enable-fnal \
 		    --enable-validation-tools \
 		    --enable-test \
@@ -38,7 +40,9 @@ $BUILDDIR/configure --prefix=$INSTALLROOT \
 		    --with-libxml2-lib=$LIBXML2_ROOT/lib/ \
 		    --with-libxml2-inc=$LIBXML2_ROOT/include/libxml2 \
 		    --with-log4cpp-inc=$LOG4CPP_ROOT/include/ \
-		    --with-log4cpp-lib=$LOG4CPP_ROOT/lib/
+		    --with-log4cpp-lib=$LOG4CPP_ROOT/lib/ \
+		    --with-apfel-inc=$APFEL_ROOT/include/ \
+		    --with-apfel-lib=$APFEL_ROOT/lib/ 
 
 
 make CXXFLAGS="-Wall $CXXFLAGS" CFLAGS="-Wall $CFLAGS"
@@ -74,7 +78,7 @@ proc ModulesHelp { } {
 set version $PKGVERSION-@@PKGREVISION@$PKGHASH@@
 module-whatis "ALICE Modulefile for $PKGNAME $PKGVERSION-@@PKGREVISION@$PKGHASH@@"
 # Dependencies
-module load BASE/1.0 ROOT/$ROOT_VERSION-$ROOT_REVISION pythia6/$PYTHIA6_VERSION-$PYTHIA6_REVISION lhapdf/$LHAPDF_VERSION-$LHAPDF_REVISION log4cpp/$LOG4CPP_VERSION-$LOG4CPP_REVISION ${LIBXML2:+libxml2/$LIBXML2_VERSION-$LIBXML2_REVISION} ${GSL_VERSION:+GSL/$GSL_VERSION-$GSL_REVISION}
+module load BASE/1.0 ROOT/$ROOT_VERSION-$ROOT_REVISION pythia6/$PYTHIA6_VERSION-$PYTHIA6_REVISION lhapdf/$LHAPDF_VERSION-$LHAPDF_REVISION log4cpp/$LOG4CPP_VERSION-$LOG4CPP_REVISION ${LIBXML2:+libxml2/$LIBXML2_VERSION-$LIBXML2_REVISION} ${GSL_VERSION:+GSL/$GSL_VERSION-$GSL_REVISION} apfel/$APFEL_VERSION-$APFEL_REVISION
 # Our environment
 setenv GENIE_ROOT \$::env(BASEDIR)/$PKGNAME/\$version
 setenv GENIE \$::env(GENIE_ROOT)/genie
