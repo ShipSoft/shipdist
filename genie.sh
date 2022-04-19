@@ -28,9 +28,9 @@ $BUILDDIR/configure --prefix=$INSTALLROOT \
                     --enable-fnal \
 		    --enable-validation-tools \
 		    --enable-test \
-                    --enable-boosted-dark-matter \
-                    --enable-neutral-heavy-lepton \
-                    --enable-dark-neutrino \
+		    --enable-boosted-dark-matter \
+		    --enable-neutral-heavy-lepton \
+		    --enable-dark-neutrino \
 		    --enable-rwght \
 		    --enable-pyhia6 \
 		    --enable-mathmore \
