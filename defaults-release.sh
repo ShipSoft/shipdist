@@ -171,6 +171,13 @@ overrides:
       ls $LOG4CPP_ROOT/include/ > /dev/null && \
       ls $LOG4CPP_ROOT/lib/ > /dev/null && \
       true
+  apfel:
+    tag: 3.0.6
+    prefer_system_check: |
+      ls $APFEL_ROOT/bin > /dev/null && \
+      ls $APFEL_ROOT/lib > /dev/null && \
+      ls $APFEL_ROOT/include > /dev/null && \
+      true
   alpaca:
     version: v1.1
     prefer_system_check: |
