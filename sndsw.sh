@@ -58,6 +58,7 @@ incremental_recipe: |
   setenv VMCWORKDIR \$::env(SNDSW_ROOT)
   setenv GEOMPATH \$::env(SNDSW_ROOT)/geometry
   setenv CONFIG_DIR \$::env(SNDSW_ROOT)/gconfig
+  setenv GALGCONF \$::env(SNDSW_ROOT)/shipgen/genie_config
   prepend-path PATH \$::env(SNDSW_ROOT)/bin
   prepend-path LD_LIBRARY_PATH \$::env(SNDSW_ROOT)/lib
   setenv FAIRLIBDIR \$::env(SNDSW_ROOT)/lib
@@ -169,6 +170,7 @@ setenv FAIRSHIP_HASH \$::env(SNDSW_HASH)
 setenv VMCWORKDIR \$::env(SNDSW_ROOT)
 setenv GEOMPATH \$::env(SNDSW_ROOT)/geometry
 setenv CONFIG_DIR \$::env(SNDSW_ROOT)/gconfig
+setenv GALGCONF \$::env(SNDSW_ROOT)/shipgen/genie_config
 prepend-path PATH \$::env(SNDSW_ROOT)/bin
 prepend-path LD_LIBRARY_PATH \$::env(SNDSW_ROOT)/lib
 setenv FAIRLIBDIR \$::env(SNDSW_ROOT)/lib

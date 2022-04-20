@@ -155,7 +155,7 @@ overrides:
       ls $VMC_ROOT/include > /dev/null && \
       true
   GENIE:
-    tag: R-3_00_06
+    tag: R-3_02_00
     prefer_system_check: |
       ls $GENIE_ROOT/genie > /dev/null && \
       ls $GENIE_ROOT/genie/bin > /dev/null && \
@@ -164,6 +164,12 @@ overrides:
       ls $GENIE_ROOT/genie/inc > /dev/null && \
       ls $GENIE_ROOT/genie/lib > /dev/null && \
       ls $GENIE_ROOT/genie/src > /dev/null && \
+      true
+  log4cpp:
+    tag: 1b9f8f7c031d6947c7468d54bc1da4b2f414558d
+    prefer_system_check: | 
+      ls $LOG4CPP_ROOT/include/ > /dev/null && \
+      ls $LOG4CPP_ROOT/lib/ > /dev/null && \
       true
   alpaca:
     version: v1.1
@@ -248,7 +254,7 @@ overrides:
       ls $LHAPDF_ROOT/include > /dev/null && \
       ls $LHAPDF_ROOT/include/LHAPDF > /dev/null && \
       ls $LHAPDF_ROOT/lib > /dev/null && \
-      ls $LHAPDF_ROOT/share/lhapdf > /dev/null
+      ls $LHAPDF_ROOT/share/LHAPDF > /dev/null
   lhapdf5:
     prefer_system_check: |
       ls $LHAPDF5_ROOT/ > /dev/null && \
