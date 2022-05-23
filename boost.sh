@@ -1,22 +1,19 @@
 package: boost
-version: "%(tag_basename)s"
-tag: v1.72.0
+version: v1.75.0
+tag: v1.75.0
 source: https://github.com/alisw/boost.git
 requires:
   - "GCC-Toolchain:(?!osx)"
   - "Python-modules:(?!osx)"
   - libpng
-  - lzma
+  - zlib
 build_requires:
-  - "bz2"
-prefer_system: (?!slc5)
-prefer_system_check: |
-  printf "#include \"boost/version.hpp\"\n# if (BOOST_VERSION < 106800 || BOOST_VERSION > 106899)\n#error \"Cannot use system's boost: boost 1.68 required.\"\n#endif\nint main(){}" | c++ -I$(brew --prefix boost)/include -xc++ - -o /dev/null
+  - lzma
+  - bz2
+  - alibuild-recipe-tools
 prepend_path:
   ROOT_INCLUDE_PATH: "$BOOST_ROOT/include"
 ---
-#!/bin/bash -e
-
 BOOST_PYTHON=
 BOOST_CXXFLAGS=
 if [[ $ARCHITECTURE != osx* && $PYTHON_MODULES_VERSION ]]; then
@@ -57,7 +54,7 @@ fi
 
 TMPB2=$BUILDDIR/tmp-boost-build
 case $ARCHITECTURE in
-  osx*) TOOLSET=darwin ;;
+  osx*) TOOLSET=clang-darwin ;;
   *) TOOLSET=gcc ;;
 esac
 
@@ -67,11 +64,11 @@ cd $BUILDDIR/tools/build
 # the ABI suffix. E.g. ../include/python3 rather than ../include/python3m.
 # This is causing havok on different combinations of Ubuntu / Anaconda
 # installations.
+bash bootstrap.sh $TOOLSET
 case $ARCHITECTURE in
   osx*)  ;;
   *) export CPLUS_INCLUDE_PATH="$CPLUS_INCLUDE_PATH:$(python3 -c 'import sysconfig; print(sysconfig.get_path("include"))')" ;;
 esac
-bash bootstrap.sh $TOOLSET
 mkdir -p $TMPB2
 ./b2 install --prefix=$TMPB2
 export PATH=$TMPB2/bin:$PATH
@@ -92,6 +89,13 @@ b2 -q                                            \
    ${BOOST_NO_PYTHON:+--without-python}          \
    --without-wave                                \
    --debug-configuration                         \
+   -sNO_ZSTD=1                                   \
+   ${BZ2_ROOT:+-sBZIP2_INCLUDE="$BZ2_ROOT/include"}  \
+   ${BZ2_ROOT:+-sBZIP2_LIBPATH="$BZ2_ROOT/lib"}      \
+   ${ZLIB_ROOT:+-sZLIB_INCLUDE="$ZLIB_ROOT/include"} \
+   ${ZLIB_ROOT:+-sZLIB_LIBPATH="$ZLIB_ROOT/lib"}     \
+   ${LZMA_ROOT:+-sLZMA_INCLUDE="$LZMA_ROOT/include"} \
+   ${LZMA_ROOT:+-sLZMA_LIBPATH="$LZMA_ROOT/lib"}     \
    toolset=$TOOLSET                              \
    link=shared                                   \
    threading=multi                               \
@@ -115,20 +119,10 @@ fi
 # Modulefile
 MODULEDIR="$INSTALLROOT/etc/modulefiles"
 MODULEFILE="$MODULEDIR/$PKGNAME"
-mkdir -p "$MODULEDIR"
-cat > "$MODULEFILE" <<EoF
-#%Module1.0
-proc ModulesHelp { } {
-  global version
-  puts stderr "ALICE Modulefile for $PKGNAME $PKGVERSION-@@PKGREVISION@$PKGHASH@@"
-}
-set version $PKGVERSION-@@PKGREVISION@$PKGHASH@@
-module-whatis "ALICE Modulefile for $PKGNAME $PKGVERSION-@@PKGREVISION@$PKGHASH@@"
-# Dependencies
-module load BASE/1.0 ${GCC_TOOLCHAIN_VERSION:+GCC-Toolchain/$GCC_TOOLCHAIN_VERSION-$GCC_TOOLCHAIN_REVISION} ${PYTHON_VERSION:+Python/$PYTHON_VERSION-$PYTHON_REVISION}
-# Our environment
-setenv BOOST_ROOT \$::env(BASEDIR)/$PKGNAME/\$version
-prepend-path LD_LIBRARY_PATH \$::env(BOOST_ROOT)/lib
-prepend-path ROOT_INCLUDE_PATH \$::env(BOOST_ROOT)/include
-$([[ ${ARCHITECTURE:0:3} == osx ]] && echo "prepend-path DYLD_LIBRARY_PATH \$::env(BOOST_ROOT)/lib")
-EoF
+
+mkdir -p etc/modulefiles
+alibuild-generate-module --bin --lib > etc/modulefiles/$PKGNAME
+cat << EOF >> etc/modulefiles/$PKGNAME
+prepend-path ROOT_INCLUDE_PATH \$PKG_ROOT/include
+EOF
+mkdir -p $INSTALLROOT/etc/modulefiles && rsync -a --delete etc/modulefiles/ $INSTALLROOT/etc/modulefiles

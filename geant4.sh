@@ -24,16 +24,17 @@ env:
   G4SAIDXSDATA : "`find ${G4INSTALL} $G4DATASEARCHOPT  '*data*G4SAIDDATA*'`"
 ---
 #!/bin/bash -e
-
+export G4DEBUG=1
 cmake $SOURCEDIR                                    \
   -DGEANT4_INSTALL_DATA_TIMEOUT=1500                \
   -DCMAKE_CXX_FLAGS="-fPIC"                         \
   -DCMAKE_INSTALL_PREFIX:PATH="$INSTALLROOT"        \
   -DCMAKE_INSTALL_LIBDIR="lib"                      \
-  -DCMAKE_BUILD_TYPE=$CMAKE_BUILD_TYPE              \
+  -DCMAKE_BUILD_TYPE="DEBUG"              \
   -DGEANT4_BUILD_TLS_MODEL:STRING="global-dynamic"  \
   -DGEANT4_ENABLE_TESTING=OFF                       \
   -DBUILD_SHARED_LIBS=ON                            \
+  -DG4VERBOSE=ON                                    \
   -DGEANT4_INSTALL_EXAMPLES=OFF                     \
   -DCLHEP_ROOT_DIR:PATH="$CLHEP_ROOT"               \
   -DGEANT4_BUILD_MULTITHREADED=OFF                  \
