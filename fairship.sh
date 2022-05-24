@@ -12,6 +12,7 @@ requires:
   - PHOTOSPP
   - EvtGen
   - ROOT
+  - VMC
   - alpaca
 build_requires:
   - googletest
@@ -55,6 +56,7 @@ incremental_recipe: |
   setenv VMCWORKDIR \$::env(FAIRSHIP)
   setenv GEOMPATH \$::env(FAIRSHIP)/geometry
   setenv CONFIG_DIR \$::env(FAIRSHIP)/gconfig
+  setenv GALGCONF \$::env(FAIRSHIP_ROOT)/shipgen/genie_config
   prepend-path PATH \$::env(FAIRSHIP_ROOT)/bin
   prepend-path LD_LIBRARY_PATH \$::env(FAIRSHIP_ROOT)/lib
   setenv FAIRLIBDIR \$::env(FAIRSHIP_ROOT)/lib
@@ -65,6 +67,7 @@ incremental_recipe: |
   append-path ROOT_INCLUDE_PATH \$::env(PYTHIA_ROOT)/include/Pythia8
   append-path ROOT_INCLUDE_PATH \$::env(GEANT4_VMC_ROOT)/include
   append-path ROOT_INCLUDE_PATH \$::env(GEANT4_VMC_ROOT)/include/geant4vmc
+  append-path ROOT_INCLUDE_PATH \$::env(FAIRSHIP_ROOT)/genfit/core/include
   prepend-path PYTHONPATH \$::env(FAIRSHIP_ROOT)/python
   append-path PYTHONPATH \$::env(FAIRSHIP_ROOT)/Developments/track_pattern_recognition
   $([[ ${ARCHITECTURE:0:3} == osx ]] && echo "prepend-path DYLD_LIBRARY_PATH \$::env(FAIRSHIP_ROOT)/lib")
@@ -111,6 +114,7 @@ cmake $SOURCEDIR                                                 \
       ${PYTHON_ROOT:+-DPYTHON_INCLUDE_DIR=$PYTHON_ROOT/include/python3.6m/} \
       -DPYTHIA8_DIR=$PYTHIA_ROOT                                 \
       -DPYTHIA8_INCLUDE_DIR=$PYTHIA_ROOT/include                 \
+      -DXROOTD_INCLUDE_DIR=$XROOTD_ROOT/include/xrootd                 \
       -DGEANT4_ROOT=$GEANT4_ROOT                                 \
       -DGEANT4_INCLUDE_DIR=$GEANT4_ROOT/include/Geant4           \
       -DGEANT4_VMC_INCLUDE_DIR=$GEANT4_VMC_ROOT/include/geant4vmc \
@@ -160,6 +164,7 @@ setenv FAIRSHIP_HASH $FAIRSHIP_HASH
 setenv VMCWORKDIR \$::env(FAIRSHIP)
 setenv GEOMPATH \$::env(FAIRSHIP)/geometry
 setenv CONFIG_DIR \$::env(FAIRSHIP)/gconfig
+setenv GALGCONF \$::env(FAIRSHIP_ROOT)/shipgen/genie_config
 prepend-path PATH \$::env(FAIRSHIP_ROOT)/bin
 prepend-path LD_LIBRARY_PATH \$::env(FAIRSHIP_ROOT)/lib
 setenv FAIRLIBDIR \$::env(FAIRSHIP_ROOT)/lib
