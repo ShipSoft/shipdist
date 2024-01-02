@@ -10,7 +10,7 @@ For general documentation, please refer to the `alisw/alibuild` documentation pa
 
 Defaults in use:
 
-- `fairship`: Default for use with `FairShip/master`
+- `release`: Default for use with `FairShip/master`
 - `fairship-2018`: Default for use with `FairShip/muflux` and legacy branches
 
 ### Troubleshooting tips
@@ -31,58 +31,30 @@ If you are working on a platform that is not listed below, `containers/toolbox` 
 
 On platforms which can use CVMFS, most dependencies can be used form CVMFS and don't need to be built locally. Information to follow.
 
-### Ubuntu 18.04.X
-
-Known to work. Information to follow.
-
 ### CERN CentOS 7
 
-Known to work. Tested on `lxplus7` and base of official container image. Information to follow.
+See [ALICE documentation](https://alice-doc.github.io/alice-analysis-tutorial/building/prereq-centos7.html) for build pre-requisites.
 
-### Fedora 30
+Officially supportes as plaftorm of `lxplus7` and base of official container image.
 
-Confirmed to work. Tested using `container/toolbox`.
+### RHEL 9
 
-#### Dependencies
+See [ALICE documentation](https://alice-doc.github.io/alice-analysis-tutorial/building/prereq-alma9.html) for build pre-requisites.
 
-#### Local Packages
-
-The following packages are used from the system:
-
-- `zlib`
-- `autotools`
-- `GCC-Toolchain`
-- `Python`
-- `libxml2`
-- `Python-modules`
-- `FreeType`
-
-Everything else is used from `aliBuild`/`shipdist`.
-
-### Fedora 31
-
-Tested using `container/toolbox`.
-
-#### Dependencies
-
-```bash
-sudo dnf install -y mysql-devel curl-devel bzip2-devel auto{conf,make} texinfo gettext{,-devel} libtool freetype-devel libpng-devel sqlite{,-devel}  ncurses-devel mesa-libGLU-devel libX11-devel libXpm-devel libXext-devel libXft-devel libxml2-devel motif{,-devel} kernel-devel pciutils-devel kmod-devel bison flex perl-ExtUtils-Embed environment-modules gcc-{gfortran,c++} swig make krb5-{workstation,devel}
-```
-
-#### Local Packages
-
-The following packages are used from the system:
-
-- `libpng`
-- `libxml2`
-- `sqlite`
-- `GCC-Toolchain`
-- `autotools`
-- `FreeType`
-- `zlib`
+Officially supported as platform for lxplus9 and HTCondor.
 
 ### macOS
 
 Known to **NOT** work, but there is interest to make it work.
 
 Please write to the `ship-software` egroup, if you are interested in helping.
+
+### Other platforms
+
+See [ALICE documentation](https://alice-doc.github.io/alice-analysis-tutorial/building/) for information useful for building.
+
+Platforms known to work with some tweaking:
+
+* Ubuntu
+* Fedora
+* Arch
