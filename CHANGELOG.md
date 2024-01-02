@@ -14,6 +14,8 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 
 ### Fixed
 
+* Recipe: ZeroMQ system check not working
+
 ### Changed
 
 * Defaults: Move to `defaults-release`
