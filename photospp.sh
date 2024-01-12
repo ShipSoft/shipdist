@@ -4,6 +4,9 @@ tag: "v3.64"
 source: https://gitlab.cern.ch/photospp/photospp
 requires:
   - HepMC
+  - ROOT
+  - pythia
+  - Tauolapp
 build_requires:
   - "autotools:(slc6|slc7)"
   - alibuild-recipe-tools
@@ -12,7 +15,10 @@ build_requires:
 rsync -a --delete --exclude '**/.git' $SOURCEDIR/ ./
 
 autoreconf -ifv
-./configure --prefix $INSTALLROOT --with-hepmc="$HEPMC_ROOT"
+F77=gfortran ./configure --prefix $INSTALLROOT \
+	--with-hepmc="$HEPMC_ROOT" \
+	--with-pythia8=$PYTHIA_ROOT \
+	--with-tauola=$TAUOLAPP_ROOT
 make -j$JOBS
 make install
 
