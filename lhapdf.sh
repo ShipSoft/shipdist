@@ -1,9 +1,12 @@
 package: lhapdf
 version: "%(tag_basename)s%(defaults_upper)s"
-tag: v6.2.3
-source: https://github.com/olantwin/LHAPDF
+tag: lhapdf-6.5.3-snd
+source:  https://github.com/SND-LHC/lhapdf
 requires:
  - Python-modules
+ - "Python:slc.*"
+ - "Python-system:(?!slc.*)"
+ - "GCC-Toolchain:(?!osx)"
 build_requires:
  - autotools
 env:
