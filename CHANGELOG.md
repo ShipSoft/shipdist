@@ -20,6 +20,7 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 
 * Defaults: Move to `defaults-release`
 * Recipe: Update FairShip recipe from sndsw recipe
+* Recipe: Use ALICE method of installing python depencencies in virtual env
 
 ### Removed
 

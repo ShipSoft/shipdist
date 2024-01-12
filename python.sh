@@ -1,29 +1,25 @@
 package: Python
 version: "%(tag_basename)s"
-tag: v3.6.8
+tag: v3.9.16
 source: https://github.com/python/cpython
 requires:
- - AliEn-Runtime:(?!.*ppc64)
- - FreeType
- - libpng
- - sqlite
- - "GCC-Toolchain:(?!osx)"
- - libffi
+  - AliEn-Runtime:(?!.*ppc64)
+  - FreeType
+  - libpng
+  - sqlite
+  - "GCC-Toolchain:(?!osx)"
+  - libffi
 build_requires:
- - curl
+  - curl
+  - alibuild-recipe-tools
 env:
   SSL_CERT_FILE: "$(export PATH=$PYTHON_ROOT/bin:$PATH; export LD_LIBRARY_PATH=$PYTHON_ROOT/lib:$LD_LIBRARY_PATH; python -c \"import certifi; print(certifi.where())\")"
   PYTHONHOME: "$PYTHON_ROOT"
   PYTHONPATH: "$PYTHON_ROOT/lib/python/site-packages"
-prefer_system: ".*"
-prefer_system_check: |
-  set -e
-  python3 -c 'import sys; import sqlite3; sys.exit(1 if sys.version_info < (3, 5) else 0)'
-  pip3 --help > /dev/null
-  printf '#include "pyconfig.h"' | cc -c $(pkg-config python3 --cflags) -xc -o /dev/null - || { printf "Python, the Python development packages, and pip must be installed on your system.\nUsually those packages are called python, python-devel (or python-dev) and python-pip.\n"; exit 1; }
+prefer_system: "(?!slc5|ubuntu)"
+prefer_system_check:
+  python3 -c 'import sys; import sqlite3; sys.exit(1 if sys.version_info < (3, 5) else 0)' && python3 -m pip --help > /dev/null && printf '#include "pyconfig.h"' | cc -c $(python3-config --includes) -xc -o /dev/null -; if [ $? -ne 0 ]; then printf "Python, the Python development packages, and pip must be installed on your system.\nUsually those packages are called python, python-devel (or python-dev) and python-pip.\n"; exit 1; fi
 ---
-#!/bin/bash -ex
-
 rsync -av --exclude '**/.git' $SOURCEDIR/ $BUILDDIR/
 
 # According to cmsdist, this is required to pick up our own version
@@ -44,6 +40,9 @@ if [[ $ALIEN_RUNTIME_VERSION ]]; then
   OPENSSL_ROOT=${OPENSSL_ROOT:+$ALIEN_RUNTIME_ROOT}
   ZLIB_ROOT=${ZLIB_ROOT:+$ALIEN_RUNTIME_ROOT}
 fi
+case $ARCHITECTURE in
+  osx*) [[ ! $OPENSSL_ROOT ]] && OPENSSL_ROOT=$(brew --prefix openssl@3) ;;
+esac
 
 # Set own OpenSSL if appropriate
 if [[ $OPENSSL_ROOT ]]; then
@@ -61,6 +60,7 @@ EOF
 fi
 
 ./configure --prefix="$INSTALLROOT"  \
+            ${OPENSSL_ROOT:+--with-openssl=$OPENSSL_ROOT} ${OPENSSL_ROOT:+--with-openssl-rpath=no} \
             --enable-shared          \
             --with-system-expat      \
             --with-ensurepip=install
@@ -86,7 +86,7 @@ popd
 env PATH="$INSTALLROOT/bin:$PATH" \
     LD_LIBRARY_PATH="$INSTALLROOT/lib:$LD_LIBRARY_PATH" \
     PYTHONHOME="$INSTALLROOT" \
-    pip3 install 'certifi==2019.3.9'
+    python3 -m pip install 'certifi==2022.12.7'
 
 # Uniform Python library path
 pushd "$INSTALLROOT/lib"
@@ -99,51 +99,21 @@ find "$INSTALLROOT"/lib/python* \
      -mindepth 2 -maxdepth 2 -type d -and \( -name test -or -name tests \) \
      -exec rm -rvf '{}' \;
 
-# Execute some commands in a clean environment
-cat > "$INSTALLROOT"/bin/yum-cleanenv <<'EOF'
-#!/bin/bash
-exec env -i /usr/bin/"$(basename "$0")" "$@"
-EOF
-chmod +x "$INSTALLROOT"/bin/yum-cleanenv
-for F in $(echo /usr/bin/yum*) $(echo /usr/bin/rpm*); do
-  [[ -e $F ]] || continue
-  ln -nfs yum-cleanenv "$INSTALLROOT"/bin/"$(basename "$F")"
-done
-
 # Get OpenSSL and zlib at runtime from AliEn-Runtime if appropriate
-[[ $ALIEN_RUNTIME_VERSION ]] && unset OPENSSL_VERSION ZLIB_VERSION
-
-# Test if Tcl/Tk support is enabled (requires tk-devel or similar installed)
-env PATH="$INSTALLROOT/bin:$PATH" \
-    LD_LIBRARY_PATH="$INSTALLROOT/lib:$LD_LIBRARY_PATH" \
-    PYTHONHOME="$INSTALLROOT" \
-    python3 -c 'import tkinter'
+[[ $ALIEN_RUNTIME_REVISION ]] && unset OPENSSL_REVISION ZLIB_REVISION
 
 # Modulefile
 MODULEDIR="$INSTALLROOT/etc/modulefiles"
 MODULEFILE="$MODULEDIR/$PKGNAME"
 mkdir -p "$MODULEDIR"
-cat > "$MODULEFILE" <<EoF
-#%Module1.0
-proc ModulesHelp { } {
-  global version
-  puts stderr "ALICE Modulefile for $PKGNAME $PKGVERSION-@@PKGREVISION@$PKGHASH@@"
+alibuild-generate-module --bin --lib > "$MODULEFILE"
+cat >> "$MODULEFILE" <<EoF
+setenv PYTHONHOME \$PKG_ROOT
+prepend-path PYTHONPATH \$PKG_ROOT/lib/python/site-packages
+if { [module-info mode load] } {
+  setenv SSL_CERT_FILE  [exec \$PKG_ROOT/bin/python3 -c "import certifi; print(certifi.where())"]
 }
-set version $PKGVERSION-@@PKGREVISION@$PKGHASH@@
-module-whatis "ALICE Modulefile for $PKGNAME $PKGVERSION-@@PKGREVISION@$PKGHASH@@"
-# Dependencies
-module load BASE/1.0 ${ALIEN_RUNTIME_VERSION:+AliEn-Runtime/$ALIEN_RUNTIME_VERSION-$ALIEN_RUNTIME_REVISION} \\
-                     ${ZLIB_VERSION:+zlib/$ZLIB_VERSION-$ZLIB_REVISION}                                     \\
-                     ${OPENSSL_VERSION:+OpenSSL/$OPENSSL_VERSION-$OPENSSL_REVISION}                         \\
-                     ${LIBPNG_VERSION:+libpng/$LIBPNG_VERSION-$LIBPNG_REVISION}                             \\
-                     ${LIBFFI_VERSION:+libffi/$LIBFFI_VERSION-$LIBFFI_REVISION}                             \\
-                     ${FREETYPE_VERSION:+FreeType/$FREETYPE_VERSION-$FREETYPE_REVISION}                     \\
-                     ${GCC_TOOLCHAIN_VERSION:+GCC-Toolchain/$GCC_TOOLCHAIN_VERSION-$GCC_TOOLCHAIN_REVISION}
-# Our environment
-setenv PYTHON_ROOT \$::env(BASEDIR)/$PKGNAME/\$version
-setenv PYTHONHOME \$::env(BASEDIR)/$PKGNAME/\$version
-prepend-path PYTHONPATH $::env(PYTHON_ROOT)/lib/python/site-packages
-prepend-path PATH $::env(PYTHON_ROOT)/bin
-prepend-path LD_LIBRARY_PATH $::env(PYTHON_ROOT)/lib
-setenv SSL_CERT_FILE  [exec python3 -c "import certifi; print(certifi.where())"]
+if { [module-info mode remove] } {
+  unsetenv SSL_CERT_FILE
+}
 EoF
