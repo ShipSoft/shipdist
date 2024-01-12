@@ -32,7 +32,7 @@ overrides:
   XRootD:
     tag: v5.3.1
   ROOT:
-    tag: "v6-26-02"
+    tag: "v6-26-14"
     source: https://github.com/root-project/root
     requires:
       - GSL
