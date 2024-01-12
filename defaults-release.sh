@@ -234,8 +234,8 @@ overrides:
     tag: v1.1.5-ship
   pythia6:
     version: "%(tag_basename)s"
-    source: https://github.com/ShipSoft/pythia6
-    tag: v6.4.28-ship1
+    source: https://github.com/SND-LHC/pythia6
+    tag: v6.4.28-snd
     prefer_system_check: |
       ls $PYTHIA6_ROOT/lib/libpythia6.so > /dev/null && \
       ls $PYTHIA6_ROOT/lib/libPythia6.so > /dev/null
