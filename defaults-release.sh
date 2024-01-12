@@ -216,9 +216,6 @@ overrides:
       ls $EVTGEN_ROOT/include/EvtGenExternal > /dev/null && \
       ls $EVTGEN_ROOT/include/EvtGenModels > /dev/null
   PHOTOSPP:
-    version: "%(tag_basename)s"
-    source: https://github.com/ShipSoft/PHOTOSPP
-    tag: v3.61
     prefer_system_check: |
       ls $PHOTOSPP_ROOT/ > /dev/null && \
       ls $PHOTOSPP_ROOT/include/Photos > /dev/null && \

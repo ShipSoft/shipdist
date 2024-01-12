@@ -1,42 +1,29 @@
 package: PHOTOSPP
-version: "%(tag_basename)s-ship%(defaults_upper)s"
-source: https://github.com/ShipSoft/PHOTOSPP
-tag: v3.61
+version: "%(tag_basename)s"
+tag: "v3.64"
+source: https://gitlab.cern.ch/photospp/photospp
 requires:
   - HepMC
-  - ROOT
-  - pythia
-  - Tauolapp
+build_requires:
+  - "autotools:(slc6|slc7)"
+  - alibuild-recipe-tools
 ---
-#!/bin/sh
+#!/bin/bash -e
+rsync -a --delete --exclude '**/.git' $SOURCEDIR/ ./
 
-export  HEPMCLOCATION="$HEPMC_ROOT"
-
-rsync -a $SOURCEDIR/* .
-
-./configure --enable-debug --with-hepmc=$HEPMC_ROOT --with-pythia8=$PYTHIA_ROOT --with-tauola=$TAUOLAPP_ROOT --prefix=$INSTALLROOT CFLAGS="$CFLAGS" CXXFLAGS="$CXXFLAGS"
-
-mkdir lib
-
-make 
+autoreconf -ifv
+./configure --prefix $INSTALLROOT --with-hepmc="$HEPMC_ROOT"
+make -j$JOBS
 make install
 
-# Modulefile
-MODULEDIR="$INSTALLROOT/etc/modulefiles"
-MODULEFILE="$MODULEDIR/$PKGNAME"
-mkdir -p "$MODULEDIR"
-cat > "$MODULEFILE" <<EoF
-#%Module1.0
-proc ModulesHelp { } {
-  global version
-  puts stderr "ALICE Modulefile for $PKGNAME $PKGVERSION-@@PKGREVISION@$PKGHASH@@"
-}
-set version $PKGVERSION-@@PKGREVISION@$PKGHASH@@
-module-whatis "ALICE Modulefile for $PKGNAME $PKGVERSION-@@PKGREVISION@$PKGHASH@@"
-# Dependencies
-module load BASE/1.0 ROOT/$ROOT_VERSION-$ROOT_REVISION pythia/$PYTHIA_VERSION-$PYTHIA_REVISION HepMC/$HEPMC_VERSION-$HEPMC_REVISION  Tauolapp/$TAUOLAPP_VERSION-$TAUOLAPP_REVISION
-# Our environment
-setenv PHOTOSPP_ROOT \$::env(BASEDIR)/$PKGNAME/\$version
-prepend-path LD_LIBRARY_PATH \$::env(PHOTOSPP_ROOT)/lib
-$([[ ${ARCHITECTURE:0:3} == osx ]] && echo "prepend-path DYLD_LIBRARY_PATH \$::env(PHOTOSPP_ROOT)/lib")
-EoF
+#ModuleFile
+mkdir -p $INSTALLROOT/etc/modulefiles
+alibuild-generate-module > $INSTALLROOT/etc/modulefiles/$PKGNAME
+
+cat << EOF >> $INSTALLROOT/etc/modulefiles/$PKGNAME
+set PHOTOSPP_ROOT \$::env(BASEDIR)/$PKGNAME/\$version
+setenv PHOTOSPP_ROOT \$PHOTOSPP_ROOT
+setenv PHOTOSPP_INSTALL_PATH \$PHOTOSPP_ROOT/lib/PHOTOS
+prepend-path PATH \$PHOTOSPP_ROOT/bin
+prepend-path LD_LIBRARY_PATH \$PHOTOSPP_ROOT/lib
+EOF
