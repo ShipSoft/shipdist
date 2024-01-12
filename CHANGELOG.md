@@ -27,6 +27,7 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 * openssl: update from ALICE for new openssl versions in SLC9
 * XRootD: update recipe from ALICE, don't overwrite version in defaults
 * pythia6: use version from SND@LHC
+* ofi: update version to v1.14.0
 
 ### Removed
 
