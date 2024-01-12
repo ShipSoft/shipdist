@@ -24,6 +24,7 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 * ROOT: Update to latest bugfix release of 6.26 series: 6.26/14
 * Recipe: Update uuid from ALICE recipe
 * lhapdf: update recipe and version from snddist
+* openssl: update from ALICE for new openssl versions in SLC9
 
 ### Removed
 
