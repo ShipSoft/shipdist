@@ -61,6 +61,7 @@ env:
     dryable==1.0.5
     responses==0.10.6
     pandas==1.1.5
+    future
   "PIP39_REQUIREMENTS_ubuntu2110_x86_64": |
     PyYAML==6.0.1
     psutil==5.8.0
