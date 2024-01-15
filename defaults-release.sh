@@ -222,13 +222,16 @@ overrides:
       ls $PHOTOSPP_ROOT/lib > /dev/null && \
       ls $PHOTOSPP_ROOT/lib/libPhotospp.a > /dev/null && \
       ls $PHOTOSPP_ROOT/lib/libPhotosppHEPEVT.so > /dev/null && \
-      ls $PHOTOSPP_ROOT/lib/libPhotosppHepMC.so.1.0.0 > /dev/null && \
-      ls $PHOTOSPP_ROOT/lib/libPhotospp.so > /dev/null && \
-      true
+      ls $PHOTOSPP_ROOT/lib/libPhotosppHepMC.so > /dev/null && \
+      ls $PHOTOSPP_ROOT/lib/libPhotospp.so > /dev/null
   Tauolapp:
     version: "%(tag_basename)s"
     source: https://github.com/ShipSoft/Tauolapp
     tag: v1.1.5-ship
+    prefer_system_check: |
+      ls "$TAUOLAPP_ROOT"/lib > /dev/null && \
+      ls "$TAUOLAPP_ROOT"/etc > /dev/null && \
+      ls "$TAUOLAPP_ROOT"/include > /dev/null
   pythia6:
     version: "%(tag_basename)s"
     source: https://github.com/SND-LHC/pythia6

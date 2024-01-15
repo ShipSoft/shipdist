@@ -16,6 +16,7 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 
 * Recipe: ZeroMQ system check not working
 * PHOTOSPP: use gfortan (F77 used by mistake for GCC > 9)
+* PHOTOSPP: fix prefer_system_check (so version)
 
 ### Changed
 
@@ -32,6 +33,7 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 * PHOTOSPP: change source repo and update version and recipe
 * PHOTOSPP: fix dependencies
 * python-modules-list: add future
+* Tauolapp: add prefer_system_check
 
 ### Removed
 
