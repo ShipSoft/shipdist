@@ -44,6 +44,9 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 * ROOT: Update to latest patch release in 6.26 series
 * openssl: update from ALICE
 * Housekeeping: Update README with information relevant to SHiP
+* GEANT4: Update version to v11.2.1
+* flatbuffers: Update recipe from ALICE
+* BOOST: update recipe and version to 1.85
 
 ## [24.01](https://github.com/ShipSoft/shipdist/tree/24.01)
 
