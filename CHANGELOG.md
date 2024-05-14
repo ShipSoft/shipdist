@@ -11,6 +11,7 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 ### Added
 
 * Housekeeping: Keep track of changes in `CHANGELOG.md`
+* Add python-system.sh recipe to determine whether system python is useable
 
 ### Fixed
 
