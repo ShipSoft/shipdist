@@ -14,6 +14,8 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 
 ### Changed
 
+* ROOT: Update recipe and version to 6.30.8
+
 ### Removed
 
 * Alpaca: Unused, unmaintained and doesn't include all relevant production
