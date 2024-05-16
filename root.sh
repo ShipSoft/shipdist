@@ -1,33 +1,30 @@
 package: ROOT
 version: "%(tag_basename)s%(defaults_upper)s"
-tag: v5-34-30-alice7
-source: https://github.com/alisw/root
+tag: "v6-30-08"
+source: https://github.com/root-project/root
 requires:
-  - AliEn-Runtime:(?!.*ppc64)
-  - GSL
-  - opengl:(?!osx)
-  - Xdevel:(?!osx)
-  - FreeType:(?!osx)
-  - "MySQL:slc7.*"
-  - GCC-Toolchain:(?!osx)
-  - libxml2
+- GSL
+- opengl:(?!osx)
+- Xdevel:(?!osx)
+- FreeType:(?!osx)
+- Python-modules
+- zlib
+- libxml2
+- "OpenSSL:(?!osx)"
+- "osx-system-openssl:(osx.*)"
+- XRootD
+- pythia
+- pythia6
 build_requires:
-  - CMake
-  - "Xcode:(osx.*)"
-  - Python
+- CMake
+- "Xcode:(osx.*)"
+- libxml2
+- Python
 env:
   ROOTSYS: "$ROOT_ROOT"
 prepend_path:
   PYTHONPATH: "$ROOTSYS/lib"
 incremental_recipe: |
-  if [[ $ALICE_DAQ ]]; then
-    export ROOTSYS=$BUILDDIR && make ${JOBS+-j$JOBS} && make static
-    for S in montecarlo/vmc tree/treeplayer io/xmlparser math/minuit2 sql/mysql; do
-      mkdir -p $INSTALLROOT/$S/src
-      cp -v $S/src/*.o $INSTALLROOT/$S/src/
-    done
-    export ROOTSYS=$INSTALLROOT
-  fi
   make ${JOBS:+-j$JOBS} install
   mkdir -p $INSTALLROOT/etc/modulefiles && rsync -a --delete etc/modulefiles/ $INSTALLROOT/etc/modulefiles
   cd $INSTALLROOT/test
@@ -39,18 +36,10 @@ unset ROOTSYS
 COMPILER_CC=cc
 COMPILER_CXX=c++
 COMPILER_LD=c++
-case $PKGVERSION in
-  v6-20*) 
-     [[ "$CXXFLAGS" == *'-std=c++11'* ]] && CMAKE_CXX_STANDARD=11 || true
-     [[ "$CXXFLAGS" == *'-std=c++14'* ]] && CMAKE_CXX_STANDARD=14 || true
-     [[ "$CXXFLAGS" == *'-std=c++17'* ]] && CMAKE_CXX_STANDARD=17 || true
-  ;;
-  *)
-    [[ "$CXXFLAGS" == *'-std=c++11'* ]] && CXX11=1 || true
-    [[ "$CXXFLAGS" == *'-std=c++14'* ]] && CXX14=1 || true
-    [[ "$CXXFLAGS" == *'-std=c++17'* ]] && CXX17=1 || true
-  ;;
-esac
+
+[[ "$CXXFLAGS" == *'-std=c++11'* ]] && CMAKE_CXX_STANDARD=11 || true
+[[ "$CXXFLAGS" == *'-std=c++14'* ]] && CMAKE_CXX_STANDARD=14 || true
+[[ "$CXXFLAGS" == *'-std=c++17'* ]] && CMAKE_CXX_STANDARD=17 || true
 
 case $ARCHITECTURE in
   osx*)
@@ -69,79 +58,41 @@ then
     PYHIA6_LATE=TRUE
 fi
 
-if [[ $ALICE_DAQ ]]; then
-  # DAQ requires static ROOT, only supported by ./configure (not CMake).
-  export ROOTSYS=$BUILDDIR
-  $SOURCEDIR/configure                  \
-    --with-pythia6-uscore=SINGLE        \
-    --enable-minuit2                    \
-    --enable-roofit                     \
-    --enable-soversion                  \
-    --enable-builtin-freetype           \
-    --enable-builtin-pcre               \
-    --enable-mathmore                   \
-    --with-f77=gfortran                 \
-    --with-cc=$COMPILER_CC              \
-    --with-cxx=$COMPILER_CXX            \
-    --with-ld=$COMPILER_LD              \
-    ${CXXFLAGS:+--cxxflags="$CXXFLAGS"} \
-    --disable-shadowpw                  \
-    --disable-astiff                    \
-    --disable-globus                    \
-    --disable-krb5                      \
-    --disable-ssl                       \
-    --enable-mysql
-  FEATURES="builtin_freetype builtin_pcre mathmore minuit2 pythia6 roofit
-            soversion ${CXX11:+cxx11} ${CXX14:+cxx14} mysql xml"
-else
-  # Normal ROOT build.
-  cmake $SOURCEDIR                                                \
-        -DCMAKE_BUILD_TYPE=$CMAKE_BUILD_TYPE                      \
-        -DCMAKE_INSTALL_PREFIX=$INSTALLROOT                       \
-        ${ALIEN_RUNTIME_ROOT:+-Dalien=ON}                         \
-        ${ALIEN_RUNTIME_ROOT:+-DALIEN_DIR=$ALIEN_RUNTIME_ROOT}    \
-        ${ALIEN_RUNTIME_ROOT:+-DMONALISA_DIR=$ALIEN_RUNTIME_ROOT} \
-        ${XROOTD_ROOT:+-DXROOTD_ROOT_DIR=$XROOTD_ROOT}            \
-	${ALIEN_RUNTIME_ROOT:+-DXROOTD_ROOT_DIR=$ALIEN_RUNTIME_ROOT}\
-	-DCMAKE_CXX_STANDARD=$CMAKE_CXX_STANDARD                  \
-        -Dfreetype=ON                                             \
-        -Dbuiltin_freetype=OFF                                    \
-        -Dpcre=OFF                                                \
-        -Dbuiltin_pcre=ON                                         \
-        -Drpath=ON                                                \
-        ${ENABLE_COCOA:+-Dcocoa=ON}                               \
-        -DCMAKE_CXX_COMPILER=$COMPILER_CXX                        \
-        -DCMAKE_C_COMPILER=$COMPILER_CC                           \
-        -DCMAKE_LINKER=$COMPILER_LD                               \
-        ${GCC_TOOLCHAIN_VERSION:+-DCMAKE_EXE_LINKER_FLAGS="-L$GCC_TOOLCHAIN_ROOT/lib64"} \
-        ${OPENSSL_ROOT:+-DOPENSSL_ROOT=$ALIEN_RUNTIME_ROOT}       \
-        ${SYS_OPENSSL_ROOT:+-DOPENSSL_ROOT=$SYS_OPENSSL_ROOT}     \
-        ${SYS_OPENSSL_ROOT:+-DOPENSSL_INCLUDE_DIR=$SYS_OPENSSL_ROOT/include}  \
-        ${LIBXML2_ROOT:+-DLIBXML2_ROOT=$ALIEN_RUNTIME_ROOT}       \
-        ${GSL_ROOT:+-DGSL_DIR=$GSL_ROOT}                          \
-	${PYTHIA_ROOT:+-DPYTHIA8_DIR=$PYTHIA_ROOT}                \
-	${PYTHIA6_ROOT:+-DPYTHIA6_LIBRARY=$PYTHIA6_ROOT/lib/libpythia6.so}\
-	${PYTHIA6_ROOT:+-Dpythia6=ON}                             \
-        -Dpgsql=OFF                                               \
-        -Dminuit2=ON                                              \
-        -Dgdml=ON                                                 \
-	${PYTHIA6_LATE:+-Dpythia6_nolink=ON}                      \
-        -Droofit=ON                                               \
-        -Dhttp=ON                                                 \
-        -Dsoversion=ON                                            \
-        -Dshadowpw=OFF                                            \
-        -Dvdt=ON                                                  \
-        -Dbuiltin_vdt=ON                                          \
-        ${PYTHON_ROOT:+-DPYTHON_EXECUTABLE=$PYTHONHOME/bin/python} \
-        ${PYTHON_ROOT:+-DPYTHON_INCLUDE_DIR=$PYTHONHOME/include/python3.6m} \
-        ${PYTHON_ROOT:+-DPYTHON_LIBRARY=$PYTHONHOME/lib/libpython3.6m.so} \
-        -DCMAKE_PREFIX_PATH="$FREETYPE_ROOT;$SYS_OPENSSL_ROOT;$GSL_ROOT;$ALIEN_RUNTIME_ROOT;$PYTHON_ROOT;$PYTHON_MODULES_ROOT"
-  FEATURES="builtin_pcre mathmore xml ssl opengl minuit2 http gdml ${PYTHIA_ROOT:+pythia8}
-            pythia6 roofit soversion vdt ${CXX11:+cxx11} ${CXX14:+cxx14} ${XROOTD_ROOT:+xrootd}
-            ${ALIEN_RUNTIME_ROOT:+alien monalisa}
-            ${ENABLE_COCOA:+builtin_freetype}"
-  NO_FEATURES="${FREETYPE_ROOT:+builtin_freetype}"
-fi
+# Normal ROOT build.
+cmake $SOURCEDIR \
+-DCMAKE_BUILD_TYPE=$CMAKE_BUILD_TYPE                      \
+-DCMAKE_INSTALL_PREFIX=$INSTALLROOT                       \
+${XROOTD_ROOT:+-DXROOTD_ROOT_DIR=$XROOTD_ROOT}            \
+-DCMAKE_CXX_STANDARD=$CMAKE_CXX_STANDARD                  \
+-Dbuiltin_freetype=OFF                                    \
+-Dbuiltin_pcre=ON                                         \
+${ENABLE_COCOA:+-Dcocoa=ON}                               \
+-DCMAKE_CXX_COMPILER=$COMPILER_CXX                        \
+-DCMAKE_C_COMPILER=$COMPILER_CC                           \
+-DCMAKE_LINKER=$COMPILER_LD                               \
+${GCC_TOOLCHAIN_VERSION:+-DCMAKE_EXE_LINKER_FLAGS="-L$GCC_TOOLCHAIN_ROOT/lib64"} \
+${OPENSSL_ROOT:+-DOPENSSL_ROOT=$ALIEN_RUNTIME_ROOT}       \
+${SYS_OPENSSL_ROOT:+-DOPENSSL_ROOT=$SYS_OPENSSL_ROOT}     \
+${SYS_OPENSSL_ROOT:+-DOPENSSL_INCLUDE_DIR=$SYS_OPENSSL_ROOT/include} \
+${LIBXML2_ROOT:+-DLIBXML2_ROOT=$ALIEN_RUNTIME_ROOT}       \
+${GSL_ROOT:+-DGSL_DIR=$GSL_ROOT}                          \
+${PYTHIA_ROOT:+-DPYTHIA8_DIR=$PYTHIA_ROOT}                \
+${PYTHIA_ROOT:+-Dpythia8=ON}                \
+${PYTHIA6_ROOT:+-DPYTHIA6_LIBRARY=$PYTHIA6_ROOT/lib/libpythia6.so} \
+${PYTHIA6_ROOT:+-Dpythia6=ON}                             \
+${PYTHIA6_LATE:+-Dpythia6_nolink=ON}                      \
+-Dmathmore=ON \
+-Dsoversion=ON                                            \
+-Dshadowpw=OFF                                            \
+-Dbuiltin_vdt=ON                                          \
+${PYTHON_ROOT:+-DPYTHON_EXECUTABLE=$PYTHONHOME/bin/python} \
+${PYTHON_ROOT:+-DPYTHON_INCLUDE_DIR=$PYTHONHOME/include/python3.6m} \
+${PYTHON_ROOT:+-DPYTHON_LIBRARY=$PYTHONHOME/lib/libpython3.6m.so} \
+-DCMAKE_PREFIX_PATH="$FREETYPE_ROOT;$SYS_OPENSSL_ROOT;$GSL_ROOT;$ALIEN_RUNTIME_ROOT;$PYTHON_ROOT;$PYTHON_MODULES_ROOT"
+FEATURES="builtin_pcre xml ssl opengl http gdml mathmore ${PYTHIA_ROOT:+pythia8}
+    pythia6 roofit soversion vdt ${XROOTD_ROOT:+xrootd}
+    ${ENABLE_COCOA:+builtin_freetype}"
+NO_FEATURES="${FREETYPE_ROOT:+builtin_freetype}"
 
 # Check if all required features are enabled
 bin/root-config --features
@@ -152,18 +103,7 @@ for FEATURE in $NO_FEATURES; do
   bin/root-config --has-$FEATURE | grep -q no
 done
 
-if [[ $ALICE_DAQ ]]; then
-  make ${JOBS+-j$JOBS}
-  make static
-  # *.o files from these modules need to be copied to the install directory
-  # because AliRoot static build uses them directly
-  for S in montecarlo/vmc tree/treeplayer io/xmlparser math/minuit2 sql/mysql; do
-    mkdir -p $INSTALLROOT/$S/src
-    cp -v $S/src/*.o $INSTALLROOT/$S/src/
-  done
-  export ROOTSYS=$INSTALLROOT
-fi
-make ${JOBS+-j$JOBS} install
+cmake --build . ${JOBS+-j$JOBS} --target install
 [[ -d $INSTALLROOT/test ]] && ( cd $INSTALLROOT/test && env PATH=$INSTALLROOT/bin:$PATH LD_LIBRARY_PATH=$INSTALLROOT/lib:$LD_LIBRARY_PATH DYLD_LIBRARY_PATH=$INSTALLROOT/lib:$DYLD_LIBRARY_PATH make ${JOBS+-j$JOBS} )
 
 # Modulefile
