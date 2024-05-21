@@ -1,6 +1,6 @@
 package: XRootD
 version: "%(tag_basename)s"
-tag: "v5.5.5"
+tag: "v5.6.9"
 source: https://github.com/xrootd/xrootd
 requires:
   - "OpenSSL:(?!osx)"

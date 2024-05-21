@@ -14,6 +14,8 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 
 ### Fixed
 
+* XRootD: Update to 5.6.9 to fix authentication issue with EOS
+
 ### Changed
 
 * ROOT: Update to latest patch release in 6.26 series
