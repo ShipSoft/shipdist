@@ -10,6 +10,16 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 
 ### Added
 
+### Fixed
+
+### Changed
+
+### Removed
+
+## [24.05](https://github.com/ShipSoft/shipdist/tree/24.05)
+
+### Added
+
 * Add python-system.sh recipe to determine whether system python is useable
 
 ### Fixed
