@@ -14,6 +14,8 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 
 ### Changed
 
+* ZeroMQ: Update to 4.3.5 and change to upstream repo (an up-to-date version is required by SWAN)
+
 ### Removed
 
 ## [24.05](https://github.com/ShipSoft/shipdist/tree/24.05)
