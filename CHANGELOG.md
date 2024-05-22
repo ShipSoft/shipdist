@@ -14,9 +14,13 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 
 ### Changed
 
-* ZeroMQ: Update to 4.3.5 and change to upstream repo (an up-to-date version is required by SWAN)
-
 ### Removed
+
+## [24.05.1](https://github.com/ShipSoft/shipdist/tree/24.05)
+
+### Changed
+
+* ZeroMQ: Update to 4.3.5 and change to upstream repo (an up-to-date version is required by SWAN)
 
 ## [24.05](https://github.com/ShipSoft/shipdist/tree/24.05)
 
@@ -33,8 +37,6 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 * ROOT: Update to latest patch release in 6.26 series
 * openssl: update from ALICE
 * Housekeeping: Update README with information relevant to SHiP
-
-### Removed
 
 ## [24.01](https://github.com/ShipSoft/shipdist/tree/24.01)
 
