@@ -104,7 +104,7 @@ overrides:
       grep 1.9.0 $FAIRLOGGER_ROOT/include/fairlogger/Version.h
   GEANT4:
     version: "%(tag_basename)s"
-    tag: v10.7.2
+    tag: v10.7.3
     source: https://github.com/geant4/geant4.git
     prefer_system_check: |
       ls $GEANT4_ROOT/bin > /dev/null && \
