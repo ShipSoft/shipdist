@@ -14,6 +14,10 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 
 ### Changed
 
+* Geant4: Update to 10.7.3, as required for Ubuntu22
+
+* Python-modules-list: scikit-learn and sklearn-evaluation module version requirement reduced from == to >=
+
 ### Removed
 
 ## [24.05.1](https://github.com/ShipSoft/shipdist/tree/24.05)
