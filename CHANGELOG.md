@@ -16,6 +16,8 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 
 ### Removed
 
+* madgraph: remove as it is not used
+
 ## [24.05.1](https://github.com/ShipSoft/shipdist/tree/24.05)
 
 ### Changed
