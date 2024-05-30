@@ -18,6 +18,8 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 
 * Python-modules-list: scikit-learn and sklearn-evaluation module version requirement reduced from == to >=
 
+* bz2: version number set to string (1.0 -> "1.0")
+
 ### Removed
 
 * madgraph: remove as it is not used
