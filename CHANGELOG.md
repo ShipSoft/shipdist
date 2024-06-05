@@ -12,13 +12,12 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 
 ### Fixed
 
+* bz2: version number set to string (1.0 -> "1.0")
+
 ### Changed
 
-* Geant4: Update to 10.7.3, as required for Ubuntu22
-
-* Python-modules-list: scikit-learn and sklearn-evaluation module version requirement reduced from == to >=
-
-* bz2: version number set to string (1.0 -> "1.0")
+* Geant4: Update to 10.7.3, as required for Ubuntu 22.04
+* Python-modules-list: scikit-learn and sklearn-evaluation module version requirement relaxed from == to >=
 
 ### Removed
 
