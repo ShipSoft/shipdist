@@ -12,6 +12,16 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 
 ### Fixed
 
+### Changed
+
+### Removed
+
+## [24.06](https://github.com/ShipSoft/shipdist/tree/24.05)
+
+Ubuntu 22.04 is now also supported.
+
+### Fixed
+
 * bz2: version number set to string (1.0 -> "1.0")
 
 ### Changed
@@ -23,7 +33,7 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 
 * madgraph: remove as it is not used
 
-## [24.05.1](https://github.com/ShipSoft/shipdist/tree/24.05)
+## [24.05.1](https://github.com/ShipSoft/shipdist/tree/24.05.1)
 
 ### Changed
 
