@@ -8,6 +8,7 @@ requires:
   - FairRoot
   - FairLogger
   - GENIE
+  - GenFit
   - GEANT4
   - PHOTOSPP
   - EvtGen
@@ -47,6 +48,7 @@ incremental_recipe: |
             ${PHOTOSPP_VERSION:+PHOTOSPP/$PHOTOSPP_VERSION-$PHOTOSPP_REVISION}  \\
             ${EVTGEN_VERSION:+EvtGen/$EVTGEN_VERSION-$EVTGEN_REVISION}          \\
             ${FAIRROOT_VERSION:+FairRoot/$FAIRROOT_VERSION-$FAIRROOT_REVISION} \\
+            ${GENFIT_VERSION:+GenFit/$GENFIT_VERSION-$GENFIT_REVISION} \\
             ${ALPACA_VERSION:+alpaca/$ALPACA_VERSION-$ALPACA_REVISION}
   # Our environment
   setenv EOSSHIP root://eospublic.cern.ch/
@@ -67,7 +69,6 @@ incremental_recipe: |
   append-path ROOT_INCLUDE_PATH \$::env(PYTHIA_ROOT)/include/Pythia8
   append-path ROOT_INCLUDE_PATH \$::env(GEANT4_VMC_ROOT)/include
   append-path ROOT_INCLUDE_PATH \$::env(GEANT4_VMC_ROOT)/include/geant4vmc
-  append-path ROOT_INCLUDE_PATH \$::env(FAIRSHIP_ROOT)/genfit/core/include
   prepend-path PYTHONPATH \$::env(FAIRSHIP_ROOT)/python
   append-path PYTHONPATH \$::env(FAIRSHIP_ROOT)/Developments/track_pattern_recognition
   $([[ ${ARCHITECTURE:0:3} == osx ]] && echo "prepend-path DYLD_LIBRARY_PATH \$::env(FAIRSHIP_ROOT)/lib")
@@ -154,6 +155,7 @@ module load BASE/1.0                                                            
             ${PHOTOSPP_VERSION:+PHOTOSPP/$PHOTOSPP_VERSION-$PHOTOSPP_REVISION}  \\
             ${EVTGEN_VERSION:+EvtGen/$EVTGEN_VERSION-$EVTGEN_REVISION}          \\
             ${FAIRROOT_VERSION:+FairRoot/$FAIRROOT_VERSION-$FAIRROOT_REVISION}	\\
+            ${GENFIT_VERSION:+GenFit/$GENFIT_VERSION-$GENFIT_REVISION} \\
             ${ALPACA_VERSION:+alpaca/$ALPACA_VERSION-$ALPACA_REVISION}
 # Our environment
 setenv EOSSHIP root://eospublic.cern.ch/
