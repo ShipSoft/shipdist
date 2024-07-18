@@ -10,6 +10,8 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 
 ### Added
 
+* GenFit: Standalone recipe, use for FairShip
+
 ### Fixed
 
 * Python-modules: Remove obsolete workaround for scikit-garden
