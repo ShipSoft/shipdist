@@ -1,7 +1,7 @@
 package: FairRoot
-version: "%(short_hash)s"
-tag: "v18.4.2_snd"
-source: https://github.com/SND-LHC/FairRoot
+version: "%(tag_basename)s"
+tag: "v19.0.0"
+source: https://github.com/FairRootGroup/FairRoot
 requires:
   - generators
   - simulation

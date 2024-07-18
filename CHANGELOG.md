@@ -18,6 +18,7 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 
 * Geant4: Update to 10.7.3, as required for Ubuntu 22.04
 * Python-modules-list: scikit-learn and sklearn-evaluation module version requirement relaxed from == to >=
+* FairRoot: Update to 19.0.0
 
 ### Removed
 

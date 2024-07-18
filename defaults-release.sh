@@ -71,8 +71,6 @@ overrides:
       verge() { [[  "$1" = "`echo -e "$1\n$2" | sort -V | head -n1`" ]]; }
       type cmake && verge 3.18.2 `cmake --version | sed -e 's/.* //' | cut -d. -f1,2,3`
   FairRoot:
-    version: "%(tag_basename)s"
-    tag: "v18.4.2_snd"
     prefer_system_check: |
       ls $FAIRROOT_ROOT/ > /dev/null && \
       ls $FAIRROOT_ROOT/lib > /dev/null && \
