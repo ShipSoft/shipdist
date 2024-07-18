@@ -21,6 +21,7 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 
 * XRootD: Update to 5.7.1
 * FairRoot: Update to v18.6.10 (support C++20, stepping stone to v19)
+* FairShip: Clean up recipe, remove unused gtest dependency
 
 ### Removed
 
@@ -59,6 +60,7 @@ Ubuntu 22.04 is now also supported.
 
 * Geant4: Update to 10.7.3, as required for Ubuntu 22.04
 * Python-modules-list: scikit-learn and sklearn-evaluation module version requirement relaxed from == to >=
+* FairRoot: Update to 19.0.0
 
 ### Removed
 
@@ -85,6 +87,9 @@ Ubuntu 22.04 is now also supported.
 * ROOT: Update to latest patch release in 6.26 series
 * openssl: update from ALICE
 * Housekeeping: Update README with information relevant to SHiP
+* GEANT4: Update version to v11.2.1
+* flatbuffers: Update recipe from ALICE
+* BOOST: update recipe and version to 1.85
 
 ## [24.01](https://github.com/ShipSoft/shipdist/tree/24.01)
 
