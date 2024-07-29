@@ -14,6 +14,8 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 
 ### Changed
 
+* XRootD: Update to 5.7.0 to fix authentication issue with EOS
+
 ### Removed
 
 ## [24.06](https://github.com/ShipSoft/shipdist/tree/24.05)
