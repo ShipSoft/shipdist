@@ -14,6 +14,8 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 
 ### Changed
 
+* XRootD: build with KRB5 support
+
 ### Removed
 
 ## [24.07](https://github.com/ShipSoft/shipdist/tree/24.07)

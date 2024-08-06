@@ -82,7 +82,7 @@ cmake "${BUILDDIR}"                                                   \
       ${UUID_ROOT:+-DUUID_LIBRARY=$UUID_ROOT/lib/libuuid.so}          \
       ${UUID_ROOT:+-DUUID_INCLUDE_DIRS=$UUID_ROOT/include}            \
       ${UUID_ROOT:+-DUUID_INCLUDE_DIR=$UUID_ROOT/include}             \
-      -DENABLE_KRB5=OFF                                               \
+      -DENABLE_KRB5=ON \
       -DENABLE_FUSE=OFF                                               \
       -DENABLE_VOMS=OFF                                               \
       -DENABLE_XRDCLHTTP=OFF                                          \
