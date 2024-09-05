@@ -1,6 +1,6 @@
 package: GENIE
-version: v3.2.0
-tag: R-3_02_00
+version: v3.4.2
+tag: R-3_04_02
 source: https://github.com/GENIE-MC/Generator.git
 requires:
   - GCC-Toolchain
