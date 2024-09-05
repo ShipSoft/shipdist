@@ -18,6 +18,7 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 
 * XRootD: build with KRB5 support
 * ROOT: Update to 6.28
+* GENIE: Update to 3.4.2
 
 ### Removed
 
