@@ -22,6 +22,7 @@ LDFLAGS="$LDFLAGS -L$GEANT4_ROOT/lib"            \
     -DGeant4VMC_USE_VGM=ON                       \
     -DCMAKE_INSTALL_LIBDIR=lib                   \
     -DCMAKE_INSTALL_PREFIX="$INSTALLROOT"        \
+    -DCMAKE_POLICY_DEFAULT_CMP0074=NEW \
     ${CXXSTD:+-DCMAKE_CXX_STANDARD=$CXXSTD}
 
 make ${JOBS+-j $JOBS} install
