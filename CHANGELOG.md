@@ -21,6 +21,8 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 
 ### Removed
 
+* GEANT3: remove as it is not used
+
 ## [24.07](https://github.com/ShipSoft/shipdist/tree/24.07)
 
 ### Changed

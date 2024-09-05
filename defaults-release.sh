@@ -300,17 +300,6 @@ overrides:
       ls $XERCESC_ROOT/lib/libxerces-c.a > /dev/null && \
       ls $XERCESC_ROOT/lib/libxerces-c.la > /dev/null && \
       ls $XERCESC_ROOT/lib/libxerces-c.so > /dev/null
-  GEANT3:
-    version: "%(tag_basename)s"
-    source: https://github.com/vmc-project/geant3
-    tag: v3-9
-    prefer_system_check: |
-      ls $GEANT3_ROOT/ > /dev/null && \
-      ls $GEANT3_ROOT/include > /dev/null && \
-      ls $GEANT3_ROOT/include/TGeant3 > /dev/null && \
-      ls $GEANT3_ROOT/include/TGeant3/TGeant3.h > /dev/null && \
-      ls $GEANT3_ROOT/lib64/libgeant321.so > /dev/null && \
-      true
   googletest:
     prefer_system_check: |
       ls $GOOGLETEST_ROOT/ > /dev/null && \
