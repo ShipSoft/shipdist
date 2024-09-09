@@ -53,7 +53,6 @@ overrides:
       ls $ROOT_ROOT/bin > /dev/null && \
       ls $ROOT_ROOT/cmake > /dev/null && \
       ls $ROOT_ROOT/config > /dev/null && \
-      ls $ROOT_ROOT/emacs > /dev/null && \
       ls $ROOT_ROOT/etc > /dev/null && \
       ls $ROOT_ROOT/fonts > /dev/null && \
       ls $ROOT_ROOT/geom > /dev/null && \

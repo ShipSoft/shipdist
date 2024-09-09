@@ -13,6 +13,7 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 ### Fixed
 
 * VMC, GEANT4-VMC: Fix ROOT/VDT discovery in CMake
+* ROOT: defaults didn't pick up CVMFS version
 
 ### Changed
 
