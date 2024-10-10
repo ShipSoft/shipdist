@@ -66,11 +66,6 @@ esac | tr -s '[:space:]' '\n' > requirements.txt
 # Install pinned basic requirements for python infrastructure
 python3 -m pip install -IU -r base-requirements.txt
 
-# FIXME: required because of the newly introduced dependency on scikit-garden requires
-# a numpy to be installed separately
-# See also:
-#   https://github.com/scikit-garden/scikit-garden/issues/23
-python3 -m pip install -IU numpy
 python3 -m pip install -IU -r requirements.txt
 
 # Find the proper Python lib library and export it

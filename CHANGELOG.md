@@ -12,6 +12,11 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 
 ### Fixed
 
+* Python-modules: Remove obsolete workaround for scikit-garden
+  Installing numpy without specifying the version ahead of the other
+  dependencies lead to the  installation of two conflicting numpy versions, one
+  of which broke matplotlib.
+
 ### Changed
 
 ### Removed
