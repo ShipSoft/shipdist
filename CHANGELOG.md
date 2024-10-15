@@ -19,6 +19,8 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 
 ### Changed
 
+* XRootD: Update to 5.7.1
+
 ### Removed
 
 ## [24.09](https://github.com/ShipSoft/shipdist/tree/24.09)
