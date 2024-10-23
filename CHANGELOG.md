@@ -20,6 +20,7 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 ### Changed
 
 * XRootD: Update to 5.7.1
+* FairRoot: Update to v18.6.10 (support C++20, stepping stone to v19)
 
 ### Removed
 
