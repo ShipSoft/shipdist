@@ -10,6 +10,16 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 
 ### Added
 
+### Fixed
+
+### Changed
+
+### Removed
+
+## [24.10](https://github.com/ShipSoft/shipdist/tree/24.10)
+
+### Added
+
 * GenFit: Standalone recipe, use for FairShip
 
 ### Fixed
@@ -24,8 +34,6 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 * XRootD: Update to 5.7.1
 * FairRoot: Update to v18.6.10 (support C++20, stepping stone to v19)
 * FairShip: Clean up recipe, remove unused gtest dependency
-
-### Removed
 
 ## [24.09](https://github.com/ShipSoft/shipdist/tree/24.09)
 
