@@ -13,6 +13,7 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 ### Fixed
 
 * Freetype & XDevel: Fix freetype detection
+* GenFit: Add prefer_system_check to allow use from CVMFS
 
 ### Changed
 
