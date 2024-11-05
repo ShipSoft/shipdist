@@ -56,13 +56,6 @@ overrides:
       ls $FAIRROOT_ROOT/lib > /dev/null && \
       ls $FAIRROOT_ROOT/include > /dev/null && \
       grep v19.0.0 $FAIRROOT_ROOT/include/FairVersion.h
-  FairMQ:
-    version: "%(tag_basename)s"
-    tag: "v1.4.38"
-    prefer_system_check: |
-      ls $FAIRMQ_ROOT/ > /dev/null && \
-      ls $FAIRMQ_ROOT/lib > /dev/null && \
-      ls $FAIRMQ_ROOT/include > /dev/null && \
   FairLogger:
     version: "%(tag_basename)s"
     tag: "v1.9.0"

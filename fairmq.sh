@@ -1,6 +1,6 @@
 package: FairMQ
 version: "%(tag_basename)s"
-tag: v1.4.49
+tag: v1.8.4
 source: https://github.com/FairRootGroup/FairMQ
 requires:
  - boost
@@ -20,6 +20,10 @@ incremental_recipe: |
 prepend_path:
   ROOT_INCLUDE_PATH: "$FAIRMQ_ROOT/include"
   ROOT_INCLUDE_PATH: "$FAIRMQ_ROOT/include/fairmq"
+prefer_system_check: |
+  ls $FAIRMQ_ROOT/ > /dev/null && \
+  ls $FAIRMQ_ROOT/lib > /dev/null && \
+  ls $FAIRMQ_ROOT/include > /dev/null
 ---
 mkdir -p $INSTALLROOT
 
