@@ -1,7 +1,7 @@
 package: boost
-version: v1.75.0
-tag: v1.75.0
-source: https://github.com/alisw/boost.git
+version: boost-1.85.0
+tag: boost-1.85.0
+source: https://github.com/boostorg/boost.git
 requires:
   - "GCC-Toolchain:(?!osx)"
   - "Python-modules:(?!osx)"
@@ -54,9 +54,14 @@ fi
 
 TMPB2=$BUILDDIR/tmp-boost-build
 case $ARCHITECTURE in
-  osx*) TOOLSET=clang-darwin ;;
+  osx*) TOOLSET=clang ;;
   *) TOOLSET=gcc ;;
 esac
+
+
+pushd $SOURCEDIR
+git submodule update --init --recursive
+popd
 
 rsync -a $SOURCEDIR/ $BUILDDIR/
 cd $BUILDDIR/tools/build
@@ -64,6 +69,7 @@ cd $BUILDDIR/tools/build
 # the ABI suffix. E.g. ../include/python3 rather than ../include/python3m.
 # This is causing havok on different combinations of Ubuntu / Anaconda
 # installations.
+ls -l ../../
 bash bootstrap.sh $TOOLSET
 case $ARCHITECTURE in
   osx*)  ;;
@@ -84,10 +90,8 @@ b2 -q                                            \
    --without-graph                               \
    --without-graph_parallel                      \
    --without-locale                              \
-   --without-math                                \
    --without-mpi                                 \
    ${BOOST_NO_PYTHON:+--without-python}          \
-   --without-wave                                \
    --debug-configuration                         \
    -sNO_ZSTD=1                                   \
    ${BZ2_ROOT:+-sBZIP2_INCLUDE="$BZ2_ROOT/include"}  \
@@ -121,7 +125,7 @@ MODULEDIR="$INSTALLROOT/etc/modulefiles"
 MODULEFILE="$MODULEDIR/$PKGNAME"
 
 mkdir -p etc/modulefiles
-alibuild-generate-module --bin --lib > etc/modulefiles/$PKGNAME
+alibuild-generate-module --lib > etc/modulefiles/$PKGNAME
 cat << EOF >> etc/modulefiles/$PKGNAME
 prepend-path ROOT_INCLUDE_PATH \$PKG_ROOT/include
 EOF

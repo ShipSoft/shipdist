@@ -16,6 +16,7 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 
 * ROOT: Update recipe and version to 6.30.6
 * flatbuffers: Update recipe from ALICE
+* BOOST: update recipe and version to 1.85
 
 ### Removed
 
