@@ -14,6 +14,8 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 
 ### Changed
 
+* flatbuffers: Update recipe from ALICE
+
 ### Removed
 
 ## [24.10](https://github.com/ShipSoft/shipdist/tree/24.10)
