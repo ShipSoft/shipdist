@@ -1,6 +1,6 @@
 package: FairLogger
 version: "%(tag_basename)s"
-tag: v1.9.0
+tag: v2.0.0
 source: https://github.com/FairRootGroup/FairLogger
 requires:
  - fmt
@@ -12,6 +12,11 @@ incremental_recipe: |
   mkdir -p $INSTALLROOT/etc/modulefiles && rsync -a --delete etc/modulefiles/ $INSTALLROOT/etc/modulefiles
 prepend_path:
   ROOT_INCLUDE_PATH: "$FAIRLOGGER_ROOT/include"
+prefer_system_check: |
+  ls $FAIRLOGGER_ROOT/ > /dev/null && \
+  ls $FAIRLOGGER_ROOT/lib > /dev/null && \
+  ls $FAIRLOGGER_ROOT/include/fairlogger > /dev/null && \
+  grep 2.0.0 $FAIRLOGGER_ROOT/include/fairlogger/Version.h
 ---
 #!/bin/bash
 

@@ -56,14 +56,6 @@ overrides:
       ls $FAIRROOT_ROOT/lib > /dev/null && \
       ls $FAIRROOT_ROOT/include > /dev/null && \
       grep v19.0.0 $FAIRROOT_ROOT/include/FairVersion.h
-  FairLogger:
-    version: "%(tag_basename)s"
-    tag: "v1.9.0"
-    prefer_system_check: |
-      ls $FAIRLOGGER_ROOT/ > /dev/null && \
-      ls $FAIRLOGGER_ROOT/lib > /dev/null && \
-      ls $FAIRLOGGER_ROOT/include/fairlogger > /dev/null && \
-      grep 1.9.0 $FAIRLOGGER_ROOT/include/fairlogger/Version.h
   GEANT4:
     version: "%(tag_basename)s"
     tag: v11.2.1
