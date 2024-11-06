@@ -100,12 +100,6 @@ overrides:
       ls $GEANT4_VMC_ROOT/include/geant4vmc > /dev/null && \
       ls $GEANT4_VMC_ROOT/include/mtroot > /dev/null && \
       true
-  VMC:
-    version: "%(tag_basename)s"
-    tag: v1-1-p1
-    prefer_system_check: |
-      ls $VMC_ROOT/include > /dev/null && \
-      true
   GENIE:
     prefer_system_check: |
       ls $GENIE_ROOT/genie > /dev/null && \

@@ -1,6 +1,6 @@
 package: VMC
 version: "%(tag_basename)s"
-tag: "v1-1-p1"
+tag: "v2-0"
 source: https://github.com/vmc-project/vmc
 requires:
   - ROOT
@@ -10,6 +10,9 @@ build_requires:
   - alibuild-recipe-tools
 prepend_path:
   ROOT_INCLUDE_PATH: "$VMC_ROOT/include/vmc"
+prefer_system_check: |
+  ls $VMC_ROOT/include > /dev/null && \
+  true
 ---
 #!/bin/bash -e
 
