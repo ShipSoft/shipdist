@@ -88,18 +88,6 @@ overrides:
      G4RADIOACTIVEDATA : "`find ${G4INSTALL} $G4DATASEARCHOPT '*data*RadioactiveDecay*'`"
      G4REALSURFACEDATA : "`find ${G4INSTALL} $G4DATASEARCHOPT '*data*RealSurface*'`"
      G4SAIDXSDATA : "`find ${G4INSTALL} $G4DATASEARCHOPT  '*data*G4SAIDDATA*'`"
-  GEANT4_VMC:
-    version: "%(tag_basename)s"
-    tag: v5-4
-    prefer_system_check: |
-      ls $GEANT4_VMC_ROOT/bin > /dev/null && \
-      ls $GEANT4_VMC_ROOT/lib/libg4root.so > /dev/null && \
-      ls $GEANT4_VMC_ROOT/lib/libgeant4vmc.so> /dev/null && \
-      ls $GEANT4_VMC_ROOT/lib/libmtroot.so > /dev/null && \
-      ls $GEANT4_VMC_ROOT/include/g4root > /dev/null && \
-      ls $GEANT4_VMC_ROOT/include/geant4vmc > /dev/null && \
-      ls $GEANT4_VMC_ROOT/include/mtroot > /dev/null && \
-      true
   GENIE:
     prefer_system_check: |
       ls $GENIE_ROOT/genie > /dev/null && \
