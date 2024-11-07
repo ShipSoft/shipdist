@@ -146,9 +146,6 @@ overrides:
       ls $PYTHIA_ROOT/lib/libpythia8lhapdf6.so > /dev/null && \
       ls $PYTHIA_ROOT/lib/libpythia8.so > /dev/null && \
       true
-  vgm:
-    version: "%(tag_basename)s"
-    tag: "4.4"
   evtGen:
     version: "%(tag_basename)s"
     source: https://github.com/ShipSoft/evtgen
@@ -220,22 +217,6 @@ overrides:
       ls $LHAPDF5_ROOT/lib/libLHAPDF.a > /dev/null && \
       ls $LHAPDF5_ROOT/lib64/python2.7/site-packages/lhapdf.py > /dev/null && \
       ls $LHAPDF5_ROOT/share/lhapdf > /dev/null 
-  vgm:
-    prefer_system_check: |
-      ls $VGM_ROOT/ > /dev/null && \
-      ls $VGM_ROOT/include > /dev/null && \
-      ls $VGM_ROOT/include/BaseVGM > /dev/null && \
-      ls $VGM_ROOT/include/ClhepVGM > /dev/null && \
-      ls $VGM_ROOT/include/Geant4GM > /dev/null && \
-      ls $VGM_ROOT/include/RootGM > /dev/null && \
-      ls $VGM_ROOT/include/VGM > /dev/null && \
-      ls $VGM_ROOT/include/XmlVGM > /dev/null && \
-      ls $VGM_ROOT/lib > /dev/null && \
-      ls $VGM_ROOT/lib/libBaseVGM.a > /dev/null && \
-      ls $VGM_ROOT/lib/libClhepVGM.a > /dev/null && \
-      ls $VGM_ROOT/lib/libGeant4GM.a > /dev/null && \
-      ls $VGM_ROOT/lib/libRootGM.a > /dev/null && \
-      ls $VGM_ROOT/lib/libXmlVGM.a > /dev/null
   XercesC:
     prefer_system_check: |
       ls $XERCESC_ROOT/ > /dev/null && \

@@ -20,6 +20,7 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 * GEANT4: Update version to v11.2.1
 * FairRoot: Update to 19.0.0
 * VMC: Update to 2.0
+* VGM: Update to 5.2
 
 ### Removed
 
