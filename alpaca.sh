@@ -2,12 +2,15 @@
 package: alpaca
 tag: master
 version: v1.1
-source: https://github.com/tugberk92/alpaca
+source: https://github.com/ShipSoft/alpaca
 requires:
   - GCC-Toolchain:(?!osx)
 env:
   ALPACABIN: "$ALPACA_ROOT/bin"
   ALPACA: "$ALPACA_ROOT"
+prefer_system_check: |
+    [ -n "$ALPACA" ] || exit 1
+    ls $ALPACA/bin > /dev/null && true
 ---
 #!/bin/sh
 rsync -a $SOURCEDIR/* .
