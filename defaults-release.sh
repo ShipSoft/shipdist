@@ -172,11 +172,6 @@ overrides:
       ls $APFEL_ROOT/lib > /dev/null && \
       ls $APFEL_ROOT/include > /dev/null && \
       true
-  alpaca:
-    version: v1.1
-    prefer_system_check: |
-      ls $ALPACA/bin > /dev/null && \
-      true
   pythia:
     version: "%(tag_basename)s"
     source: https://github.com/ShipSoft/pythia8
