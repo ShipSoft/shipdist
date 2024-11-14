@@ -12,11 +12,12 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 
 ### Fixed
 
-* Alpaca: fix broken prefer_system_check and move to our mirror
-
 ### Changed
 
 ### Removed
+
+* Alpaca: Unused, unmaintained and doesn't include all relevant production
+  mechanisms for our use
 
 ## [24.10](https://github.com/ShipSoft/shipdist/tree/24.10)
 

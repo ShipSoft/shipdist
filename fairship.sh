@@ -14,7 +14,6 @@ requires:
   - EvtGen
   - ROOT
   - VMC
-  - alpaca
 incremental_recipe: |
   rsync -ar $SOURCEDIR/ $INSTALLROOT/
   cmake --build . ${JOBS+-j$JOBS} --target install
@@ -41,8 +40,7 @@ incremental_recipe: |
             ${PHOTOSPP_VERSION:+PHOTOSPP/$PHOTOSPP_VERSION-$PHOTOSPP_REVISION}  \\
             ${EVTGEN_VERSION:+EvtGen/$EVTGEN_VERSION-$EVTGEN_REVISION}          \\
             ${FAIRROOT_VERSION:+FairRoot/$FAIRROOT_VERSION-$FAIRROOT_REVISION} \\
-            ${GENFIT_VERSION:+GenFit/$GENFIT_VERSION-$GENFIT_REVISION} \\
-            ${ALPACA_VERSION:+alpaca/$ALPACA_VERSION-$ALPACA_REVISION}
+            ${GENFIT_VERSION:+GenFit/$GENFIT_VERSION-$GENFIT_REVISION}
   # Our environment
   setenv EOSSHIP root://eospublic.cern.ch/
   setenv FAIRSHIP_ROOT \$::env(BASEDIR)/$PKGNAME/\$version
@@ -141,8 +139,7 @@ module load BASE/1.0                                                            
             ${PHOTOSPP_VERSION:+PHOTOSPP/$PHOTOSPP_VERSION-$PHOTOSPP_REVISION}  \\
             ${EVTGEN_VERSION:+EvtGen/$EVTGEN_VERSION-$EVTGEN_REVISION}          \\
             ${FAIRROOT_VERSION:+FairRoot/$FAIRROOT_VERSION-$FAIRROOT_REVISION}	\\
-            ${GENFIT_VERSION:+GenFit/$GENFIT_VERSION-$GENFIT_REVISION} \\
-            ${ALPACA_VERSION:+alpaca/$ALPACA_VERSION-$ALPACA_REVISION}
+            ${GENFIT_VERSION:+GenFit/$GENFIT_VERSION-$GENFIT_REVISION}
 # Our environment
 setenv EOSSHIP root://eospublic.cern.ch/
 setenv FAIRSHIP_ROOT \$::env(BASEDIR)/$PKGNAME/\$version
