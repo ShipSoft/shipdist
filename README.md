@@ -29,19 +29,25 @@ If you are working on a platform that is not listed below, `containers/toolbox` 
 
 ### With CVMFS
 
-On platforms which can use CVMFS, most dependencies can be used form CVMFS and don't need to be built locally. Information to follow.
+On platforms which can use CVMFS, most dependencies can be used from CVMFS and don't need to be built locally. Information to follow.
 
 ### CERN CentOS 7
 
 See [ALICE documentation](https://alice-doc.github.io/alice-analysis-tutorial/building/prereq-centos7.html) for build pre-requisites.
 
-Officially supportes as plaftorm of `lxplus7` and base of official container image.
+No longer supported.
 
 ### RHEL 9
 
 See [ALICE documentation](https://alice-doc.github.io/alice-analysis-tutorial/building/prereq-alma9.html) for build pre-requisites.
 
-Officially supported as platform for lxplus9 and HTCondor.
+Officially supported as platform for lxplus9 and HTCondor, CVMFS builds available.
+
+### Ubuntu 22.04
+
+See [ALICE documentation](https://alice-doc.github.io/alice-analysis-tutorial/building/prereq-ubuntu.html) for build pre-requisites.
+
+Officially supported with CVMFS builds available.
 
 ### macOS
 
