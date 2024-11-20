@@ -1,6 +1,6 @@
 package: ROOT
 version: "%(tag_basename)s%(defaults_upper)s"
-tag: "v6-30-08"
+tag: "v6-32-08"
 source: https://github.com/root-project/root
 requires:
 - GSL
@@ -14,7 +14,6 @@ requires:
 - "osx-system-openssl:(osx.*)"
 - XRootD
 - pythia
-- pythia6
 build_requires:
 - CMake
 - "Xcode:(osx.*)"
@@ -52,12 +51,6 @@ case $ARCHITECTURE in
   ;;
 esac
 
-#If pythia6 is not provided, perform late linking
-if [[ -z $PYTHIA6_ROOT ]]
-then
-    PYHIA6_LATE=TRUE
-fi
-
 # Normal ROOT build.
 cmake $SOURCEDIR \
 -DCMAKE_BUILD_TYPE=$CMAKE_BUILD_TYPE                      \
@@ -76,9 +69,6 @@ ${SYS_OPENSSL_ROOT:+-DOPENSSL_INCLUDE_DIR=$SYS_OPENSSL_ROOT/include} \
 ${GSL_ROOT:+-DGSL_DIR=$GSL_ROOT}                          \
 ${PYTHIA_ROOT:+-DPYTHIA8_DIR=$PYTHIA_ROOT}                \
 ${PYTHIA_ROOT:+-Dpythia8=ON}                \
-${PYTHIA6_ROOT:+-DPYTHIA6_LIBRARY=$PYTHIA6_ROOT/lib/libpythia6.so} \
-${PYTHIA6_ROOT:+-Dpythia6=ON}                             \
-${PYTHIA6_LATE:+-Dpythia6_nolink=ON}                      \
 -Dmathmore=ON \
 -Dsoversion=ON                                            \
 -Dshadowpw=OFF                                            \
@@ -88,7 +78,7 @@ ${PYTHON_ROOT:+-DPYTHON_INCLUDE_DIR=$PYTHONHOME/include/python3.6m} \
 ${PYTHON_ROOT:+-DPYTHON_LIBRARY=$PYTHONHOME/lib/libpython3.6m.so} \
 -DCMAKE_PREFIX_PATH="$FREETYPE_ROOT;$SYS_OPENSSL_ROOT;$GSL_ROOT;$PYTHON_ROOT;$PYTHON_MODULES_ROOT"
 FEATURES="builtin_pcre xml ssl opengl http gdml mathmore ${PYTHIA_ROOT:+pythia8}
-    pythia6 roofit soversion vdt ${XROOTD_ROOT:+xrootd}
+    roofit soversion vdt ${XROOTD_ROOT:+xrootd}
     ${ENABLE_COCOA:+builtin_freetype}"
 NO_FEATURES="${FREETYPE_ROOT:+builtin_freetype}"
 
@@ -122,7 +112,6 @@ module load BASE/1.0 ${GCC_TOOLCHAIN_VERSION:+GCC-Toolchain/$GCC_TOOLCHAIN_VERSI
                      ${PYTHON_VERSION:+Python/$PYTHON_VERSION-$PYTHON_REVISION}                                 \\
                      ${PYTHON_MODULES_VERSION:+Python-modules/$PYTHON_MODULES_VERSION-$PYTHON_MODULES_REVISION} \\
                      ${PYTHIA_VERSION:+pythia/$PYTHIA_VERSION-$PYTHIA_REVISION}                                 \\
-                     ${PYTHIA6_VERSION:+pythia6/$PYTHIA6_VERSION-$PYTHIA6_REVISION}
 # Our environment
 setenv ROOT_RELEASE \$version
 setenv ROOT_BASEDIR \$::env(BASEDIR)/$PKGNAME

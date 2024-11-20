@@ -1,13 +1,12 @@
 package: GENIE
-version: v3.4.2
-tag: R-3_04_02
+version: master
+tag: master
 source: https://github.com/GENIE-MC/Generator.git
 requires:
   - GCC-Toolchain
   - ROOT
   - lhapdf
   - apfel
-  - pythia6
   - log4cpp
   - GSL
   - libxml2
@@ -32,9 +31,8 @@ $BUILDDIR/configure --prefix=$INSTALLROOT \
 		    --enable-neutral-heavy-lepton \
 		    --enable-dark-neutrino \
 		    --enable-rwght \
-		    --enable-pyhia6 \
+		    --disable-pythia6 \
 		    --enable-mathmore \
-      		    --with-pythia6-lib=$PYTHIA6_ROOT/lib/ \
 		    --with-lhapdf-lib=$LHAPDF_ROOT/lib/ \
 		    --with-lhapdf-inc=$LHAPDF_ROOT/include/ \
 		    --with-libxml2-lib=$LIBXML2_ROOT/lib/ \
@@ -78,7 +76,7 @@ proc ModulesHelp { } {
 set version $PKGVERSION-@@PKGREVISION@$PKGHASH@@
 module-whatis "ALICE Modulefile for $PKGNAME $PKGVERSION-@@PKGREVISION@$PKGHASH@@"
 # Dependencies
-module load BASE/1.0 ROOT/$ROOT_VERSION-$ROOT_REVISION pythia6/$PYTHIA6_VERSION-$PYTHIA6_REVISION lhapdf/$LHAPDF_VERSION-$LHAPDF_REVISION log4cpp/$LOG4CPP_VERSION-$LOG4CPP_REVISION ${LIBXML2:+libxml2/$LIBXML2_VERSION-$LIBXML2_REVISION} ${GSL_VERSION:+GSL/$GSL_VERSION-$GSL_REVISION} apfel/$APFEL_VERSION-$APFEL_REVISION
+module load BASE/1.0 ROOT/$ROOT_VERSION-$ROOT_REVISION lhapdf/$LHAPDF_VERSION-$LHAPDF_REVISION log4cpp/$LOG4CPP_VERSION-$LOG4CPP_REVISION ${LIBXML2:+libxml2/$LIBXML2_VERSION-$LIBXML2_REVISION} ${GSL_VERSION:+GSL/$GSL_VERSION-$GSL_REVISION} apfel/$APFEL_VERSION-$APFEL_REVISION
 # Our environment
 setenv GENIE_ROOT \$::env(BASEDIR)/$PKGNAME/\$version
 setenv GENIE \$::env(GENIE_ROOT)/genie
