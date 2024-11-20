@@ -280,6 +280,9 @@ overrides:
       ls $GOOGLETEST_ROOT/lib/libgtest.a > /dev/null && \
       ls $GOOGLETEST_ROOT/lib/libgtest_main.a > /dev/null && \
       true
+  TPythia6:
+    version: "main"
+    tag: "main"
 ---
 # This file is included in any build recipe and it's only used to set
 # environment variables. Which file to actually include can be defined by the
