@@ -50,18 +50,19 @@ overrides:
       - "Xcode:(osx.*)"
       - libxml2
     prefer_system_check: |
-      ls $ROOT_ROOT/bin > /dev/null && \
-      ls $ROOT_ROOT/cmake > /dev/null && \
-      ls $ROOT_ROOT/config > /dev/null && \
-      ls $ROOT_ROOT/etc > /dev/null && \
-      ls $ROOT_ROOT/fonts > /dev/null && \
-      ls $ROOT_ROOT/geom > /dev/null && \
-      ls $ROOT_ROOT/icons > /dev/null && \
-      ls $ROOT_ROOT/include > /dev/null && \
-      ls $ROOT_ROOT/lib > /dev/null && \
-      ls $ROOT_ROOT/macros > /dev/null && \
-      ls $ROOT_ROOT/man > /dev/null && \
-      true
+      VERSION=$(root-config --version)
+      REQUESTED_VERSION=${REQUESTED_VERSION#v}
+      REQUESTED_VERSION=${REQUESTED_VERSION//-/.}
+      if [ $(printf "${VERSION}\n${REQUESTED_VERSION}" | sort -V | head -1) != "${VERSION}" ]; then
+          echo "ROOT version $VERSION sufficient"
+      else
+          echo "ROOT version $VERSION insufficient"
+          exit 1
+      fi
+      FEATURES="builtin_pcre mathmore xml ssl opengl http gdml pythia8 roofit soversion vdt xrootd"
+      for FEATURE in $FEATURES; do
+          root-config --has-$FEATURE | grep -q yes || { echo "$FEATURE missing"; exit 1; }
+      done
   GSL:
     version: "v1.16%(defaults_upper)s"
     source: https://github.com/alisw/gsl
