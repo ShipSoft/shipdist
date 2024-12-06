@@ -31,18 +31,25 @@ overrides:
       which cc && test -f $(dirname $(which cc))/c++ && printf "#define GCCVER ((__GNUC__ << 16)+(__GNUC_MINOR__ << 8)+(__GNUC_PATCHLEVEL__))\n#if (GCCVER < 0x060000 || GCCVER > 0x100000)\n#error \"System's GCC cannot be used: we need GCC 6.X. We are going to compile our own version.\"\n#endif\n" | cc -xc++ - -c -o /dev/null
   ROOT:
     prefer_system_check: |
-      ls $ROOT_ROOT/bin > /dev/null && \
-      ls $ROOT_ROOT/cmake > /dev/null && \
-      ls $ROOT_ROOT/config > /dev/null && \
-      ls $ROOT_ROOT/etc > /dev/null && \
-      ls $ROOT_ROOT/fonts > /dev/null && \
-      ls $ROOT_ROOT/geom > /dev/null && \
-      ls $ROOT_ROOT/icons > /dev/null && \
-      ls $ROOT_ROOT/include > /dev/null && \
-      ls $ROOT_ROOT/lib > /dev/null && \
-      ls $ROOT_ROOT/macros > /dev/null && \
-      ls $ROOT_ROOT/man > /dev/null && \
-      true
+      VERSION=$(root-config --version)
+      REQUESTED_VERSION=${REQUESTED_VERSION#v}
+      REQUESTED_VERSION=${REQUESTED_VERSION//-/.}
+      verlte() {
+          printf '%s\n' "$1" "$2" | sort -C -V
+      }
+      verlt() {
+          ! verlte "$2" "$1"
+      }
+      if ! verlt $VERSION $REQUESTED_VERSION; then
+          echo "ROOT version $VERSION sufficient"
+      else
+          echo "ROOT version $VERSION insufficient ($REQUESTED_VERSION requested)"
+          exit 1
+      fi
+      FEATURES="builtin_pcre mathmore xml ssl opengl http gdml pythia8 roofit soversion vdt xrootd"
+      for FEATURE in $FEATURES; do
+          root-config --has-$FEATURE | grep -q yes || { echo "$FEATURE missing"; exit 1; }
+      done
   GSL:
     version: "v1.16%(defaults_upper)s"
     source: https://github.com/alisw/gsl
