@@ -12,6 +12,8 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 
 ### Fixed
 
+* Freetype & XDevel: Fix freetype detection
+
 ### Changed
 
 * ROOT: Update recipe and version to 6.30.8
