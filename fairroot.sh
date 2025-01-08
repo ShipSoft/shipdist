@@ -1,7 +1,7 @@
 package: FairRoot
 version: "%(short_hash)s"
-tag: "v18.6.10"
-source: https://github.com/FairRootGroup/FairRoot
+tag: "v18.6.10_ship"
+source: https://github.com/ShipSoft/FairRoot
 requires:
   - generators
   - simulation
@@ -20,6 +20,7 @@ env:
   FAIRROOTPATH: "$FAIRROOT_ROOT"
 prepend_path:
   ROOT_INCLUDE_PATH: "$FAIRROOT_ROOT/include"
+  LD_LIBRARY_PATH: "$FAIRROOT_ROOT/lib"
 ---
 # Making sure people do not have SIMPATH set when they build fairroot.
 # Unfortunately SIMPATH seems to be hardcoded in a bunch of places in
