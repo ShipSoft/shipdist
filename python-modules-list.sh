@@ -101,7 +101,7 @@ env:
     PyYAML==6.0.1
     psutil==5.9.0
     uproot==4.1.0
-    numpy==1.23.4
+    numpy==1.21.6
     scipy==1.9.3
     Cython==0.29.21
     seaborn==0.11.0
