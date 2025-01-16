@@ -16,7 +16,7 @@ env:
   PATH: "$PATH:$GENIE_ROOT/genie/bin"
   LD_LIBRARY_PATH: "$LD_LIBRARY_PATH:$GENIE_ROOT/genie/lib"
   ROOT_INCLUDE_PATH: "$ROOT_INCLUDE_PATH:$GENIE_ROOT/genie/inc:$GENIE_ROOT/genie/src"
----  
+---
 #/bin/bash -ex
 export GENIE="$BUILDDIR"
 

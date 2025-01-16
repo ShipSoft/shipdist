@@ -5,7 +5,7 @@ requires:
   - ROOT
   - googletest # should be build dep?
   - boost
-build-requires:
+build_requires:
   - CMake
   - "GCC-Toolchain:(?!osx)"
 env:
