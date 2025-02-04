@@ -36,5 +36,5 @@ module load BASE/1.0
 set TPYTHIA6_ROOT \$::env(BASEDIR)/$PKGNAME/\$version
 setenv TPYTHIA6_ROOT \$TPYTHIA6_ROOT
 prepend-path ROOT_INCLUDE_PATH \$TPYTHIA6_ROOT/inc
-prepend-path LD_LIBRARY_PATH \$TPYTHIA6_ROOT/lib
+prepend-path LD_LIBRARY_PATH \$TPYTHIA6_ROOT
 EoF
