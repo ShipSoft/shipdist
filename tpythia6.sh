@@ -17,7 +17,7 @@ cmake "$SOURCEDIR"                               \
 make 
 cp -r $SOURCEDIR/inc $INSTALLROOT/inc
 cp *.so $INSTALLROOT/
-
+cp *.pcm $INSTALLROOT/
 # Modulefile
 MODULEDIR="$INSTALLROOT/etc/modulefiles"
 MODULEFILE="$MODULEDIR/$PKGNAME"
