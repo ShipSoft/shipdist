@@ -14,6 +14,7 @@ requires:
   - EvtGen
   - ROOT
   - VMC
+  - TPythia6
 incremental_recipe: |
   rsync -ar $SOURCEDIR/ $INSTALLROOT/
   cmake --build . ${JOBS+-j$JOBS} --target install
@@ -40,7 +41,8 @@ incremental_recipe: |
             ${PHOTOSPP_VERSION:+PHOTOSPP/$PHOTOSPP_VERSION-$PHOTOSPP_REVISION}  \\
             ${EVTGEN_VERSION:+EvtGen/$EVTGEN_VERSION-$EVTGEN_REVISION}          \\
             ${FAIRROOT_VERSION:+FairRoot/$FAIRROOT_VERSION-$FAIRROOT_REVISION} \\
-            ${GENFIT_VERSION:+GenFit/$GENFIT_VERSION-$GENFIT_REVISION}
+            ${GENFIT_VERSION:+GenFit/$GENFIT_VERSION-$GENFIT_REVISION}         \\
+            ${TPYTHIA6_VERSION:+TPythia6/$TPYTHIA6_VERSION-$TPYTHIA6_REVISION}
   # Our environment
   setenv EOSSHIP root://eospublic.cern.ch/
   setenv FAIRSHIP_ROOT \$::env(BASEDIR)/$PKGNAME/\$version
@@ -60,6 +62,7 @@ incremental_recipe: |
   append-path ROOT_INCLUDE_PATH \$::env(PYTHIA_ROOT)/include/Pythia8
   append-path ROOT_INCLUDE_PATH \$::env(GEANT4_VMC_ROOT)/include
   append-path ROOT_INCLUDE_PATH \$::env(GEANT4_VMC_ROOT)/include/geant4vmc
+  append-path ROOT_INCLUDE_PATH \$::env(TPYTHIA6_ROOT)/inc
   prepend-path PYTHONPATH \$::env(FAIRSHIP_ROOT)/python
   append-path PYTHONPATH \$::env(FAIRSHIP_ROOT)/Developments/track_pattern_recognition
   $([[ ${ARCHITECTURE:0:3} == osx ]] && echo "prepend-path DYLD_LIBRARY_PATH \$::env(FAIRSHIP_ROOT)/lib")
@@ -110,6 +113,7 @@ cmake $SOURCEDIR                                                 \
       ${CMAKE_VERBOSE_MAKEFILE:+-DCMAKE_VERBOSE_MAKEFILE=ON}     \
       ${BOOST_ROOT:+-DBOOST_ROOT=$BOOST_ROOT}                    \
       ${GENFIT:+-Dgenfit2_ROOT=$GENFIT} \
+      -DTPYTHIA6_INCLUDE_DIR=$TPYTHIA6_ROOT/inc \
       -DCMAKE_INSTALL_PREFIX=$INSTALLROOT
 
 cmake --build . ${JOBS+-j$JOBS} --target install
@@ -138,7 +142,8 @@ module load BASE/1.0                                                            
             ${PHOTOSPP_VERSION:+PHOTOSPP/$PHOTOSPP_VERSION-$PHOTOSPP_REVISION}  \\
             ${EVTGEN_VERSION:+EvtGen/$EVTGEN_VERSION-$EVTGEN_REVISION}          \\
             ${FAIRROOT_VERSION:+FairRoot/$FAIRROOT_VERSION-$FAIRROOT_REVISION}	\\
-            ${GENFIT_VERSION:+GenFit/$GENFIT_VERSION-$GENFIT_REVISION}
+            ${GENFIT_VERSION:+GenFit/$GENFIT_VERSION-$GENFIT_REVISION}          \\
+            ${TPYTHIA6_VERSION:+TPythia6/$TPYTHIA6_VERSION-$TPYTHIA6_REVISION}
 # Our environment
 setenv EOSSHIP root://eospublic.cern.ch/
 setenv FAIRSHIP_ROOT \$::env(BASEDIR)/$PKGNAME/\$version
@@ -158,6 +163,7 @@ append-path ROOT_INCLUDE_PATH \$::env(PYTHIA_ROOT)/include
 append-path ROOT_INCLUDE_PATH \$::env(PYTHIA_ROOT)/include/Pythia8
 append-path ROOT_INCLUDE_PATH \$::env(GEANT4_VMC_ROOT)/include
 append-path ROOT_INCLUDE_PATH \$::env(GEANT4_VMC_ROOT)/include/geant4vmc
+append-path ROOT_INCLUDE_PATH \$::env(TPYTHIA6_ROOT)/inc
 prepend-path PYTHONPATH \$::env(FAIRSHIP_ROOT)/python
 append-path PYTHONPATH \$::env(FAIRSHIP_ROOT)/Developments/track_pattern_recognition
 $([[ ${ARCHITECTURE:0:3} == osx ]] && echo "prepend-path DYLD_LIBRARY_PATH \$::env(FAIRSHIP_ROOT)/lib")
