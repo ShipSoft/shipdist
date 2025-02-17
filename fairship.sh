@@ -92,7 +92,6 @@ cmake $SOURCEDIR                                                 \
       -DFAIRROOTPATH="$FAIRROOTPATH"                             \
       -DFAIRROOT_INCLUDE_DIR="$FAIRROOT_ROOT/include"            \
       -DFAIRROOT_LIBRARY_DIR="$FAIRROOT_ROOT/lib"                \
-      -DFAIRLOGGER_INCLUDE_DIR="$FAIRLOGGER_ROOT/include"        \
       -DFMT_INCLUDE_DIR="$FMT_ROOT/include"                      \
       -DCMAKE_CXX_FLAGS="$CXXFLAGS"                              \
       -DCMAKE_BUILD_TYPE=$CMAKE_BUILD_TYPE                       \
