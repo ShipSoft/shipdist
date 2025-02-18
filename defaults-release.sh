@@ -173,7 +173,6 @@ overrides:
       true
   vgm:
     version: "%(tag_basename)s"
-    tag: "4.4"
     prefer_system_check: |
       ls $VGM_ROOT/ > /dev/null && \
       ls $VGM_ROOT/include > /dev/null && \

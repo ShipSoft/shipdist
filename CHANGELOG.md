@@ -19,6 +19,7 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 
 * ROOT: Update recipe and version to 6.30.8
 * FairRoot: Use patched 18.6.10 to allow building without Geant3
+* vgm: update to v4-9 to support C++17
 
 ### Removed
 
