@@ -5,12 +5,6 @@ env:
   CFLAGS: "-fPIC -g -O2"
   CMAKE_BUILD_TYPE: "RELEASE"
   CMAKE_CXX_STANDARD: "17"
-disable:
-  - AliEn-Runtime
-  - MonALISA-gSOAP-client
-  - AliEn-CAs
-  - ApMon-CPP
-  - DDS
 overrides:
   autotools:
     tag: v1.6.3
