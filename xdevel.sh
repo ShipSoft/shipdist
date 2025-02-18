@@ -8,4 +8,3 @@ system_requirement: ".*"
 system_requirement_check: |
   printf "#include <X11/Xlib.h>\n#include <X11/xpm.h>\n#include <X11/Xft/Xft.h>\n#include <X11/extensions/Xext.h>\n" | cc -xc - -I/opt/X11/include $(freetype-config --cflags 2> /dev/null ||  pkg-config freetype2 --cflags 2> /dev/null)  -c -o /dev/null
 ---
-

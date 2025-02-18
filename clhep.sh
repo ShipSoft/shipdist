@@ -6,6 +6,6 @@ tag: CLHEP_2_2_0_8
 #!/bin/sh
 cmake $SOURCEDIR \
   -DCMAKE_INSTALL_PREFIX:PATH="$INSTALLROOT"
-  
+
 make ${JOBS+-j $JOBS}
 make install

@@ -11,7 +11,7 @@ env:
 #!/bin/sh
 cd $SOURCEDIR
 autoreconf -i
-cd - 
+cd -
 echo "command $SOURCEDIR configure --prefix $INSTALLROOT CFLAGS $CFLAGS CXXFLAGS=$CFLAGS"
 $SOURCEDIR/configure --prefix=$INSTALLROOT CFLAGS="$CFLAGS" CXXFLAGS="$CFLAGS"
 make ${JOBS+-j $JOBS}

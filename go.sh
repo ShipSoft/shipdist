@@ -52,4 +52,3 @@ module load BASE/1.0
 setenv GOROOT \$::env(BASEDIR)/$PKGNAME/\$version
 prepend-path PATH \$::env(GOROOT)/bin
 EoF
-
