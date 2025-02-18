@@ -58,4 +58,3 @@ prepend-path ROOT_INCLUDE_PATH \$FAIRLOGGER_ROOT/include
 EoF
 MODULEDIR="$INSTALLROOT/etc/modulefiles"
 mkdir -p $MODULEDIR && rsync -a --delete etc/modulefiles/ $MODULEDIR
-

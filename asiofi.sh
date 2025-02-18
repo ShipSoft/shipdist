@@ -53,5 +53,3 @@ prepend-path LD_LIBRARY_PATH \$ASIOFI_ROOT/lib
 EoF
 MODULEDIR="$INSTALLROOT/etc/modulefiles"
 mkdir -p $MODULEDIR && rsync -a --delete etc/modulefiles/ $MODULEDIR
-
-

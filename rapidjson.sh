@@ -8,7 +8,7 @@ tag: v1.1.0
 #!/bin/sh
 
 cmake $SOURCEDIR                                              \
-      -DCMAKE_INSTALL_PREFIX=$INSTALLROOT                     
+      -DCMAKE_INSTALL_PREFIX=$INSTALLROOT
 
 make ${JOBS:+-j$JOBS} install
 
