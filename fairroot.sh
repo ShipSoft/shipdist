@@ -55,7 +55,6 @@ cmake $SOURCEDIR                                                                
       -DBUILD_EXAMPLES=ON                                                                   \
       ${GEANT4_ROOT:+-DGeant4_DIR=$GEANT4_ROOT}                                             \
       -DFAIRROOT_MODULAR_BUILD=ON                                                           \
-      ${DDS_ROOT:+-DDDS_PATH=$DDS_ROOT}                                                     \
       ${BOOST_ROOT:+-DBOOST_ROOT=$BOOST_ROOT}                                               \
       -DBoost_NO_SYSTEM_PATHS=${BOOST_NO_SYSTEM_PATHS}                                      \
       ${GSL_ROOT:+-DGSL_DIR=$GSL_ROOT}                                                      \
@@ -107,7 +106,6 @@ module load BASE/1.0                                                            
             ${BOOST_REVISION:+boost/$BOOST_VERSION-$BOOST_REVISION}                             \\
             ROOT/$ROOT_VERSION-$ROOT_REVISION                                                   \\
             ${ZEROMQ_REVISION:+ZeroMQ/$ZEROMQ_VERSION-$ZEROMQ_REVISION}                         \\
-            ${DDS_REVISION:+DDS/$DDS_VERSION-$DDS_REVISION}                                     \\
             ${GCC_TOOLCHAIN_REVISION:+GCC-Toolchain/$GCC_TOOLCHAIN_VERSION-$GCC_TOOLCHAIN_REVISION}
 # Our environment
 set FAIRROOT_ROOT \$::env(BASEDIR)/$PKGNAME/\$version

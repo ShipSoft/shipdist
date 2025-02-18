@@ -1,7 +1,7 @@
 package: libpng
 version: v1.6.18
 requires:
- - AliEn-Runtime:(?!.*ppc64)
+ - zlib
 build_requires:
  - CMake
 source: https://git.code.sf.net/p/libpng/code
@@ -34,7 +34,7 @@ proc ModulesHelp { } {
 set version $PKGVERSION-@@PKGREVISION@$PKGHASH@@
 module-whatis "ALICE Modulefile for $PKGNAME $PKGVERSION-@@PKGREVISION@$PKGHASH@@"
 # Dependencies
-module load BASE/1.0 $([[ $ALIEN_RUNTIME_VERSION ]] && echo "AliEn-Runtime/$ALIEN_RUNTIME_VERSION-$ALIEN_RUNTIME_REVISION" || echo "${ZLIB_VERSION:+zlib/$ZLIB_VERSION-$ZLIB_REVISION}")
+module load BASE/1.0 ${ZLIB_VERSION:+zlib/$ZLIB_VERSION-$ZLIB_REVISION}
 # Our environment
 setenv LIBPNG_ROOT \$::env(BASEDIR)/$PKGNAME/\$version
 prepend-path PATH $::env(LIBPNG_ROOT)/bin

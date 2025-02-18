@@ -5,7 +5,6 @@ source: https://github.com/xrootd/xrootd
 requires:
   - "OpenSSL:(?!osx)"
   - Python-modules
-  - AliEn-Runtime
   - libxml2
 build_requires:
   - CMake
