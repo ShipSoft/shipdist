@@ -5,4 +5,3 @@ system_requirement: ".*"
 system_requirement_check: |
   printf "#include <EXTERN.h>\nint main(){}\n" | cc -xc -lperl -L`perl -MConfig -e 'print $Config{archlib}'`/CORE -I`perl -MConfig -e 'print $Config{archlib}'`/CORE - -o /dev/null && perl -MExtUtils::Embed -e 1
 ---
-

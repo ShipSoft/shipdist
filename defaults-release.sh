@@ -142,7 +142,7 @@ overrides:
       true
   log4cpp:
     tag: 1b9f8f7c031d6947c7468d54bc1da4b2f414558d
-    prefer_system_check: | 
+    prefer_system_check: |
       ls $LOG4CPP_ROOT/include/ > /dev/null && \
       ls $LOG4CPP_ROOT/lib/ > /dev/null && \
       true
@@ -257,7 +257,7 @@ overrides:
       ls $LHAPDF5_ROOT/lib/libLHAPDF.la > /dev/null && \
       ls $LHAPDF5_ROOT/lib/libLHAPDF.a > /dev/null && \
       ls $LHAPDF5_ROOT/lib64/python2.7/site-packages/lhapdf.py > /dev/null && \
-      ls $LHAPDF5_ROOT/share/lhapdf > /dev/null 
+      ls $LHAPDF5_ROOT/share/lhapdf > /dev/null
   XercesC:
     prefer_system_check: |
       ls $XERCESC_ROOT/ > /dev/null && \
