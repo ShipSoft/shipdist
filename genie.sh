@@ -42,7 +42,7 @@ $BUILDDIR/configure --prefix=$INSTALLROOT \
 		    --with-log4cpp-inc=$LOG4CPP_ROOT/include/ \
 		    --with-log4cpp-lib=$LOG4CPP_ROOT/lib/ \
 		    --with-apfel-inc=$APFEL_ROOT/include/ \
-		    --with-apfel-lib=$APFEL_ROOT/lib/ 
+		    --with-apfel-lib=$APFEL_ROOT/lib/
 
 
 make CXXFLAGS="-Wall $CXXFLAGS" CFLAGS="-Wall $CFLAGS"
@@ -86,5 +86,5 @@ prepend-path LD_LIBRARY_PATH \$::env(GENIE_ROOT)/genie/lib
 prepend-path ROOT_INCLUDE_PATH \$::env(GENIE_ROOT)/genie/inc
 prepend-path ROOT_INCLUDE_PATH \$::env(GENIE_ROOT)/genie/src
 $([[ ${ARCHITECTURE:0:3} == osx ]] && echo "prepend-path DYLD_LIBRARY_PATH \$::env(GENIE_ROOT)/lib")
-append-path PATH \$::env(GENIE_ROOT)/genie/bin 
+append-path PATH \$::env(GENIE_ROOT)/genie/bin
 EoF

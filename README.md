@@ -1,5 +1,7 @@
 # shipdist
 
+[![pre-commit.ci status](https://results.pre-commit.ci/badge/github/ShipSoft/shipdist/main.svg)](https://results.pre-commit.ci/latest/github/ShipSoft/shipdist/main)
+
 Recipes to build `FairShip` and it's dependencies using `aliBuild`
 
 ## General information
