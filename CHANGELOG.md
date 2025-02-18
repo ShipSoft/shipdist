@@ -25,6 +25,7 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 
 * Alpaca: Unused, unmaintained and doesn't include all relevant production
   mechanisms for our use
+* Remove unused recipes
 
 ## [24.10](https://github.com/ShipSoft/shipdist/tree/24.10)
 
