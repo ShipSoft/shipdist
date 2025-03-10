@@ -61,7 +61,6 @@ incremental_recipe: |
   append-path ROOT_INCLUDE_PATH \$::env(GEANT4_VMC_ROOT)/include
   append-path ROOT_INCLUDE_PATH \$::env(GEANT4_VMC_ROOT)/include/geant4vmc
   prepend-path PYTHONPATH \$::env(FAIRSHIP_ROOT)/python
-  append-path PYTHONPATH \$::env(FAIRSHIP_ROOT)/Developments/track_pattern_recognition
   EoF
 ---
 #!/bin/sh
@@ -140,5 +139,4 @@ append-path ROOT_INCLUDE_PATH \$::env(PYTHIA_ROOT)/include/Pythia8
 append-path ROOT_INCLUDE_PATH \$::env(GEANT4_VMC_ROOT)/include
 append-path ROOT_INCLUDE_PATH \$::env(GEANT4_VMC_ROOT)/include/geant4vmc
 prepend-path PYTHONPATH \$::env(FAIRSHIP_ROOT)/python
-append-path PYTHONPATH \$::env(FAIRSHIP_ROOT)/Developments/track_pattern_recognition
 EoF
