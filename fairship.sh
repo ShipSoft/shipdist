@@ -62,7 +62,6 @@ incremental_recipe: |
   append-path ROOT_INCLUDE_PATH \$::env(GEANT4_VMC_ROOT)/include/geant4vmc
   prepend-path PYTHONPATH \$::env(FAIRSHIP_ROOT)/python
   append-path PYTHONPATH \$::env(FAIRSHIP_ROOT)/Developments/track_pattern_recognition
-  $([[ ${ARCHITECTURE:0:3} == osx ]] && echo "prepend-path DYLD_LIBRARY_PATH \$::env(FAIRSHIP_ROOT)/lib")
   EoF
 ---
 #!/bin/sh
@@ -73,18 +72,8 @@ incremental_recipe: |
 # maximum safety.
 unset SIMPATH
 
-case $ARCHITECTURE in
-  osx*)
-    # If we preferred system tools, we need to make sure we can pick them up.
-    [[ ! $BOOST_ROOT ]] && BOOST_ROOT=`brew --prefix boost`
-    [[ ! $ZEROMQ_ROOT ]] && ZEROMQ_ROOT=`brew --prefix zeromq`
-    [[ ! $PROTOBUF_ROOT ]] && PROTOBUF_ROOT=`brew --prefix protobuf`
-    [[ ! $NANOMSG_ROOT ]] && NANOMSG_ROOT=`brew --prefix nanomsg`
-    [[ ! $GSL_ROOT ]] && GSL_ROOT=`brew --prefix gsl`
-    SONAME=dylib
-  ;;
-  *) SONAME=so ;;
-esac
+SONAME=so
+
 rsync -a $SOURCEDIR/ $INSTALLROOT/
 
 cmake $SOURCEDIR                                                 \
@@ -160,5 +149,4 @@ append-path ROOT_INCLUDE_PATH \$::env(GEANT4_VMC_ROOT)/include
 append-path ROOT_INCLUDE_PATH \$::env(GEANT4_VMC_ROOT)/include/geant4vmc
 prepend-path PYTHONPATH \$::env(FAIRSHIP_ROOT)/python
 append-path PYTHONPATH \$::env(FAIRSHIP_ROOT)/Developments/track_pattern_recognition
-$([[ ${ARCHITECTURE:0:3} == osx ]] && echo "prepend-path DYLD_LIBRARY_PATH \$::env(FAIRSHIP_ROOT)/lib")
 EoF
