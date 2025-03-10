@@ -66,8 +66,6 @@ incremental_recipe: |
 ---
 #!/bin/sh
 
-SONAME=so
-
 rsync -a $SOURCEDIR/ $INSTALLROOT/
 
 cmake $SOURCEDIR                                                 \
