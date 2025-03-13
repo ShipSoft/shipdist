@@ -9,6 +9,9 @@ build_requires:
   - CMake
 prepend_path:
   ROOT_INCLUDE_PATH: "$TPYTHIA6_ROOT/inc"
+prefer_system_check: |
+    ls $TPYTHIA6_ROOT/libEGPythia6.so && \
+    ls $TPYTHIA6_ROOT/inc/TPythia6.h
 ---
 #!/bin/bash -e
 cmake "$SOURCEDIR"                               \
