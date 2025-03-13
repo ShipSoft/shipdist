@@ -13,6 +13,9 @@ env:
 prepend_path:
   ROOT_INCLUDE_PATH: "$GENFIT_ROOT/include"
   LD_LIBRARY_PATH: "$GENFIT_ROOT/lib"
+prefer_system_check: |
+    ls $GENFIT_ROOT/include && \
+    ls $GENFIT_ROOT/lib
 ---
 cmake $SOURCEDIR                                                                            \
       ${CMAKE_GENERATOR:+-G "$CMAKE_GENERATOR"}                                             \
