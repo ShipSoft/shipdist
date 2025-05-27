@@ -10,6 +10,8 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 
 ### Added
 
+* TPythia6: Maintain TPythia6 as separate package to allow using ROOT 6.32+
+
 ### Fixed
 
 * Freetype & XDevel: Fix freetype detection
@@ -20,6 +22,8 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 * ROOT: Update recipe and version to 6.30.8
 * FairRoot: Use patched 18.6.10 to allow building without Geant3
 * vgm: update to v4-9 to support C++17
+* FairShip: Use standalone TPythia6
+* GENIE: Disable Pythia6 dependency
 
 ### Removed
 
