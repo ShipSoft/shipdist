@@ -79,7 +79,7 @@ ${PYTHON_ROOT:+-DPYTHON_INCLUDE_DIR=$PYTHONHOME/include/python3.6m} \
 ${PYTHON_ROOT:+-DPYTHON_LIBRARY=$PYTHONHOME/lib/libpython3.6m.so} \
 -DCMAKE_PREFIX_PATH="$FREETYPE_ROOT;$SYS_OPENSSL_ROOT;$GSL_ROOT;$PYTHON_ROOT;$PYTHON_MODULES_ROOT"
 FEATURES="builtin_pcre xml ssl opengl http gdml mathmore ${PYTHIA_ROOT:+pythia8}
-    proot roofit soversion vdt ${XROOTD_ROOT:+xrootd}
+    proof roofit soversion vdt ${XROOTD_ROOT:+xrootd}
     ${ENABLE_COCOA:+builtin_freetype}"
 NO_FEATURES="${FREETYPE_ROOT:+builtin_freetype}"
 
