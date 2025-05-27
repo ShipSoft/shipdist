@@ -93,7 +93,7 @@ cmake $SOURCEDIR                                                 \
       ${CMAKE_VERBOSE_MAKEFILE:+-DCMAKE_VERBOSE_MAKEFILE=ON}     \
       ${BOOST_ROOT:+-DBOOST_ROOT=$BOOST_ROOT}                    \
       ${GENFIT:+-Dgenfit2_ROOT=$GENFIT} \
-      -DTPYTHIA6_INCLUDE_DIR=$TPYTHIA6_ROOT/inc \
+      -DTPYTHIA6_INCLUDE_DIR="$TPYTHIA6_ROOT"/inc \
       -DCMAKE_INSTALL_PREFIX=$INSTALLROOT
 
 cmake --build . ${JOBS+-j$JOBS} --target install
