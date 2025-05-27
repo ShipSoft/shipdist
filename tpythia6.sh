@@ -10,17 +10,18 @@ build_requires:
 prepend_path:
   ROOT_INCLUDE_PATH: "$TPYTHIA6_ROOT/inc"
 prefer_system_check: |
-    ls $TPYTHIA6_ROOT/libEGPythia6.so && \
-    ls $TPYTHIA6_ROOT/inc/TPythia6.h
+    ls "$TPYTHIA6_ROOT"/libEGPythia6.so && \
+    ls "$TPYTHIA6_ROOT"/inc/TPythia6.h
 ---
 #!/bin/bash -e
 cmake "$SOURCEDIR"                               \
-    -DPYTHIA6_ROOT=${PYTHIA6_ROOT} \
+    -DPYTHIA6_ROOT="${PYTHIA6_ROOT}" \
 
 make
-cp -r $SOURCEDIR/inc $INSTALLROOT/inc
-cp *.so $INSTALLROOT/
-cp *.pcm $INSTALLROOT/
+cp -r "$SOURCEDIR"/inc "$INSTALLROOT"/inc
+cp ./*.so "$INSTALLROOT"/
+cp ./*.pcm "$INSTALLROOT"/
+
 # Modulefile
 MODULEDIR="$INSTALLROOT/etc/modulefiles"
 MODULEFILE="$MODULEDIR/$PKGNAME"
