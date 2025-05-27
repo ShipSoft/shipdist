@@ -13,5 +13,10 @@ repos:
   hooks:
   - id: committed
     name: check commit message formatting
+- repo: https://github.com/alisw/alidistlint
+  rev: v1.7.4
+  hooks:
+  - id: alidistlint
+    verbose: true
 ci:
   autofix_prs: true
