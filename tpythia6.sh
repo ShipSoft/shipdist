@@ -17,7 +17,7 @@ prefer_system_check: |
 cmake "$SOURCEDIR"                               \
     -DPYTHIA6_ROOT=${PYTHIA6_ROOT} \
 
-make 
+make
 cp -r $SOURCEDIR/inc $INSTALLROOT/inc
 cp *.so $INSTALLROOT/
 cp *.pcm $INSTALLROOT/
