@@ -41,7 +41,7 @@ incremental_recipe: |
             ${PHOTOSPP_VERSION:+PHOTOSPP/$PHOTOSPP_VERSION-$PHOTOSPP_REVISION}  \\
             ${EVTGEN_VERSION:+EvtGen/$EVTGEN_VERSION-$EVTGEN_REVISION}          \\
             ${FAIRROOT_VERSION:+FairRoot/$FAIRROOT_VERSION-$FAIRROOT_REVISION} \\
-            ${GENFIT_VERSION:+GenFit/$GENFIT_VERSION-$GENFIT_REVISION}         \\
+            ${GENFIT_VERSION:+GenFit/$GENFIT_VERSION-$GENFIT_REVISION} \\
             ${TPYTHIA6_VERSION:+TPythia6/$TPYTHIA6_VERSION-$TPYTHIA6_REVISION}
   # Our environment
   setenv EOSSHIP root://eospublic.cern.ch/
@@ -122,7 +122,7 @@ module load BASE/1.0                                                            
             ${PHOTOSPP_VERSION:+PHOTOSPP/$PHOTOSPP_VERSION-$PHOTOSPP_REVISION}  \\
             ${EVTGEN_VERSION:+EvtGen/$EVTGEN_VERSION-$EVTGEN_REVISION}          \\
             ${FAIRROOT_VERSION:+FairRoot/$FAIRROOT_VERSION-$FAIRROOT_REVISION}	\\
-            ${GENFIT_VERSION:+GenFit/$GENFIT_VERSION-$GENFIT_REVISION}          \\
+            ${GENFIT_VERSION:+GenFit/$GENFIT_VERSION-$GENFIT_REVISION} \\
             ${TPYTHIA6_VERSION:+TPythia6/$TPYTHIA6_VERSION-$TPYTHIA6_REVISION}
 # Our environment
 setenv EOSSHIP root://eospublic.cern.ch/
