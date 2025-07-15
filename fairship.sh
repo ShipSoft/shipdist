@@ -17,15 +17,15 @@ requires:
 env:
   FAIRSHIP: "$FAIRSHIP_ROOT"
   EOSSHIP: "root://eospublic.cern.ch/"
-  VMCWORKDIT: "$FAIRSHIP_ROOT"
+  VMCWORKDIR: "$FAIRSHIP_ROOT"
   GEOMPATH: "$FAIRSHIP_ROOT/geometry"
   CONFIG_DIR: "$FAIRSHIP_ROOT/gconfig"
   GALCONF: "$FAIRSHIP_ROOT/shipgen/genie_config"
-  FAIRLIBDIR: "$FAIRSHIP_ROOT)/lib"
+  FAIRLIBDIR: "$FAIRSHIP_ROOT/lib"
 prepend_path:
   PYTHONPATH: "$FAIRSHIP_ROOT/python"
   ROOT_INCLUDE_PATH: "$FAIRSHIP_ROOT/include"
-  LD_LIBRARY_PATH: "$FAIRSHIP_ROOT)/lib"
+  LD_LIBRARY_PATH: "$FAIRSHIP_ROOT/lib"
 append_path:
   ROOT_INCLUDE_PATH: "$GEANT4_ROOT/include:$GEANT4_ROOT/include/Geant4:$PYTHIA_ROOT/include:$PYTHIA_ROOT/include/Pythia8:$GEANT4_VMC_ROOT/include:$GEANT4_VMC_ROOT/include/geant4vmc"
 incremental_recipe: |
