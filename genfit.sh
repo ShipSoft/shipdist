@@ -17,6 +17,7 @@ prefer_system_check: |
     ls $GENFIT_ROOT/include && \
     ls $GENFIT_ROOT/lib
 ---
+: ${BUILD_TESTING:=OFF}
 cmake $SOURCEDIR                                                                            \
       ${CMAKE_GENERATOR:+-G "$CMAKE_GENERATOR"}                                             \
       ${MACOSX_RPATH:+-DMACOSX_RPATH=${MACOSX_RPATH}}                                       \
@@ -28,7 +29,9 @@ cmake $SOURCEDIR                                                                
       -DCMAKE_INSTALL_LIBDIR=lib                                                            \
       -DCMAKE_INSTALL_PREFIX=$INSTALLROOT \
       -DCMAKE_POLICY_DEFAULT_CMP0074=NEW \
-      -DROOT_DIR="${ROOT_ROOT}"
+      -DROOT_DIR="${ROOT_ROOT}" \
+      -DBUILD_TESTING=${BUILD_TESTING} 
+
 
 cmake --build . -- -j$JOBS install
 
