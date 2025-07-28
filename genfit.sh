@@ -30,7 +30,7 @@ cmake $SOURCEDIR                                                                
       -DCMAKE_INSTALL_PREFIX=$INSTALLROOT \
       -DCMAKE_POLICY_DEFAULT_CMP0074=NEW \
       -DROOT_DIR="${ROOT_ROOT}" \
-      -DBUILD_TESTING=${BUILD_TESTING} 
+      -DBUILD_TESTING=${BUILD_TESTING}
 
 
 cmake --build . -- -j$JOBS install
