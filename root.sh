@@ -83,6 +83,7 @@ ${PYTHIA6_LATE:+-Dpythia6_nolink=ON}                      \
 -Dsoversion=ON                                            \
 -Dshadowpw=OFF                                            \
 -Dbuiltin_vdt=ON                                          \
+-Dproof=ON \
 ${PYTHON_ROOT:+-DPYTHON_EXECUTABLE=$PYTHONHOME/bin/python} \
 ${PYTHON_ROOT:+-DPYTHON_INCLUDE_DIR=$PYTHONHOME/include/python3.6m} \
 ${PYTHON_ROOT:+-DPYTHON_LIBRARY=$PYTHONHOME/lib/libpython3.6m.so} \
