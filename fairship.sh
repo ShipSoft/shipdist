@@ -14,6 +14,8 @@ requires:
   - EvtGen
   - ROOT
   - VMC
+  - acts
+  - HepMC3
 env:
   FAIRSHIP: "$FAIRSHIP_ROOT"
   EOSSHIP: "root://eospublic.cern.ch/"
@@ -54,7 +56,9 @@ incremental_recipe: |
             ${PHOTOSPP_VERSION:+PHOTOSPP/$PHOTOSPP_VERSION-$PHOTOSPP_REVISION}  \\
             ${EVTGEN_VERSION:+EvtGen/$EVTGEN_VERSION-$EVTGEN_REVISION}          \\
             ${FAIRROOT_VERSION:+FairRoot/$FAIRROOT_VERSION-$FAIRROOT_REVISION} \\
-            ${GENFIT_VERSION:+GenFit/$GENFIT_VERSION-$GENFIT_REVISION}
+            ${GENFIT_VERSION:+GenFit/$GENFIT_VERSION-$GENFIT_REVISION} \\
+            ${HEPMC3_VERSION:+HepMC3/$HEPMC3_VERSION-$HEPMC3_REVISION} \\
+            ${ACTS_VERSION:+acts/$ACTS_VERSION-$ACTS_REVISION}
   # Our environment
   setenv EOSSHIP root://eospublic.cern.ch/
   setenv FAIRSHIP_ROOT \$::env(BASEDIR)/$PKGNAME/\$version
@@ -104,6 +108,7 @@ cmake $SOURCEDIR                                                 \
       ${CMAKE_VERBOSE_MAKEFILE:+-DCMAKE_VERBOSE_MAKEFILE=ON}     \
       ${BOOST_ROOT:+-DBOOST_ROOT=$BOOST_ROOT}                    \
       ${GENFIT:+-Dgenfit2_ROOT=$GENFIT} \
+      ${ACTS:+-DACTS_ROOT=$ACTS} \
       -DCMAKE_INSTALL_PREFIX=$INSTALLROOT
 
 cmake --build . ${JOBS+-j$JOBS} --target install
@@ -132,7 +137,10 @@ module load BASE/1.0                                                            
             ${PHOTOSPP_VERSION:+PHOTOSPP/$PHOTOSPP_VERSION-$PHOTOSPP_REVISION}  \\
             ${EVTGEN_VERSION:+EvtGen/$EVTGEN_VERSION-$EVTGEN_REVISION}          \\
             ${FAIRROOT_VERSION:+FairRoot/$FAIRROOT_VERSION-$FAIRROOT_REVISION}	\\
-            ${GENFIT_VERSION:+GenFit/$GENFIT_VERSION-$GENFIT_REVISION}
+            ${GENFIT_VERSION:+GenFit/$GENFIT_VERSION-$GENFIT_REVISION} \\
+            ${HEPMC3_VERSION:+HepMC3/$HEPMC3_VERSION-$HEPMC3_REVISION} \\
+            ${ACTS_VERSION:+acts/$ACTS_VERSION-$ACTS_REVISION}
+
 # Our environment
 setenv EOSSHIP root://eospublic.cern.ch/
 setenv FAIRSHIP_ROOT \$::env(BASEDIR)/$PKGNAME/\$version
