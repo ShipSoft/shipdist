@@ -54,7 +54,7 @@ if ![ is-loaded 'BASE/1.0' ] {
 }
 
 if ![ is-loaded "ROOT/$ROOT_VERSION-$ROOT_REVISION" ] { module load "ROOT/$ROOT_VERSION-$ROOT_REVISION"}
-set ACTS_ROOT \$::env(BASEDIR)/$PKGNAME/\$version 
+set ACTS_ROOT \$::env(BASEDIR)/$PKGNAME/\$version
 prepend-path LD_LIBRARY_PATH \$ACTS_ROOT/lib
 prepend-path ROOT_INCLUDE_PATH \$ACTS_ROOT/include
 $([[ ${ARCHITECTURE:0:3} == osx ]] && echo "prepend-path DYLD_LIBRARY_PATH \$::env(ACTS_ROOT)/lib")

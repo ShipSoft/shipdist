@@ -17,7 +17,7 @@ prepend_path:
 cmake  $SOURCEDIR                           \
        -DCMAKE_INSTALL_PREFIX=$INSTALLROOT  \
        -DCMAKE_INSTALL_LIBDIR=lib           \
-       -DROOT_DIR=$ROOT_ROOT 
+       -DROOT_DIR=$ROOT_ROOT
 
 make ${JOBS+-j $JOBS}
 make install
