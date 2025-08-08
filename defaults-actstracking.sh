@@ -84,6 +84,7 @@ overrides:
      - ROOT
      - VMC
      - acts
+     - HepMC3
   FairMQ:
     version: "%(tag_basename)s"
     tag: "v1.4.38"

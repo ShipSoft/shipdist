@@ -16,17 +16,23 @@ export  HEPMCLOCATION="$HEPMC_ROOT"
 
 rsync -a $SOURCEDIR/* .
 
-cmake $SOURCEDIR -DCMAKE_INSTALL_PREFIX=$INSTALLROOT \
-      -DCMAKE_INSTALL_LIBDIR=lib \
-      -DEVTGEN_HEPMC3=OFF \
-      -DHEPMC2_ROOT_DIR=$HEPMC_ROOT \
-      -DEVTGEN_PYTHIA=ON \
-      -DPYTHIA8_ROOT_DIR=$PYTHIA_ROOT \
-      -DEVTGEN_PHOTOS=ON \
-      -DPHOTOSPP_ROOT_DIR=$PHOTOSPP_ROOT \
-      -DEVTGEN_TAUOLA=ON \
-      -DTAUOLAPP_ROOT_DIR=$TAUOLAPP_ROOT
-make ${JOBS:+-j$JOBS} install
+if [[ CMAKE_CXX_STANDARD=20 ]]; then
+    cmake $SOURCEDIR -DCMAKE_INSTALL_PREFIX=$INSTALLROOT \
+          -DCMAKE_INSTALL_LIBDIR=lib \
+          -DEVTGEN_HEPMC3=OFF \
+          -DHEPMC2_ROOT_DIR=$HEPMC_ROOT \
+          -DEVTGEN_PYTHIA=ON \
+          -DPYTHIA8_ROOT_DIR=$PYTHIA_ROOT \
+          -DEVTGEN_PHOTOS=ON \
+          -DPHOTOSPP_ROOT_DIR=$PHOTOSPP_ROOT \
+          -DEVTGEN_TAUOLA=ON \
+          -DTAUOLAPP_ROOT_DIR=$TAUOLAPP_ROOT
+    make ${JOBS:+-j$JOBS} install
+else
+    ./configure --hepmcdir=$HEPMC_ROOT --pythiadir=$PYTHIA_ROOT --tauoladir=$TAUOLAPP_ROOT --photosdir=$PHOTOSPP_ROOT --prefix=$INSTALLROOT CFLAGS="$CFLAGS" CXXFLAGS="$CXXFLAGS"
+    make
+    make install
+fi    
 
 # Modulefile
 MODULEDIR="$INSTALLROOT/etc/modulefiles"
