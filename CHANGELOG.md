@@ -10,7 +10,7 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 
 ### Added
 
-* ACTS: Standalone recipe for new tracking framework 
+* ACTS: Standalone recipe for new tracking framework
 * HEPMC3: Recipe, required dependency for ACTS
 * Defaults: defaults-actstracking, C++20 build environment to enable ACTS and its dependencies.
   Additional overrides setup to enable C++20 build compatibility, Fairship: added acts and hepmc3 as requirements,
