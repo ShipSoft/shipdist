@@ -1,7 +1,7 @@
 package: EvtGen
 version: "%(tag_basename)s-ship%(defaults_upper)s"
-source: https://github.com/alisw/EVTGEN
-tag: "R02-02-00-alice2"
+tag: fairshipdev
+source: https://github.com/ShipSoft/evtgen
 requires:
   - HepMC
   - pythia
@@ -16,7 +16,7 @@ export  HEPMCLOCATION="$HEPMC_ROOT"
 
 rsync -a $SOURCEDIR/* .
 
-if [[ CMAKE_CXX_STANDARD=20 ]]; then
+if [[ $CMAKE_CXX_STANDARD=20 ]]; then
     cmake $SOURCEDIR -DCMAKE_INSTALL_PREFIX=$INSTALLROOT \
           -DCMAKE_INSTALL_LIBDIR=lib \
           -DEVTGEN_HEPMC3=OFF \

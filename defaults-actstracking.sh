@@ -9,7 +9,7 @@ overrides:
   autotools:
     tag: v1.6.3
   boost:
-    version:  "%(tag_basename)s"
+    version: "%(tag_basename)s"
     tag: "v1.70.0"
     requires:
       - "GCC-Toolchain:(?!osx)"
@@ -51,8 +51,8 @@ overrides:
       done
   GSL:
     version: "v1.16%(defaults_upper)s"
-    source: https://github.com/alisw/gsl
     tag: "release-1-16"
+    source: https://github.com/alisw/gsl
     prefer_system_check: |
       printf "#include \"gsl/gsl_version.h\"\n#define GSL_V GSL_MAJOR_VERSION * 100 + GSL_MINOR_VERSION\n# if (GSL_V < 116)\n#error \"Cannot use system's gsl. Notice we only support versions from 1.16 (included)\"\n#endif\nint main(){}"\
        | gcc  -I"$GSL_ROOT/include" -xc++ - -o /dev/null
@@ -175,8 +175,8 @@ overrides:
       true
   pythia:
     version: "%(tag_basename)s"
-    source: https://github.com/alisw/pythia8
     tag: v8311
+    source: https://github.com/alisw/pythia8
     requires:
       - lhapdf
       - HepMC
@@ -210,8 +210,8 @@ overrides:
       ls $VGM_ROOT/lib/libXmlVGM.a > /dev/null
   evtGen:
     version: "%(tag_basename)s"
-    source: https://github.com/alisw/EVTGEN
     tag: "R02-02-00-alice2"
+    source: https://github.com/alisw/EVTGEN
     prefer_system_check: |
       ls $EVTGEN_ROOT/include > /dev/null && \
       ls $EVTGEN_ROOT/lib > /dev/null && \
@@ -232,16 +232,16 @@ overrides:
       ls $PHOTOSPP_ROOT/lib/libPhotospp.so > /dev/null
   Tauolapp:
     version: "%(tag_basename)s"
-    source: https://github.com/ShipSoft/Tauolapp
     tag: v1.1.5-ship
+    source: https://github.com/ShipSoft/Tauolapp
     prefer_system_check: |
       ls "$TAUOLAPP_ROOT"/lib > /dev/null && \
       ls "$TAUOLAPP_ROOT"/etc > /dev/null && \
       ls "$TAUOLAPP_ROOT"/include > /dev/null
   pythia6:
     version: "%(tag_basename)s"
-    source: https://github.com/SND-LHC/pythia6
     tag: v6.4.28-snd
+    source: https://github.com/SND-LHC/pythia6
     prefer_system_check: |
       ls $PYTHIA6_ROOT/lib/libpythia6.so > /dev/null && \
       ls $PYTHIA6_ROOT/lib/libPythia6.so > /dev/null

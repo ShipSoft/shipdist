@@ -1,17 +1,15 @@
 package: acts
-source: https://github.com/webbjm/acts.git
 version: shipdist-build
+source: https://github.com/webbjm/acts.git
 requires:
   - ROOT
   - GEANT4
   - pythia
   - HepMC3
-build-requires:
   - CMake
   - boost
   - alibuild-recipe-tools
 ---
-
 #!/bin/bash -e
 
 cmake "$SOURCEDIR" -DCMAKE_INSTALL_PREFIX=$INSTALLROOT \
