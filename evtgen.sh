@@ -32,7 +32,7 @@ else
     ./configure --hepmcdir=$HEPMC_ROOT --pythiadir=$PYTHIA_ROOT --tauoladir=$TAUOLAPP_ROOT --photosdir=$PHOTOSPP_ROOT --prefix=$INSTALLROOT CFLAGS="$CFLAGS" CXXFLAGS="$CXXFLAGS"
     make
     make install
-fi    
+fi
 
 # Modulefile
 MODULEDIR="$INSTALLROOT/etc/modulefiles"
