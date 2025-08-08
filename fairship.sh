@@ -14,8 +14,6 @@ requires:
   - EvtGen
   - ROOT
   - VMC
-  - acts
-  - HepMC3
 env:
   FAIRSHIP: "$FAIRSHIP_ROOT"
   EOSSHIP: "root://eospublic.cern.ch/"
