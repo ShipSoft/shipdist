@@ -10,9 +10,24 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 
 ### Added
 
+* ACTS: Standalone recipe for new tracking framework 
+* HEPMC3: Recipe, required dependency for ACTS
+* Defaults: defaults-actstracking, C++20 build environment to enable ACTS and its dependencies.
+  Additional overrides setup to enable C++20 build compatibility, Fairship: added acts and hepmc3 as requirements,
+  GEANT4: v10.7.3 -> v11.1.3, GEANT4VMC: v5-4 -> v6-1-p1, VMC: v1-1-p1 -> v2-0, pythia: v8230-ship -> v8311,
+  vgm: v5-2, evtGen: R01-06-00-ship -> R02-02-00-alice2
+
 ### Fixed
 
+* ROOT: Disabled davix to resolve build issues 
+
 ### Changed
+
+* Python-modules-list: Updated pip to v25.0.1
+* Python-modules-list: Added pybind11 v2.13.6 
+* EvtGen: Added cmake build instructions required for R02-02-00
+* Fairship: Added build option to include acts (if found)
+* Fairship: Added acts and hepmc3 as dependency modules 
 
 ## [25.08](https://github.com/ShipSoft/shipdist/tree/25.08)
 
