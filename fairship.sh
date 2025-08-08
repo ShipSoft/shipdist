@@ -111,8 +111,8 @@ cmake $SOURCEDIR                                                 \
       -DCMAKE_INSTALL_PREFIX=$INSTALLROOT
 
 if [[ $ACTS_ROOT ]]; then
-      cmake ${ACTS:+-DACTS_ROOT=$ACTS} 
-fi    
+      cmake ${ACTS:+-DACTS_ROOT=$ACTS}
+fi
 cmake --build . ${JOBS+-j$JOBS} --target install
 
 #Get the current git hash
