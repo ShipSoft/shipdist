@@ -10,6 +10,7 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 
 ### Added
 
+
 * ACTS: Standalone recipe for new tracking framework
 * HEPMC3: Recipe, required dependency for ACTS
 * EIGEN3: Recipe, required dependency for ACTS
@@ -17,6 +18,8 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
   Additional overrides setup to enable C++20 build compatibility, Fairship: added acts and hepmc3 as requirements,
   GEANT4: v10.7.3 -> v11.1.3, GEANT4VMC: v5-4 -> v6-1-p1, VMC: v1-1-p1 -> v2-0, pythia: v8230-ship -> v8311,
   vgm: v5-2, evtGen: R01-06-00-ship -> R02-02-00-alice2, boost: 1.75.0 -> 1.83.0
+* Readd support for GEANT3, to allow using upstream FairRoot
+
 
 ### Fixed
 
@@ -28,7 +31,6 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 ### Changed
 
 * ROOT: Update recipe and version to 6.30.8
-* FairRoot: Use patched 18.6.10 to allow building without Geant3
 * vgm: update to v4-9 to support C++17
 * ROOT: Explicitly enable PROOF for newer ROOT versions
 * Root: Check version, features
@@ -37,6 +39,7 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 * EvtGen: Added cmake build instructions required for R02-02-00
 * Fairship: Added build option to include acts (if found)
 * Fairship: Added acts and hepmc3 as dependency modules
+* FairRoot: Update to 18.8.2
 
 ### Removed
 
