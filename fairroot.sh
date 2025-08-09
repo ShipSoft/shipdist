@@ -1,7 +1,7 @@
 package: FairRoot
-version: "%(short_hash)s"
-tag: "v18.6.10_ship"
-source: https://github.com/ShipSoft/FairRoot
+version: "v18.8.2"
+tag: "v18.8.2"
+source: https://github.com/FairRootGroup/FairRoot
 requires:
   - generators
   - simulation
@@ -51,6 +51,7 @@ cmake $SOURCEDIR                                                                
       -DROOT_CONFIG_SEARCHPATH=$ROOT_ROOT/bin                                               \
       -DPythia6_LIBRARY_DIR=$PYTHIA6_ROOT/lib                                               \
       ${YAML_CPP_ROOT:+-DYAML_CPP_ROOT=$YAML_CPP_ROOT}                                      \
+      -DGeant3_DIR=$GEANT3_ROOT                                                             \
       -DDISABLE_GO=ON                                                                       \
       -DBUILD_EXAMPLES=ON                                                                   \
       ${GEANT4_ROOT:+-DGeant4_DIR=$GEANT4_ROOT}                                             \
@@ -98,6 +99,7 @@ module load BASE/1.0                                                            
             ${YAML_CPP_REVISION:+yaml-cpp/$YAML_CPP_VERSION-$YAML_CPP_REVISION}                  \\
             ${FAIRLOGGER_REVISION:+FairLogger/$FAIRLOGGER_VERSION-$FAIRLOGGER_REVISION}         \\
             ${FAIRMQ_REVISION:+FairMQ/$FAIRMQ_VERSION-$FAIRMQ_REVISION}                         \\
+            ${GEANT3_REVISION:+GEANT3/$GEANT3_VERSION-$GEANT3_REVISION}                         \\
             ${GEANT4_VMC_REVISION:+GEANT4_VMC/$GEANT4_VMC_VERSION-$GEANT4_VMC_REVISION}         \\
             ${PROTOBUF_REVISION:+protobuf/$PROTOBUF_VERSION-$PROTOBUF_REVISION}                 \\
             ${PYTHIA6_REVISION:+pythia6/$PYTHIA6_VERSION-$PYTHIA6_REVISION}                     \\

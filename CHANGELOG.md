@@ -10,6 +10,8 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 
 ### Added
 
+* Readd support for GEANT3, to allow using upstream FairRoot
+
 ### Fixed
 
 * Freetype & XDevel: Fix freetype detection
@@ -19,10 +21,10 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 ### Changed
 
 * ROOT: Update recipe and version to 6.30.8
-* FairRoot: Use patched 18.6.10 to allow building without Geant3
 * vgm: update to v4-9 to support C++17
 * ROOT: Explicitly enable PROOF for newer ROOT versions
 * Root: Check version, features
+* FairRoot: Update to 18.8.2
 
 ### Removed
 
