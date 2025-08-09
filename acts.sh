@@ -8,6 +8,7 @@ requires:
   - HepMC3
   - CMake
   - boost
+  - Eigen3
   - alibuild-recipe-tools
 ---
 #!/bin/bash -e

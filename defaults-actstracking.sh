@@ -10,7 +10,7 @@ overrides:
     tag: v1.6.3
   boost:
     version: "%(tag_basename)s"
-    tag: "v1.70.0"
+    tag: "v1.83.0"
     requires:
       - "GCC-Toolchain:(?!osx)"
       - Python
