@@ -15,7 +15,7 @@ overrides:
       - "GCC-Toolchain:(?!osx)"
       - Python
     prefer_system_check: |
-     printf "#include \"boost/version.hpp\"\n# if (BOOST_VERSION < 106400)\n#error \"Cannot use system's boost. Boost > 1.64.00 required.\"\n#endif\nint main(){}" \
+     printf "#include \"boost/version.hpp\"\n# if (BOOST_VERSION < 107700)\n#error \"Cannot use system's boost. Boost > 1.77.00 required.\"\n#endif\nint main(){}" \
      | gcc -I$BOOST_ROOT/include -xc++ - -o /dev/null
   GCC-Toolchain:
     tag: v7.3.0-alice2
