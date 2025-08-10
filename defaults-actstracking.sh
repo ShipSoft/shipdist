@@ -100,6 +100,8 @@ overrides:
       ls $FAIRLOGGER_ROOT/lib > /dev/null && \
       ls $FAIRLOGGER_ROOT/include/fairlogger > /dev/null && \
       grep 1.9.0 $FAIRLOGGER_ROOT/include/fairlogger/Version.h
+  flatbuffers:
+    version: v2.0.8
   GEANT4:
     version: "%(tag_basename)s"
     tag: v11.1.3
