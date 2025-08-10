@@ -61,6 +61,7 @@ pushd build-binutils
                         --enable-lto                           \
                         --enable-plugins                       \
                         --enable-threads                       \
+                        --enable-gprofng=no                    \
                         --disable-nls
   make ${JOBS:+-j$JOBS} MAKEINFO=":"
   make install MAKEINFO=":"
@@ -73,6 +74,10 @@ cat > test.c <<EOF
 #include <stdio.h>
 int main(void) { printf("The answer is 42.\n"); }
 EOF
+
+# We will need to rebuild them with the final GCC
+rsync -a gcc/mpfr/ mpfr
+rsync -a gcc/gmp/ gmp
 
 pushd gcc
 [ -e mpfr ] && (cd mpfr && autoreconf -ivf)
@@ -127,11 +132,38 @@ g++ test.c
 ./a.out
 rm -f a.out
 
+# We rebuild mpfr, gmp to be used with gdb. We do so because
+# we want to make sure they were actually built with the GCC we
+# use, not with the bootstrap xgcc.
+[ -d mpfr ] && (cd mpfr && autoreconf -ivf)
+[ -d gmp ] && (cd gmp && autoreconf -ivf)
+mkdir -p build-gmp
+mkdir -p build-mpfr
+
+pushd build-gmp
+  ../gmp/configure --prefix="$INSTALLROOT/libexec/extra"  \
+                   --disable-shared                       \
+                   --enable-static
+  make ${JOBS:+-j$JOBS} MAKEINFO=":"
+  make install MAKEINFO=":"
+popd
+
+pushd build-mpfr
+  ../mpfr/configure --prefix="$INSTALLROOT/libexec/extra"  \
+                   --disable-shared                        \
+                   --with-gmp="$INSTALLROOT/libexec/extra" \
+                   --enable-static
+  make ${JOBS:+-j$JOBS} MAKEINFO=":"
+  make install MAKEINFO=":"
+popd
+
 # GDB
 mkdir build-gdb
 pushd build-gdb
   ../gdb/configure --prefix="$INSTALLROOT"                \
                    ${MARCH:+--build=$MARCH --host=$MARCH} \
+                   --with-gmp=$INSTALLROOT/libexec/extra  \
+                   --with-mpfr=$INSTALLROOT/libexec/extra \
                    --without-python                       \
                    --disable-multilib
   make ${JOBS:+-j$JOBS} MAKEINFO=":"
