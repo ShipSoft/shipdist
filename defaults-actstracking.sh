@@ -18,11 +18,11 @@ overrides:
      printf "#include \"boost/version.hpp\"\n# if (BOOST_VERSION < 107700)\n#error \"Cannot use system's boost. Boost > 1.77.00 required.\"\n#endif\nint main(){}" \
      | gcc -I$BOOST_ROOT/include -xc++ - -o /dev/null
   GCC-Toolchain:
-    tag: v7.3.0-alice2
+    tag: v13.2.0-alice1
     prefer_system_check: |
       set -e
       which gfortran || { echo "gfortran missing"; exit 1; }
-      which cc && test -f $(dirname $(which cc))/c++ && printf "#define GCCVER ((__GNUC__ << 16)+(__GNUC_MINOR__ << 8)+(__GNUC_PATCHLEVEL__))\n#if (GCCVER < 0x060000 || GCCVER > 0x100000)\n#error \"System's GCC cannot be used: we need GCC 6.X. We are going to compile our own version.\"\n#endif\n" | cc -xc++ - -c -o /dev/null
+      which gcc && test -f $(dirname $(which gcc))/c++ && printf "#define GCCVER ((__GNUC__ * 10000)+(__GNUC_MINOR__ * 100)+(__GNUC_PATCHLEVEL__))\n#if (GCCVER < 130000)\n#error \"System's GCC cannot be used: we need at least GCC $REQUESTED_VERSION We are going to compile our own version.\"\n#endif\n" | gcc -xc++ - -c -o /dev/null
   ROOT:
     prefer_system_check: |
       root-config --version || exit 1
