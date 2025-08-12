@@ -6,7 +6,7 @@ tag: V04-03-01
 #!/bin/bash
 rsync -a $SOURCEDIR/* .
 
-make  pede 
+make  pede
 ./pede -t
 rsync pede $INSTALLROOT/bin/
 

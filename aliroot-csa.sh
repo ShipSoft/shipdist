@@ -6,7 +6,7 @@ requires:
 env:
   ALICE_ROOT: "$ALIROOT_ROOT"
 source: http://git.cern.ch/pub/AliRoot
-write_repo: https://git.cern.ch/reps/AliRoot 
+write_repo: https://git.cern.ch/reps/AliRoot
 tag: master
 ---
 #!/bin/sh
@@ -18,7 +18,7 @@ cmake $SOURCEDIR -DCMAKE_INSTALL_PREFIX=$INSTALLROOT \
       -DALIEN=$ALIEN_ROOT/alien \
       -DOCDB_INSTALL=PLACEHOLDER
 
-case $ARCHITECTURE in 
+case $ARCHITECTURE in
   osx*) SONAME=dylib ;;
 esac
 

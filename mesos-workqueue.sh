@@ -9,8 +9,8 @@ requires:
 - glog
 build_requires:
 - CMake
---- 
-case $ARCHITECTURE in 
+---
+case $ARCHITECTURE in
   osx*)
     [[ -z "$BOOST_ROOT" ]] && BOOST_ROOT=$(brew --prefix boost)
   ;;

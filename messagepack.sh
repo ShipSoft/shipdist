@@ -12,7 +12,7 @@ cmake $SOURCEDIR -DCMAKE_INSTALL_PREFIX:PATH="${INSTALLROOT}" \
       -DCMAKE_BUILD_TYPE=$CMAKE_BUILD_TYPE                    \
       -DMSGPACK_CXX11=ON                                      \
       -DGTEST_DIR=$GOOGLETEST_ROOT                            \
-      -DGTEST_ROOT=$GOOGLETEST_ROOT                           
+      -DGTEST_ROOT=$GOOGLETEST_ROOT
 
 make ${JOBS+-j $JOBS}
 make test

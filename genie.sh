@@ -16,7 +16,7 @@ env:
   PATH: "$PATH:$GENIE_ROOT/genie/bin"
   LD_LIBRARY_PATH: "$LD_LIBRARY_PATH:$GENIE_ROOT/genie/lib"
   ROOT_INCLUDE_PATH: "$ROOT_INCLUDE_PATH:$GENIE_ROOT/genie/inc:$GENIE_ROOT/genie/src"
----  
+---
 #/bin/bash -ex
 export GENIE="$BUILDDIR"
 
@@ -87,5 +87,5 @@ prepend-path LD_LIBRARY_PATH \$::env(GENIE_ROOT)/genie/lib
 prepend-path ROOT_INCLUDE_PATH \$::env(GENIE_ROOT)/genie/inc
 prepend-path ROOT_INCLUDE_PATH \$::env(GENIE_ROOT)/genie/src
 $([[ ${ARCHITECTURE:0:3} == osx ]] && echo "prepend-path DYLD_LIBRARY_PATH \$::env(GENIE_ROOT)/lib")
-append-path PATH \$::env(GENIE_ROOT)/genie/bin 
+append-path PATH \$::env(GENIE_ROOT)/genie/bin
 EoF

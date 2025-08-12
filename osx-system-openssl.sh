@@ -6,4 +6,3 @@ system_requirement: "osx.*"
 system_requirement_check: |
   echo '#include <openssl/bio.h>' | c++ -x c++ - -I`brew --prefix openssl`/include -c -o /dev/null
 ---
-

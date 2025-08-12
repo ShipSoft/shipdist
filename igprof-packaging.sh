@@ -14,21 +14,21 @@ tar xzf /sw/TARS/$ARCHITECTURE/libatomic_ops/libatomic_ops-$LIBATOMIC_OPS_VERSIO
 RPM_LIBATOMIC_OPS_VERSION=`echo $LIBATOMIC_OPS_VERSION | tr - _`
 
 case $ARCHITECTURE in
-  ubuntu*) 
+  ubuntu*)
     RPM_LIBATOMIC_OPS_VERSION=$LIBATOMIC_OPS_VERSION
     RPM_LIBATOMIC_OPS_NAME=libatomic-ops
-    PACKAGE_FORMAT=deb 
+    PACKAGE_FORMAT=deb
     ARCH_SEP=_
     VERSION_SEP=_
     RPM_ARCH=amd64
     apt-get install -y python-requests ruby-dev
     gem install --no-ri --no-rdoc fpm
   ;;
-  *) 
+  *)
     RPM_LIBATOMIC_OPS_VERSION=`echo $LIBATOMIC_OPS_VERSION | tr - _`
     RPM_LIBUNWIND_VERSION=`echo $LIBUNWIND_VERSION | tr - _`
     RPM_LIBATOMIC_OPS_NAME=libatomic_ops
-    PACKAGE_FORMAT=rpm 
+    PACKAGE_FORMAT=rpm
     ARCH_SEP=.
     VERSION_SEP=-
     RPM_ARCH=x86_64
@@ -66,29 +66,29 @@ packages:
   - name: igprof
     version: $IGPROF_VERSION
     file: igprof$VERSION_SEP$IGPROF_VERSION-$IGPROF_REVISION$ARCH_SEP$RPM_ARCH.$PACKAGE_FORMAT
-    licenses: 
+    licenses:
       - GPL-2.0
     vcs_url: "https://github.com/igprof/igprof.git"
     website_url: http://igprof.org
-    labels: 
+    labels:
       - profiling
       - development
   - name: libunwind
     version: $LIBUNWIND_VERSION
     file: libunwind$VERSION_SEP$RPM_LIBUNWIND_VERSION-$LIBUNWIND_REVISION$ARCH_SEP$RPM_ARCH.$PACKAGE_FORMAT
-    licenses: 
+    licenses:
       - GPL-2.0
     vcs_url: "https://github.com/igprof/libunwind"
-    labels: 
+    labels:
       - profiling
       - development
   - name: libatomic_ops
     version: $RPM_LIBATOMIC_OPS_VERSION
     file: $RPM_LIBATOMIC_OPS_NAME$VERSION_SEP$RPM_LIBATOMIC_OPS_VERSION-$LIBATOMIC_OPS_REVISION$ARCH_SEP$RPM_ARCH.$PACKAGE_FORMAT
-    licenses: 
+    licenses:
       - GPL-2.0
     vcs_url: "https://github.com/igprof/libatomic_ops"
-    labels: 
+    labels:
       - profiling
       - development
 level: test

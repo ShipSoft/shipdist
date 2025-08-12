@@ -32,4 +32,3 @@ cmake "$SOURCEDIR"                               \
 
 make ${JOBS:+-j $JOBS}
 make install
-

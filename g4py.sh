@@ -25,7 +25,7 @@ cmake $INSTALLROOT                                 \
       ${BOOST_VERSION:+-DBoost_NO_SYSTEM_PATH=TRUE}\
       -DXERCESC_ROOT_DIR=${XERCESC_ROOT}           \
       -DCMAKE_VERBOSE_MAKEFILE=TRUE                \
-      -DBoost_NO_BOOST_CMAKE=TRUE 
+      -DBoost_NO_BOOST_CMAKE=TRUE
 
 make ${JOBS:+-j $JOBS}
 make install

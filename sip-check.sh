@@ -12,4 +12,3 @@ system_requirement: "(osx.*)"
 system_requirement_check: |
   (which csrutil && (csrutil status | grep disabled) ) || ! which csrutil
 ---
-

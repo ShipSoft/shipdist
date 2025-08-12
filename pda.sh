@@ -8,14 +8,14 @@ build_requires:
   - kernel-devel
   - autotools
 
---- 
+---
 #!/bin/sh
 
 rsync -a --delete --exclude '**/.git' --delete-excluded $SOURCEDIR/ ./
 ./configure --debug=false --numa=true --modprobe=true --prefix=$INSTALLROOT
 make ${JOBS+-j $JOBS} install
 
-#ModuleFile 
+#ModuleFile
 mkdir -p etc/modulefiles
 cat > etc/modulefiles/$PKGNAME <<EoF
 #%Module1.0
@@ -28,7 +28,7 @@ module-whatis "ALICE Modulefile for $PKGNAME $PKGVERSION-@@PKGREVISION@$PKGHASH@
 
 # Dependencies
 module load BASE/1.0                                                                            \\
-            ${GCC_TOOLCHAIN_ROOT:+GCC-Toolchain/$GCC_TOOLCHAIN_VERSION-$GCC_TOOLCHAIN_REVISION}                       
+            ${GCC_TOOLCHAIN_ROOT:+GCC-Toolchain/$GCC_TOOLCHAIN_VERSION-$GCC_TOOLCHAIN_REVISION}
 
 # Our environment
 setenv PDA_ROOT \$::env(BASEDIR)/$PKGNAME/\$version

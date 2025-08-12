@@ -1,7 +1,7 @@
 package: AliEn-CAs
 version: v1
 tag: master
-source: https://github.com/alisw/alien-cas.git 
+source: https://github.com/alisw/alien-cas.git
 ---
 #!/bin/bash -e
 DEST="$INSTALLROOT/globus/share/certificates"

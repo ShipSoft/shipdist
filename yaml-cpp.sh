@@ -46,4 +46,3 @@ module load BASE/1.0 ${BOOST_REVISION:+boost/$BOOST_VERSION-$BOOST_REVISION}
 set YAMLCPP \$::env(BASEDIR)/$PKGNAME/\$version
 prepend-path LD_LIBRARY_PATH \$YAMLCPP/lib
 EoF
-

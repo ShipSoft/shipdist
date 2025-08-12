@@ -16,7 +16,7 @@ rsync -a $SOURCEDIR/* .
 
 ./configure --with-hepmc=$HEPMC_ROOT --with-lhapdf=$LHAPDF_ROOT --with-pythia8=$PYTHIA_ROOT --prefix=$INSTALLROOT CFLAGS="$CFLAGS" CXXFLAGS="$CFLAGS"
 
-make 
+make
 make install
 
 # Modulefile
