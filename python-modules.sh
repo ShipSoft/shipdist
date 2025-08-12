@@ -6,7 +6,6 @@ requires:
   - "FreeType:(?!osx)"
   - libpng
 build_requires:
-  - curl
   - Python-modules-list
   - alibuild-recipe-tools
 prepend_path:
@@ -45,7 +44,7 @@ case $ARCHITECTURE in
 esac
 
 # Major.minor version of Python
-pyver="$(python3 -c 'import distutils.sysconfig; print(distutils.sysconfig.get_python_version())')"
+pyver="$(python3 -c 'import sysconfig; print(sysconfig.get_python_version())')"
 
 # These are the basic requirements needed for all installation and platform
 # and it should represent the common denominator (working) for all packages/platforms

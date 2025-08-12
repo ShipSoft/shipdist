@@ -43,3 +43,4 @@ prepend-path PATH \$FLATBUFFERS_ROOT/bin
 prepend-path LD_LIBRARY_PATH \$FLATBUFFERS_ROOT/lib
 prepend-path PATH \$FLATBUFFERS_ROOT/bin
 EoF
+

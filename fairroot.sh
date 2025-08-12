@@ -1,6 +1,6 @@
 package: FairRoot
-version: "v18.8.2"
-tag: "v18.8.2"
+version: "%(short_hash)s"
+tag: "v19.0.0"
 source: https://github.com/FairRootGroup/FairRoot
 requires:
   - generators
@@ -20,7 +20,6 @@ env:
   FAIRROOTPATH: "$FAIRROOT_ROOT"
 prepend_path:
   ROOT_INCLUDE_PATH: "$FAIRROOT_ROOT/include"
-  LD_LIBRARY_PATH: "$FAIRROOT_ROOT/lib"
 ---
 # Making sure people do not have SIMPATH set when they build fairroot.
 # Unfortunately SIMPATH seems to be hardcoded in a bunch of places in
@@ -51,11 +50,11 @@ cmake $SOURCEDIR                                                                
       -DROOT_CONFIG_SEARCHPATH=$ROOT_ROOT/bin                                               \
       -DPythia6_LIBRARY_DIR=$PYTHIA6_ROOT/lib                                               \
       ${YAML_CPP_ROOT:+-DYAML_CPP_ROOT=$YAML_CPP_ROOT}                                      \
-      -DGeant3_DIR=$GEANT3_ROOT                                                             \
       -DDISABLE_GO=ON                                                                       \
       -DBUILD_EXAMPLES=ON                                                                   \
       ${GEANT4_ROOT:+-DGeant4_DIR=$GEANT4_ROOT}                                             \
       -DFAIRROOT_MODULAR_BUILD=ON                                                           \
+      ${DDS_ROOT:+-DDDS_PATH=$DDS_ROOT}                                                     \
       ${BOOST_ROOT:+-DBOOST_ROOT=$BOOST_ROOT}                                               \
       -DBoost_NO_SYSTEM_PATHS=${BOOST_NO_SYSTEM_PATHS}                                      \
       ${GSL_ROOT:+-DGSL_DIR=$GSL_ROOT}                                                      \
@@ -99,7 +98,6 @@ module load BASE/1.0                                                            
             ${YAML_CPP_REVISION:+yaml-cpp/$YAML_CPP_VERSION-$YAML_CPP_REVISION}                  \\
             ${FAIRLOGGER_REVISION:+FairLogger/$FAIRLOGGER_VERSION-$FAIRLOGGER_REVISION}         \\
             ${FAIRMQ_REVISION:+FairMQ/$FAIRMQ_VERSION-$FAIRMQ_REVISION}                         \\
-            ${GEANT3_REVISION:+GEANT3/$GEANT3_VERSION-$GEANT3_REVISION}                         \\
             ${GEANT4_VMC_REVISION:+GEANT4_VMC/$GEANT4_VMC_VERSION-$GEANT4_VMC_REVISION}         \\
             ${PROTOBUF_REVISION:+protobuf/$PROTOBUF_VERSION-$PROTOBUF_REVISION}                 \\
             ${PYTHIA6_REVISION:+pythia6/$PYTHIA6_VERSION-$PYTHIA6_REVISION}                     \\
@@ -108,6 +106,7 @@ module load BASE/1.0                                                            
             ${BOOST_REVISION:+boost/$BOOST_VERSION-$BOOST_REVISION}                             \\
             ROOT/$ROOT_VERSION-$ROOT_REVISION                                                   \\
             ${ZEROMQ_REVISION:+ZeroMQ/$ZEROMQ_VERSION-$ZEROMQ_REVISION}                         \\
+            ${DDS_REVISION:+DDS/$DDS_VERSION-$DDS_REVISION}                                     \\
             ${GCC_TOOLCHAIN_REVISION:+GCC-Toolchain/$GCC_TOOLCHAIN_VERSION-$GCC_TOOLCHAIN_REVISION}
 # Our environment
 set FAIRROOT_ROOT \$::env(BASEDIR)/$PKGNAME/\$version

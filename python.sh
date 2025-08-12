@@ -3,13 +3,13 @@ version: "%(tag_basename)s"
 tag: v3.9.16
 source: https://github.com/python/cpython
 requires:
+  - AliEn-Runtime:(?!.*ppc64)
   - FreeType
   - libpng
   - sqlite
   - "GCC-Toolchain:(?!osx)"
   - libffi
 build_requires:
-  - curl
   - alibuild-recipe-tools
 env:
   SSL_CERT_FILE: "$(export PATH=$PYTHON_ROOT/bin:$PATH; export LD_LIBRARY_PATH=$PYTHON_ROOT/lib:$LD_LIBRARY_PATH; python -c \"import certifi; print(certifi.where())\")"
@@ -27,13 +27,18 @@ export LIBFFI_ROOT
 # The only way to pass externals to Python
 LDFLAGS=
 CPPFLAGS=
-for ext in $ZLIB_ROOT $FREETYPE_ROOT $LIBPNG_ROOT $SQLITE_ROOT $LIBFFI_ROOT; do
+for ext in $ALIEN_RUNTIME_ROOT $ZLIB_ROOT $FREETYPE_ROOT $LIBPNG_ROOT $SQLITE_ROOT $LIBFFI_ROOT; do
   LDFLAGS="$(find $ext -type d \( -name lib -o -name lib64 \) -exec echo -L\{\} \;) $LDFLAGS"
   CPPFLAGS="$(find $ext -type d -name include -exec echo -I\{\} \;) $CPPFLAGS"
 done
 export LDFLAGS=$(echo $LDFLAGS)
 export CPPFLAGS=$(echo $CPPFLAGS)
 
+# Check if OpenSSL and zlib are from AliEn
+if [[ $ALIEN_RUNTIME_VERSION ]]; then
+  OPENSSL_ROOT=${OPENSSL_ROOT:+$ALIEN_RUNTIME_ROOT}
+  ZLIB_ROOT=${ZLIB_ROOT:+$ALIEN_RUNTIME_ROOT}
+fi
 case $ARCHITECTURE in
   osx*) [[ ! $OPENSSL_ROOT ]] && OPENSSL_ROOT=$(brew --prefix openssl@3) ;;
 esac
@@ -92,6 +97,9 @@ rm -rvf "$INSTALLROOT"/share "$INSTALLROOT"/lib/python*/test
 find "$INSTALLROOT"/lib/python* \
      -mindepth 2 -maxdepth 2 -type d -and \( -name test -or -name tests \) \
      -exec rm -rvf '{}' \;
+
+# Get OpenSSL and zlib at runtime from AliEn-Runtime if appropriate
+[[ $ALIEN_RUNTIME_REVISION ]] && unset OPENSSL_REVISION ZLIB_REVISION
 
 # Modulefile
 MODULEDIR="$INSTALLROOT/etc/modulefiles"

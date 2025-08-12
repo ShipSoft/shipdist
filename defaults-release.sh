@@ -4,7 +4,13 @@ env:
   CXXFLAGS: "-fPIC -g -O2 -std=c++17"
   CFLAGS: "-fPIC -g -O2"
   CMAKE_BUILD_TYPE: "RELEASE"
-  CMAKE_CXX_STANDARD: "17"
+  CMAKE_CXX_STANDARD: 17
+disable:
+  - AliEn-Runtime
+  - MonALISA-gSOAP-client
+  - AliEn-CAs
+  - ApMon-CPP
+  - DDS
 overrides:
   autotools:
     tag: v1.6.3
@@ -25,24 +31,13 @@ overrides:
       which cc && test -f $(dirname $(which cc))/c++ && printf "#define GCCVER ((__GNUC__ << 16)+(__GNUC_MINOR__ << 8)+(__GNUC_PATCHLEVEL__))\n#if (GCCVER < 0x060000 || GCCVER > 0x100000)\n#error \"System's GCC cannot be used: we need GCC 6.X. We are going to compile our own version.\"\n#endif\n" | cc -xc++ - -c -o /dev/null
   ROOT:
     prefer_system_check: |
-      root-config --version || exit 1
-      if [[ "$REQUESTED_VERSION" == "master" || "$REQUESTED_VERSION" == "ship-master" ]]; then
-          echo "Branch $REQUESTED_VERSION selected, skipping version check."
-          exit 0
-      fi
       VERSION=$(root-config --version)
       REQUESTED_VERSION=${REQUESTED_VERSION#v}
       REQUESTED_VERSION=${REQUESTED_VERSION//-/.}
-      verlte() {
-          printf '%s\n' "$1" "$2" | sort -C -V
-      }
-      verlt() {
-          ! verlte "$2" "$1"
-      }
-      if ! verlt $VERSION $REQUESTED_VERSION; then
+      if [ $(printf "${VERSION}\n${REQUESTED_VERSION}" | sort -V | head -1) != "${VERSION}" ]; then
           echo "ROOT version $VERSION sufficient"
       else
-          echo "ROOT version $VERSION insufficient ($REQUESTED_VERSION requested)"
+          echo "ROOT version $VERSION insufficient"
           exit 1
       fi
       FEATURES="builtin_pcre mathmore xml ssl opengl http gdml pythia8 roofit soversion vdt xrootd"
@@ -69,17 +64,18 @@ overrides:
     prefer_system_check: |
       ls $FAIRROOT_ROOT/ > /dev/null && \
       ls $FAIRROOT_ROOT/lib > /dev/null && \
-      ls $FAIRROOT_ROOT/include > /dev/null
+      ls $FAIRROOT_ROOT/include > /dev/null && \
+      grep v19.0.0 $FAIRROOT_ROOT/include/FairVersion.h
   FairMQ:
     version: "%(tag_basename)s"
-    tag: "v1.4.38"
+    tag: "v1.10.0"
     prefer_system_check: |
       ls $FAIRMQ_ROOT/ > /dev/null && \
       ls $FAIRMQ_ROOT/lib > /dev/null && \
-      ls $FAIRMQ_ROOT/include > /dev/null
+      ls $FAIRMQ_ROOT/include > /dev/null && \
   FairLogger:
     version: "%(tag_basename)s"
-    tag: "v1.9.0"
+    tag: "v2.2.0"
     prefer_system_check: |
       ls $FAIRLOGGER_ROOT/ > /dev/null && \
       ls $FAIRLOGGER_ROOT/lib > /dev/null && \
@@ -90,14 +86,20 @@ overrides:
     tag: v10.7.3
     source: https://github.com/geant4/geant4.git
     prefer_system_check: |
-      ls $GEANT4_ROOT/bin > /dev/null && \
-      ls $GEANT4_ROOT/bin/geant4-config > /dev/null && \
-      ls $GEANT4_ROOT/bin/geant4.csh > /dev/null && \
-      ls $GEANT4_ROOT/bin/geant4.sh > /dev/null && \
-      ls $GEANT4_ROOT/include > /dev/null && \
-      ls $GEANT4_ROOT/include/Geant4 > /dev/null && \
-      ls $GEANT4_ROOT/lib/ > /dev/null && \
-      true
+      VERSION=$(geant4-config --version)
+      REQUESTED_VERSION=${REQUESTED_VERSION#v}
+      verlte() {
+          printf '%s\n' "$1" "$2" | sort -C -V
+      }
+      verlt() {
+          ! verlte "$2" "$1"
+      }
+      if ! verlt $VERSION $REQUESTED_VERSION; then
+        echo "GEANT4 version $VERSION sufficient"
+      else
+        echo "GEANT4 version $VERSION insufficient"
+        exit 1
+      fi
     requires:
       - "GCC-Toolchain:(?!osx)"
       - opengl
@@ -119,7 +121,7 @@ overrides:
      G4SAIDXSDATA : "`find ${G4INSTALL} $G4DATASEARCHOPT  '*data*G4SAIDDATA*'`"
   GEANT4_VMC:
     version: "%(tag_basename)s"
-    tag: v5-4
+    tag: v6-6-p3
     prefer_system_check: |
       ls $GEANT4_VMC_ROOT/bin > /dev/null && \
       ls $GEANT4_VMC_ROOT/lib/libg4root.so > /dev/null && \
@@ -131,7 +133,7 @@ overrides:
       true
   VMC:
     version: "%(tag_basename)s"
-    tag: v1-1-p1
+    tag: v2-0
     prefer_system_check: |
       ls $VMC_ROOT/include > /dev/null && \
       true
@@ -147,17 +149,26 @@ overrides:
       true
   log4cpp:
     tag: 1b9f8f7c031d6947c7468d54bc1da4b2f414558d
-    prefer_system_check: |
+    prefer_system_check: | 
       ls $LOG4CPP_ROOT/include/ > /dev/null && \
       ls $LOG4CPP_ROOT/lib/ > /dev/null && \
       true
   apfel:
     tag: 3.0.6
     prefer_system_check: |
-      ls $APFEL_ROOT/bin > /dev/null && \
-      ls $APFEL_ROOT/lib > /dev/null && \
-      ls $APFEL_ROOT/include > /dev/null && \
-      true
+      VERSION=$(apfel-config --version)
+      verlte() {
+          printf '%s\n' "$1" "$2" | sort -C -V
+      }
+      verlt() {
+          ! verlte "$2" "$1"
+      }
+      if ! verlt $VERSION $REQUESTED_VERSION; then
+        echo "apfel version $VERSION sufficient"
+      else
+        echo "apfel version $VERSION insufficient"
+        exit 1
+      fi
   pythia:
     version: "%(tag_basename)s"
     source: https://github.com/ShipSoft/pythia8
@@ -167,31 +178,25 @@ overrides:
       - HepMC
       - boost
     prefer_system_check: |
-      ls $PYTHIA_ROOT/bin > /dev/null && \
-      ls $PYTHIA_ROOT/bin/pythia8-config > /dev/null && \
-      ls $PYTHIA_ROOT/include/ > /dev/null && \
-      ls $PYTHIA_ROOT/include/Pythia8 > /dev/null && \
-      ls $PYTHIA_ROOT/include/Pythia8Plugins > /dev/null && \
-      ls $PYTHIA_ROOT/lib/libpythia8.a > /dev/null && \
-      ls $PYTHIA_ROOT/lib/libpythia8lhapdf6.so > /dev/null && \
-      ls $PYTHIA_ROOT/lib/libpythia8.so > /dev/null && \
-      true
+      VERSION=$(pythia8-config --version)
+      REQUESTED_VERSION=${REQUESTED_VERSION#v}
+      VERSION=${VERSION//.}
+      verlte() {
+          printf '%s\n' "$1" "$2" | sort -C -V
+      }
+      verlt() {
+          ! verlte "$2" "$1"
+      }
+      if ! verlt $VERSION $REQUESTED_VERSION; then
+        echo "pythia8 version $VERSION sufficient"
+      else
+        echo "pythia8 version $VERSION insufficient"
+        exit 1
+      fi
+      pythia8-config --with-lhapdf6 || { echo "lhapdf6 support missing."; exit 1; }
   vgm:
-    prefer_system_check: |
-      ls $VGM_ROOT/ > /dev/null && \
-      ls $VGM_ROOT/include > /dev/null && \
-      ls $VGM_ROOT/include/BaseVGM > /dev/null && \
-      ls $VGM_ROOT/include/ClhepVGM > /dev/null && \
-      ls $VGM_ROOT/include/Geant4GM > /dev/null && \
-      ls $VGM_ROOT/include/RootGM > /dev/null && \
-      ls $VGM_ROOT/include/VGM > /dev/null && \
-      ls $VGM_ROOT/include/XmlVGM > /dev/null && \
-      ls $VGM_ROOT/lib > /dev/null && \
-      ls $VGM_ROOT/lib/libBaseVGM.a > /dev/null && \
-      ls $VGM_ROOT/lib/libClhepVGM.a > /dev/null && \
-      ls $VGM_ROOT/lib/libGeant4GM.a > /dev/null && \
-      ls $VGM_ROOT/lib/libRootGM.a > /dev/null && \
-      ls $VGM_ROOT/lib/libXmlVGM.a > /dev/null
+    version: "%(tag_basename)s"
+    tag: "4.4"
   evtGen:
     version: "%(tag_basename)s"
     source: https://github.com/ShipSoft/evtgen
@@ -244,12 +249,20 @@ overrides:
       grep "2.06" $HEPMC_ROOT/include/HepMC/HepMCDefs.h > /dev/null
   lhapdf:
     prefer_system_check: |
-      ls $LHAPDF_ROOT/ > /dev/null && \
-      ls $LHAPDF_ROOT/bin > /dev/null && \
-      ls $LHAPDF_ROOT/include > /dev/null && \
-      ls $LHAPDF_ROOT/include/LHAPDF > /dev/null && \
-      ls $LHAPDF_ROOT/lib > /dev/null && \
-      ls $LHAPDF_ROOT/share/LHAPDF > /dev/null
+      VERSION=$(lhapdf-config --version)
+      REQUESTED_VERSION=${REQUESTED_VERSION#lhapdf-}
+      verlte() {
+          printf '%s\n' "$1" "$2" | sort -C -V
+      }
+      verlt() {
+          ! verlte "$2" "$1"
+      }
+      if ! verlt $VERSION $REQUESTED_VERSION; then
+        echo "lhapdf version $VERSION sufficient"
+      else
+        echo "lhapdf version $VERSION insufficient"
+        exit 1
+      fi
   lhapdf5:
     prefer_system_check: |
       ls $LHAPDF5_ROOT/ > /dev/null && \
@@ -262,40 +275,55 @@ overrides:
       ls $LHAPDF5_ROOT/lib/libLHAPDF.la > /dev/null && \
       ls $LHAPDF5_ROOT/lib/libLHAPDF.a > /dev/null && \
       ls $LHAPDF5_ROOT/lib64/python2.7/site-packages/lhapdf.py > /dev/null && \
-      ls $LHAPDF5_ROOT/share/lhapdf > /dev/null
+      ls $LHAPDF5_ROOT/share/lhapdf > /dev/null 
+  vgm:
+    prefer_system_check: |
+      ls $VGM_ROOT/ > /dev/null && \
+      ls $VGM_ROOT/include > /dev/null && \
+      ls $VGM_ROOT/include/BaseVGM > /dev/null && \
+      ls $VGM_ROOT/include/ClhepVGM > /dev/null && \
+      ls $VGM_ROOT/include/Geant4GM > /dev/null && \
+      ls $VGM_ROOT/include/RootGM > /dev/null && \
+      ls $VGM_ROOT/include/VGM > /dev/null && \
+      ls $VGM_ROOT/include/XmlVGM > /dev/null && \
+      ls $VGM_ROOT/lib > /dev/null && \
+      ls $VGM_ROOT/lib/libBaseVGM.a > /dev/null && \
+      ls $VGM_ROOT/lib/libClhepVGM.a > /dev/null && \
+      ls $VGM_ROOT/lib/libGeant4GM.a > /dev/null && \
+      ls $VGM_ROOT/lib/libRootGM.a > /dev/null && \
+      ls $VGM_ROOT/lib/libXmlVGM.a > /dev/null
   XercesC:
     prefer_system_check: |
-      ls $XERCESC_ROOT/ > /dev/null && \
-      ls $XERCESC_ROOT/bin > /dev/null && \
-      ls $XERCESC_ROOT/include > /dev/null && \
-      ls $XERCESC_ROOT/include/xercesc/ > /dev/null && \
-      ls $XERCESC_ROOT/lib > /dev/null && \
-      ls $XERCESC_ROOT/lib/libxerces-c-3.1.so > /dev/null && \
-      ls $XERCESC_ROOT/lib/libxerces-c.a > /dev/null && \
-      ls $XERCESC_ROOT/lib/libxerces-c.la > /dev/null && \
-      ls $XERCESC_ROOT/lib/libxerces-c.so > /dev/null
-  GEANT3:
-    version: "%(tag_basename)s"
-    source: https://github.com/vmc-project/geant3
-    tag: v3-9
-    prefer_system_check: |
-      ls $GEANT3_ROOT/ > /dev/null && \
-      ls $GEANT3_ROOT/include > /dev/null && \
-      ls $GEANT3_ROOT/include/TGeant3 > /dev/null && \
-      ls $GEANT3_ROOT/include/TGeant3/TGeant3.h > /dev/null && \
-      ls $GEANT3_ROOT/lib64/libgeant321.so > /dev/null && \
-      true
+      VERSION=$(pkg-config xerces-c --modversion)
+      REQUESTED_VERSION=${REQUESTED_VERSION#v}
+      verlte() {
+          printf '%s\n' "$1" "$2" | sort -C -V
+      }
+      verlt() {
+          ! verlte "$2" "$1"
+      }
+      if ! verlt $VERSION $REQUESTED_VERSION; then
+        echo "xerces-c version $VERSION sufficient"
+      else
+        echo "xerces-c version $VERSION insufficient"
+        exit 1
+      fi
   googletest:
     prefer_system_check: |
-      ls $GOOGLETEST_ROOT/ > /dev/null && \
-      ls $GOOGLETEST_ROOT/include > /dev/null && \
-      ls $GOOGLETEST_ROOT/include/gmock > /dev/null && \
-      ls $GOOGLETEST_ROOT/include/gtest > /dev/null && \
-      ls $GOOGLETEST_ROOT/lib/libgmock.a > /dev/null && \
-      ls $GOOGLETEST_ROOT/lib/libgmock_main.a > /dev/null && \
-      ls $GOOGLETEST_ROOT/lib/libgtest.a > /dev/null && \
-      ls $GOOGLETEST_ROOT/lib/libgtest_main.a > /dev/null && \
-      true
+      VERSION=$(pkg-config gtest --modversion)
+      REQUESTED_VERSION=${REQUESTED_VERSION#v}
+      verlte() {
+          printf '%s\n' "$1" "$2" | sort -C -V
+      }
+      verlt() {
+          ! verlte "$2" "$1"
+      }
+      if ! verlt $VERSION $REQUESTED_VERSION; then
+        echo "googletest version $VERSION sufficient"
+      else
+        echo "googletest version $VERSION insufficient"
+        exit 1
+      fi
 ---
 # This file is included in any build recipe and it's only used to set
 # environment variables. Which file to actually include can be defined by the

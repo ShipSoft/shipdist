@@ -1,6 +1,6 @@
 package: ROOT
 version: "%(tag_basename)s%(defaults_upper)s"
-tag: "v6-30-08"
+tag: "v6-30-02"
 source: https://github.com/root-project/root
 requires:
 - GSL
@@ -25,6 +25,7 @@ env:
 prepend_path:
   PYTHONPATH: "$ROOTSYS/lib"
 incremental_recipe: |
+  JOBS=8
   make ${JOBS:+-j$JOBS} install
   mkdir -p $INSTALLROOT/etc/modulefiles && rsync -a --delete etc/modulefiles/ $INSTALLROOT/etc/modulefiles
   cd $INSTALLROOT/test
@@ -71,8 +72,10 @@ ${ENABLE_COCOA:+-Dcocoa=ON}                               \
 -DCMAKE_C_COMPILER=$COMPILER_CC                           \
 -DCMAKE_LINKER=$COMPILER_LD                               \
 ${GCC_TOOLCHAIN_VERSION:+-DCMAKE_EXE_LINKER_FLAGS="-L$GCC_TOOLCHAIN_ROOT/lib64"} \
+${OPENSSL_ROOT:+-DOPENSSL_ROOT=$ALIEN_RUNTIME_ROOT}       \
 ${SYS_OPENSSL_ROOT:+-DOPENSSL_ROOT=$SYS_OPENSSL_ROOT}     \
 ${SYS_OPENSSL_ROOT:+-DOPENSSL_INCLUDE_DIR=$SYS_OPENSSL_ROOT/include} \
+${LIBXML2_ROOT:+-DLIBXML2_ROOT=$ALIEN_RUNTIME_ROOT}       \
 ${GSL_ROOT:+-DGSL_DIR=$GSL_ROOT}                          \
 ${PYTHIA_ROOT:+-DPYTHIA8_DIR=$PYTHIA_ROOT}                \
 ${PYTHIA_ROOT:+-Dpythia8=ON}                \
@@ -83,11 +86,10 @@ ${PYTHIA6_LATE:+-Dpythia6_nolink=ON}                      \
 -Dsoversion=ON                                            \
 -Dshadowpw=OFF                                            \
 -Dbuiltin_vdt=ON                                          \
--Dproof=ON \
 ${PYTHON_ROOT:+-DPYTHON_EXECUTABLE=$PYTHONHOME/bin/python} \
 ${PYTHON_ROOT:+-DPYTHON_INCLUDE_DIR=$PYTHONHOME/include/python3.6m} \
 ${PYTHON_ROOT:+-DPYTHON_LIBRARY=$PYTHONHOME/lib/libpython3.6m.so} \
--DCMAKE_PREFIX_PATH="$FREETYPE_ROOT;$SYS_OPENSSL_ROOT;$GSL_ROOT;$PYTHON_ROOT;$PYTHON_MODULES_ROOT"
+-DCMAKE_PREFIX_PATH="$FREETYPE_ROOT;$SYS_OPENSSL_ROOT;$GSL_ROOT;$ALIEN_RUNTIME_ROOT;$PYTHON_ROOT;$PYTHON_MODULES_ROOT"
 FEATURES="builtin_pcre xml ssl opengl http gdml mathmore ${PYTHIA_ROOT:+pythia8}
     pythia6 roofit soversion vdt ${XROOTD_ROOT:+xrootd}
     ${ENABLE_COCOA:+builtin_freetype}"
@@ -101,7 +103,7 @@ done
 for FEATURE in $NO_FEATURES; do
   bin/root-config --has-$FEATURE | grep -q no
 done
-
+JOBS=8
 cmake --build . ${JOBS+-j$JOBS} --target install
 [[ -d $INSTALLROOT/test ]] && ( cd $INSTALLROOT/test && env PATH=$INSTALLROOT/bin:$PATH LD_LIBRARY_PATH=$INSTALLROOT/lib:$LD_LIBRARY_PATH DYLD_LIBRARY_PATH=$INSTALLROOT/lib:$DYLD_LIBRARY_PATH make ${JOBS+-j$JOBS} )
 
@@ -116,7 +118,8 @@ proc ModulesHelp { } {
 set version $PKGVERSION-@@PKGREVISION@$PKGHASH@@
 module-whatis "ALICE Modulefile for $PKGNAME $PKGVERSION-@@PKGREVISION@$PKGHASH@@"
 # Dependencies
-module load BASE/1.0 ${GCC_TOOLCHAIN_VERSION:+GCC-Toolchain/$GCC_TOOLCHAIN_VERSION-$GCC_TOOLCHAIN_REVISION}     \\
+module load BASE/1.0 ${ALIEN_RUNTIME_ROOT:+AliEn-Runtime/$ALIEN_RUNTIME_VERSION-$ALIEN_RUNTIME_REVISION}        \\
+                     ${GCC_TOOLCHAIN_VERSION:+GCC-Toolchain/$GCC_TOOLCHAIN_VERSION-$GCC_TOOLCHAIN_REVISION}     \\
                      ${GSL_VERSION:+GSL/$GSL_VERSION-$GSL_REVISION}                                             \\
                      ${XROOTD_VERSION:+XRootD/$XROOTD_VERSION-$XROOTD_REVISION}                                 \\
                      ${FREETYPE_VERSION:+FreeType/$FREETYPE_VERSION-$FREETYPE_REVISION}                         \\

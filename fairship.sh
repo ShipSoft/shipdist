@@ -7,29 +7,18 @@ requires:
   - simulation
   - FairRoot
   - FairLogger
+  - apfel
   - GENIE
   - GenFit
   - GEANT4
+  - vgm
   - PHOTOSPP
   - EvtGen
   - ROOT
   - VMC
-env:
-  FAIRSHIP: "$FAIRSHIP_ROOT"
-  EOSSHIP: "root://eospublic.cern.ch/"
-  VMCWORKDIR: "$FAIRSHIP_ROOT"
-  GEOMPATH: "$FAIRSHIP_ROOT/geometry"
-  CONFIG_DIR: "$FAIRSHIP_ROOT/gconfig"
-  GALCONF: "$FAIRSHIP_ROOT/shipgen/genie_config"
-  FAIRLIBDIR: "$FAIRSHIP_ROOT/lib"
-prepend_path:
-  PYTHONPATH: "$FAIRSHIP_ROOT/python"
-  ROOT_INCLUDE_PATH: "$FAIRSHIP_ROOT/include"
-  LD_LIBRARY_PATH: "$FAIRSHIP_ROOT/lib"
-append_path:
-  ROOT_INCLUDE_PATH: "$GEANT4_ROOT/include:$GEANT4_ROOT/include/Geant4:$PYTHIA_ROOT/include:$PYTHIA_ROOT/include/Pythia8:$GEANT4_VMC_ROOT/include:$GEANT4_VMC_ROOT/include/geant4vmc"
 incremental_recipe: |
   rsync -ar $SOURCEDIR/ $INSTALLROOT/
+  JOBS=8
   cmake --build . ${JOBS+-j$JOBS} --target install
   #Get the current git hash
   cd $SOURCEDIR
@@ -75,10 +64,30 @@ incremental_recipe: |
   append-path ROOT_INCLUDE_PATH \$::env(GEANT4_VMC_ROOT)/include
   append-path ROOT_INCLUDE_PATH \$::env(GEANT4_VMC_ROOT)/include/geant4vmc
   prepend-path PYTHONPATH \$::env(FAIRSHIP_ROOT)/python
+  append-path PYTHONPATH \$::env(FAIRSHIP_ROOT)/Developments/track_pattern_recognition
+  $([[ ${ARCHITECTURE:0:3} == osx ]] && echo "prepend-path DYLD_LIBRARY_PATH \$::env(FAIRSHIP_ROOT)/lib")
   EoF
 ---
 #!/bin/sh
 
+# Making sure people do not have SIMPATH set when they build fairroot.
+# Unfortunately SIMPATH seems to be hardcoded in a bunch of places in
+# fairroot, so this really should be cleaned up in FairRoot itself for
+# maximum safety.
+unset SIMPATH
+
+case $ARCHITECTURE in
+  osx*)
+    # If we preferred system tools, we need to make sure we can pick them up.
+    [[ ! $BOOST_ROOT ]] && BOOST_ROOT=`brew --prefix boost`
+    [[ ! $ZEROMQ_ROOT ]] && ZEROMQ_ROOT=`brew --prefix zeromq`
+    [[ ! $PROTOBUF_ROOT ]] && PROTOBUF_ROOT=`brew --prefix protobuf`
+    [[ ! $NANOMSG_ROOT ]] && NANOMSG_ROOT=`brew --prefix nanomsg`
+    [[ ! $GSL_ROOT ]] && GSL_ROOT=`brew --prefix gsl`
+    SONAME=dylib
+  ;;
+  *) SONAME=so ;;
+esac
 rsync -a $SOURCEDIR/ $INSTALLROOT/
 
 cmake $SOURCEDIR                                                 \
@@ -86,6 +95,7 @@ cmake $SOURCEDIR                                                 \
       -DFAIRROOTPATH="$FAIRROOTPATH"                             \
       -DFAIRROOT_INCLUDE_DIR="$FAIRROOT_ROOT/include"            \
       -DFAIRROOT_LIBRARY_DIR="$FAIRROOT_ROOT/lib"                \
+      -DFAIRLOGGER_INCLUDE_DIR="$FAIRLOGGER_ROOT/include"        \
       -DFMT_INCLUDE_DIR="$FMT_ROOT/include"                      \
       -DCMAKE_CXX_FLAGS="$CXXFLAGS"                              \
       -DCMAKE_BUILD_TYPE=$CMAKE_BUILD_TYPE                       \
@@ -98,8 +108,8 @@ cmake $SOURCEDIR                                                 \
       ${PYTHON_ROOT:+-DPYTHON_INCLUDE_DIR=$PYTHON_ROOT/include/python3.6m/} \
       -DPYTHIA8_DIR=$PYTHIA_ROOT                                 \
       -DPYTHIA8_INCLUDE_DIR=$PYTHIA_ROOT/include                 \
-      -DGEANT4_ROOT=$GEANT4_ROOT                                 \
-      -DGEANT4_INCLUDE_DIR=$GEANT4_ROOT/include/Geant4           \
+      -DGEANT4_ROOT=$Geant4_DIR                                 \
+      -DGEANT4_INCLUDE_DIR=$Geant4_INC_DIR/Geant4           \
       -DGEANT4_VMC_INCLUDE_DIR=$GEANT4_VMC_ROOT/include/geant4vmc \
       ${CMAKE_VERBOSE_MAKEFILE:+-DCMAKE_VERBOSE_MAKEFILE=ON}     \
       ${BOOST_ROOT:+-DBOOST_ROOT=$BOOST_ROOT}                    \
@@ -149,8 +159,10 @@ prepend-path ROOT_INCLUDE_PATH \$::env(FAIRSHIP_ROOT)/include
 append-path ROOT_INCLUDE_PATH \$::env(GEANT4_ROOT)/include
 append-path ROOT_INCLUDE_PATH \$::env(GEANT4_ROOT)/include/Geant4
 append-path ROOT_INCLUDE_PATH \$::env(PYTHIA_ROOT)/include
-append-path ROOT_INCLUDE_PATH \$::env(PYTHIA_ROOT)/include/Pythia8
+append-path ROOT_INCLUDE_PATH \$::env(PYTHIA_ROOT)/include/Pythia8Plugins
 append-path ROOT_INCLUDE_PATH \$::env(GEANT4_VMC_ROOT)/include
 append-path ROOT_INCLUDE_PATH \$::env(GEANT4_VMC_ROOT)/include/geant4vmc
 prepend-path PYTHONPATH \$::env(FAIRSHIP_ROOT)/python
+append-path PYTHONPATH \$::env(FAIRSHIP_ROOT)/Developments/track_pattern_recognition
+$([[ ${ARCHITECTURE:0:3} == osx ]] && echo "prepend-path DYLD_LIBRARY_PATH \$::env(FAIRSHIP_ROOT)/lib")
 EoF

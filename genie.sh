@@ -1,6 +1,6 @@
 package: GENIE
-version: v3.4.2
-tag: R-3_04_02
+version: v3.6.2
+tag: R-3_06_02
 source: https://github.com/GENIE-MC/Generator.git
 requires:
   - GCC-Toolchain
@@ -16,12 +16,13 @@ env:
   PATH: "$PATH:$GENIE_ROOT/genie/bin"
   LD_LIBRARY_PATH: "$LD_LIBRARY_PATH:$GENIE_ROOT/genie/lib"
   ROOT_INCLUDE_PATH: "$ROOT_INCLUDE_PATH:$GENIE_ROOT/genie/inc:$GENIE_ROOT/genie/src"
----
-#!/bin/bash -ex
+---  
+#/bin/bash -ex
 export GENIE="$BUILDDIR"
 
 rsync -a $SOURCEDIR/* $BUILDDIR
 ls -alh $BUILDDIR
+APFEL_ROOT=/vols/lhcb/masmith/SHiP/LCG_build/sw/rocky9_x86-64/apfel/3.0.6-local1/
 $BUILDDIR/configure --prefix=$INSTALLROOT \
 		    --enable-lhapdf6 \
 		    --enable-apfel \
@@ -34,7 +35,7 @@ $BUILDDIR/configure --prefix=$INSTALLROOT \
 		    --enable-rwght \
 		    --enable-pyhia6 \
 		    --enable-mathmore \
-      		    --with-pythia6-lib=$PYTHIA6_ROOT/lib/ \
+      		--with-pythia6-lib=$PYTHIA6_ROOT/lib/ \
 		    --with-lhapdf-lib=$LHAPDF_ROOT/lib/ \
 		    --with-lhapdf-inc=$LHAPDF_ROOT/include/ \
 		    --with-libxml2-lib=$LIBXML2_ROOT/lib/ \
@@ -42,7 +43,7 @@ $BUILDDIR/configure --prefix=$INSTALLROOT \
 		    --with-log4cpp-inc=$LOG4CPP_ROOT/include/ \
 		    --with-log4cpp-lib=$LOG4CPP_ROOT/lib/ \
 		    --with-apfel-inc=$APFEL_ROOT/include/ \
-		    --with-apfel-lib=$APFEL_ROOT/lib/
+		    --with-apfel-lib=$APFEL_ROOT/lib/ \
 
 
 make CXXFLAGS="-Wall $CXXFLAGS" CFLAGS="-Wall $CFLAGS"
@@ -86,5 +87,5 @@ prepend-path LD_LIBRARY_PATH \$::env(GENIE_ROOT)/genie/lib
 prepend-path ROOT_INCLUDE_PATH \$::env(GENIE_ROOT)/genie/inc
 prepend-path ROOT_INCLUDE_PATH \$::env(GENIE_ROOT)/genie/src
 $([[ ${ARCHITECTURE:0:3} == osx ]] && echo "prepend-path DYLD_LIBRARY_PATH \$::env(GENIE_ROOT)/lib")
-append-path PATH \$::env(GENIE_ROOT)/genie/bin
+append-path PATH \$::env(GENIE_ROOT)/genie/bin 
 EoF
