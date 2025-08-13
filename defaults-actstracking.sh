@@ -71,6 +71,8 @@ overrides:
       ls $FAIRROOT_ROOT/lib > /dev/null && \
       ls $FAIRROOT_ROOT/include > /dev/null
   FairShip:
+    tag: pythia_update
+    source: https://github.com/webbjm/FairShip
     requires:
      - generators
      - simulation
@@ -177,8 +179,8 @@ overrides:
       true
   pythia:
     version: "%(tag_basename)s"
-    tag: v8311
-    source: https://github.com/alisw/pythia8
+    tag: 8311Fairship
+    source: https://github.com/webbjm/pythia8
     requires:
       - lhapdf
       - HepMC
