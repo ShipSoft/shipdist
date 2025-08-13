@@ -44,6 +44,8 @@ $BUILDDIR/configure --prefix=$INSTALLROOT \
 		    --with-log4cpp-lib=$LOG4CPP_ROOT/lib/ \
 		    --with-apfel-inc=$APFEL_ROOT/include/ \
 		    --with-apfel-lib=$APFEL_ROOT/lib/ \
+            --with-lhapdf6-lib=$LHAPDF_ROOT/lib/ \
+            --with-lhapdf6-inc=$LHAPDF_ROOT/include/
 
 
 make CXXFLAGS="-Wall $CXXFLAGS" CFLAGS="-Wall $CFLAGS"

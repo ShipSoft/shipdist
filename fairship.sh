@@ -103,7 +103,7 @@ cmake $SOURCEDIR                                                 \
       -DHEPMC_DIR=$HEPMC_ROOT                                    \
       -DHEPMC_INCLUDE_DIR=$HEPMC_ROOT/include/HepMC              \
       -DEVTGEN_INCLUDE_DIR=$EVTGEN_ROOT/include                  \
-      -DEVTGEN_LIBRARY_DIR=$EVTGEN_ROOT/lib                      \
+      -DEVTGEN_LIBRARY_DIR=$EVTGEN_ROOT/lib64                      \
       ${PYTHON_ROOT:+-DPYTHON_LIBRARY=$PYTHON_ROOT/lib}          \
       ${PYTHON_ROOT:+-DPYTHON_INCLUDE_DIR=$PYTHON_ROOT/include/python3.6m/} \
       -DPYTHIA8_DIR=$PYTHIA_ROOT                                 \

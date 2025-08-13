@@ -19,7 +19,7 @@ overrides:
     tag: "v1.70.0"
     requires:
       - "GCC-Toolchain:(?!osx)"
-      - Python
+      - Pytho64n
     prefer_system_check: |
      printf "#include \"boost/version.hpp\"\n# if (BOOST_VERSION < 106400)\n#error \"Cannot use system's boost. Boost > 1.64.00 required.\"\n#endif\nint main(){}" \
      | gcc -I$BOOST_ROOT/include -xc++ - -o /dev/null
@@ -199,13 +199,13 @@ overrides:
     tag: "4.4"
   evtGen:
     version: "%(tag_basename)s"
-    source: https://github.com/ShipSoft/evtgen
-    tag: R01-06-00-ship
+    source:  https://github.com/alisw/EVTGEN # https://github.com/ShipSoft/evtgen
+    tag: R02-02-00-alice2
     prefer_system_check: |
       ls $EVTGEN_ROOT/include > /dev/null && \
-      ls $EVTGEN_ROOT/lib > /dev/null && \
-      ls $EVTGEN_ROOT/lib/libEvtGenExternal.so > /dev/null && \
-      ls $EVTGEN_ROOT/lib/libEvtGen.so > /dev/null && \
+      ls $EVTGEN_ROOT/lib64 > /dev/null && \
+      ls $EVTGEN_ROOT/lib64/libEvtGenExternal.so > /dev/null && \
+      ls $EVTGEN_ROOT/lib64/libEvtGen.so > /dev/null && \
       ls $EVTGEN_ROOT/include/EvtGen > /dev/null && \
       ls $EVTGEN_ROOT/include/EvtGenBase > /dev/null && \
       ls $EVTGEN_ROOT/include/EvtGenExternal > /dev/null && \
@@ -217,7 +217,7 @@ overrides:
       ls $PHOTOSPP_ROOT/lib > /dev/null && \
       ls $PHOTOSPP_ROOT/lib/libPhotospp.a > /dev/null && \
       ls $PHOTOSPP_ROOT/lib/libPhotosppHEPEVT.so > /dev/null && \
-      ls $PHOTOSPP_ROOT/lib/libPhotosppHepMC.so > /dev/null && \
+      ls $PHOTOSPP_ROOT/lib/libPhotosppHepMC3.so > /dev/null && \
       ls $PHOTOSPP_ROOT/lib/libPhotospp.so > /dev/null
   Tauolapp:
     version: "%(tag_basename)s"
