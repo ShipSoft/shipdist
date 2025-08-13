@@ -1,6 +1,6 @@
 package: lhapdf
 version: "%(tag_basename)s%(defaults_upper)s"
-tag: lhapdf-6.5.3-snd
+tag: 6.5.3
 source:  https://github.com/SND-LHC/lhapdf
 requires:
  - Python-modules

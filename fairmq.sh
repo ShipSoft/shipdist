@@ -1,11 +1,12 @@
 package: FairMQ
 version: "%(tag_basename)s"
-tag: v1.4.49
+tag: v1.10.0
 source: https://github.com/FairRootGroup/FairMQ
 requires:
  - boost
  - FairLogger
  - ZeroMQ
+ - "DDS:(?!osx)"
  - asiofi
  - asio
 build_requires:
@@ -14,12 +15,12 @@ build_requires:
  - "GCC-Toolchain:(?!osx)"
  - FairCMakeModules
 incremental_recipe: |
-  cmake --build . --target install ${JOBS:+-- -j$JOBS}
+  JOBS=8
+  cmake --build . --target install -j8 #${JOBS:+-- -j$JOBS}
   mkdir -p $INSTALLROOT/etc/modulefiles && rsync -a --delete etc/modulefiles/ $INSTALLROOT/etc/modulefiles
 prepend_path:
-  ROOT_INCLUDE_PATH:
-    - "$FAIRMQ_ROOT/include"
-    - "$FAIRMQ_ROOT/include/fairmq"
+  ROOT_INCLUDE_PATH: "$FAIRMQ_ROOT/include"
+  ROOT_INCLUDE_PATH: "$FAIRMQ_ROOT/include/fairmq"
 ---
 mkdir -p $INSTALLROOT
 
@@ -31,7 +32,7 @@ case $ARCHITECTURE in
   ;;
   *)
     BUILD_OFI=ON
-    if [[ $(printf '%s\n' "1.4.2" "${PKGVERSION:1}" | sort -V | head -n1) != "1.4.2" ]]; then
+    if [[ $(printf '%s\n' "1.10.0" "${PKGVERSION:1}" | sort -V | head -n1) != "1.10.0" ]]; then
       BUILD_OFI=OFF
     fi
   ;;
@@ -44,6 +45,7 @@ cmake $SOURCEDIR                                                 \
       ${BOOST_ROOT:+-DBOOST_ROOT=$BOOST_ROOT}                    \
       ${FAIRLOGGER_ROOT:+-DFAIRLOGGER_ROOT=$FAIRLOGGER_ROOT}     \
       ${ZEROMQ_ROOT:+-DZeroMQ_ROOT=$ZEROMQ_ROOT}                 \
+      ${DDS_ROOT:+-DDDS_ROOT=$DDS_ROOT}                          \
       ${FLATBUFFERS_ROOT:+-DFlatbuffers_ROOT=$FLATBUFFERS_ROOT}  \
       ${ASIOFI_ROOT:+-Dasiofi_ROOT=$ASIOFI_ROOT}                 \
       ${ASIO_ROOT:+-Dasio_ROOT=$ASIO_ROOT}                       \
@@ -51,6 +53,9 @@ cmake $SOURCEDIR                                                 \
       ${OFI_ROOT:+-DOFI_ROOT=$OFI_ROOT}                          \
       ${OFI_ROOT:--DBUILD_OFI_TRANSPORT=OFF}                     \
       -DDISABLE_COLOR=ON                                         \
+      ${DDS_ROOT:+-DBUILD_DDS_PLUGIN=ON}                         \
+      ${DDS_ROOT:+-DBUILD_SDK_COMMANDS=ON}                       \
+      ${DDS_ROOT:+-DBUILD_SDK=ON}                                \
       ${BUILD_OFI:+-DBUILD_OFI_TRANSPORT=ON}                     \
       -DBUILD_EXAMPLES=ON                                        \
       -DBUILD_TESTING=${ALIBUILD_FAIRMQ_TESTS:-OFF}              \
@@ -58,8 +63,8 @@ cmake $SOURCEDIR                                                 \
       -DCMAKE_INSTALL_BINDIR=bin
 # NOTE: FairMQ examples must always be built in RPMs as they are used for
 #       AliECS integration testing. Please do not disable them.
-
-cmake --build . --target install ${JOBS:+-- -j$JOBS}
+JOBS=8
+cmake --build . --target install  ${JOBS:+-- -j$JOBS}
 
 # Tests will not run unless ALIBUILD_FAIRMQ_TESTS is set
 if [[ $ALIBUILD_FAIRMQ_TESTS ]]; then
@@ -83,7 +88,8 @@ module load BASE/1.0                                                            
             ${FAIRLOGGER_REVISION:+FairLogger/$FAIRLOGGER_VERSION-$FAIRLOGGER_REVISION}  \\
             ${ZEROMQ_REVISION:+ZeroMQ/$ZEROMQ_VERSION-$ZEROMQ_REVISION}                  \\
             ${ASIOFI_REVISION:+asiofi/$ASIOFI_VERSION-$ASIOFI_REVISION}                  \\
-            ${ASIO_REVISION:+asio/$ASIO_VERSION-$ASIO_REVISION}
+            ${ASIO_REVISION:+asio/$ASIO_VERSION-$ASIO_REVISION}                          \\
+            ${DDS_REVISION:+DDS/$DDS_VERSION-$DDS_REVISION}
 # Our environment
 set FAIRMQ_ROOT \$::env(BASEDIR)/$PKGNAME/\$version
 prepend-path PATH \$FAIRMQ_ROOT/bin
