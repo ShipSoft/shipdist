@@ -34,13 +34,13 @@ overrides:
       VERSION=$(root-config --version)
       REQUESTED_VERSION=${REQUESTED_VERSION#v}
       REQUESTED_VERSION=${REQUESTED_VERSION//-/.}
-      if [ $(printf "${VERSION}\n${REQUESTED_VERSION}" | sort -V | head -1) != "${VERSION}" ]; then
+      if [ "$(printf '%s\n' "$REQUESTED_VERSION" "VERSION" | sort -V | head -n1)" = "$REQUESTED_VERSION" ]; then 
           echo "ROOT version $VERSION sufficient"
       else
           echo "ROOT version $VERSION insufficient"
           exit 1
       fi
-      FEATURES="builtin_pcre mathmore xml ssl opengl http gdml pythia8 roofit soversion vdt xrootd"
+      FEATURES="builtin_pcre mathmore xml ssl opengl http gdml roofit  vdt xrootd pythia6"
       for FEATURE in $FEATURES; do
           root-config --has-$FEATURE | grep -q yes || { echo "$FEATURE missing"; exit 1; }
       done
@@ -222,7 +222,7 @@ overrides:
   Tauolapp:
     version: "%(tag_basename)s"
     source: https://github.com/ShipSoft/Tauolapp
-    tag: v1.1.5-ship
+    tag: 1.1.8.atlas1
     prefer_system_check: |
       ls "$TAUOLAPP_ROOT"/lib > /dev/null && \
       ls "$TAUOLAPP_ROOT"/etc > /dev/null && \
