@@ -34,7 +34,7 @@ overrides:
       VERSION=$(root-config --version)
       REQUESTED_VERSION=${REQUESTED_VERSION#v}
       REQUESTED_VERSION=${REQUESTED_VERSION//-/.}
-      if [ "$(printf '%s\n' "$REQUESTED_VERSION" "VERSION" | sort -V | head -n1)" = "$REQUESTED_VERSION" ]; then 
+      if [ "$(printf '%s\n' "$REQUESTED_VERSION" "VERSION" | sort -V | head -n1)" = "$REQUESTED_VERSION" ]; then
           echo "ROOT version $VERSION sufficient"
       else
           echo "ROOT version $VERSION insufficient"
