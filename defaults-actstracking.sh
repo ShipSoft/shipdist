@@ -15,14 +15,17 @@ overrides:
       - "GCC-Toolchain:(?!osx)"
       - Python
     prefer_system_check: |
-     printf "#include \"boost/version.hpp\"\n# if (BOOST_VERSION < 107700)\n#error \"Cannot use system's boost. Boost > 1.77.00 required.\"\n#endif\nint main(){}" \
+     printf "#include \"boost/version.hpp\"\n# if (BOOST_VERSION < 107700)\n#error \"Cannot use system's boost. Boost > 1.77.00 required.\" \
+             \n#endif\nint main(){}" \
      | gcc -I$BOOST_ROOT/include -xc++ - -o /dev/null
   GCC-Toolchain:
     tag: v13.2.0-alice1
     prefer_system_check: |
       set -e
       which gfortran || { echo "gfortran missing"; exit 1; }
-      which gcc && test -f $(dirname $(which gcc))/c++ && printf "#define GCCVER ((__GNUC__ * 10000)+(__GNUC_MINOR__ * 100)+(__GNUC_PATCHLEVEL__))\n#if (GCCVER < 130000)\n#error \"System's GCC cannot be used: we need at least GCC $REQUESTED_VERSION We are going to compile our own version.\"\n#endif\n" | gcc -xc++ - -c -o /dev/null
+      which gcc && test -f $(dirname $(which gcc))/c++ && printf "#define GCCVER ((__GNUC__ * 10000)+(__GNUC_MINOR__ * 100)+(__GNUC_PATCHLEVEL__))\n" \ 
+                                                                 "#if (GCCVER < 130000)\n#error \"System's GCC cannot be used: we need at least GCC $REQUESTED_VERSION" \
+                                                                 "We are going to compile our own version.\"\n#endif\n" | gcc -xc++ - -c -o /dev/null
   ROOT:
     prefer_system_check: |
       root-config --version || exit 1
@@ -54,7 +57,8 @@ overrides:
     tag: "release-1-16"
     source: https://github.com/alisw/gsl
     prefer_system_check: |
-      printf "#include \"gsl/gsl_version.h\"\n#define GSL_V GSL_MAJOR_VERSION * 100 + GSL_MINOR_VERSION\n# if (GSL_V < 116)\n#error \"Cannot use system's gsl. Notice we only support versions from 1.16 (included)\"\n#endif\nint main(){}"\
+      printf "#include \"gsl/gsl_version.h\"\n#define GSL_V GSL_MAJOR_VERSION * 100 + GSL_MINOR_VERSION\n# if (GSL_V < 116)\n#error \"Cannot use system's gsl." \
+             "Notice we only support versions from 1.16 (included)\"\n#endif\nint main(){}"\
        | gcc  -I"$GSL_ROOT/include" -xc++ - -o /dev/null
   protobuf:
     version: "%(tag_basename)s"
@@ -74,19 +78,19 @@ overrides:
     tag: pythia_update
     source: https://github.com/webbjm/FairShip
     requires:
-     - generators
-     - simulation
-     - FairRoot
-     - FairLogger
-     - GENIE
-     - GenFit
-     - GEANT4
-     - PHOTOSPP
-     - EvtGen
-     - ROOT
-     - VMC
-     - acts
-     - HepMC3
+      - generators
+      - simulation
+      - FairRoot
+      - FairLogger
+      - GENIE
+      - GenFit
+      - GEANT4
+      - PHOTOSPP
+      - EvtGen
+      - ROOT
+      - VMC
+      - acts
+      - HepMC3
   FairMQ:
     version: "%(tag_basename)s"
     tag: "v1.4.38"
@@ -122,20 +126,20 @@ overrides:
       - opengl
       - XercesC
     env:
-     G4INSTALL : $GEANT4_ROOT
-     G4DATASEARCHOPT : "-mindepth 2 -maxdepth 4 -type d -wholename"
-     G4ABLADATA : "`find ${G4INSTALL} $G4DATASEARCHOPT '*data*G4ABLA*'`"  ## v10.4.px only
-     G4ENSDFSTATEDATA : "`find ${G4INSTALL} $G4DATASEARCHOPT '*data*G4ENSDFSTATE*'`"
-     G4INCLDATA : "`find ${G4INSTALL} $G4DATASEARCHOPT '*data*G4INCL*'`"  ## v10.5.px only
-     G4LEDATA : "`find ${G4INSTALL} $G4DATASEARCHOPT '*data*G4EMLOW*'`"
-     G4LEVELGAMMADATA : "`find ${G4INSTALL} $G4DATASEARCHOPT '*data*PhotonEvaporation*'`"
-     G4NEUTRONHPDATA : "`find ${G4INSTALL} $G4DATASEARCHOPT '*data*G4NDL*'`"
-     G4NEUTRONXSDATA : "`find ${G4INSTALL} $G4DATASEARCHOPT '*data*G4NEUTRONXS*'`"   ## v10.4.px only
-     G4PARTICLEXSDATA : "`find ${G4INSTALL} $G4DATASEARCHOPT '*data*G4PARTICLEXS*'`"   ## v10.5.px only
-     G4PIIDATA : "`find ${G4INSTALL} $G4DATASEARCHOPT '*data*G4PII*'`"
-     G4RADIOACTIVEDATA : "`find ${G4INSTALL} $G4DATASEARCHOPT '*data*RadioactiveDecay*'`"
-     G4REALSURFACEDATA : "`find ${G4INSTALL} $G4DATASEARCHOPT '*data*RealSurface*'`"
-     G4SAIDXSDATA : "`find ${G4INSTALL} $G4DATASEARCHOPT  '*data*G4SAIDDATA*'`"
+      G4INSTALL: $GEANT4_ROOT
+      G4DATASEARCHOPT: "-mindepth 2 -maxdepth 4 -type d -wholename"
+      G4ABLADATA: "`find ${G4INSTALL} $G4DATASEARCHOPT '*data*G4ABLA*'`"  ## v10.4.px only
+      G4ENSDFSTATEDATA: "`find ${G4INSTALL} $G4DATASEARCHOPT '*data*G4ENSDFSTATE*'`"
+      G4INCLDATA: "`find ${G4INSTALL} $G4DATASEARCHOPT '*data*G4INCL*'`"  ## v10.5.px only
+      G4LEDATA: "`find ${G4INSTALL} $G4DATASEARCHOPT '*data*G4EMLOW*'`"
+      G4LEVELGAMMADATA: "`find ${G4INSTALL} $G4DATASEARCHOPT '*data*PhotonEvaporation*'`"
+      G4NEUTRONHPDATA: "`find ${G4INSTALL} $G4DATASEARCHOPT '*data*G4NDL*'`"
+      G4NEUTRONXSDATA: "`find ${G4INSTALL} $G4DATASEARCHOPT '*data*G4NEUTRONXS*'`"   ## v10.4.px only
+      G4PARTICLEXSDATA: "`find ${G4INSTALL} $G4DATASEARCHOPT '*data*G4PARTICLEXS*'`"   ## v10.5.px only
+      G4PIIDATA: "`find ${G4INSTALL} $G4DATASEARCHOPT '*data*G4PII*'`"
+      G4RADIOACTIVEDATA: "`find ${G4INSTALL} $G4DATASEARCHOPT '*data*RadioactiveDecay*'`"
+      G4REALSURFACEDATA: "`find ${G4INSTALL} $G4DATASEARCHOPT '*data*RealSurface*'`"
+      G4SAIDXSDATA: "`find ${G4INSTALL} $G4DATASEARCHOPT  '*data*G4SAIDDATA*'`"
   GEANT4_VMC:
     version: "%(tag_basename)s"
     tag: v6-1-p1

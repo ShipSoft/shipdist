@@ -39,22 +39,9 @@ MODULEDIR="$INSTALLROOT/etc/modulefiles"
 MODULEFILE="$MODULEDIR/$PKGNAME"
 mkdir -p "$MODULEDIR"
 alibuild-generate-module --bin --lib > "${MODULEFILE}"
-cat > "$MODULEFILE" <<EoF
-#%Module1.0
-proc ModulesHelp { } {
-  global version
-  puts stderr "ALICE Modulefile for $PKGNAME $PKGVERSION-@@PKGREVISION@$PKGHASH@@"
-}
-set version $PKGVERSION-@@PKGREVISION@$PKGHASH@@
-module-whatis "ALICE Modulefile for $PKGNAME $PKGVERSION-@@PKGREVISION@$PKGHASH@@"
-# Dependencies
-if ![ is-loaded 'BASE/1.0' ] {
- module load BASE/1.0
-}
 
-if ![ is-loaded "ROOT/$ROOT_VERSION-$ROOT_REVISION" ] { module load "ROOT/$ROOT_VERSION-$ROOT_REVISION"}
+cat > "$MODULEFILE" <<EoF
 set ACTS_ROOT \$::env(BASEDIR)/$PKGNAME/\$version
 prepend-path LD_LIBRARY_PATH \$ACTS_ROOT/lib
 prepend-path ROOT_INCLUDE_PATH \$ACTS_ROOT/include
-$([[ ${ARCHITECTURE:0:3} == osx ]] && echo "prepend-path DYLD_LIBRARY_PATH \$::env(ACTS_ROOT)/lib")
 EoF
