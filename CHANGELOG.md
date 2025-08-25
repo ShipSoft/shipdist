@@ -21,15 +21,15 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 
 ### Fixed
 
-* ROOT: Disabled davix to resolve build issues 
+* ROOT: Disabled davix to resolve build issues
 
 ### Changed
 
 * Python-modules-list: Updated pip to v25.0.1
-* Python-modules-list: Added pybind11 v2.13.6 
+* Python-modules-list: Added pybind11 v2.13.6
 * EvtGen: Added cmake build instructions required for R02-02-00
 * Fairship: Added build option to include acts (if found)
-* Fairship: Added acts and hepmc3 as dependency modules 
+* Fairship: Added acts and hepmc3 as dependency modules
 * gcc-toolchain: Disabled gprofng in binutil config
 * gcc-toolchain: Rebuild mpfr, gmp to be used with gdb
 
