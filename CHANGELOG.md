@@ -10,6 +10,16 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 
 ### Added
 
+### Fixed
+
+### Changed
+
+## [25.08](https://github.com/ShipSoft/shipdist/tree/25.08)
+
+Maintenance release with several fixes and no major version upgrades.
+
+### Added
+
 * Readd support for GEANT3, to allow using upstream FairRoot
 
 ### Fixed
