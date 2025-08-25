@@ -10,7 +10,6 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 
 ### Added
 
-
 * ACTS: Standalone recipe for new tracking framework
 * HEPMC3: Recipe, required dependency for ACTS
 * EIGEN3: Recipe, required dependency for ACTS
@@ -19,6 +18,17 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
   GEANT4: v10.7.3 -> v11.1.3, GEANT4VMC: v5-4 -> v6-1-p1, VMC: v1-1-p1 -> v2-0, pythia: v8230-ship -> v8311,
   vgm: v5-2, evtGen: R01-06-00-ship -> R02-02-00-alice2, boost: 1.75.0 -> 1.83.0, gcc: 11.5.0 -> 13.2.0,
   flatbuffers: v1.11.0 -> v2.0.8
+
+### Fixed
+
+### Changed
+
+## [25.08](https://github.com/ShipSoft/shipdist/tree/25.08)
+
+Maintenance release with several fixes and no major version upgrades.
+
+### Added
+
 * Readd support for GEANT3, to allow using upstream FairRoot
 
 
