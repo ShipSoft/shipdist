@@ -1,6 +1,5 @@
 package: Configuration
 requires:
-  - curl
   - boost
   - "GCC-Toolchain:(?!osx)"
   - protobuf

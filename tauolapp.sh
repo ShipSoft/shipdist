@@ -1,7 +1,7 @@
 package: Tauolapp
 version: "%(tag_basename)s-ship%(defaults_upper)s"
 source: https://github.com/ShipSoft/Tauolapp
-tag: v1.1.5
+tag: 1.1.8.atlas1
 requires:
   - HepMC
   - ROOT
