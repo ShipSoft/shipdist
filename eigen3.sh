@@ -12,8 +12,8 @@ MODULEFILE="$MODULEDIR/$PKGNAME"
 mkdir -p "$MODULEDIR"
 alibuild-generate-module --bin --lib > "${MODULEFILE}"
 
-cmake $SOURCEDIR -DCMAKE_INSTALL_PREFIX=$INSTALLROOT       \
-                 -DCMAKE_BUILD_TYPE=$CMAKE_BUILD_TYPE      \
+cmake "$SOURCEDIR" -DCMAKE_INSTALL_PREFIX="$INSTALLROOT"       \
+                 -DCMAKE_BUILD_TYPE="$CMAKE_BUILD_TYPE"      \
                  -DCMAKE_SKIP_RPATH=TRUE
 cmake --build . -- ${JOBS:+-j$JOBS} install
 
