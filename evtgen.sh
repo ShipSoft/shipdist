@@ -16,7 +16,6 @@ export  HEPMCLOCATION="$HEPMC_ROOT"
 
 rsync -a $SOURCEDIR/* .
 
-<<<<<<< HEAD
 if [[ $CMAKE_CXX_STANDARD = 20 ]]; then
     cmake $SOURCEDIR -DCMAKE_INSTALL_PREFIX=$INSTALLROOT \
           -DCMAKE_INSTALL_LIBDIR=lib \

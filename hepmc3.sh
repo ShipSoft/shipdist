@@ -9,7 +9,7 @@ build_requires:
   - GCC-Toolchain:(?!osx.*)
   - alibuild-recipe-tools
 env:
-  "HEPMC3": $HEPMC3_ROOT
+  "HEPMC3": "$HEPMC3_ROOT"
 prepend_path:
   "ROOT_INCLUDE_PATH": "$HEPMC3_ROOT/include"
 ---
@@ -19,10 +19,10 @@ MODULEFILE="$MODULEDIR/$PKGNAME"
 mkdir -p "$MODULEDIR"
 alibuild-generate-module --bin --lib > "${MODULEFILE}"
 
-cmake  $SOURCEDIR                           \
-       -DCMAKE_INSTALL_PREFIX=$INSTALLROOT  \
+cmake  "$SOURCEDIR"                           \
+       -DCMAKE_INSTALL_PREFIX="$INSTALLROOT"  \
        -DCMAKE_INSTALL_LIBDIR=lib           \
-       -DROOT_DIR=$ROOT_ROOT
+       -DROOT_DIR="$ROOT_ROOT"
 
 make ${JOBS+-j $JOBS}
 make install
