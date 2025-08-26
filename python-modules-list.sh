@@ -2,7 +2,7 @@ package: Python-modules-list
 version: "1.0"
 env:
   PIP_BASE_REQUIREMENTS: |
-    pip==21.3.1
+    pip==25.0.1
     setuptools==59.6.0
     wheel==0.37.1
   PIP_REQUIREMENTS: |
@@ -127,6 +127,7 @@ env:
     dryable==1.0.5
     responses==0.10.6
     pandas==1.5.3
+    pybind11==2.13.6
 build_requires:
   - alibuild-recipe-tools
 ---
