@@ -44,6 +44,7 @@ case $ARCHITECTURE in
     . "$PYTHON_MODULES_INSTALLROOT/bin/activate" ;;
 esac
 
+python3 -m pip install setuptools
 # Major.minor version of Python
 pyver="$(python3 -c 'import distutils.sysconfig; print(distutils.sysconfig.get_python_version())')"
 
