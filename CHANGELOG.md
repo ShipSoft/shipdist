@@ -34,6 +34,7 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 * gcc-toolchain: Disabled gprofng in binutil config
 * gcc-toolchain: Rebuild mpfr, gmp to be used with gdb
 * FairLogger: Update to 2.3.0
+* alibuild-recipe-tools: Update to 0.2.5
 
 ## [25.08](https://github.com/ShipSoft/shipdist/tree/25.08)
 
