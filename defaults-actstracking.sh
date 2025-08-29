@@ -95,13 +95,11 @@ overrides:
       ls $FAIRMQ_ROOT/lib > /dev/null && \
       ls $FAIRMQ_ROOT/include > /dev/null
   FairLogger:
-    version: "%(tag_basename)s"
-    tag: "v1.9.0"
     prefer_system_check: |
       ls $FAIRLOGGER_ROOT/ > /dev/null && \
       ls $FAIRLOGGER_ROOT/lib > /dev/null && \
       ls $FAIRLOGGER_ROOT/include/fairlogger > /dev/null && \
-      grep 1.9.0 $FAIRLOGGER_ROOT/include/fairlogger/Version.h
+      grep $REQUESTED_VERSION $FAIRLOGGER_ROOT/include/fairlogger/Version.h
   flatbuffers:
     version: v2.0.8
   GEANT4:
