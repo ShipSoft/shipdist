@@ -1,6 +1,6 @@
 package: XRootD
 version: "%(tag_basename)s"
-tag: "v5.7.1"
+tag: "v5.6.3"
 source: https://github.com/xrootd/xrootd
 requires:
   - "OpenSSL:(?!osx)"
@@ -14,7 +14,7 @@ build_requires:
   - UUID
   - alibuild-recipe-tools
 prepend_path:
-  PYTHONPATH: "${XROOTD_ROOT}/lib/python/site-packages"
+  PYTHONPATH: "${XROOTD_ROOT}/lib/python3.9/site-packages"
 prefer_system_check: |
     VERSION=$(xrootd-config --version)
     REQUESTED_VERSION=${REQUESTED_VERSION#v}

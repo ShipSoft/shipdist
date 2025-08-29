@@ -1,7 +1,6 @@
 package: dim
 version: "v20r20"
 build_requires:
-  - curl
   - "GCC-Toolchain:(?!osx)"
   - motif
 ---

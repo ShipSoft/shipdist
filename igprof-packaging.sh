@@ -14,21 +14,21 @@ tar xzf /sw/TARS/$ARCHITECTURE/libatomic_ops/libatomic_ops-$LIBATOMIC_OPS_VERSIO
 RPM_LIBATOMIC_OPS_VERSION=`echo $LIBATOMIC_OPS_VERSION | tr - _`
 
 case $ARCHITECTURE in
-  ubuntu*) 
+  ubuntu*)
     RPM_LIBATOMIC_OPS_VERSION=$LIBATOMIC_OPS_VERSION
     RPM_LIBATOMIC_OPS_NAME=libatomic-ops
-    PACKAGE_FORMAT=deb 
+    PACKAGE_FORMAT=deb
     ARCH_SEP=_
     VERSION_SEP=_
     RPM_ARCH=amd64
     apt-get install -y python-requests ruby-dev
     gem install --no-ri --no-rdoc fpm
   ;;
-  *) 
+  *)
     RPM_LIBATOMIC_OPS_VERSION=`echo $LIBATOMIC_OPS_VERSION | tr - _`
     RPM_LIBUNWIND_VERSION=`echo $LIBUNWIND_VERSION | tr - _`
     RPM_LIBATOMIC_OPS_NAME=libatomic_ops
-    PACKAGE_FORMAT=rpm 
+    PACKAGE_FORMAT=rpm
     ARCH_SEP=.
     VERSION_SEP=-
     RPM_ARCH=x86_64

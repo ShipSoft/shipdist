@@ -2,18 +2,18 @@ package: Python-modules-list
 version: "1.0"
 env:
   PIP_BASE_REQUIREMENTS: |
-    pip==21.3.1
-    setuptools==59.6.0
+    pip==23.3.1
+    setuptools==57.1.0
     wheel==0.37.1
   PIP_REQUIREMENTS: |
-    requests==2.27.1
-    ipykernel==5.1.0
-    ipython==7.4.0
-    ipywidgets==7.4.2
-    metakernel==0.20.14
-    mock==2.0.0
-    notebook==5.7.8
-    scons==4.1.0
+    requests==2.31.0
+    ipykernel==6.0.2
+    ipython==7.25.0
+    ipywidgets==7.6.3
+    metakernel==0.24.2
+    mock==3.0.5
+    notebook==6.4.0
+    scons==4.6.0
   PIP36_REQUIREMENTS: |
     PyYAML==6.0.1
     psutil==5.8.0
@@ -49,18 +49,18 @@ env:
   PIP39_REQUIREMENTS: |
     PyYAML==6.0.1
     psutil==5.8.0
-    uproot==4.1.0
-    numpy==1.21.6
-    scipy==1.7.3
-    Cython==0.29.21
-    seaborn==0.11.0
-    scikit-learn==0.24.1
-    sklearn-evaluation==0.5.2
-    Keras==2.4.3
-    xgboost==1.2.0
+    uproot==4.3.7
+    numpy==1.23.5
+    scipy==1.11.3
+    Cython==0.29.33
+    seaborn==0.11.2
+    scikit-learn==1.2.2
+    sklearn-evaluation==0.12.2
+    Keras==2.13.1
+    xgboost==2.0.2
     dryable==1.0.5
     responses==0.10.6
-    pandas==1.1.5
+    pandas==1.5.3
     future
   "PIP39_REQUIREMENTS_ubuntu2110_x86_64": |
     PyYAML==6.0.1
@@ -91,7 +91,7 @@ env:
     Cython==0.29.21
     seaborn==0.11.0
     scikit-learn==1.2.2
-    sklearn-evaluation==0.12.0
+    sklearn-evaluation==0.12.2
     Keras==2.13.1
     xgboost==1.7.5
     dryable==1.0.5
@@ -127,6 +127,26 @@ env:
     dryable==1.0.5
     responses==0.10.6
     pandas==1.5.3
+  PIP312_REQUIREMENTS: |
+    PyYAML==6.0.2
+    psutil==5.9.8
+    uproot==5.6.0
+    numpy==2.1.3
+    scipy==1.15.3
+    Cython==3.0.12
+    seaborn==0.13.2
+    scikit-learn==1.5.2
+    sklearn-evaluation==0.12.0
+    Keras==3.7.0
+    xgboost==2.1.3
+    dryable==1.0.5
+    responses==0.10.6
+    pandas==2.2.3
+    dask[array,dataframe,distributed]==2025.2.0
+    dask_jobqueue==0.9.0
+
+    gnureadline
+
 build_requires:
   - alibuild-recipe-tools
 ---

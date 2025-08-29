@@ -1,6 +1,6 @@
 package: FairMQ
 version: "%(tag_basename)s"
-tag: v1.4.49
+tag: v1.10.0
 source: https://github.com/FairRootGroup/FairMQ
 requires:
  - boost
@@ -31,7 +31,7 @@ case $ARCHITECTURE in
   ;;
   *)
     BUILD_OFI=ON
-    if [[ $(printf '%s\n' "1.4.2" "${PKGVERSION:1}" | sort -V | head -n1) != "1.4.2" ]]; then
+    if [[ $(printf '%s\n' "1.10.0" "${PKGVERSION:1}" | sort -V | head -n1) != "1.10.0" ]]; then
       BUILD_OFI=OFF
     fi
   ;;

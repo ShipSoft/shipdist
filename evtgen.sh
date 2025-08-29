@@ -1,7 +1,7 @@
 package: EvtGen
 version: "%(tag_basename)s-ship%(defaults_upper)s"
-source: https://github.com/ShipSoft/evtgen
-tag: fairshipdev
+source: https://github.com/alisw/EVTGEN/ # https://github.com/ShipSoft/evtgen
+tag: R02-02-00-alice2
 requires:
   - HepMC
   - pythia
@@ -16,10 +16,17 @@ export  HEPMCLOCATION="$HEPMC_ROOT"
 
 rsync -a $SOURCEDIR/* .
 
-./configure --hepmcdir=$HEPMC_ROOT --pythiadir=$PYTHIA_ROOT --tauoladir=$TAUOLAPP_ROOT --photosdir=$PHOTOSPP_ROOT --prefix=$INSTALLROOT CFLAGS="$CFLAGS" CXXFLAGS="$CXXFLAGS" 
-
-make 
-make install
+cmake $SOURCEDIR -DCMAKE_INSTALL_PREFIX=$INSTALLROOT \
+      -DCMAKE_INSTALL_LIBDIR=lib \
+      -DEVTGEN_HEPMC3=OFF \
+      -DHEPMC2_ROOT_DIR=$HEPMC_ROOT \
+      -DEVTGEN_PYTHIA=ON \
+      -DPYTHIA8_ROOT_DIR=$PYTHIA_ROOT \
+      -DEVTGEN_PHOTOS=ON \
+      -DPHOTOSPP_ROOT_DIR=$PHOTOS_ROOT \
+      -DEVTGEN_TAUOLA=ON \
+      -DTAUOLAPP_ROOT_DIR=$TAUOLA_ROOT
+make ${JOBS:+-j$JOBS} install
 
 # Modulefile
 MODULEDIR="$INSTALLROOT/etc/modulefiles"

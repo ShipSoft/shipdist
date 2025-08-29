@@ -7,9 +7,11 @@ requires:
   - simulation
   - FairRoot
   - FairLogger
+  - apfel
   - GENIE
   - GenFit
   - GEANT4
+  - vgm
   - PHOTOSPP
   - EvtGen
   - ROOT
@@ -100,13 +102,13 @@ cmake $SOURCEDIR                                                 \
       -DHEPMC_DIR=$HEPMC_ROOT                                    \
       -DHEPMC_INCLUDE_DIR=$HEPMC_ROOT/include/HepMC              \
       -DEVTGEN_INCLUDE_DIR=$EVTGEN_ROOT/include                  \
-      -DEVTGEN_LIBRARY_DIR=$EVTGEN_ROOT/lib                      \
+      -DEVTGEN_LIBRARY_DIR=$EVTGEN_ROOT/lib64                      \
       ${PYTHON_ROOT:+-DPYTHON_LIBRARY=$PYTHON_ROOT/lib}          \
       ${PYTHON_ROOT:+-DPYTHON_INCLUDE_DIR=$PYTHON_ROOT/include/python3.6m/} \
       -DPYTHIA8_DIR=$PYTHIA_ROOT                                 \
       -DPYTHIA8_INCLUDE_DIR=$PYTHIA_ROOT/include                 \
-      -DGEANT4_ROOT=$GEANT4_ROOT                                 \
-      -DGEANT4_INCLUDE_DIR=$GEANT4_ROOT/include/Geant4           \
+      -DGEANT4_ROOT=$Geant4_DIR                                 \
+      -DGEANT4_INCLUDE_DIR=$Geant4_INC_DIR/Geant4           \
       -DGEANT4_VMC_INCLUDE_DIR=$GEANT4_VMC_ROOT/include/geant4vmc \
       ${CMAKE_VERBOSE_MAKEFILE:+-DCMAKE_VERBOSE_MAKEFILE=ON}     \
       ${BOOST_ROOT:+-DBOOST_ROOT=$BOOST_ROOT}                    \
@@ -156,7 +158,7 @@ prepend-path ROOT_INCLUDE_PATH \$::env(FAIRSHIP_ROOT)/include
 append-path ROOT_INCLUDE_PATH \$::env(GEANT4_ROOT)/include
 append-path ROOT_INCLUDE_PATH \$::env(GEANT4_ROOT)/include/Geant4
 append-path ROOT_INCLUDE_PATH \$::env(PYTHIA_ROOT)/include
-append-path ROOT_INCLUDE_PATH \$::env(PYTHIA_ROOT)/include/Pythia8
+append-path ROOT_INCLUDE_PATH \$::env(PYTHIA_ROOT)/include/Pythia8Plugins
 append-path ROOT_INCLUDE_PATH \$::env(GEANT4_VMC_ROOT)/include
 append-path ROOT_INCLUDE_PATH \$::env(GEANT4_VMC_ROOT)/include/geant4vmc
 prepend-path PYTHONPATH \$::env(FAIRSHIP_ROOT)/python

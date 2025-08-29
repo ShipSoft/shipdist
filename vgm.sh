@@ -1,7 +1,7 @@
 package: vgm
 version: "%(tag_basename)s%(defaults_upper)s"
-tag: "4.3-alice1"
-source: https://github.com/alisw/vgm.git
+tag: "v5-3-1"
+source: https://github.com/vmc-project/vgm.git
 requires:
   - ROOT
   - GEANT4
@@ -9,6 +9,7 @@ requires:
 build_requires:
   - CMake
 ---
+Geant4_DIR=/cvmfs/sft.cern.ch/lcg/releases/Geant4/11.2.0-52c79/x86_64-el9-gcc12-opt/lib64/cmake/Geant4/
 #!/bin/bash -e
 cmake "$SOURCEDIR" \
   -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} \
@@ -16,8 +17,11 @@ cmake "$SOURCEDIR" \
   -DCMAKE_INSTALL_PREFIX="$INSTALLROOT"  \
   -DWITH_EXAMPLES=OFF                \
   -DWITH_TEST=OFF                     \
-  -DBUILD_SHARED_LIBS=OFF
+  -DBUILD_SHARED_LIBS=OFF \
+  -DGeant4_DIR=/cvmfs/sft.cern.ch/lcg/releases/Geant4/11.2.0-52c79/x86_64-el9-gcc12-opt/lib64/cmake/Geant4/ \
+  -DCLHEP_DIR=/cvmfs/sft.cern.ch/lcg/releases/clhep/2.4.7.1-b7a7d/x86_64-el9-gcc12-opt/
 
+Geant4_DIR=/cvmfs/sft.cern.ch/lcg/releases/Geant4/11.2.0-52c79/x86_64-el9-gcc12-opt/lib64/Geant4-11.2.0/Linux-g++/cmake/Geant4/
 make ${JOBS+-j $JOBS} install
 
 # Modulefile

@@ -19,7 +19,7 @@ overrides:
     tag: "v1.70.0"
     requires:
       - "GCC-Toolchain:(?!osx)"
-      - Python
+      - Pytho64n
     prefer_system_check: |
      printf "#include \"boost/version.hpp\"\n# if (BOOST_VERSION < 106400)\n#error \"Cannot use system's boost. Boost > 1.64.00 required.\"\n#endif\nint main(){}" \
      | gcc -I$BOOST_ROOT/include -xc++ - -o /dev/null
@@ -34,13 +34,13 @@ overrides:
       VERSION=$(root-config --version)
       REQUESTED_VERSION=${REQUESTED_VERSION#v}
       REQUESTED_VERSION=${REQUESTED_VERSION//-/.}
-      if [ $(printf "${VERSION}\n${REQUESTED_VERSION}" | sort -V | head -1) != "${VERSION}" ]; then
+      if [ "$(printf '%s\n' "$REQUESTED_VERSION" "VERSION" | sort -V | head -n1)" = "$REQUESTED_VERSION" ]; then
           echo "ROOT version $VERSION sufficient"
       else
           echo "ROOT version $VERSION insufficient"
           exit 1
       fi
-      FEATURES="builtin_pcre mathmore xml ssl opengl http gdml pythia8 roofit soversion vdt xrootd"
+      FEATURES="builtin_pcre mathmore xml ssl opengl http gdml roofit  vdt xrootd pythia6"
       for FEATURE in $FEATURES; do
           root-config --has-$FEATURE | grep -q yes || { echo "$FEATURE missing"; exit 1; }
       done
@@ -65,17 +65,17 @@ overrides:
       ls $FAIRROOT_ROOT/ > /dev/null && \
       ls $FAIRROOT_ROOT/lib > /dev/null && \
       ls $FAIRROOT_ROOT/include > /dev/null && \
-      grep v18.6.10 $FAIRROOT_ROOT/include/FairVersion.h
+      grep v19.0.0 $FAIRROOT_ROOT/include/FairVersion.h
   FairMQ:
     version: "%(tag_basename)s"
-    tag: "v1.4.38"
+    tag: "v1.10.0"
     prefer_system_check: |
       ls $FAIRMQ_ROOT/ > /dev/null && \
       ls $FAIRMQ_ROOT/lib > /dev/null && \
       ls $FAIRMQ_ROOT/include > /dev/null && \
   FairLogger:
     version: "%(tag_basename)s"
-    tag: "v1.9.0"
+    tag: "v2.2.0"
     prefer_system_check: |
       ls $FAIRLOGGER_ROOT/ > /dev/null && \
       ls $FAIRLOGGER_ROOT/lib > /dev/null && \
@@ -121,7 +121,7 @@ overrides:
      G4SAIDXSDATA : "`find ${G4INSTALL} $G4DATASEARCHOPT  '*data*G4SAIDDATA*'`"
   GEANT4_VMC:
     version: "%(tag_basename)s"
-    tag: v5-4
+    tag: v6-6-p3
     prefer_system_check: |
       ls $GEANT4_VMC_ROOT/bin > /dev/null && \
       ls $GEANT4_VMC_ROOT/lib/libg4root.so > /dev/null && \
@@ -133,7 +133,7 @@ overrides:
       true
   VMC:
     version: "%(tag_basename)s"
-    tag: v1-1-p1
+    tag: v2-0
     prefer_system_check: |
       ls $VMC_ROOT/include > /dev/null && \
       true
@@ -199,13 +199,13 @@ overrides:
     tag: "4.4"
   evtGen:
     version: "%(tag_basename)s"
-    source: https://github.com/ShipSoft/evtgen
-    tag: R01-06-00-ship
+    source:  https://github.com/alisw/EVTGEN # https://github.com/ShipSoft/evtgen
+    tag: R02-02-00-alice2
     prefer_system_check: |
       ls $EVTGEN_ROOT/include > /dev/null && \
-      ls $EVTGEN_ROOT/lib > /dev/null && \
-      ls $EVTGEN_ROOT/lib/libEvtGenExternal.so > /dev/null && \
-      ls $EVTGEN_ROOT/lib/libEvtGen.so > /dev/null && \
+      ls $EVTGEN_ROOT/lib64 > /dev/null && \
+      ls $EVTGEN_ROOT/lib64/libEvtGenExternal.so > /dev/null && \
+      ls $EVTGEN_ROOT/lib64/libEvtGen.so > /dev/null && \
       ls $EVTGEN_ROOT/include/EvtGen > /dev/null && \
       ls $EVTGEN_ROOT/include/EvtGenBase > /dev/null && \
       ls $EVTGEN_ROOT/include/EvtGenExternal > /dev/null && \
@@ -217,12 +217,12 @@ overrides:
       ls $PHOTOSPP_ROOT/lib > /dev/null && \
       ls $PHOTOSPP_ROOT/lib/libPhotospp.a > /dev/null && \
       ls $PHOTOSPP_ROOT/lib/libPhotosppHEPEVT.so > /dev/null && \
-      ls $PHOTOSPP_ROOT/lib/libPhotosppHepMC.so > /dev/null && \
+      ls $PHOTOSPP_ROOT/lib/libPhotosppHepMC3.so > /dev/null && \
       ls $PHOTOSPP_ROOT/lib/libPhotospp.so > /dev/null
   Tauolapp:
     version: "%(tag_basename)s"
     source: https://github.com/ShipSoft/Tauolapp
-    tag: v1.1.5-ship
+    tag: 1.1.8.atlas1
     prefer_system_check: |
       ls "$TAUOLAPP_ROOT"/lib > /dev/null && \
       ls "$TAUOLAPP_ROOT"/etc > /dev/null && \

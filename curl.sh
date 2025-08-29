@@ -1,10 +1,29 @@
 package: curl
-version: "1.0"
-system_requirement_missing: |
-  curl and its development package are missing from your system.
-   * RHEL-compatible systems: you will probably need "curl" and "curl-devel" packages.
-   * Ubuntu-compatible systems: you will probably need "curl" and "libcurl4-openssl-dev" (or "libcurl4-gnutls-dev").
-system_requirement: ".*"
-system_requirement_check: |
-  curl --version > /dev/null; if test $? = 127; then exit 1; else printf "#include <curl/curl.h>\nint main() {}\n" | cc -xc -lcurl - -o /dev/null || exit 2; fi; exit 0
+version: "7.76.1"
+tag: curl-7_76_1
+source: https://github.com/curl/curl.git
+build_requires:
+  - "OpenSSL:(?!osx)"
+  - alibuild-recipe-tools
 ---
+#!/bin/bash -e
+
+if [[ $ARCHITECTURE = osx* ]]; then
+  OPENSSL_ROOT=$(brew --prefix openssl@3)
+else
+  ${OPENSSL_ROOT:+env LDFLAGS=-Wl,-R$OPENSSL_ROOT/lib}
+fi
+rsync -a --chmod=ug=rwX  --delete --exclude="**/.git" --delete-excluded $SOURCEDIR/ .
+
+sed -i.deleteme 's/CPPFLAGS="$CPPFLAGS $SSL_CPPFLAGS"/CPPFLAGS="$SSL_CPPFLAGS $CPPFLAGS"/' configure.ac
+sed -i.deleteme 's/LDFLAGS="$LDFLAGS $SSL_LDFLAGS"/LDFLAGS="$SSL_LDFLAGS $LDFLAGS"/' configure.ac
+
+./buildconf
+./configure --prefix=$INSTALLROOT --disable-ldap ${OPENSSL_ROOT:+--with-ssl=$OPENSSL_ROOT} --disable-static
+make ${JOBS:+-j$JOBS}
+make install
+
+# Modulefile
+mkdir -p etc/modulefiles
+alibuild-generate-module --bin --lib > etc/modulefiles/$PKGNAME
+mkdir -p $INSTALLROOT/etc/modulefiles && rsync -a --delete etc/modulefiles/ $INSTALLROOT/etc/modulefiles

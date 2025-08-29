@@ -1,7 +1,6 @@
 package: Monitoring
 requires:
   - Configuration
-  - curl
   - boost
   - "GCC-Toolchain:(?!osx)"
   - ApMon-CPP
