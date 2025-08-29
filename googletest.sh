@@ -1,7 +1,7 @@
 package: googletest
-version: "1.8.0"
+version: "1.17.0"
 source: https://github.com/google/googletest
-tag: release-1.8.0
+tag: v1.17.0
 build_requires:
  - "GCC-Toolchain:(?!osx)"
  - CMake
