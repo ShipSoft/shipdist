@@ -22,6 +22,7 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 ### Fixed
 
 * ROOT: Disabled davix to resolve build issues
+* FairRoot: Add missing GEANT3 dependency
 
 ### Changed
 
