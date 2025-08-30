@@ -42,6 +42,7 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 * lhapdf: Switch to upstream, update to 6.5.5
 * Xerces-C: Update to 3.3.0
 * flatbuffers: Update to 25.2.10
+* XRootD: Update to 5.8.4
 
 ## [25.08](https://github.com/ShipSoft/shipdist/tree/25.08)
 
