@@ -1,7 +1,7 @@
 package: lhapdf
 version: "%(tag_basename)s%(defaults_upper)s"
-tag: lhapdf-6.5.3-snd
-source:  https://github.com/SND-LHC/lhapdf
+tag: lhapdf-6.5.5
+source:  https://gitlab.com/hepcedar/lhapdf
 requires:
  - Python-modules
  - "Python:slc.*"

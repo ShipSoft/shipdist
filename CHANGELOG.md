@@ -39,6 +39,7 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 * alibuild-recipe-tools: Update to 0.2.5
 * googletest: Update to 1.17.0
 * fmt: Update to 11.2.0
+* lhapdf: Switch to upstream, update to 6.5.5
 
 ## [25.08](https://github.com/ShipSoft/shipdist/tree/25.08)
 
