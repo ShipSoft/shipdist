@@ -43,6 +43,12 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 * Xerces-C: Update to 3.3.0
 * flatbuffers: Update to 25.2.10
 * XRootD: Update to 5.8.4
+* boost: Updated from version 1.70.0 to version 1.74.0
+* Geant4: Updated from version 10.7.3 to version 11.3.0
+* VMC: Updated from version 1.1-p1 to version 2.1
+* GEANT4_VMC: Updated from version 5-4 to 6-7
+* VGM: Updated from version 4.9 to 5.1
+* FairShip: provide path to python libraries from sysconfig, instead of $PYTHON_ROOT
 
 ## [25.08](https://github.com/ShipSoft/shipdist/tree/25.08)
 
