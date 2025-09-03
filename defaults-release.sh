@@ -191,9 +191,6 @@ overrides:
       ls $VGM_ROOT/lib/libRootGM.a > /dev/null && \
       ls $VGM_ROOT/lib/libXmlVGM.a > /dev/null
   evtGen:
-    version: "%(tag_basename)s"
-    source: https://github.com/ShipSoft/evtgen
-    tag: R01-06-00-ship
     prefer_system_check: |
       ls $EVTGEN_ROOT/include > /dev/null && \
       ls $EVTGEN_ROOT/lib > /dev/null && \

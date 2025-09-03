@@ -1,6 +1,6 @@
 package: EvtGen
 version: "%(tag_basename)s-ship%(defaults_upper)s"
-tag: fairshipdev
+tag: R01-06-00_ship_1
 source: https://github.com/ShipSoft/evtgen
 requires:
   - HepMC
