@@ -18,7 +18,7 @@ cmake "$SOURCEDIR" -DCMAKE_INSTALL_PREFIX="$INSTALLROOT"       \
 cmake --build . -- ${JOBS:+-j$JOBS} install
 
 # Modulefile
-cat > "$MODULEFILE" <<EoF
+cat << EoF >> "$MODULEFILE"
 # Our environment
 set EIGEN3_ROOT \$::env(BASEDIR)/$PKGNAME/\$version
 prepend-path PATH \$EIGEN3_ROOT/bin

@@ -26,6 +26,7 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 * ROOT: Disabled davix to resolve build issues
 * FairRoot: Add missing GEANT3 dependency
 * EvtGen: Fix detection of C++11
+* ACTS/Eigen3/Hepmc3: Fixed module detection
 
 ### Changed
 
