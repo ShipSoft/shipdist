@@ -28,7 +28,7 @@ make ${JOBS+-j $JOBS}
 make install
 
 # Modulefile
-cat > "$MODULEFILE" <<EoF
+cat << EoF >> "$MODULEFILE"
 # Our environment
 set HEPMC3_ROOT \$::env(BASEDIR)/$PKGNAME/\$version
 prepend-path PATH \$HEPMC3_ROOT/bin
