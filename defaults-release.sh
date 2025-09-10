@@ -10,7 +10,7 @@ overrides:
     tag: v1.6.3
   boost:
     version:  "%(tag_basename)s"
-    tag: "v1.70.0"
+    tag: "v1.74.0"
     requires:
       - "GCC-Toolchain:(?!osx)"
       - Python
@@ -85,7 +85,7 @@ overrides:
       grep $REQUESTED_VERSION $FAIRLOGGER_ROOT/include/fairlogger/Version.h
   GEANT4:
     version: "%(tag_basename)s"
-    tag: v10.7.3
+    tag: v11.3.0
     source: https://github.com/geant4/geant4.git
     prefer_system_check: |
       ls $GEANT4_ROOT/bin > /dev/null && \
@@ -117,7 +117,7 @@ overrides:
      G4SAIDXSDATA : "`find ${G4INSTALL} $G4DATASEARCHOPT  '*data*G4SAIDDATA*'`"
   GEANT4_VMC:
     version: "%(tag_basename)s"
-    tag: v5-4
+    tag: v6-7
     prefer_system_check: |
       ls $GEANT4_VMC_ROOT/bin > /dev/null && \
       ls $GEANT4_VMC_ROOT/lib/libg4root.so > /dev/null && \
@@ -129,7 +129,7 @@ overrides:
       true
   VMC:
     version: "%(tag_basename)s"
-    tag: v1-1-p1
+    tag: v2-1
     prefer_system_check: |
       ls $VMC_ROOT/include > /dev/null && \
       true
