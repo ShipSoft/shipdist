@@ -15,6 +15,7 @@ requires:
 - XRootD
 - pythia
 - pythia6
+- TBB
 build_requires:
 - CMake
 - "Xcode:(osx.*)"
