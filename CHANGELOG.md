@@ -62,6 +62,7 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 * XRootD: Update to 5.8.4
 * autotools: Update to 1.6.4
 * CMake: Update to 3.26.5 (match SLC9)
+* boost: Update to 1.75.0 (match SLC9 version)
 
 ## [25.08](https://github.com/ShipSoft/shipdist/tree/25.08)
 
