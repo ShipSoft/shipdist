@@ -20,6 +20,7 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
   GEANT4: v10.7.3 -> v11.1.3, GEANT4VMC: v5-4 -> v6-1-p1, VMC: v1-1-p1 -> v2-0, pythia: v8230-ship -> v8311, GEANT3: v3-9 -> v4-4
   vgm: v5-2, evtGen: R01-06-00-ship -> R02-02-00-alice2, boost: 1.75.0 -> 1.83.0, gcc: 11.5.0 -> 13.2.0,
   flatbuffers: v1.11.0 -> v2.0.8
+* TBB: Add recipe and dependency for ROOT
 
 ### Fixed
 
