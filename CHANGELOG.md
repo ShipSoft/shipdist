@@ -68,6 +68,10 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 * GCC: Update to v11.2.0 when not using system toolchain
 * Freetype: Update to 2.10, update recipe from alidist
 
+### Removed
+
+* lhapdf: Don't build python extension
+
 ## [25.08](https://github.com/ShipSoft/shipdist/tree/25.08)
 
 Maintenance release with several fixes and no major version upgrades.
