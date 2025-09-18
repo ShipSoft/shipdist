@@ -6,7 +6,7 @@ prefer_system: (?!slc5|slc6)
 prefer_system_check: |
   #!/bin/bash -e
   case $(uname) in
-    Darwin) prefix=$(brew --prefix openssl@1.1); [ -d "$prefix" ] ;;
+    Darwin) prefix=$(brew --prefix openssl@3); [ -d "$prefix" ] ;;
     *) prefix= ;;
   esac
   cc -x c - ${prefix:+"-I$prefix/include"} -c -o /dev/null <<\EOF
@@ -21,10 +21,12 @@ build_requires:
   - zlib
   - alibuild-recipe-tools
   - "GCC-Toolchain:(?!osx)"
+prepend_path:
+  PKG_CONFIG_PATH: "$OPENSSL_ROOT/lib/pkgconfig"
 ---
 #!/bin/bash -e
 
-rsync -av --delete --exclude="**/.git" $SOURCEDIR/ .
+rsync -av --delete --exclude="**/.git" "$SOURCEDIR/" .
 case ${PKG_VERSION} in
   v1.1*)
     OPTS=""
@@ -53,26 +55,16 @@ make  # don't ever try to build in multicore
 make install_sw # no not install man pages
 
 # Remove static libraries and pkgconfig
-rm -rf $INSTALLROOT/lib/pkgconfig \
-       $INSTALLROOT/lib/*.a
+rm -rf "$INSTALLROOT"/lib/*.a
 
 # Modulefile
 MODULEDIR="$INSTALLROOT/etc/modulefiles"
 MODULEFILE="$MODULEDIR/$PKGNAME"
+
 mkdir -p "$MODULEDIR"
-cat > "$MODULEFILE" <<EoF
-#%Module1.0
-proc ModulesHelp { } {
-  global version
-  puts stderr "ALICE Modulefile for $PKGNAME $PKGVERSION-@@PKGREVISION@$PKGHASH@@"
-}
-set version $PKGVERSION-@@PKGREVISION@$PKGHASH@@
-module-whatis "ALICE Modulefile for $PKGNAME $PKGVERSION-@@PKGREVISION@$PKGHASH@@"
-# Dependencies
-module load BASE/1.0 ${ZLIB_VERSION:+zlib/$ZLIB_VERSION-$ZLIB_REVISION} ${GCC_TOOLCHAIN_ROOT:+GCC-Toolchain/$GCC_TOOLCHAIN_VERSION-$GCC_TOOLCHAIN_REVISION}
-# Our environment
-setenv OPENSSL_ROOT \$::env(BASEDIR)/$PKGNAME/\$version
-prepend-path PATH \$::env(OPENSSL_ROOT)/bin
-prepend-path LD_LIBRARY_PATH \$::env(OPENSSL_ROOT)/lib
-$([[ ${ARCHITECTURE:0:3} == osx ]] && echo "prepend-path DYLD_LIBRARY_PATH \$::env(OPENSSL_ROOT)/lib")
-EoF
+alibuild-generate-module --lib --bin > "$MODULEFILE"
+cat << EOF >> "$MODULEFILE"
+prepend-path ROOT_INCLUDE_PATH \$PKG_ROOT/include
+EOF
+mkdir -p "$INSTALLROOT/etc/modulefiles"
+rsync -a --delete  "$MODULEDIR/" "$INSTALLROOT/etc/modulefiles"
