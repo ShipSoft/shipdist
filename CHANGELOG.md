@@ -45,6 +45,7 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 * Xerces-C: Update to 3.3.0
 * flatbuffers: Update to 25.2.10
 * XRootD: Update to 5.8.4
+* autotools: Update to 1.6.4
 
 ## [25.08](https://github.com/ShipSoft/shipdist/tree/25.08)
 
