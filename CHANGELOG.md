@@ -67,6 +67,7 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 * boost: Update to 1.75.0 (match SLC9 version)
 * GCC: Update to v11.2.0 when not using system toolchain
 * Freetype: Update to 2.10, update recipe from alidist
+* OpenSSL: Update recipe from alidist
 
 ### Removed
 
