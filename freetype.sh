@@ -1,23 +1,25 @@
 package: FreeType
-version: v2.6
+version: v2.10.1
+tag: VER-2-10-1
+source: https://github.com/freetype/freetype
 requires:
   - zlib
 build_requires:
-  - autotools
-  - curl
+  - "autotools:(slc6|slc7)"
+  - alibuild-recipe-tools
 prefer_system: (?!slc5)
 prefer_system_check: |
   printf "#include <ft2build.h>\n" | c++ -xc++ - `freetype-config --cflags 2>/dev/null` `pkg-config freetype2 --cflags 2>/dev/null` -c -M 2>&1;
   if [ $? -ne 0 ]; then printf "FreeType is missing on your system.\n * On RHEL-compatible systems you probably need: freetype freetype-devel\n * On Ubuntu-compatible systems you probably need: libfreetype6 libfreetype6-dev\n"; exit 1; fi
 ---
 #!/bin/bash -ex
-URL="http://download.savannah.gnu.org/releases/freetype/freetype-old/freetype-${PKGVERSION:1}.tar.gz"
-curl -L -o freetype.tgz $URL
-tar xzf freetype.tgz
-rm -f freetype.tgz
-cd freetype-${PKGVERSION:1}
-./configure --prefix=$INSTALLROOT \
-            ${ZLIB_ROOT:+--with-zlib=$ZLIB_ROOT}
+rsync -a --chmod=ug=rwX --exclude='**/.git' --delete --delete-excluded "$SOURCEDIR/" ./
+type libtoolize && export LIBTOOLIZE=libtoolize
+type glibtoolize && export LIBTOOLIZE=glibtoolize
+sh autogen.sh
+./configure --prefix="$INSTALLROOT"              \
+            --with-png=no                        \
+            ${ZLIB_ROOT:+--with-zlib="$ZLIB_ROOT"}
 
 make ${JOBS:+-j$JOBS}
 make install
@@ -25,20 +27,7 @@ make install
 # Modulefile
 MODULEDIR="$INSTALLROOT/etc/modulefiles"
 MODULEFILE="$MODULEDIR/$PKGNAME"
-mkdir -p "$MODULEDIR"
-cat > "$MODULEFILE" <<EoF
-#%Module1.0
-proc ModulesHelp { } {
-  global version
-  puts stderr "ALICE Modulefile for $PKGNAME $PKGVERSION-@@PKGREVISION@$PKGHASH@@"
-}
-set version $PKGVERSION-@@PKGREVISION@$PKGHASH@@
-module-whatis "ALICE Modulefile for $PKGNAME $PKGVERSION-@@PKGREVISION@$PKGHASH@@"
-# Dependencies
-module load BASE/1.0 ${ZLIB_VERSION:+zlib/$ZLIB_VERSION-$ZLIB_REVISION}
-# Our environment
-setenv FREETYPE_ROOT \$::env(BASEDIR)/$PKGNAME/\$version
-prepend-path PATH $::env(FREETYPE_ROOT)/bin
-prepend-path LD_LIBRARY_PATH $::env(FREETYPE_ROOT)/lib
-$([[ ${ARCHITECTURE:0:3} == osx ]] && echo "prepend-path DYLD_LIBRARY_PATH $::env(FREETYPE_ROOT)/lib")
-EoF
+
+mkdir -p etc/modulefiles
+alibuild-generate-module --lib > etc/modulefiles/$PKGNAME
+mkdir -p $INSTALLROOT/etc/modulefiles && rsync -a --delete etc/modulefiles/ $INSTALLROOT/etc/modulefiles
