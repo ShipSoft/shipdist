@@ -34,7 +34,7 @@ esac
 rsync -a --exclude '**/.git' "$SOURCEDIR"/ ./
 
 autoreconf -ivf
-./configure --prefix="$INSTALLROOT"
+./configure --prefix="$INSTALLROOT" --disable-python
 
 make ${JOBS+-j $JOBS} all
 make install
