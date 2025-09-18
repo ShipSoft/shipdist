@@ -6,8 +6,6 @@ env:
   CMAKE_BUILD_TYPE: "RELEASE"
   CMAKE_CXX_STANDARD: "17"
 overrides:
-  autotools:
-    tag: v1.6.3
   boost:
     version:  "%(tag_basename)s"
     tag: "v1.70.0"
