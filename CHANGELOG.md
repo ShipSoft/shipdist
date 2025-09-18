@@ -64,6 +64,7 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 * autotools: Update to 1.6.4
 * CMake: Update to 3.26.5 (match SLC9)
 * boost: Update to 1.75.0 (match SLC9 version)
+* GCC: Update to v11.2.0 when not using system toolchain
 
 ## [25.08](https://github.com/ShipSoft/shipdist/tree/25.08)
 
