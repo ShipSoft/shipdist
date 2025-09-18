@@ -57,12 +57,6 @@ overrides:
   protobuf:
     version: "%(tag_basename)s"
     tag: "v3.12.3"
-  CMake:
-    version: "%(tag_basename)s"
-    tag: "v3.18.2"
-    prefer_system_check: |
-      verge() { [[  "$1" = "`echo -e "$1\n$2" | sort -V | head -n1`" ]]; }
-      type cmake && verge 3.18.2 `cmake --version | sed -e 's/.* //' | cut -d. -f1,2,3`
   FairRoot:
     prefer_system_check: |
       ls $FAIRROOT_ROOT/ > /dev/null && \
