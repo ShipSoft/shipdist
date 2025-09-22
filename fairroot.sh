@@ -19,6 +19,10 @@ env:
   GEOMPATH:   "$FAIRROOT_ROOT/share/fairbase/examples/common/geometry"
   CONFIG_DIR: "$FAIRROOT_ROOT/share/fairbase/examples/common/gconfig"
   FAIRROOTPATH: "$FAIRROOT_ROOT"
+prefer_system_check: |
+  ls $FAIRROOT_ROOT/ > /dev/null && \
+  ls $FAIRROOT_ROOT/lib > /dev/null && \
+  ls $FAIRROOT_ROOT/include > /dev/null
 prepend_path:
   ROOT_INCLUDE_PATH: "$FAIRROOT_ROOT/include"
   LD_LIBRARY_PATH: "$FAIRROOT_ROOT/lib"

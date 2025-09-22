@@ -7,6 +7,19 @@ env:
   GEANT4_INSTALL: "$GEANT4_ROOT"
 requires:
  - "GCC-Toolchain:(?!osx)"
+prefer_system_check: |
+  #!/bin/bash -e
+  ls $LHAPDF5_ROOT/ > /dev/null && \
+  ls $LHAPDF5_ROOT/bin > /dev/null && \
+  ls $LHAPDF5_ROOT/include > /dev/null && \
+  ls $LHAPDF5_ROOT/include/LHAPDF > /dev/null && \
+  ls $LHAPDF5_ROOT/lib > /dev/null && \
+  ls $LHAPDF5_ROOT/lib/libLHAPDF.so > /dev/null && \
+  ls $LHAPDF5_ROOT/lib/libLHAPDF.so.0 > /dev/null && \
+  ls $LHAPDF5_ROOT/lib/libLHAPDF.la > /dev/null && \
+  ls $LHAPDF5_ROOT/lib/libLHAPDF.a > /dev/null && \
+  ls $LHAPDF5_ROOT/lib64/python2.7/site-packages/lhapdf.py > /dev/null && \
+  ls $LHAPDF5_ROOT/share/lhapdf > /dev/null
 ---
 #!/bin/bash -ex
 

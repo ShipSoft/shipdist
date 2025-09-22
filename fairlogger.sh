@@ -12,6 +12,12 @@ incremental_recipe: |
   mkdir -p $INSTALLROOT/etc/modulefiles && rsync -a --delete etc/modulefiles/ $INSTALLROOT/etc/modulefiles
 prepend_path:
   ROOT_INCLUDE_PATH: "$FAIRLOGGER_ROOT/include"
+prefer_system_check: |
+  #!/bin/bash -e
+  ls $FAIRLOGGER_ROOT/ > /dev/null && \
+  ls $FAIRLOGGER_ROOT/lib > /dev/null && \
+  ls $FAIRLOGGER_ROOT/include/fairlogger > /dev/null && \
+  grep $REQUESTED_VERSION $FAIRLOGGER_ROOT/include/fairlogger/Version.h
 ---
 #!/bin/bash
 

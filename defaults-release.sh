@@ -57,24 +57,6 @@ overrides:
   protobuf:
     version: "%(tag_basename)s"
     tag: "v3.12.3"
-  FairRoot:
-    prefer_system_check: |
-      ls $FAIRROOT_ROOT/ > /dev/null && \
-      ls $FAIRROOT_ROOT/lib > /dev/null && \
-      ls $FAIRROOT_ROOT/include > /dev/null
-  FairMQ:
-    version: "%(tag_basename)s"
-    tag: "v1.4.38"
-    prefer_system_check: |
-      ls $FAIRMQ_ROOT/ > /dev/null && \
-      ls $FAIRMQ_ROOT/lib > /dev/null && \
-      ls $FAIRMQ_ROOT/include > /dev/null
-  FairLogger:
-    prefer_system_check: |
-      ls $FAIRLOGGER_ROOT/ > /dev/null && \
-      ls $FAIRLOGGER_ROOT/lib > /dev/null && \
-      ls $FAIRLOGGER_ROOT/include/fairlogger > /dev/null && \
-      grep $REQUESTED_VERSION $FAIRLOGGER_ROOT/include/fairlogger/Version.h
   GEANT4:
     version: "%(tag_basename)s"
     tag: v10.7.3
@@ -125,29 +107,6 @@ overrides:
     prefer_system_check: |
       ls $VMC_ROOT/include > /dev/null && \
       true
-  GENIE:
-    prefer_system_check: |
-      ls $GENIE_ROOT/genie > /dev/null && \
-      ls $GENIE_ROOT/genie/bin > /dev/null && \
-      ls $GENIE_ROOT/genie/config > /dev/null && \
-      ls $GENIE_ROOT/genie/data > /dev/null && \
-      ls $GENIE_ROOT/genie/inc > /dev/null && \
-      ls $GENIE_ROOT/genie/lib > /dev/null && \
-      ls $GENIE_ROOT/genie/src > /dev/null && \
-      true
-  log4cpp:
-    tag: 1b9f8f7c031d6947c7468d54bc1da4b2f414558d
-    prefer_system_check: |
-      ls $LOG4CPP_ROOT/include/ > /dev/null && \
-      ls $LOG4CPP_ROOT/lib/ > /dev/null && \
-      true
-  apfel:
-    tag: 3.0.6
-    prefer_system_check: |
-      ls $APFEL_ROOT/bin > /dev/null && \
-      ls $APFEL_ROOT/lib > /dev/null && \
-      ls $APFEL_ROOT/include > /dev/null && \
-      true
   pythia:
     version: "%(tag_basename)s"
     source: https://github.com/ShipSoft/pythia8
@@ -192,75 +151,6 @@ overrides:
       ls $EVTGEN_ROOT/include/EvtGenBase > /dev/null && \
       ls $EVTGEN_ROOT/include/EvtGenExternal > /dev/null && \
       ls $EVTGEN_ROOT/include/EvtGenModels > /dev/null
-  PHOTOSPP:
-    prefer_system_check: |
-      ls $PHOTOSPP_ROOT/ > /dev/null && \
-      ls $PHOTOSPP_ROOT/include/Photos > /dev/null && \
-      ls $PHOTOSPP_ROOT/lib > /dev/null && \
-      ls $PHOTOSPP_ROOT/lib/libPhotospp.a > /dev/null && \
-      ls $PHOTOSPP_ROOT/lib/libPhotosppHEPEVT.so > /dev/null && \
-      ls $PHOTOSPP_ROOT/lib/libPhotosppHepMC.so > /dev/null && \
-      ls $PHOTOSPP_ROOT/lib/libPhotospp.so > /dev/null
-  Tauolapp:
-    version: "%(tag_basename)s"
-    source: https://github.com/ShipSoft/Tauolapp
-    tag: v1.1.5-ship
-    prefer_system_check: |
-      ls "$TAUOLAPP_ROOT"/lib > /dev/null && \
-      ls "$TAUOLAPP_ROOT"/etc > /dev/null && \
-      ls "$TAUOLAPP_ROOT"/include > /dev/null
-  pythia6:
-    version: "%(tag_basename)s"
-    source: https://github.com/SND-LHC/pythia6
-    tag: v6.4.28-snd
-    prefer_system_check: |
-      ls $PYTHIA6_ROOT/lib/libpythia6.so > /dev/null && \
-      ls $PYTHIA6_ROOT/lib/libPythia6.so > /dev/null
-  HepMC:
-    prefer_system_check: |
-      ls $HEPMC_ROOT/lib > /dev/null && \
-      ls $HEPMC_ROOT/lib/libHepMC.so > /dev/null && \
-      ls $HEPMC_ROOT/lib/libHepMC.so.4 > /dev/null && \
-      ls $HEPMC_ROOT/lib/libHepMC.a > /dev/null && \
-      ls $HEPMC_ROOT/lib/libHepMCfio.so > /dev/null && \
-      ls $HEPMC_ROOT/lib/libHepMCfio.so.4 > /dev/null && \
-      ls $HEPMC_ROOT/lib/libHepMCfio.a > /dev/null && \
-      ls $HEPMC_ROOT/include > /dev/null && \
-      ls $HEPMC_ROOT/include/HepMC > /dev/null && \
-      ls $HEPMC_ROOT/include/HepMC/HepMCDefs.h > /dev/null && \
-      grep "2.06" $HEPMC_ROOT/include/HepMC/HepMCDefs.h > /dev/null
-  lhapdf:
-    prefer_system_check: |
-      ls $LHAPDF_ROOT/ > /dev/null && \
-      ls $LHAPDF_ROOT/bin > /dev/null && \
-      ls $LHAPDF_ROOT/include > /dev/null && \
-      ls $LHAPDF_ROOT/include/LHAPDF > /dev/null && \
-      ls $LHAPDF_ROOT/lib > /dev/null && \
-      ls $LHAPDF_ROOT/share/LHAPDF > /dev/null
-  lhapdf5:
-    prefer_system_check: |
-      ls $LHAPDF5_ROOT/ > /dev/null && \
-      ls $LHAPDF5_ROOT/bin > /dev/null && \
-      ls $LHAPDF5_ROOT/include > /dev/null && \
-      ls $LHAPDF5_ROOT/include/LHAPDF > /dev/null && \
-      ls $LHAPDF5_ROOT/lib > /dev/null && \
-      ls $LHAPDF5_ROOT/lib/libLHAPDF.so > /dev/null && \
-      ls $LHAPDF5_ROOT/lib/libLHAPDF.so.0 > /dev/null && \
-      ls $LHAPDF5_ROOT/lib/libLHAPDF.la > /dev/null && \
-      ls $LHAPDF5_ROOT/lib/libLHAPDF.a > /dev/null && \
-      ls $LHAPDF5_ROOT/lib64/python2.7/site-packages/lhapdf.py > /dev/null && \
-      ls $LHAPDF5_ROOT/share/lhapdf > /dev/null
-  XercesC:
-    prefer_system_check: |
-      ls $XERCESC_ROOT/ > /dev/null && \
-      ls $XERCESC_ROOT/bin > /dev/null && \
-      ls $XERCESC_ROOT/include > /dev/null && \
-      ls $XERCESC_ROOT/include/xercesc/ > /dev/null && \
-      ls $XERCESC_ROOT/lib > /dev/null && \
-      ls $XERCESC_ROOT/lib/libxerces-c-3.1.so > /dev/null && \
-      ls $XERCESC_ROOT/lib/libxerces-c.a > /dev/null && \
-      ls $XERCESC_ROOT/lib/libxerces-c.la > /dev/null && \
-      ls $XERCESC_ROOT/lib/libxerces-c.so > /dev/null
   GEANT3:
     version: "%(tag_basename)s"
     source: https://github.com/vmc-project/geant3
@@ -271,17 +161,6 @@ overrides:
       ls $GEANT3_ROOT/include/TGeant3 > /dev/null && \
       ls $GEANT3_ROOT/include/TGeant3/TGeant3.h > /dev/null && \
       ls $GEANT3_ROOT/lib64/libgeant321.so > /dev/null && \
-      true
-  googletest:
-    prefer_system_check: |
-      ls $GOOGLETEST_ROOT/ > /dev/null && \
-      ls $GOOGLETEST_ROOT/include > /dev/null && \
-      ls $GOOGLETEST_ROOT/include/gmock > /dev/null && \
-      ls $GOOGLETEST_ROOT/include/gtest > /dev/null && \
-      ls $GOOGLETEST_ROOT/lib/libgmock.a > /dev/null && \
-      ls $GOOGLETEST_ROOT/lib/libgmock_main.a > /dev/null && \
-      ls $GOOGLETEST_ROOT/lib/libgtest.a > /dev/null && \
-      ls $GOOGLETEST_ROOT/lib/libgtest_main.a > /dev/null && \
       true
 ---
 # This file is included in any build recipe and it's only used to set
