@@ -6,6 +6,12 @@ requires:
   - lhapdf
 env :
   LD_LIBRARY_PATH: "$LD_LIBRARY_PATH:$APFEL_ROOT/lib"
+prefer_system_check: |
+  #!/bin/bash -e
+  ls $APFEL_ROOT/bin > /dev/null && \
+  ls $APFEL_ROOT/lib > /dev/null && \
+  ls $APFEL_ROOT/include > /dev/null && \
+  true
 ---
 #!/bin/bash -ex
 

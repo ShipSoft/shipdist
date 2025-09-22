@@ -1,10 +1,13 @@
 # a pythia6 recipe based on the one from FairROOT
 package: pythia6
 version: "%(tag_basename)s"
-tag: "428-alice1"
-source: https://github.com/alisw/pythia6.git
+tag: v6.4.28-snd
+source: https://github.com/SND-LHC/pythia6
 requires:
   - GCC-Toolchain:(?!osx)
+prefer_system_check: |
+  ls $PYTHIA6_ROOT/lib/libpythia6.so > /dev/null && \
+  ls $PYTHIA6_ROOT/lib/libPythia6.so > /dev/null
 build_requires:
   - CMake
 ---

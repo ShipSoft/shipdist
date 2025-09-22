@@ -1,12 +1,16 @@
 package: Tauolapp
-version: "%(tag_basename)s-ship%(defaults_upper)s"
+version: "%(tag_basename)s"
+tag: v1.1.5-ship
 source: https://github.com/ShipSoft/Tauolapp
-tag: v1.1.5
 requires:
   - HepMC
   - ROOT
   - pythia
   - lhapdf
+prefer_system_check: |
+  ls "$TAUOLAPP_ROOT"/lib > /dev/null && \
+  ls "$TAUOLAPP_ROOT"/etc > /dev/null && \
+  ls "$TAUOLAPP_ROOT"/include > /dev/null
 ---
 #!/bin/sh
 

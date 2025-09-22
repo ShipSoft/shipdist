@@ -16,6 +16,16 @@ env:
   PATH: "$PATH:$GENIE_ROOT/genie/bin"
   LD_LIBRARY_PATH: "$LD_LIBRARY_PATH:$GENIE_ROOT/genie/lib"
   ROOT_INCLUDE_PATH: "$ROOT_INCLUDE_PATH:$GENIE_ROOT/genie/inc:$GENIE_ROOT/genie/src"
+prefer_system_check: |
+  #!/bin/bash -e
+  ls $GENIE_ROOT/genie > /dev/null && \
+  ls $GENIE_ROOT/genie/bin > /dev/null && \
+  ls $GENIE_ROOT/genie/config > /dev/null && \
+  ls $GENIE_ROOT/genie/data > /dev/null && \
+  ls $GENIE_ROOT/genie/inc > /dev/null && \
+  ls $GENIE_ROOT/genie/lib > /dev/null && \
+  ls $GENIE_ROOT/genie/src > /dev/null && \
+  true
 ---
 #!/bin/bash -ex
 export GENIE="$BUILDDIR"

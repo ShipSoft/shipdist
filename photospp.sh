@@ -10,6 +10,15 @@ requires:
 build_requires:
   - "autotools:(slc6|slc7)"
   - alibuild-recipe-tools
+prefer_system_check: |
+  #!/bin/bash -e
+  ls $PHOTOSPP_ROOT/ > /dev/null && \
+  ls $PHOTOSPP_ROOT/include/Photos > /dev/null && \
+  ls $PHOTOSPP_ROOT/lib > /dev/null && \
+  ls $PHOTOSPP_ROOT/lib/libPhotospp.a > /dev/null && \
+  ls $PHOTOSPP_ROOT/lib/libPhotosppHEPEVT.so > /dev/null && \
+  ls $PHOTOSPP_ROOT/lib/libPhotosppHepMC.so > /dev/null && \
+  ls $PHOTOSPP_ROOT/lib/libPhotospp.so > /dev/null
 ---
 #!/bin/bash -e
 rsync -a --delete --exclude '**/.git' $SOURCEDIR/ ./
