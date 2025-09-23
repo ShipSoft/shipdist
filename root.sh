@@ -24,6 +24,32 @@ env:
   ROOTSYS: "$ROOT_ROOT"
 prepend_path:
   PYTHONPATH: "$ROOTSYS/lib"
+prefer_system_check: |
+  #!/bin/bash -e
+  root-config --version || exit 1
+  if [[ "$REQUESTED_VERSION" == "master" || "$REQUESTED_VERSION" == "ship-master" ]]; then
+      echo "Branch $REQUESTED_VERSION selected, skipping version check."
+      exit 0
+  fi
+  VERSION=$(root-config --version)
+  REQUESTED_VERSION=${REQUESTED_VERSION#v}
+  REQUESTED_VERSION=${REQUESTED_VERSION//-/.}
+  verlte() {
+      printf '%s\n' "$1" "$2" | sort -C -V
+  }
+  verlt() {
+      ! verlte "$2" "$1"
+  }
+  if ! verlt $VERSION $REQUESTED_VERSION; then
+      echo "ROOT version $VERSION sufficient"
+  else
+      echo "ROOT version $VERSION insufficient ($REQUESTED_VERSION requested)"
+      exit 1
+  fi
+  FEATURES="builtin_pcre mathmore xml ssl opengl http gdml pythia8 roofit soversion vdt xrootd"
+  for FEATURE in $FEATURES; do
+      root-config --has-$FEATURE | grep -q yes || { echo "$FEATURE missing"; exit 1; }
+  done
 incremental_recipe: |
   make ${JOBS:+-j$JOBS} install
   mkdir -p $INSTALLROOT/etc/modulefiles && rsync -a --delete etc/modulefiles/ $INSTALLROOT/etc/modulefiles

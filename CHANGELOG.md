@@ -30,7 +30,17 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 
 ### Changed
 
-* Defaults: Moved identical overrides from defaults files to individual recipes to reduce duplication
+* Defaults: Moved all overrides from defaults files to individual recipes to reduce duplication
+  - defaults-release.sh: Moved all 12 package overrides to their respective recipe files, leaving only environment configuration
+  - boost: Updated recipe from v1.75.0 to v1.70.0 and moved version, tag, requires, and prefer_system_check to recipe
+  - GCC-Toolchain: Updated prefer_system_check in recipe to match defaults version
+  - ROOT: Added prefer_system_check configuration to recipe
+  - GSL: Updated prefer_system_check in recipe to match defaults version
+  - protobuf: Updated recipe from v2.6.1 to v3.12.3 and added version/tag configuration
+  - GEANT4: Updated recipe source, version, tag, requires, env, and prefer_system_check to match defaults
+  - GEANT4_VMC, VMC: Added prefer_system_check configurations to recipes
+  - pythia: Updated recipe source, tag, requires, and prefer_system_check to match defaults
+  - vgm, evtGen, GEANT3: Added prefer_system_check configurations to recipes
   - FairRoot, FairMQ, FairLogger, GENIE, log4cpp, apfel, PHOTOSPP, Tauolapp, pythia6, HepMC, lhapdf, lhapdf5, XercesC, googletest: moved prefer_system_check configurations to respective recipe files
   - FairMQ: Updated recipe version from v1.4.49 to v1.4.38 to match defaults
   - Tauolapp: Updated recipe version format and tag from v1.1.5 to v1.1.5-ship to match defaults

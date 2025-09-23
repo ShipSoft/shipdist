@@ -9,6 +9,16 @@ requires:
   - PHOTOSPP
 env:
   EVTGENDATA: "$EVTGEN_ROOT/share"
+prefer_system_check: |
+  #!/bin/bash -e
+  ls $EVTGEN_ROOT/include > /dev/null && \
+  ls $EVTGEN_ROOT/lib > /dev/null && \
+  ls $EVTGEN_ROOT/lib/libEvtGenExternal.so > /dev/null && \
+  ls $EVTGEN_ROOT/lib/libEvtGen.so > /dev/null && \
+  ls $EVTGEN_ROOT/include/EvtGen > /dev/null && \
+  ls $EVTGEN_ROOT/include/EvtGenBase > /dev/null && \
+  ls $EVTGEN_ROOT/include/EvtGenExternal > /dev/null && \
+  ls $EVTGEN_ROOT/include/EvtGenModels > /dev/null
 ---
 #!/bin/sh
 
