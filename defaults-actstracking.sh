@@ -126,6 +126,8 @@ overrides:
     prefer_system_check: |
       ls $VMC_ROOT/include > /dev/null && \
       true
+  GEANT3:
+    tag: v4-4
   pythia:
     version: "%(tag_basename)s"
     tag: 8311Fairship
