@@ -1,10 +1,10 @@
 package: boost
-version: v1.75.0
-tag: v1.75.0
+version: "%(tag_basename)s"
+tag: "v1.70.0"
 source: https://github.com/alisw/boost.git
 requires:
   - "GCC-Toolchain:(?!osx)"
-  - "Python-modules:(?!osx)"
+  - Python
   - libpng
   - zlib
 build_requires:
@@ -13,6 +13,9 @@ build_requires:
   - alibuild-recipe-tools
 prepend_path:
   ROOT_INCLUDE_PATH: "$BOOST_ROOT/include"
+prefer_system_check: |
+ printf "#include \"boost/version.hpp\"\n# if (BOOST_VERSION < 106400)\n#error \"Cannot use system's boost. Boost > 1.64.00 required.\"\n#endif\nint main(){}" \
+ | gcc -I$BOOST_ROOT/include -xc++ - -o /dev/null
 ---
 BOOST_PYTHON=
 BOOST_CXXFLAGS=

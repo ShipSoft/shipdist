@@ -1,5 +1,6 @@
 package: protobuf
-version: v2.6.1
+version: "%(tag_basename)s"
+tag: "v3.12.3"
 source: https://github.com/google/protobuf
 build_requires:
  - autotools

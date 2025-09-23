@@ -1,27 +1,39 @@
 package: GEANT4
-version: "%(tag_basename)s%(defaults_upper)s"
-source: https://github.com/alisw/geant4
-tag: v4.10.01.p03
+version: "%(tag_basename)s"
+tag: v10.7.3
+source: https://github.com/geant4/geant4.git
 requires:
   - "GCC-Toolchain:(?!osx)"
+  - opengl
+  - XercesC
 build_requires:
   - CMake
   - "Xcode:(osx.*)"
 env:
-  G4INSTALL : $GEANT4_ROOT
-  G4DATASEARCHOPT : "-mindepth 2 -maxdepth 4 -type d -wholename"
-  G4ABLADATA : "`find ${G4INSTALL} $G4DATASEARCHOPT '*data*G4ABLA*'`"  ## v10.4.px only
-  G4ENSDFSTATEDATA : "`find ${G4INSTALL} $G4DATASEARCHOPT '*data*G4ENSDFSTATE*'`"
-  G4INCLDATA : "`find ${G4INSTALL} $G4DATASEARCHOPT '*data*G4INCL*'`"  ## v10.5.px only
-  G4LEDATA : "`find ${G4INSTALL} $G4DATASEARCHOPT '*data*G4EMLOW*'`"
-  G4LEVELGAMMADATA : "`find ${G4INSTALL} $G4DATASEARCHOPT '*data*PhotonEvaporation*'`"
-  G4NEUTRONHPDATA : "`find ${G4INSTALL} $G4DATASEARCHOPT '*data*G4NDL*'`"
-  G4NEUTRONXSDATA : "`find ${G4INSTALL} $G4DATASEARCHOPT '*data*G4NEUTRONXS*'`"   ## v10.4.px only
-  G4PARTICLEXSDATA : "`find ${G4INSTALL} $G4DATASEARCHOPT '*data*G4PARTICLEXS*'`"   ## v10.5.px only
-  G4PIIDATA : "`find ${G4INSTALL} $G4DATASEARCHOPT '*data*G4PII*'`"
-  G4RADIOACTIVEDATA : "`find ${G4INSTALL} $G4DATASEARCHOPT '*data*RadioactiveDecay*'`"
-  G4REALSURFACEDATA : "`find ${G4INSTALL} $G4DATASEARCHOPT '*data*RealSurface*'`"
-  G4SAIDXSDATA : "`find ${G4INSTALL} $G4DATASEARCHOPT  '*data*G4SAIDDATA*'`"
+  G4INSTALL: $GEANT4_ROOT
+  G4DATASEARCHOPT: "-mindepth 2 -maxdepth 4 -type d -wholename"
+  G4ABLADATA: "`find ${G4INSTALL} $G4DATASEARCHOPT '*data*G4ABLA*'`"  ## v10.4.px only
+  G4ENSDFSTATEDATA: "`find ${G4INSTALL} $G4DATASEARCHOPT '*data*G4ENSDFSTATE*'`"
+  G4INCLDATA: "`find ${G4INSTALL} $G4DATASEARCHOPT '*data*G4INCL*'`"  ## v10.5.px only
+  G4LEDATA: "`find ${G4INSTALL} $G4DATASEARCHOPT '*data*G4EMLOW*'`"
+  G4LEVELGAMMADATA: "`find ${G4INSTALL} $G4DATASEARCHOPT '*data*PhotonEvaporation*'`"
+  G4NEUTRONHPDATA: "`find ${G4INSTALL} $G4DATASEARCHOPT '*data*G4NDL*'`"
+  G4NEUTRONXSDATA: "`find ${G4INSTALL} $G4DATASEARCHOPT '*data*G4NEUTRONXS*'`"   ## v10.4.px only
+  G4PARTICLEXSDATA: "`find ${G4INSTALL} $G4DATASEARCHOPT '*data*G4PARTICLEXS*'`"   ## v10.5.px only
+  G4PIIDATA: "`find ${G4INSTALL} $G4DATASEARCHOPT '*data*G4PII*'`"
+  G4RADIOACTIVEDATA: "`find ${G4INSTALL} $G4DATASEARCHOPT '*data*RadioactiveDecay*'`"
+  G4REALSURFACEDATA: "`find ${G4INSTALL} $G4DATASEARCHOPT '*data*RealSurface*'`"
+  G4SAIDXSDATA: "`find ${G4INSTALL} $G4DATASEARCHOPT  '*data*G4SAIDDATA*'`"
+prefer_system_check: |
+  #!/bin/bash -e
+  ls $GEANT4_ROOT/bin > /dev/null && \
+  ls $GEANT4_ROOT/bin/geant4-config > /dev/null && \
+  ls $GEANT4_ROOT/bin/geant4.csh > /dev/null && \
+  ls $GEANT4_ROOT/bin/geant4.sh > /dev/null && \
+  ls $GEANT4_ROOT/include > /dev/null && \
+  ls $GEANT4_ROOT/include/Geant4 > /dev/null && \
+  ls $GEANT4_ROOT/lib/ > /dev/null && \
+  true
 ---
 #!/bin/bash -e
 export G4DEBUG=1

@@ -8,6 +8,22 @@ requires:
   - XercesC
 build_requires:
   - CMake
+prefer_system_check: |
+  #!/bin/bash -e
+  [[ -v VGM_ROOT ]] && \
+  ls $VGM_ROOT/include > /dev/null && \
+  ls $VGM_ROOT/include/BaseVGM > /dev/null && \
+  ls $VGM_ROOT/include/ClhepVGM > /dev/null && \
+  ls $VGM_ROOT/include/Geant4GM > /dev/null && \
+  ls $VGM_ROOT/include/RootGM > /dev/null && \
+  ls $VGM_ROOT/include/VGM > /dev/null && \
+  ls $VGM_ROOT/include/XmlVGM > /dev/null && \
+  ls $VGM_ROOT/lib > /dev/null && \
+  ls $VGM_ROOT/lib/libBaseVGM.a > /dev/null && \
+  ls $VGM_ROOT/lib/libClhepVGM.a > /dev/null && \
+  ls $VGM_ROOT/lib/libGeant4GM.a > /dev/null && \
+  ls $VGM_ROOT/lib/libRootGM.a > /dev/null && \
+  ls $VGM_ROOT/lib/libXmlVGM.a > /dev/null
 ---
 #!/bin/bash -e
 cmake "$SOURCEDIR" \

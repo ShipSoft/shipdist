@@ -1,14 +1,25 @@
 package: pythia
-version: "%(tag_basename)s%(defaults_upper)s"
-source: https://github.com/alisw/pythia8
+version: "%(tag_basename)s"
+tag: v8230-ship
+source: https://github.com/ShipSoft/pythia8
 requires:
   - lhapdf
   - HepMC
   - boost
-tag: v8223
 env:
   PYTHIA8DATA: "$PYTHIA_ROOT/share/Pythia8/xmldoc"
   PYTHIA8: "$PYTHIA_ROOT"
+prefer_system_check: |
+  #!/bin/bash -e
+  ls $PYTHIA_ROOT/bin > /dev/null && \
+  ls $PYTHIA_ROOT/bin/pythia8-config > /dev/null && \
+  ls $PYTHIA_ROOT/include/ > /dev/null && \
+  ls $PYTHIA_ROOT/include/Pythia8 > /dev/null && \
+  ls $PYTHIA_ROOT/include/Pythia8Plugins > /dev/null && \
+  ls $PYTHIA_ROOT/lib/libpythia8.a > /dev/null && \
+  ls $PYTHIA_ROOT/lib/libpythia8lhapdf6.so > /dev/null && \
+  ls $PYTHIA_ROOT/lib/libpythia8.so > /dev/null && \
+  true
 ---
 #!/bin/bash -e
 rsync -a $SOURCEDIR/ ./

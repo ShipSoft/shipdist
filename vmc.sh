@@ -10,6 +10,9 @@ build_requires:
   - alibuild-recipe-tools
 prepend_path:
   ROOT_INCLUDE_PATH: "$VMC_ROOT/include/vmc"
+prefer_system_check: |
+  ls $VMC_ROOT/include > /dev/null && \
+  true
 ---
 #!/bin/bash -e
 
