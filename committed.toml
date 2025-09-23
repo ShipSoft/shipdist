@@ -1,0 +1,4 @@
+# see https://github.com/crate-ci/committed/blob/master/docs/reference.md
+style = "conventional"
+subject_capitalized = false
+merge_commit = false

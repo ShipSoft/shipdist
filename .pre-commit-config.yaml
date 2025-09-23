@@ -1,10 +1,17 @@
 # See https://pre-commit.com for more information
 # See https://pre-commit.com/hooks.html for more hooks
+default_install_hook_types: ["pre-commit", "commit-msg"]
+default_stages: [pre-commit, manual]
 repos:
 - repo: https://github.com/pre-commit/pre-commit-hooks
   rev: v6.0.0
   hooks:
   - id: trailing-whitespace
   - id: end-of-file-fixer
+- repo: https://github.com/crate-ci/committed
+  rev: v1.1.7
+  hooks:
+  - id: committed
+    name: check commit message formatting
 ci:
   autofix_prs: true
