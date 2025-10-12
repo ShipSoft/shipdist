@@ -58,8 +58,8 @@ overrides:
     version: "%(tag_basename)s"
     tag: "v3.12.3"
   FairShip:
-    tag: pythia_update
-    source: https://github.com/webbjm/FairShip
+    tag: master
+    source: https://github.com/ShipSoft/FairShip
     requires:
       - generators
       - simulation

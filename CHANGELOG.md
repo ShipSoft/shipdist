@@ -47,6 +47,7 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
   - FairMQ: Updated recipe version from v1.4.49 to v1.4.38 to match defaults
   - Tauolapp: Updated recipe version format and tag from v1.1.5 to v1.1.5-ship to match defaults
   - pythia6: Updated recipe tag from 428-alice1 to v6.4.28-snd and source from alisw/pythia6.git to SND-LHC/pythia6 to match defaults
+  - defaults-actstracking.sh: FairShip override removed.
 * Python-modules-list: Updated pip to v25.0.1
 * Python-modules-list: Added pybind11 v2.13.6
 * EvtGen: Added cmake build instructions required for R02-02-00
