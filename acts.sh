@@ -45,4 +45,5 @@ set ACTS_ROOT \$::env(BASEDIR)/$PKGNAME/\$version
 setenv ACTS_ROOT \$ACTS_ROOT
 prepend-path LD_LIBRARY_PATH \$ACTS_ROOT/lib
 prepend-path ROOT_INCLUDE_PATH \$ACTS_ROOT/include
+prepend-path PYTHONPATH \$ACTS_ROOT/python
 EoF
