@@ -10,6 +10,7 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 
 ### Added
 
+* DD4hep: Add recipe for detector description toolkit (v01-33)
 * ACTS: Standalone recipe for new tracking framework
 * HEPMC3: Recipe, required dependency for ACTS
 * EIGEN3: Recipe, required dependency for ACTS
@@ -24,6 +25,8 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 
 ### Fixed
 
+* DD4hep: Fix TBB linking by manually setting TBB_IMPORTED_TARGETS for modern oneTBB compatibility
+* DD4hep: Fix compilation flag concatenation bug by adding whitespace to Geant4 exported CXX_FLAGS to prevent improper flag merging in DD4hep's CMake code
 * ROOT: Disabled davix to resolve build issues
 * FairRoot: Add missing GEANT3 dependency
 * EvtGen: Fix detection of C++11
@@ -33,6 +36,7 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 
 ### Changed
 
+* FairShip: Add DD4hep as required dependency
 * Defaults: Moved all overrides from defaults files to individual recipes to reduce duplication
   - defaults-release.sh: Moved all 12 package overrides to their respective recipe files, leaving only environment configuration
   - boost: Updated recipe from v1.75.0 to v1.70.0 and moved version, tag, requires, and prefer_system_check to recipe

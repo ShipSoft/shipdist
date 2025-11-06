@@ -14,6 +14,7 @@ requires:
   - EvtGen
   - ROOT
   - VMC
+  - DD4hep
 env:
   FAIRSHIP: "$FAIRSHIP_ROOT"
   EOSSHIP: "root://eospublic.cern.ch/"
@@ -56,7 +57,8 @@ incremental_recipe: |
             ${FAIRROOT_VERSION:+FairRoot/$FAIRROOT_VERSION-$FAIRROOT_REVISION} \\
             ${GENFIT_VERSION:+GenFit/$GENFIT_VERSION-$GENFIT_REVISION} \\
             ${HEPMC3_VERSION:+HepMC3/$HEPMC3_VERSION-$HEPMC3_REVISION} \\
-            ${ACTS_VERSION:+acts/$ACTS_VERSION-$ACTS_REVISION}
+            ${ACTS_VERSION:+acts/$ACTS_VERSION-$ACTS_REVISION} \\
+            ${DD4HEP_VERSION:+DD4hep/$DD4HEP_VERSION-$DD4HEP_REVISION}
   # Our environment
   setenv EOSSHIP root://eospublic.cern.ch/
   setenv FAIRSHIP_ROOT \$::env(BASEDIR)/$PKGNAME/\$version
@@ -107,6 +109,7 @@ cmake $SOURCEDIR                                                 \
       ${BOOST_ROOT:+-DBOOST_ROOT=$BOOST_ROOT}                    \
       ${GENFIT:+-Dgenfit2_ROOT=$GENFIT} \
       ${ACTS:+-DACTS_ROOT=$ACTS_ROOT} \
+      ${DD4HEP_ROOT:+-DDD4hep_DIR=$DD4HEP_ROOT} \
       -DCMAKE_INSTALL_PREFIX=$INSTALLROOT
 
 cmake --build . ${JOBS+-j$JOBS} --target install
@@ -137,7 +140,8 @@ module load BASE/1.0                                                            
             ${FAIRROOT_VERSION:+FairRoot/$FAIRROOT_VERSION-$FAIRROOT_REVISION}	\\
             ${GENFIT_VERSION:+GenFit/$GENFIT_VERSION-$GENFIT_REVISION} \\
             ${HEPMC3_VERSION:+HepMC3/$HEPMC3_VERSION-$HEPMC3_REVISION} \\
-            ${ACTS_VERSION:+acts/$ACTS_VERSION-$ACTS_REVISION}
+            ${ACTS_VERSION:+acts/$ACTS_VERSION-$ACTS_REVISION} \\
+            ${DD4HEP_VERSION:+DD4hep/$DD4HEP_VERSION-$DD4HEP_REVISION}
 
 # Our environment
 setenv EOSSHIP root://eospublic.cern.ch/
