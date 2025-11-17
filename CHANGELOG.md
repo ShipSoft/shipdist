@@ -70,6 +70,8 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 * GCC: Update to v11.2.0 when not using system toolchain
 * Freetype: Update to 2.10, update recipe from alidist
 * OpenSSL: Update recipe from alidist
+* Pythia: Update to 8.316
+* EvtGen: Update to R02-02-00-alice2
 
 ### Removed
 
