@@ -1,7 +1,7 @@
 package: pythia
 version: "%(tag_basename)s"
-tag: v8230-ship
-source: https://github.com/ShipSoft/pythia8
+tag: pythia8316
+source: https://gitlab.com/Pythia8/releases
 requires:
   - lhapdf
   - HepMC
