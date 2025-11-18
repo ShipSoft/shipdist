@@ -9,6 +9,11 @@ requires:
   - PHOTOSPP
 env:
   EVTGENDATA: "$EVTGEN_ROOT/share/EvtGen"
+prefer_system_check: |
+    if [ ! -z "$EVTGEN_VERSION" ]; then
+        exit 0
+    fi
+    exit 1
 ---
 #!/bin/sh
 

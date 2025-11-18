@@ -30,6 +30,7 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 * ACTS/Eigen3/Hepmc3: Fixed module detection
 * ACTS: PYTHONPATH set in recipe
 * FairShip: Find python paths correctly
+* Fix `prefer_system_check`s for fmt, fairlogge,r evtgen
 
 ### Changed
 
