@@ -14,10 +14,9 @@ prepend_path:
   ROOT_INCLUDE_PATH: "$FAIRLOGGER_ROOT/include"
 prefer_system_check: |
   #!/bin/bash -e
-  ls $FAIRLOGGER_ROOT/ > /dev/null && \
-  ls $FAIRLOGGER_ROOT/lib > /dev/null && \
-  ls $FAIRLOGGER_ROOT/include/fairlogger > /dev/null && \
-  grep $REQUESTED_VERSION $FAIRLOGGER_ROOT/include/fairlogger/Version.h
+  REQUESTED_VERSION=${REQUESTED_VERSION#v}
+  verge() { [[  "$1" = "`echo -e "$1\n$2" | sort -V | head -n1`" ]]; }
+  verge $REQUESTED_VERSION $FAIRLOGGER_VERSION
 ---
 #!/bin/bash
 

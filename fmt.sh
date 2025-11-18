@@ -8,6 +8,12 @@ build_requires:
   - CMake
 prepend_path:
   ROOT_INCLUDE_PATH: "$FMT_ROOT/include"
+prefer_system_check: |
+    if [ -z "$FMT_VERSION" ]; then
+        FMT_VERSION=$(pkg-config --modversion fmt 2>/dev/null)
+    fi
+    verge() { [[  "$1" = "`echo -e "$1\n$2" | sort -V | head -n1`" ]]; }
+    verge $REQUESTED_VERSION $FMT_VERSION
 ---
 #!/bin/bash -e
 cmake $SOURCEDIR -DCMAKE_INSTALL_PREFIX=$INSTALLROOT -DFMT_TEST=OFF
