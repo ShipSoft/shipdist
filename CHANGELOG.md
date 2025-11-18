@@ -10,6 +10,34 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 
 ### Added
 
+### Fixed
+
+### Changed
+
+### Removed
+
+## [25.11](https://github.com/ShipSoft/shipdist/tree/25.11)
+
+Tagged release for the background production.
+
+### Fixed
+
+* ACTS: PYTHONPATH set in recipe
+* Fix `prefer_system_check`s for fmt, fairlogger evtgen
+
+### Changed
+
+* defaults-actstracking.sh: FairShip override removed.
+* Pythia: Update to 8.316
+* EvtGen: Update to R02-02-00-alice2
+
+## [25.09](https://github.com/ShipSoft/shipdist/tree/25.09)
+
+Many version updates to align more with SLC9 for background production. New
+default added for ACTS tracking.
+
+### Added
+
 * ACTS: Standalone recipe for new tracking framework
 * HEPMC3: Recipe, required dependency for ACTS
 * EIGEN3: Recipe, required dependency for ACTS
@@ -28,9 +56,7 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 * FairRoot: Add missing GEANT3 dependency
 * EvtGen: Fix detection of C++11
 * ACTS/Eigen3/Hepmc3: Fixed module detection
-* ACTS: PYTHONPATH set in recipe
 * FairShip: Find python paths correctly
-* Fix `prefer_system_check`s for fmt, fairlogge,r evtgen
 
 ### Changed
 
@@ -49,7 +75,6 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
   - FairMQ: Updated recipe version from v1.4.49 to v1.4.38 to match defaults
   - Tauolapp: Updated recipe version format and tag from v1.1.5 to v1.1.5-ship to match defaults
   - pythia6: Updated recipe tag from 428-alice1 to v6.4.28-snd and source from alisw/pythia6.git to SND-LHC/pythia6 to match defaults
-  - defaults-actstracking.sh: FairShip override removed.
 * Python-modules-list: Updated pip to v25.0.1
 * Python-modules-list: Added pybind11 v2.13.6
 * EvtGen: Added cmake build instructions required for R02-02-00
@@ -71,8 +96,6 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 * GCC: Update to v11.2.0 when not using system toolchain
 * Freetype: Update to 2.10, update recipe from alidist
 * OpenSSL: Update recipe from alidist
-* Pythia: Update to 8.316
-* EvtGen: Update to R02-02-00-alice2
 
 ### Removed
 
