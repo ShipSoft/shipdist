@@ -9,7 +9,7 @@ repos:
   - id: trailing-whitespace
   - id: end-of-file-fixer
 - repo: https://github.com/crate-ci/committed
-  rev: v1.1.7
+  rev: v1.1.8
   hooks:
   - id: committed
     name: check commit message formatting
