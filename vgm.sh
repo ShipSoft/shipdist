@@ -1,6 +1,6 @@
 package: vgm
 version: "%(tag_basename)s%(defaults_upper)s"
-tag: "v4-9"
+tag: "v5-2"
 source: https://github.com/vmc-project/vgm.git
 requires:
   - ROOT
@@ -32,7 +32,10 @@ cmake "$SOURCEDIR" \
   -DCMAKE_INSTALL_PREFIX="$INSTALLROOT"  \
   -DWITH_EXAMPLES=OFF                \
   -DWITH_TEST=OFF                     \
+  ${XERCESC_ROOT:+-DXercesC_ROOT=$XERCESC_ROOT} \
+  -DCMAKE_POLICY_DEFAULT_CMP0074=NEW \
   -DBUILD_SHARED_LIBS=OFF
+#  ${XERCESC_ROOT:+-DXercesC_INCLUDE_DIR=$XERCESC_ROOT/include -DXercesC_LIBRARY=$XERCESC_ROOT/lib} \
 
 make ${JOBS+-j $JOBS} install
 

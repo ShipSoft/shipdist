@@ -1,6 +1,6 @@
 package: GEANT4_VMC
 version: "%(tag_basename)s"
-tag: "v5-4"
+tag: "v6-6"
 source: https://github.com/vmc-project/geant4_vmc
 requires:
   - ROOT
@@ -33,6 +33,7 @@ LDFLAGS="$LDFLAGS -L$GEANT4_ROOT/lib"            \
     -DCMAKE_INSTALL_LIBDIR=lib                   \
     -DCMAKE_INSTALL_PREFIX="$INSTALLROOT"        \
     -DCMAKE_POLICY_DEFAULT_CMP0074=NEW \
+    ${XERCESC_ROOT:+-DXercesC_ROOT=$XERCESC_ROOT} \
     ${CXXSTD:+-DCMAKE_CXX_STANDARD=$CXXSTD}
 
 make ${JOBS+-j $JOBS} install
