@@ -14,6 +14,12 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 
 ### Changed
 
+* Geant4: Update to 11.4.0
+* Geant3: Update to 4-4
+* Geant4_VMC: Update to 6-6
+* VGM: Update to 5-2
+* VMC: Update to 2-1
+
 ### Removed
 
 ## [25.11](https://github.com/ShipSoft/shipdist/tree/25.11)
