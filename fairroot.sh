@@ -53,14 +53,11 @@ cmake $SOURCEDIR                                                                
       -DCMAKE_CXX_FLAGS="$CXXFLAGS"                                                         \
       ${CMAKE_BUILD_TYPE:+-DCMAKE_BUILD_TYPE=$CMAKE_BUILD_TYPE}                             \
       -DROOTSYS=$ROOTSYS                                                                    \
-      -DROOT_CONFIG_SEARCHPATH=$ROOT_ROOT/bin                                               \
       -DPythia6_LIBRARY_DIR=$PYTHIA6_ROOT/lib                                               \
       ${YAML_CPP_ROOT:+-DYAML_CPP_ROOT=$YAML_CPP_ROOT}                                      \
       -DGeant3_DIR=$GEANT3_ROOT                                                             \
-      -DDISABLE_GO=ON                                                                       \
       -DBUILD_EXAMPLES=ON                                                                   \
       ${GEANT4_ROOT:+-DGeant4_DIR=$GEANT4_ROOT}                                             \
-      -DFAIRROOT_MODULAR_BUILD=ON                                                           \
       ${BOOST_ROOT:+-DBOOST_ROOT=$BOOST_ROOT}                                               \
       -DBoost_NO_SYSTEM_PATHS=${BOOST_NO_SYSTEM_PATHS}                                      \
       ${GSL_ROOT:+-DGSL_DIR=$GSL_ROOT}                                                      \
