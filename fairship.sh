@@ -13,6 +13,7 @@ requires:
   - PHOTOSPP
   - EvtGen
   - ROOT
+  - ROOTEGPythia6
   - VMC
 env:
   FAIRSHIP: "$FAIRSHIP_ROOT"
@@ -53,6 +54,7 @@ incremental_recipe: |
             ${GENIE_VERSION:+GENIE/$GENIE_VERSION-$GENIE_REVISION}              \\
             ${PHOTOSPP_VERSION:+PHOTOSPP/$PHOTOSPP_VERSION-$PHOTOSPP_REVISION}  \\
             ${EVTGEN_VERSION:+EvtGen/$EVTGEN_VERSION-$EVTGEN_REVISION}          \\
+            ${ROOTEGPythia6_VERSION:+ROOTEGPythia6/$ROOTEGPythia6_VERSION-$ROOTEGPythia6_REVISION} \\
             ${FAIRROOT_VERSION:+FairRoot/$FAIRROOT_VERSION-$FAIRROOT_REVISION} \\
             ${GENFIT_VERSION:+GenFit/$GENFIT_VERSION-$GENFIT_REVISION} \\
             ${HEPMC3_VERSION:+HepMC3/$HEPMC3_VERSION-$HEPMC3_REVISION} \\
@@ -92,6 +94,8 @@ cmake $SOURCEDIR                                                 \
       -DCMAKE_CXX_FLAGS="$CXXFLAGS"                              \
       -DCMAKE_BUILD_TYPE=$CMAKE_BUILD_TYPE                       \
       -DROOT_DIR=$ROOT_ROOT                                      \
+      -DROOTEGPythia6_ROOT=$ROOTEGPYTHIA6_ROOT                   \
+      -DPYTHIA6_ROOT=$PYTHIA6_ROOT                               \
       -DHEPMC_DIR=$HEPMC_ROOT                                    \
       -DHEPMC_INCLUDE_DIR=$HEPMC_ROOT/include/HepMC              \
       -DEVTGEN_INCLUDE_DIR=$EVTGEN_ROOT/include                  \
