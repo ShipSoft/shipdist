@@ -10,6 +10,9 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 
 ### Added
 
+- GeoModel recipe (6.22.0) for detector description toolkit from CERN
+- nlohmann-json recipe (v3.12.0) for JSON library support (required by GeoModel)
+
 ### Fixed
 
 ### Changed
