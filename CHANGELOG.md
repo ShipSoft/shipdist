@@ -23,7 +23,7 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 * Geant4: Update to 11.4.0
 * Geant3: Update to 4-4
 * Geant4_VMC: Update to 6-6
-* VGM: Update to 5-2
+* VGM: Update to 5-3-1
 * VMC: Update to 2-1
 * GSL: Update to 2.8 for ROOT compatibility
 
