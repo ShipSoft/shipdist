@@ -12,6 +12,7 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 
 - ROOTEGPythia6 recipe (main branch) for TPythia6 support with upstream ROOT
 - FairShip now depends on ROOTEGPythia6 for TPythia6 functionality
+- Add ninja recipe
 
 ### Fixed
 
@@ -26,6 +27,7 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 * VGM: Update to 5-3-1
 * VMC: Update to 2-1
 * GSL: Update to 2.8 for ROOT compatibility
+* libpng: update to 1.6.47
 
 ### Removed
 
