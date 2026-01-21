@@ -9,6 +9,7 @@ requires:
   - VMC
   - boost
   - protobuf
+  - FairCMakeModules
   - FairLogger
   - FairMQ
   - yaml-cpp
@@ -69,7 +70,8 @@ cmake $SOURCEDIR                                                                
       ${CXXSTD:+-DCMAKE_CXX_STANDARD=$CXXSTD}                                               \
       -DCMAKE_EXPORT_COMPILE_COMMANDS=ON                                                    \
       -DCMAKE_INSTALL_LIBDIR=lib                                                            \
-      -DCMAKE_INSTALL_PREFIX=$INSTALLROOT
+      -DCMAKE_INSTALL_PREFIX=$INSTALLROOT \
+      -DFairCMakeModules_DIR=$FAIRCMAKEMODULES_ROOT/share/cmake/FairCMakeModules-${FAIRCMAKEMODULES_VERSION#v}
 
 cmake --build . -- -j$JOBS install
 
