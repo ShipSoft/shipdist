@@ -28,6 +28,7 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 * VMC: Update to 2-1
 * GSL: Update to 2.8 for ROOT compatibility
 * libpng: update to 1.6.47
+* FairRoot: Update to 19.0.0
 
 ### Removed
 

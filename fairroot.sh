@@ -1,6 +1,6 @@
 package: FairRoot
-version: "v18.8.2"
-tag: "v18.8.2"
+version: "v19.0.0"
+tag: "v19.0.0"
 source: https://github.com/FairRootGroup/FairRoot
 requires:
   - generators
