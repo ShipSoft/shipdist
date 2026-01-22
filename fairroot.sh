@@ -9,12 +9,13 @@ requires:
   - VMC
   - boost
   - protobuf
-  - FairCMakeModules
   - FairLogger
   - FairMQ
   - yaml-cpp
   - GEANT3
   - "GCC-Toolchain:(?!osx)"
+build_requires:
+  - FairCMakeModules
 env:
   VMCWORKDIR: "$FAIRROOT_ROOT/share/fairbase/examples"
   GEOMPATH:   "$FAIRROOT_ROOT/share/fairbase/examples/common/geometry"
@@ -71,7 +72,7 @@ cmake $SOURCEDIR                                                                
       -DCMAKE_EXPORT_COMPILE_COMMANDS=ON                                                    \
       -DCMAKE_INSTALL_LIBDIR=lib                                                            \
       -DCMAKE_INSTALL_PREFIX=$INSTALLROOT \
-      -DFairCMakeModules_DIR=$FAIRCMAKEMODULES_ROOT/share/cmake/FairCMakeModules-${FAIRCMAKEMODULES_VERSION#v}
+      -DFairCMakeModules_ROOT=$FAIRCMAKEMODULES_ROOT
 
 cmake --build . -- -j$JOBS install
 

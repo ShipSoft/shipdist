@@ -15,6 +15,8 @@ requires:
   - ROOT
   - ROOTEGPythia6
   - VMC
+build_requires:
+  - FairCMakeModules
 env:
   FAIRSHIP: "$FAIRSHIP_ROOT"
   EOSSHIP: "root://eospublic.cern.ch/"
@@ -95,21 +97,18 @@ cmake $SOURCEDIR                                                 \
       -DCMAKE_BUILD_TYPE=$CMAKE_BUILD_TYPE                       \
       -DROOT_DIR=$ROOT_ROOT                                      \
       -DROOTEGPythia6_ROOT=$ROOTEGPYTHIA6_ROOT                   \
-      -DPYTHIA6_ROOT=$PYTHIA6_ROOT                               \
       -DHEPMC_DIR=$HEPMC_ROOT                                    \
       -DHEPMC_INCLUDE_DIR=$HEPMC_ROOT/include/HepMC              \
       -DEVTGEN_INCLUDE_DIR=$EVTGEN_ROOT/include                  \
       -DEVTGEN_LIBRARY_DIR=$EVTGEN_ROOT/lib                      \
-      -DPYTHON_INCLUDE_DIR=$(python -c "import sysconfig; print(sysconfig.get_path('include'))")  \
-      -DPYTHON_LIBRARY=$(python -c "import sysconfig; print(sysconfig.get_config_var('LIBDIR'))") \
       -DPYTHIA8_DIR=$PYTHIA_ROOT                                 \
       -DPYTHIA8_INCLUDE_DIR=$PYTHIA_ROOT/include                 \
       -DGEANT4_ROOT=$GEANT4_ROOT                                 \
       -DGEANT4_INCLUDE_DIR=$GEANT4_ROOT/include/Geant4           \
       -DGEANT4_VMC_INCLUDE_DIR=$GEANT4_VMC_ROOT/include/geant4vmc \
       ${CMAKE_VERBOSE_MAKEFILE:+-DCMAKE_VERBOSE_MAKEFILE=ON}     \
-      ${BOOST_ROOT:+-DBOOST_ROOT=$BOOST_ROOT}                    \
-      ${GENFIT:+-Dgenfit2_ROOT=$GENFIT} \
+      -DFairCMakeModules_ROOT=$FAIRCMAKEMODULES_ROOT \
+      ${GENFIT_ROOT:+-Dgenfit2_ROOT=$GENFIT_ROOT} \
       ${ACTS:+-DACTS_ROOT=$ACTS_ROOT} \
       -DCMAKE_INSTALL_PREFIX=$INSTALLROOT
 
