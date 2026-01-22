@@ -1,6 +1,6 @@
 package: pythia
 version: "%(tag_basename)s"
-tag: pythia8316
+tag: pythia8317
 source: https://gitlab.com/Pythia8/releases
 requires:
   - lhapdf
