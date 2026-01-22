@@ -31,6 +31,7 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 * FairRoot: Update to 19.0.0
 * Python: Update to 3.12.12, unpin most python packages, add distro package to
   fix aliBuild architecture detection
+* Pythia8: Update to 8.317
 
 ### Removed
 
