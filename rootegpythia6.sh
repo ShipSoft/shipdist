@@ -13,6 +13,11 @@ prepend_path:
   LD_LIBRARY_PATH: "$ROOTEGPYTHIA6_ROOT/lib"
   ROOT_INCLUDE_PATH: "$ROOTEGPYTHIA6_ROOT/include"
   CMAKE_MODULE_PATH: "$ROOTEGPYTHIA6_ROOT/lib/cmake/ROOTEGPythia6/Modules"
+prefer_system_check: |
+    if [ ! -z "$ROOTEGPYTHIA6_VERSION" ]; then
+        exit 0
+    fi
+    exit 1
 ---
 #!/bin/bash -e
 
