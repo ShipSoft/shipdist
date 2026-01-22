@@ -19,10 +19,8 @@ prefer_system_check: |
   ls $GEANT4_VMC_ROOT/bin > /dev/null && \
   ls $GEANT4_VMC_ROOT/lib/libg4root.so > /dev/null && \
   ls $GEANT4_VMC_ROOT/lib/libgeant4vmc.so> /dev/null && \
-  ls $GEANT4_VMC_ROOT/lib/libmtroot.so > /dev/null && \
   ls $GEANT4_VMC_ROOT/include/g4root > /dev/null && \
   ls $GEANT4_VMC_ROOT/include/geant4vmc > /dev/null && \
-  ls $GEANT4_VMC_ROOT/include/mtroot > /dev/null && \
   true
 ---
 #!/bin/bash -e
