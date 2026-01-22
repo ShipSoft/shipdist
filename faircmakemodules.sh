@@ -6,6 +6,11 @@ build_requires:
   - CMake
   - "GCC-Toolchain:(?!osx)"
   - alibuild-recipe-tools
+prefer_system_check: |
+    if [ ! -z "$FAIRCMAKEMODULES_VERSION" ]; then
+        exit 0
+    fi
+    exit 1
 ---
 #!/bin/sh
 
