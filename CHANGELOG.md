@@ -10,30 +10,38 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 
 ### Added
 
-- ROOTEGPythia6 recipe (main branch) for TPythia6 support with upstream ROOT
-- FairShip now depends on ROOTEGPythia6 for TPythia6 functionality
-- Add ninja recipe
-
 ### Fixed
 
 ### Changed
 
-- ROOT: Update from 6.30.08 to 6.36.06
-- ROOT: removed pythia6 dependency (TPythia6 now provided by ROOTEGPythia6)
-- GENIE: updated from v3.4.2 to v3.6.2, switched from pythia6 to pythia8
-* Geant4: Update to 11.4.0
-* Geant3: Update to 4-5
-* Geant4_VMC: Update to 6-7
-* VGM: Update to 5-3-1
-* VMC: Update to 2-1
-* GSL: Update to 2.8 for ROOT compatibility
-* libpng: update to 1.6.47
-* FairRoot: Update to 19.0.0
-* Python: Update to 3.12.12, unpin most python packages, add distro package to
+- Python: Update to 3.12.12, unpin most python packages, add distro package to
   fix aliBuild architecture detection
-* Pythia8: Update to 8.317
+- Pythia8: Update to 8.317
 
 ### Removed
+
+## [25.12](https://github.com/ShipSoft/shipdist/tree/25.12)
+
+Major update to the Geant4 stack and ROOT.
+
+### Added
+
+- ROOTEGPythia6 recipe for TPythia6 support with upstream ROOT
+- ninja recipe for Ninja build system
+
+### Changed
+
+- ROOT: Update from 6.30.08 to 6.36.06, removed pythia6 dependency
+- FairRoot: Update to 19.0.0
+- GENIE: Update from v3.4.2 to v3.6.2, switch from pythia6 to pythia8
+- Geant4: Update to 11.4.0
+- Geant3: Update to 4-4
+- Geant4_VMC: Update to 6-7
+- VMC: Update to 2-1
+- VGM: Update to 5-3-1
+- GSL: Update to 2.8 for ROOT compatibility
+- libpng: Update to 1.6.47
+- FairShip: Add ROOTEGPythia6 dependency for TPythia6 functionality
 
 ## [25.11](https://github.com/ShipSoft/shipdist/tree/25.11)
 
