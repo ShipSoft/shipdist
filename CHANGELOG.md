@@ -14,11 +14,15 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 
 ### Changed
 
+### Removed
+
+## [26.01](https://github.com/ShipSoft/shipdist/tree/26.01)
+
+### Changed
+
 - Python: Update to 3.12.12, unpin most python packages, add distro package to
   fix aliBuild architecture detection
 - Pythia8: Update to 8.317
-
-### Removed
 
 ## [25.12](https://github.com/ShipSoft/shipdist/tree/25.12)
 
