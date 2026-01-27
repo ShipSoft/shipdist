@@ -20,3 +20,5 @@ repos:
     verbose: true
 ci:
   autofix_prs: true
+  autoupdate_commit_msg: "chore(deps): update pre-commit hooks"
+  autofix_commit_msg: "style: pre-commit fixes"
