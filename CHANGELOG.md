@@ -12,6 +12,8 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 
 ### Fixed
 
+* FairRoot: Make sure Geant4-VMC and XercesC are found
+
 ### Changed
 
 * defaults-actstracking: Removed all overrides unrelated to ACTS or C++20.

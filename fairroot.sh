@@ -60,6 +60,8 @@ cmake $SOURCEDIR                                                                
       -DGeant3_DIR=$GEANT3_ROOT                                                             \
       -DBUILD_EXAMPLES=ON                                                                   \
       ${GEANT4_ROOT:+-DGeant4_DIR=$GEANT4_ROOT}                                             \
+      ${GEANT4_VMC_ROOT:+-DGeant4VMC_ROOT=$GEANT4_VMC_ROOT} \
+      ${XERCESC_ROOT:+-DXercesC_ROOT=$XERCESC_ROOT} \
       ${BOOST_ROOT:+-DBOOST_ROOT=$BOOST_ROOT}                                               \
       -DBoost_NO_SYSTEM_PATHS=${BOOST_NO_SYSTEM_PATHS}                                      \
       ${GSL_ROOT:+-DGSL_DIR=$GSL_ROOT}                                                      \
