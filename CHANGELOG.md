@@ -10,6 +10,8 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 
 ### Added
 
+* Add pre-commit to python modules
+
 ### Fixed
 
 * FairRoot: Make sure Geant4-VMC and XercesC are found
