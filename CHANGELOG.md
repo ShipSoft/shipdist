@@ -66,6 +66,7 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 ### Added
 
 * Add pre-commit to python modules
+* abseil: Add recipe for protobuf dependency
 
 ### Fixed
 
@@ -74,6 +75,7 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 
 ### Changed
 
+* protobuf: Update to v33.5, migrate from autotools to CMake build
 * Move to C++20
 * ROOT: Update to 6.36.08
 * defaults-actstracking: Remove all overrides unrelated to ACTS or C++20
