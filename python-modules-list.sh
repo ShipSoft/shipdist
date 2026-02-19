@@ -15,6 +15,7 @@ env:
     mock>=5.2.0
     notebook>=7.5.2
     scons>=4.10.1
+    pre-commit>=4.5.1
   PIP312_REQUIREMENTS: |
     PyYAML>=6.0.3
     psutil>=7.2.1
