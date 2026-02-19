@@ -20,6 +20,7 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 * python: Require at least 3.12.12 in prefer_system_check
 * defaults-actstracking: Removed all overrides unrelated to ACTS or C++20.
 * ACTS: Disabled all GEANT4 build options required for examples.
+* Move to C++20
 
 ### Removed
 
