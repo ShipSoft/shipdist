@@ -1,6 +1,6 @@
 package: ROOT
 version: "%(tag_basename)s%(defaults_upper)s"
-tag: v6-36-06
+tag: v6-36-08
 source: https://github.com/root-project/root
 requires:
 - GSL
