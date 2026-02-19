@@ -1,9 +1,9 @@
 package: CMake
 version: "%(tag_basename)s"
-tag: "v3.26.5"
+tag: "v4.2.3"
 source: https://github.com/Kitware/CMake
 build_requires:
- - "GCC-Toolchain:(?!osx)"
+  - "GCC-Toolchain:(?!osx)"
 prefer_system: .*
 prefer_system_check: |
     REQUESTED_VERSION=${REQUESTED_VERSION#v}
@@ -12,27 +12,27 @@ prefer_system_check: |
 ---
 #!/bin/bash -e
 
-cat > build-flags.cmake <<- EOF
-# Disable Java capabilities; we don't need it and on OS X might miss the
-# required /System/Library/Frameworks/JavaVM.framework/Headers/jni.h.
-SET(JNI_H FALSE CACHE BOOL "" FORCE)
-SET(Java_JAVA_EXECUTABLE FALSE CACHE BOOL "" FORCE)
-SET(Java_JAVAC_EXECUTABLE FALSE CACHE BOOL "" FORCE)
+cat >build-flags.cmake <<-EOF
+	# Disable Java capabilities; we don't need it and on OS X might miss the
+	# required /System/Library/Frameworks/JavaVM.framework/Headers/jni.h.
+	SET(JNI_H FALSE CACHE BOOL "" FORCE)
+	SET(Java_JAVA_EXECUTABLE FALSE CACHE BOOL "" FORCE)
+	SET(Java_JAVAC_EXECUTABLE FALSE CACHE BOOL "" FORCE)
 
-# SL6 with GCC 4.6.1 and LTO requires -ltinfo with -lcurses for link to succeed,
-# but cmake is not smart enough to find it. We do not really need ccmake anyway,
-# so just disable it.
-SET(BUILD_CursesDialog FALSE CACHE BOOL "" FORCE)
+	# SL6 with GCC 4.6.1 and LTO requires -ltinfo with -lcurses for link to succeed,
+	# but cmake is not smart enough to find it. We do not really need ccmake anyway,
+	# so just disable it.
+	SET(BUILD_CursesDialog FALSE CACHE BOOL "" FORCE)
 EOF
 
 $SOURCEDIR/bootstrap --prefix=$INSTALLROOT \
-                     --init=build-flags.cmake \
-                     ${JOBS:+--parallel=$JOBS}
+	--init=build-flags.cmake \
+	${JOBS:+--parallel=$JOBS}
 make ${JOBS+-j $JOBS}
 make install/strip
 
 mkdir -p etc/modulefiles
-cat > etc/modulefiles/$PKGNAME <<EoF
+cat >etc/modulefiles/$PKGNAME <<EoF
 #%Module1.0
 proc ModulesHelp { } {
   global version
