@@ -34,6 +34,7 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 * PHOTOSPP, Tauolapp: Build with HepMC3 support
 * APFEL: Upgrade to 3.1.1 and switch to CMake build
 * ROOT, Geant4: Build with Ninja
+* FairLogger: Update to v2.3.1
 * FairShip: Build with Ninja
 * Refactor modulefiles to use alibuild-generate-module
 * FairRoot: Remove unused FairMQ dependency
