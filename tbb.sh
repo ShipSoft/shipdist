@@ -22,6 +22,7 @@ prepend_path:
 cmake "$SOURCEDIR" -DCMAKE_INSTALL_PREFIX="$INSTALLROOT" \
           ${CXXSTD:+-DCMAKE_CXX_STANDARD=$CXXSTD} \
           -DCMAKE_INSTALL_LIBDIR=lib \
+	  -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
 	  -DTBB_TEST=OFF
 
 # Build and install

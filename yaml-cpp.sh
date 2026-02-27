@@ -24,6 +24,7 @@ cmake $SOURCEDIR                                         \
   ${BOOST_ROOT:+-DBoost_INCLUDE_DIR:PATH="$BOOST_ROOT/include"}  \
   -DCMAKE_SKIP_RPATH=YES                                 \
   -DYAML_CPP_BUILD_TESTS=NO                              \
+  -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
   -DSKIP_INSTALL_FILES=1
 
 make ${JOBS+-j $JOBS} install
