@@ -1,6 +1,6 @@
 package: GenFit
-version: main
-source: https://github.com/olantwin/GenFit
+version: 02-03-00
+source: https://github.com/GenFit/GenFit
 requires:
   - ROOT
   - googletest # should be build dep?
@@ -17,6 +17,7 @@ prefer_system_check: |
     ls $GENFIT_ROOT/include && \
     ls $GENFIT_ROOT/lib
 ---
+#!/bin/bash -e
 : ${BUILD_TESTING:=OFF}
 cmake $SOURCEDIR                                                                            \
       ${CMAKE_GENERATOR:+-G "$CMAKE_GENERATOR"}                                             \
@@ -29,6 +30,7 @@ cmake $SOURCEDIR                                                                
       -DCMAKE_INSTALL_LIBDIR=lib                                                            \
       -DCMAKE_INSTALL_PREFIX=$INSTALLROOT \
       -DCMAKE_POLICY_DEFAULT_CMP0074=NEW \
+      -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
       -DROOT_DIR="${ROOT_ROOT}" \
       -DBUILD_TESTING=${BUILD_TESTING}
 
