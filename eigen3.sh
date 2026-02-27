@@ -1,6 +1,12 @@
 package: Eigen3
 version: 3.4.0
 source: https://gitlab.com/libeigen/eigen.git
+prefer_system: .*
+prefer_system_check: |
+  printf '#include <Eigen/Dense>\nint main(){}\n' | \
+    c++ -std=c++20 -xc++ - \
+    ${EIGEN3_ROOT:+-I"$EIGEN3_ROOT/include/eigen3"} \
+    -o /dev/null
 build_requires:
   - "GCC-Toolchain:(?!osx)"
   - CMake
