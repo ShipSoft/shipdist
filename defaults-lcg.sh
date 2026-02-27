@@ -10,6 +10,7 @@ env:
   EIGEN3_ROOT: "/cvmfs/sft.cern.ch/lcg/views/LCG_109/x86_64-el9-gcc15-opt"
   NLOHMANN_JSON_ROOT: "/cvmfs/sft.cern.ch/lcg/views/LCG_109/x86_64-el9-gcc15-opt"
   BOOST_ROOT: "/cvmfs/sft.cern.ch/lcg/views/LCG_109/x86_64-el9-gcc15-opt"
+  GEANT4_ROOT: "/cvmfs/sft.cern.ch/lcg/views/LCG_109/x86_64-el9-gcc15-opt"
 ---
 # Before running aliBuild with --defaults lcg, source the LCG environment:
 #   source /cvmfs/sft.cern.ch/lcg/views/LCG_109/x86_64-el9-gcc15-opt/setup.sh
