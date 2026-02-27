@@ -25,6 +25,7 @@ cmake  $SOURCEDIR                           \
        -Dmomentum=GEV                       \
        -Dlength=MM                          \
        -Dbuild_docs:BOOL=OFF                \
+       -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
        -DCMAKE_INSTALL_PREFIX=$INSTALLROOT
 
 make ${JOBS+-j $JOBS}
