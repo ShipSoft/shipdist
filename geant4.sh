@@ -26,13 +26,14 @@ env:
   G4SAIDXSDATA: "`find ${G4INSTALL} $G4DATASEARCHOPT  '*data*G4SAIDDATA*'`"
 prefer_system_check: |
   #!/bin/bash -e
-  ls $GEANT4_ROOT/bin > /dev/null && \
-  ls $GEANT4_ROOT/bin/geant4-config > /dev/null && \
-  ls $GEANT4_ROOT/bin/geant4.csh > /dev/null && \
-  ls $GEANT4_ROOT/bin/geant4.sh > /dev/null && \
-  ls $GEANT4_ROOT/include > /dev/null && \
-  ls $GEANT4_ROOT/include/Geant4 > /dev/null && \
-  ls $GEANT4_ROOT/lib/ > /dev/null && \
+  GEANT4_ROOT_EFF=${GEANT4_ROOT:-${CMAKE_PREFIX_PATH%%:*}}
+  ls $GEANT4_ROOT_EFF/bin > /dev/null && \
+  ls $GEANT4_ROOT_EFF/bin/geant4-config > /dev/null && \
+  ls $GEANT4_ROOT_EFF/bin/geant4.csh > /dev/null && \
+  ls $GEANT4_ROOT_EFF/bin/geant4.sh > /dev/null && \
+  ls $GEANT4_ROOT_EFF/include > /dev/null && \
+  ls $GEANT4_ROOT_EFF/include/Geant4 > /dev/null && \
+  ls $GEANT4_ROOT_EFF/lib/ > /dev/null && \
   true
 ---
 #!/bin/bash -e
