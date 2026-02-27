@@ -19,6 +19,7 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 
 ### Changed
 
+* protobuf: Update to v33.5, migrate from autotools to CMake build
 * python: Require at least 3.12.12 in prefer_system_check
 * ROOT: Update to 6.36.08
 * defaults-actstracking: Removed all overrides unrelated to ACTS or C++20.
