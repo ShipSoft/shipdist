@@ -24,6 +24,7 @@ env:
   G4RADIOACTIVEDATA: "`find ${G4INSTALL} $G4DATASEARCHOPT '*data*RadioactiveDecay*'`"
   G4REALSURFACEDATA: "`find ${G4INSTALL} $G4DATASEARCHOPT '*data*RealSurface*'`"
   G4SAIDXSDATA: "`find ${G4INSTALL} $G4DATASEARCHOPT  '*data*G4SAIDDATA*'`"
+prefer_system: .*
 prefer_system_check: |
   #!/bin/bash -e
   GEANT4_ROOT_EFF=${GEANT4_ROOT:-${CMAKE_PREFIX_PATH%%:*}}
