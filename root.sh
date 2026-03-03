@@ -13,7 +13,6 @@ requires:
 - "OpenSSL:(?!osx)"
 - "osx-system-openssl:(osx.*)"
 - XRootD
-- pythia
 - TBB
 build_requires:
 - CMake
@@ -46,7 +45,7 @@ prefer_system_check: |
       echo "ROOT version $VERSION insufficient ($REQUESTED_VERSION requested)"
       exit 1
   fi
-  FEATURES="builtin_pcre mathmore xml ssl opengl http gdml pythia8 roofit soversion vdt xrootd"
+  FEATURES="builtin_pcre mathmore xml ssl opengl http gdml roofit soversion vdt xrootd"
   for FEATURE in $FEATURES; do
       root-config --has-$FEATURE | grep -q yes || { echo "$FEATURE missing"; exit 1; }
   done
@@ -139,8 +138,7 @@ module load BASE/1.0 ${GCC_TOOLCHAIN_VERSION:+GCC-Toolchain/$GCC_TOOLCHAIN_VERSI
                      ${XROOTD_VERSION:+XRootD/$XROOTD_VERSION-$XROOTD_REVISION}                                 \\
                      ${FREETYPE_VERSION:+FreeType/$FREETYPE_VERSION-$FREETYPE_REVISION}                         \\
                      ${PYTHON_VERSION:+Python/$PYTHON_VERSION-$PYTHON_REVISION}                                 \\
-                     ${PYTHON_MODULES_VERSION:+Python-modules/$PYTHON_MODULES_VERSION-$PYTHON_MODULES_REVISION} \\
-                     ${PYTHIA_VERSION:+pythia/$PYTHIA_VERSION-$PYTHIA_REVISION}
+                     ${PYTHON_MODULES_VERSION:+Python-modules/$PYTHON_MODULES_VERSION-$PYTHON_MODULES_REVISION}
 # Our environment
 setenv ROOT_RELEASE \$version
 setenv ROOT_BASEDIR \$::env(BASEDIR)/$PKGNAME
