@@ -1,6 +1,6 @@
 package: boost
 version: "%(tag_basename)s"
-tag: "v1.75.0"
+tag: "v1.83.0"
 source: https://github.com/alisw/boost.git
 requires:
   - "GCC-Toolchain:(?!osx)"
@@ -14,7 +14,7 @@ build_requires:
 prepend_path:
   ROOT_INCLUDE_PATH: "$BOOST_ROOT/include"
 prefer_system_check: |
- printf "#include \"boost/version.hpp\"\n# if (BOOST_VERSION < 106400)\n#error \"Cannot use system's boost. Boost > 1.64.00 required.\"\n#endif\nint main(){}" \
+ printf "#include \"boost/version.hpp\"\n# if (BOOST_VERSION < 107800)\n#error \"Cannot use system's boost. Boost > 1.78.00 required.\"\n#endif\nint main(){}" \
  | gcc -I$BOOST_ROOT/include -xc++ - -o /dev/null
 ---
 BOOST_PYTHON=
