@@ -21,6 +21,8 @@ requires:
   - python-scipy
   - python-tabulate
   - python-uproot
+  - HepMC3
+  - acts
 build_requires:
   - FairCMakeModules
   - alibuild-recipe-tools
