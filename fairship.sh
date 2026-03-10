@@ -15,6 +15,8 @@ requires:
   - ROOT
   - ROOTEGPythia6
   - VMC
+  - HepMC3
+  - acts
 build_requires:
   - FairCMakeModules
 env:
