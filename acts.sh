@@ -10,6 +10,11 @@ requires:
   - boost
   - Eigen3
   - alibuild-recipe-tools
+env:
+  "ACTS_ROOT": "$ACTS_ROOT"
+prepend_path:
+  "ROOT_INCLUDE_PATH": "$ACTS_ROOT/include"
+  "PYTHONPATH": "$ACTS_ROOT/python"
 prefer_system_check: |
   ls $ACTS_ROOT/include && ls $ACTS_ROOT/lib64/libActsCore.so
 ---
