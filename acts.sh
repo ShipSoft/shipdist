@@ -10,6 +10,8 @@ requires:
   - boost
   - Eigen3
   - alibuild-recipe-tools
+prefer_system_check: |
+  ls $ACTS_ROOT/include && ls $ACTS_ROOT/lib64/libActsCore.so
 ---
 #!/bin/bash -e
 
