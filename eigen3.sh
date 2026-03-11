@@ -5,6 +5,8 @@ build_requires:
   - "GCC-Toolchain:(?!osx)"
   - CMake
   - alibuild-recipe-tools
+prefer_system_check: |
+  ls $EIGEN3_ROOT/include/eigen3/Eigen/Dense
 ---
 #!/bin/bash -e
 MODULEDIR="$INSTALLROOT/etc/modulefiles"
