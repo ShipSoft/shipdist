@@ -12,6 +12,8 @@ env:
   "HEPMC3": "$HEPMC3_ROOT"
 prepend_path:
   "ROOT_INCLUDE_PATH": "$HEPMC3_ROOT/include"
+prefer_system_check: |
+  ls $HEPMC3_ROOT/include/HepMC3 && ls $HEPMC3_ROOT/lib/libHepMC3.so
 ---
 #!/bin/bash -e
 MODULEDIR="$INSTALLROOT/etc/modulefiles"
