@@ -1,7 +1,7 @@
 package: FairRoot
 version: "v19.0.0"
-tag: "v19.0.0"
-source: https://github.com/FairRootGroup/FairRoot
+tag: "v19.0.0-ship"
+source: https://github.com/ShipSoft/FairRoot
 requires:
   - generators
   - simulation

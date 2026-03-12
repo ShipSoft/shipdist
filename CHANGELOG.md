@@ -16,6 +16,7 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 ### Fixed
 
 * FairRoot: Make sure Geant4-VMC and XercesC are found
+* FairRoot: Use our patched v19.0.0-ship for graceful exit at end of inputfile
 
 ### Changed
 
