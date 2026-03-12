@@ -52,6 +52,7 @@ cmake $SOURCEDIR                                                                
       ${CMAKE_GENERATOR:+-G "$CMAKE_GENERATOR"}                                             \
       ${MACOSX_RPATH:+-DMACOSX_RPATH=${MACOSX_RPATH}}                                       \
       -DCMAKE_CXX_FLAGS="$CXXFLAGS"                                                         \
+      -DCMAKE_CATCH_DISCOVER_TESTS_DISCOVERY_MODE=PRE_TEST                                   \
       ${CMAKE_BUILD_TYPE:+-DCMAKE_BUILD_TYPE=$CMAKE_BUILD_TYPE}                             \
       -DROOTSYS=$ROOTSYS                                                                    \
       -DPythia6_LIBRARY_DIR=$PYTHIA6_ROOT/lib                                               \
@@ -72,6 +73,7 @@ cmake $SOURCEDIR                                                                
       ${CXXSTD:+-DCMAKE_CXX_STANDARD=$CXXSTD}                                               \
       -DCMAKE_EXPORT_COMPILE_COMMANDS=ON                                                    \
       -DCMAKE_INSTALL_LIBDIR=lib                                                            \
+      -DCMAKE_POLICY_DEFAULT_CMP0167=NEW \
       -DCMAKE_INSTALL_PREFIX=$INSTALLROOT \
       -DFairCMakeModules_ROOT=$FAIRCMAKEMODULES_ROOT \
       -DBUILD_BASEMQ=OFF
