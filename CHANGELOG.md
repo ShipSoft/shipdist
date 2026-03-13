@@ -19,7 +19,8 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 
 ### Changed
 
-* CMake: Update to v4.2.3
+* CMake: Update to v4.2.3, but only require v3.20.0 from system (FairShip
+  minimum)
 * python: Require at least 3.12.12 in prefer_system_check
 * ROOT: Update to 6.36.08
 * defaults-actstracking: Removed all overrides unrelated to ACTS or C++20.
