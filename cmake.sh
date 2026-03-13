@@ -6,7 +6,7 @@ build_requires:
   - "GCC-Toolchain:(?!osx)"
 prefer_system: .*
 prefer_system_check: |
-    REQUESTED_VERSION=${REQUESTED_VERSION#v}
+    REQUESTED_VERSION=3.20.0
     verge() { [[  "$1" = "`echo -e "$1\n$2" | sort -V | head -n1`" ]]; }
     type cmake && verge $REQUESTED_VERSION `cmake --version | sed -e 's/.* //' | cut -d. -f1,2,3`
 ---
