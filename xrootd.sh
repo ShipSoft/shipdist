@@ -4,7 +4,8 @@ tag: "v5.8.4"
 source: https://github.com/xrootd/xrootd
 requires:
   - "OpenSSL:(?!osx)"
-  - Python-modules
+  - "Python:(slc|ubuntu)"
+  - "Python-system:(?!slc.*|ubuntu)"
   - libxml2
 build_requires:
   - CMake
@@ -146,8 +147,6 @@ alibuild-generate-module --bin --lib > "$MODULEFILE"
 cat >> "$MODULEFILE" <<EoF
 if { $XROOTD_PYTHON } {
   prepend-path PYTHONPATH \$PKG_ROOT/lib/python/site-packages
-  # This is probably redundant, but should not harm.
-  module load ${PYTHON_REVISION:+Python/$PYTHON_VERSION-$PYTHON_REVISION}                                 \\
-              ${PYTHON_MODULES_REVISION:+Python-modules/$PYTHON_MODULES_VERSION-$PYTHON_MODULES_REVISION}
+  module load ${PYTHON_REVISION:+Python/$PYTHON_VERSION-$PYTHON_REVISION}
 }
 EoF

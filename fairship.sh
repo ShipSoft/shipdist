@@ -15,6 +15,12 @@ requires:
   - ROOT
   - ROOTEGPythia6
   - VMC
+  - python-matplotlib
+  - python-pandas
+  - python-pyyaml
+  - python-scipy
+  - python-tabulate
+  - python-uproot
 build_requires:
   - FairCMakeModules
   - alibuild-recipe-tools

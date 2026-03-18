@@ -7,7 +7,7 @@ requires:
 - opengl:(?!osx)
 - Xdevel:(?!osx)
 - FreeType:(?!osx)
-- Python-modules
+- python-numpy
 - zlib
 - libxml2
 - "OpenSSL:(?!osx)"
@@ -105,7 +105,7 @@ ${PYTHIA_ROOT:+-Dpythia8=ON}                \
 ${PYTHON_ROOT:+-DPYTHON_EXECUTABLE=$PYTHONHOME/bin/python} \
 ${PYTHON_ROOT:+-DPYTHON_INCLUDE_DIR=$PYTHONHOME/include/python3.6m} \
 ${PYTHON_ROOT:+-DPYTHON_LIBRARY=$PYTHONHOME/lib/libpython3.6m.so} \
--DCMAKE_PREFIX_PATH="$FREETYPE_ROOT;$SYS_OPENSSL_ROOT;$GSL_ROOT;$PYTHON_ROOT;$PYTHON_MODULES_ROOT"
+-DCMAKE_PREFIX_PATH="$FREETYPE_ROOT;$SYS_OPENSSL_ROOT;$GSL_ROOT;$PYTHON_ROOT"
 FEATURES="builtin_pcre xml ssl opengl http gdml mathmore ${PYTHIA_ROOT:+pythia8}
     roofit soversion vdt ${XROOTD_ROOT:+xrootd}
     ${ENABLE_COCOA:+builtin_freetype}"
@@ -139,7 +139,7 @@ module load BASE/1.0 ${GCC_TOOLCHAIN_VERSION:+GCC-Toolchain/$GCC_TOOLCHAIN_VERSI
                      ${XROOTD_VERSION:+XRootD/$XROOTD_VERSION-$XROOTD_REVISION}                                 \\
                      ${FREETYPE_VERSION:+FreeType/$FREETYPE_VERSION-$FREETYPE_REVISION}                         \\
                      ${PYTHON_VERSION:+Python/$PYTHON_VERSION-$PYTHON_REVISION}                                 \\
-                     ${PYTHON_MODULES_VERSION:+Python-modules/$PYTHON_MODULES_VERSION-$PYTHON_MODULES_REVISION} \\
+                     ${PYTHON_NUMPY_VERSION:+python-numpy/$PYTHON_NUMPY_VERSION-$PYTHON_NUMPY_REVISION} \\
                      ${PYTHIA_VERSION:+pythia/$PYTHIA_VERSION-$PYTHIA_REVISION}
 # Our environment
 setenv ROOT_RELEASE \$version
