@@ -1,4 +1,6 @@
 package: python-awkward-cpp
+# awkward-cpp uses integer PyPI versions and is released from the awkward
+# monorepo, so there are no standalone GitHub tags to track.
 version: "52"
 requires:
   - "Python:(slc|ubuntu)"
