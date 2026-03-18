@@ -3,7 +3,6 @@ version: "%(tag_basename)s%(defaults_upper)s"
 tag: lhapdf-6.5.5
 source:  https://gitlab.com/hepcedar/lhapdf
 requires:
- - Python-modules
  - "Python:slc.*"
  - "Python-system:(?!slc.*)"
  - "GCC-Toolchain:(?!osx)"
