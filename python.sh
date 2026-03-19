@@ -40,7 +40,7 @@ export LIBFFI_ROOT
 export PKG_CONFIG_PATH=/usr/lib64/pkgconfig:${PKG_CONFIG_PATH}
 
 # If the python installer finds another pip, it won't install the new one
-export PATH=$(echo $PATH | awk -v RS=':' -v ORS=':' '!/python/ {print}' | sed 's/:$//')
+export PATH=$(echo $PATH | awk -v RS=':' -v ORS=':' '!(/(^|\/)[Pp]ython[0-9.]*\//)' | sed 's/:$//')
 unset PYTHONUSERBASE
 unset PYTHONHOME
 unset PYTHONPATH
