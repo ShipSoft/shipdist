@@ -1,10 +1,12 @@
 package: apfel
-version: 3.0.6
-tag: 3.0.6
+version: 3.1.1
+tag: 3.1.1
 source: https://github.com/scarrazza/apfel.git
 requires:
   - lhapdf
-env :
+build_requires:
+  - CMake
+env:
   LD_LIBRARY_PATH: "$LD_LIBRARY_PATH:$APFEL_ROOT/lib"
 prefer_system_check: |
   #!/bin/bash -e
@@ -15,12 +17,16 @@ prefer_system_check: |
 ---
 #!/bin/bash -ex
 
-rsync -a $SOURCEDIR/* $BUILDDIR
+cmake -S $SOURCEDIR -B .                                        \
+      -DCMAKE_INSTALL_PREFIX=$INSTALLROOT                       \
+      ${CMAKE_GENERATOR:+-G "$CMAKE_GENERATOR"}                 \
+      ${CMAKE_BUILD_TYPE:+-DCMAKE_BUILD_TYPE=$CMAKE_BUILD_TYPE} \
+      -DCMAKE_INSTALL_LIBDIR=lib                                \
+      -DAPFEL_DOWNLOAD_PDFS=OFF                                 \
+      -DAPFEL_ENABLE_TESTS=OFF                                  \
+      -DAPFEL_ENABLE_PYTHON=OFF
 
-$BUILDDIR/configure --prefix=${INSTALLROOT}
-
-make
-make install
+cmake --build . -- ${JOBS:+-j$JOBS} install
 
 # Modulefile
 MODULEDIR="$INSTALLROOT/etc/modulefiles"
