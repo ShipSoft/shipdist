@@ -44,6 +44,21 @@ incremental_recipe: |
   alibuild-generate-module --bin --lib > "$INSTALLROOT/etc/modulefiles/$PKGNAME"
   cat >> "$INSTALLROOT/etc/modulefiles/$PKGNAME" <<EoF
   setenv FAIRSHIP_HASH $FAIRSHIP_HASH
+  setenv FAIRSHIP \$::env(FAIRSHIP_ROOT)
+  setenv EOSSHIP root://eospublic.cern.ch/
+  setenv VMCWORKDIR \$::env(FAIRSHIP_ROOT)
+  setenv GEOMPATH \$::env(FAIRSHIP_ROOT)/geometry
+  setenv CONFIG_DIR \$::env(FAIRSHIP_ROOT)/gconfig
+  setenv GALCONF \$::env(FAIRSHIP_ROOT)/shipgen/genie_config
+  setenv FAIRLIBDIR \$::env(FAIRSHIP_ROOT)/lib
+  prepend-path PYTHONPATH \$::env(FAIRSHIP_ROOT)/python
+  prepend-path ROOT_INCLUDE_PATH \$::env(FAIRSHIP_ROOT)/include
+  append-path ROOT_INCLUDE_PATH \$::env(GEANT4_ROOT)/include
+  append-path ROOT_INCLUDE_PATH \$::env(GEANT4_ROOT)/include/Geant4
+  append-path ROOT_INCLUDE_PATH \$::env(PYTHIA_ROOT)/include
+  append-path ROOT_INCLUDE_PATH \$::env(PYTHIA_ROOT)/include/Pythia8
+  append-path ROOT_INCLUDE_PATH \$::env(GEANT4_VMC_ROOT)/include
+  append-path ROOT_INCLUDE_PATH \$::env(GEANT4_VMC_ROOT)/include/geant4vmc
   EoF
 ---
 #!/bin/sh
@@ -87,4 +102,19 @@ mkdir -p "$INSTALLROOT/etc/modulefiles"
 alibuild-generate-module --bin --lib > "$INSTALLROOT/etc/modulefiles/$PKGNAME"
 cat >> "$INSTALLROOT/etc/modulefiles/$PKGNAME" <<EoF
 setenv FAIRSHIP_HASH $FAIRSHIP_HASH
+setenv FAIRSHIP \$::env(FAIRSHIP_ROOT)
+setenv EOSSHIP root://eospublic.cern.ch/
+setenv VMCWORKDIR \$::env(FAIRSHIP_ROOT)
+setenv GEOMPATH \$::env(FAIRSHIP_ROOT)/geometry
+setenv CONFIG_DIR \$::env(FAIRSHIP_ROOT)/gconfig
+setenv GALCONF \$::env(FAIRSHIP_ROOT)/shipgen/genie_config
+setenv FAIRLIBDIR \$::env(FAIRSHIP_ROOT)/lib
+prepend-path PYTHONPATH \$::env(FAIRSHIP_ROOT)/python
+prepend-path ROOT_INCLUDE_PATH \$::env(FAIRSHIP_ROOT)/include
+append-path ROOT_INCLUDE_PATH \$::env(GEANT4_ROOT)/include
+append-path ROOT_INCLUDE_PATH \$::env(GEANT4_ROOT)/include/Geant4
+append-path ROOT_INCLUDE_PATH \$::env(PYTHIA_ROOT)/include
+append-path ROOT_INCLUDE_PATH \$::env(PYTHIA_ROOT)/include/Pythia8
+append-path ROOT_INCLUDE_PATH \$::env(GEANT4_VMC_ROOT)/include
+append-path ROOT_INCLUDE_PATH \$::env(GEANT4_VMC_ROOT)/include/geant4vmc
 EoF
