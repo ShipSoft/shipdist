@@ -17,6 +17,7 @@ requires:
   - VMC
 build_requires:
   - FairCMakeModules
+  - alibuild-recipe-tools
 env:
   FAIRSHIP: "$FAIRSHIP_ROOT"
   EOSSHIP: "root://eospublic.cern.ch/"
@@ -39,48 +40,10 @@ incremental_recipe: |
   FAIRSHIP_HASH=$(git rev-parse HEAD)
   cd $BUILDDIR
   # Modulefile
-  MODULEDIR="$INSTALLROOT/etc/modulefiles"
-  MODULEFILE="$MODULEDIR/$PKGNAME"
-  mkdir -p "$MODULEDIR"
-  cat > "$MODULEFILE" <<EoF
-  #%Module1.0
-  proc ModulesHelp { } {
-    global version
-    puts stderr "ALICE Modulefile for $PKGNAME $PKGVERSION-@@PKGREVISION@$PKGHASH@@"
-  }
-  set version $PKGVERSION-@@PKGREVISION@$PKGHASH@@
-  module-whatis "ALICE Modulefile for $PKGNAME $PKGVERSION-@@PKGREVISION@$PKGHASH@@"
-  # Dependencies
-  module load BASE/1.0                                                          \\
-            ${GEANT4_VERSION:+GEANT4/$GEANT4_VERSION-$GEANT4_REVISION}          \\
-            ${GENIE_VERSION:+GENIE/$GENIE_VERSION-$GENIE_REVISION}              \\
-            ${PHOTOSPP_VERSION:+PHOTOSPP/$PHOTOSPP_VERSION-$PHOTOSPP_REVISION}  \\
-            ${EVTGEN_VERSION:+EvtGen/$EVTGEN_VERSION-$EVTGEN_REVISION}          \\
-            ${ROOTEGPythia6_VERSION:+ROOTEGPythia6/$ROOTEGPythia6_VERSION-$ROOTEGPythia6_REVISION} \\
-            ${FAIRROOT_VERSION:+FairRoot/$FAIRROOT_VERSION-$FAIRROOT_REVISION} \\
-            ${GENFIT_VERSION:+GenFit/$GENFIT_VERSION-$GENFIT_REVISION} \\
-            ${HEPMC3_VERSION:+HepMC3/$HEPMC3_VERSION-$HEPMC3_REVISION} \\
-            ${ACTS_VERSION:+acts/$ACTS_VERSION-$ACTS_REVISION}
-  # Our environment
-  setenv EOSSHIP root://eospublic.cern.ch/
-  setenv FAIRSHIP_ROOT \$::env(BASEDIR)/$PKGNAME/\$version
-  setenv FAIRSHIP \$::env(FAIRSHIP_ROOT)
+  mkdir -p "$INSTALLROOT/etc/modulefiles"
+  alibuild-generate-module --bin --lib > "$INSTALLROOT/etc/modulefiles/$PKGNAME"
+  cat >> "$INSTALLROOT/etc/modulefiles/$PKGNAME" <<EoF
   setenv FAIRSHIP_HASH $FAIRSHIP_HASH
-  setenv VMCWORKDIR \$::env(FAIRSHIP)
-  setenv GEOMPATH \$::env(FAIRSHIP)/geometry
-  setenv CONFIG_DIR \$::env(FAIRSHIP)/gconfig
-  setenv GALGCONF \$::env(FAIRSHIP_ROOT)/shipgen/genie_config
-  prepend-path PATH \$::env(FAIRSHIP_ROOT)/bin
-  prepend-path LD_LIBRARY_PATH \$::env(FAIRSHIP_ROOT)/lib
-  setenv FAIRLIBDIR \$::env(FAIRSHIP_ROOT)/lib
-  prepend-path ROOT_INCLUDE_PATH \$::env(FAIRSHIP_ROOT)/include
-  append-path ROOT_INCLUDE_PATH \$::env(GEANT4_ROOT)/include
-  append-path ROOT_INCLUDE_PATH \$::env(GEANT4_ROOT)/include/Geant4
-  append-path ROOT_INCLUDE_PATH \$::env(PYTHIA_ROOT)/include
-  append-path ROOT_INCLUDE_PATH \$::env(PYTHIA_ROOT)/include/Pythia8
-  append-path ROOT_INCLUDE_PATH \$::env(GEANT4_VMC_ROOT)/include
-  append-path ROOT_INCLUDE_PATH \$::env(GEANT4_VMC_ROOT)/include/geant4vmc
-  prepend-path PYTHONPATH \$::env(FAIRSHIP_ROOT)/python
   EoF
 ---
 #!/bin/sh
@@ -120,46 +83,8 @@ FAIRSHIP_HASH=$(git rev-parse HEAD)
 cd $BUILDDIR
 
 # Modulefile
-MODULEDIR="$INSTALLROOT/etc/modulefiles"
-MODULEFILE="$MODULEDIR/$PKGNAME"
-mkdir -p "$MODULEDIR"
-cat > "$MODULEFILE" <<EoF
-#%Module1.0
-proc ModulesHelp { } {
-  global version
-  puts stderr "ALICE Modulefile for $PKGNAME $PKGVERSION-@@PKGREVISION@$PKGHASH@@"
-}
-set version $PKGVERSION-@@PKGREVISION@$PKGHASH@@
-module-whatis "ALICE Modulefile for $PKGNAME $PKGVERSION-@@PKGREVISION@$PKGHASH@@"
-# Dependencies
-module load BASE/1.0                                                            \\
-            ${GEANT4_VERSION:+GEANT4/$GEANT4_VERSION-$GEANT4_REVISION}          \\
-            ${GENIE_VERSION:+GENIE/$GENIE_VERSION-$GENIE_REVISION}              \\
-            ${PHOTOSPP_VERSION:+PHOTOSPP/$PHOTOSPP_VERSION-$PHOTOSPP_REVISION}  \\
-            ${EVTGEN_VERSION:+EvtGen/$EVTGEN_VERSION-$EVTGEN_REVISION}          \\
-            ${FAIRROOT_VERSION:+FairRoot/$FAIRROOT_VERSION-$FAIRROOT_REVISION}	\\
-            ${GENFIT_VERSION:+GenFit/$GENFIT_VERSION-$GENFIT_REVISION} \\
-            ${HEPMC3_VERSION:+HepMC3/$HEPMC3_VERSION-$HEPMC3_REVISION} \\
-            ${ACTS_VERSION:+acts/$ACTS_VERSION-$ACTS_REVISION}
-
-# Our environment
-setenv EOSSHIP root://eospublic.cern.ch/
-setenv FAIRSHIP_ROOT \$::env(BASEDIR)/$PKGNAME/\$version
-setenv FAIRSHIP \$::env(FAIRSHIP_ROOT)
+mkdir -p "$INSTALLROOT/etc/modulefiles"
+alibuild-generate-module --bin --lib > "$INSTALLROOT/etc/modulefiles/$PKGNAME"
+cat >> "$INSTALLROOT/etc/modulefiles/$PKGNAME" <<EoF
 setenv FAIRSHIP_HASH $FAIRSHIP_HASH
-setenv VMCWORKDIR \$::env(FAIRSHIP)
-setenv GEOMPATH \$::env(FAIRSHIP)/geometry
-setenv CONFIG_DIR \$::env(FAIRSHIP)/gconfig
-setenv GALGCONF \$::env(FAIRSHIP_ROOT)/shipgen/genie_config
-prepend-path PATH \$::env(FAIRSHIP_ROOT)/bin
-prepend-path LD_LIBRARY_PATH \$::env(FAIRSHIP_ROOT)/lib
-setenv FAIRLIBDIR \$::env(FAIRSHIP_ROOT)/lib
-prepend-path ROOT_INCLUDE_PATH \$::env(FAIRSHIP_ROOT)/include
-append-path ROOT_INCLUDE_PATH \$::env(GEANT4_ROOT)/include
-append-path ROOT_INCLUDE_PATH \$::env(GEANT4_ROOT)/include/Geant4
-append-path ROOT_INCLUDE_PATH \$::env(PYTHIA_ROOT)/include
-append-path ROOT_INCLUDE_PATH \$::env(PYTHIA_ROOT)/include/Pythia8
-append-path ROOT_INCLUDE_PATH \$::env(GEANT4_VMC_ROOT)/include
-append-path ROOT_INCLUDE_PATH \$::env(GEANT4_VMC_ROOT)/include/geant4vmc
-prepend-path PYTHONPATH \$::env(FAIRSHIP_ROOT)/python
 EoF
