@@ -44,15 +44,16 @@ incremental_recipe: |
   alibuild-generate-module --bin --lib > "$INSTALLROOT/etc/modulefiles/$PKGNAME"
   cat >> "$INSTALLROOT/etc/modulefiles/$PKGNAME" <<EoF
   setenv FAIRSHIP_HASH $FAIRSHIP_HASH
-  setenv FAIRSHIP \$::env(FAIRSHIP_ROOT)
+  setenv FAIRSHIP \$PKG_ROOT
+  setenv FAIRSHIP_ROOT \$PKG_ROOT
   setenv EOSSHIP root://eospublic.cern.ch/
-  setenv VMCWORKDIR \$::env(FAIRSHIP_ROOT)
-  setenv GEOMPATH \$::env(FAIRSHIP_ROOT)/geometry
-  setenv CONFIG_DIR \$::env(FAIRSHIP_ROOT)/gconfig
-  setenv GALCONF \$::env(FAIRSHIP_ROOT)/shipgen/genie_config
-  setenv FAIRLIBDIR \$::env(FAIRSHIP_ROOT)/lib
-  prepend-path PYTHONPATH \$::env(FAIRSHIP_ROOT)/python
-  prepend-path ROOT_INCLUDE_PATH \$::env(FAIRSHIP_ROOT)/include
+  setenv VMCWORKDIR \$PKG_ROOT
+  setenv GEOMPATH \$PKG_ROOT/geometry
+  setenv CONFIG_DIR \$PKG_ROOT/gconfig
+  setenv GALCONF \$PKG_ROOT/shipgen/genie_config
+  setenv FAIRLIBDIR \$PKG_ROOT/lib
+  prepend-path PYTHONPATH \$PKG_ROOT/python
+  prepend-path ROOT_INCLUDE_PATH \$PKG_ROOT/include
   append-path ROOT_INCLUDE_PATH \$::env(GEANT4_ROOT)/include
   append-path ROOT_INCLUDE_PATH \$::env(GEANT4_ROOT)/include/Geant4
   append-path ROOT_INCLUDE_PATH \$::env(PYTHIA_ROOT)/include
@@ -102,15 +103,16 @@ mkdir -p "$INSTALLROOT/etc/modulefiles"
 alibuild-generate-module --bin --lib > "$INSTALLROOT/etc/modulefiles/$PKGNAME"
 cat >> "$INSTALLROOT/etc/modulefiles/$PKGNAME" <<EoF
 setenv FAIRSHIP_HASH $FAIRSHIP_HASH
-setenv FAIRSHIP \$::env(FAIRSHIP_ROOT)
+setenv FAIRSHIP \$PKG_ROOT
+setenv FAIRSHIP_ROOT \$PKG_ROOT
 setenv EOSSHIP root://eospublic.cern.ch/
-setenv VMCWORKDIR \$::env(FAIRSHIP_ROOT)
-setenv GEOMPATH \$::env(FAIRSHIP_ROOT)/geometry
-setenv CONFIG_DIR \$::env(FAIRSHIP_ROOT)/gconfig
-setenv GALCONF \$::env(FAIRSHIP_ROOT)/shipgen/genie_config
-setenv FAIRLIBDIR \$::env(FAIRSHIP_ROOT)/lib
-prepend-path PYTHONPATH \$::env(FAIRSHIP_ROOT)/python
-prepend-path ROOT_INCLUDE_PATH \$::env(FAIRSHIP_ROOT)/include
+setenv VMCWORKDIR \$PKG_ROOT
+setenv GEOMPATH \$PKG_ROOT/geometry
+setenv CONFIG_DIR \$PKG_ROOT/gconfig
+setenv GALCONF \$PKG_ROOT/shipgen/genie_config
+setenv FAIRLIBDIR \$PKG_ROOT/lib
+prepend-path PYTHONPATH \$PKG_ROOT/python
+prepend-path ROOT_INCLUDE_PATH \$PKG_ROOT/include
 append-path ROOT_INCLUDE_PATH \$::env(GEANT4_ROOT)/include
 append-path ROOT_INCLUDE_PATH \$::env(GEANT4_ROOT)/include/Geant4
 append-path ROOT_INCLUDE_PATH \$::env(PYTHIA_ROOT)/include
