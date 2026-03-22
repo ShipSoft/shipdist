@@ -1,9 +1,9 @@
 package: EvtGen
 version: "%(tag_basename)s-ship%(defaults_upper)s"
-source: https://github.com/alisw/EVTGEN/ # https://github.com/ShipSoft/evtgen
-tag: R02-02-00-alice2
+source: https://gitlab.cern.ch/evtgen/evtgen
+tag: R02-02-03
 requires:
-  - HepMC
+  - HepMC3
   - pythia
   - Tauolapp
   - PHOTOSPP
@@ -17,20 +17,21 @@ prefer_system_check: |
 ---
 #!/bin/sh
 
-export  HEPMCLOCATION="$HEPMC_ROOT"
+# Detect dependency paths from config tools when *_ROOT vars are not set
+: ${PYTHIA_ROOT:=$(pythia8-config --prefix 2>/dev/null)}
 
 rsync -a $SOURCEDIR/* .
 
 cmake $SOURCEDIR -DCMAKE_INSTALL_PREFIX=$INSTALLROOT \
       -DCMAKE_INSTALL_LIBDIR=lib \
-      -DEVTGEN_HEPMC3=OFF \
-      -DHEPMC2_ROOT_DIR=$HEPMC_ROOT \
+      -DEVTGEN_HEPMC3=ON \
+      ${HEPMC3_ROOT:+-DHEPMC3_ROOT_DIR=$HEPMC3_ROOT} \
       -DEVTGEN_PYTHIA=ON \
-      -DPYTHIA8_ROOT_DIR=$PYTHIA_ROOT \
+      ${PYTHIA_ROOT:+-DPYTHIA8_ROOT_DIR=$PYTHIA_ROOT} \
       -DEVTGEN_PHOTOS=ON \
-      -DPHOTOSPP_ROOT_DIR=$PHOTOSPP_ROOT \
+      ${PHOTOSPP_ROOT:+-DPHOTOSPP_ROOT_DIR=$PHOTOSPP_ROOT} \
       -DEVTGEN_TAUOLA=ON \
-      -DTAUOLAPP_ROOT_DIR=$TAUOLAPP_ROOT
+      ${TAUOLAPP_ROOT:+-DTAUOLAPP_ROOT_DIR=$TAUOLAPP_ROOT}
 make ${JOBS:+-j$JOBS} install
 
 # Modulefile
@@ -46,7 +47,7 @@ proc ModulesHelp { } {
 set version $PKGVERSION-@@PKGREVISION@$PKGHASH@@
 module-whatis "ALICE Modulefile for $PKGNAME $PKGVERSION-@@PKGREVISION@$PKGHASH@@"
 # Dependencies
-module load BASE/1.0 pythia/$PYTHIA_VERSION-$PYTHIA_REVISION HepMC/$HEPMC_VERSION-$HEPMC_REVISION  Tauolapp/$TAUOLAPP_VERSION-$TAUOLAPP_REVISION PHOTOSPP/$PHOTOSPP_VERSION-$PHOTOSPP_REVISION
+module load BASE/1.0 pythia/$PYTHIA_VERSION-$PYTHIA_REVISION ${HEPMC3_VERSION:+HepMC3/$HEPMC3_VERSION-$HEPMC3_REVISION} ${TAUOLAPP_VERSION:+Tauolapp/$TAUOLAPP_VERSION-$TAUOLAPP_REVISION} ${PHOTOSPP_VERSION:+PHOTOSPP/$PHOTOSPP_VERSION-$PHOTOSPP_REVISION}
 # Our environment
 setenv EVTGEN_ROOT \$::env(BASEDIR)/$PKGNAME/\$version
 setenv EVTGENDATA \$::env(EVTGEN_ROOT)/share/EvtGen
