@@ -24,6 +24,7 @@ alibuild-generate-module --bin --lib > "${MODULEFILE}"
 cmake  "$SOURCEDIR"                           \
        -DCMAKE_INSTALL_PREFIX="$INSTALLROOT"  \
        -DCMAKE_INSTALL_LIBDIR=lib           \
+       -DHEPMC3_ENABLE_PYTHON=OFF           \
        -DROOT_DIR="$ROOT_ROOT"
 
 make ${JOBS+-j $JOBS}
