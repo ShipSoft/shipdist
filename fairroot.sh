@@ -10,7 +10,6 @@ requires:
   - boost
   - protobuf
   - FairLogger
-  - FairMQ
   - yaml-cpp
   - GEANT3
   - "GCC-Toolchain:(?!osx)"
@@ -74,7 +73,8 @@ cmake $SOURCEDIR                                                                
       -DCMAKE_EXPORT_COMPILE_COMMANDS=ON                                                    \
       -DCMAKE_INSTALL_LIBDIR=lib                                                            \
       -DCMAKE_INSTALL_PREFIX=$INSTALLROOT \
-      -DFairCMakeModules_ROOT=$FAIRCMAKEMODULES_ROOT
+      -DFairCMakeModules_ROOT=$FAIRCMAKEMODULES_ROOT \
+      -DBUILD_BASEMQ=OFF
 
 cmake --build . -- -j$JOBS install
 
@@ -105,7 +105,6 @@ module-whatis "ALICE Modulefile for $PKGNAME $PKGVERSION-@@PKGREVISION@$PKGHASH@
 module load BASE/1.0                                                                            \\
             ${YAML_CPP_REVISION:+yaml-cpp/$YAML_CPP_VERSION-$YAML_CPP_REVISION}                  \\
             ${FAIRLOGGER_REVISION:+FairLogger/$FAIRLOGGER_VERSION-$FAIRLOGGER_REVISION}         \\
-            ${FAIRMQ_REVISION:+FairMQ/$FAIRMQ_VERSION-$FAIRMQ_REVISION}                         \\
             ${GEANT3_REVISION:+GEANT3/$GEANT3_VERSION-$GEANT3_REVISION}                         \\
             ${GEANT4_VMC_REVISION:+GEANT4_VMC/$GEANT4_VMC_VERSION-$GEANT4_VMC_REVISION}         \\
             ${PROTOBUF_REVISION:+protobuf/$PROTOBUF_VERSION-$PROTOBUF_REVISION}                 \\
