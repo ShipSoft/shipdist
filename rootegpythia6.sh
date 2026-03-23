@@ -7,6 +7,7 @@ requires:
   - GCC-Toolchain
 build_requires:
   - CMake
+  - alibuild-recipe-tools
 env:
   ROOTEGPYTHIA6: "$ROOTEGPYTHIA6_ROOT"
 prepend_path:

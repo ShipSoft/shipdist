@@ -67,6 +67,20 @@ COMPILER_LD=c++
 [[ "$CXXFLAGS" == *'-std=c++14'* ]] && CMAKE_CXX_STANDARD=14 || true
 [[ "$CXXFLAGS" == *'-std=c++17'* ]] && CMAKE_CXX_STANDARD=17 || true
 
+# Detect GCC runtime library path for the linker. When GCC is built by
+# aliBuild, GCC_TOOLCHAIN_ROOT is set. When using a system/LCG GCC,
+# we derive the path from the compiler itself.
+if [[ -n "$GCC_TOOLCHAIN_VERSION" ]]; then
+  GCC_LIB_DIR="$GCC_TOOLCHAIN_ROOT/lib64"
+else
+  _libstdcxx=$($COMPILER_CXX -print-file-name=libstdc++.so 2>/dev/null)
+  [[ "$_libstdcxx" == /* ]] && GCC_LIB_DIR=$(readlink -f "$(dirname "$_libstdcxx")")
+  unset _libstdcxx
+fi
+
+# Detect Pythia8 when using system/LCG packages
+: ${PYTHIA_ROOT:=$(pythia8-config --prefix 2>/dev/null)}
+
 # Normal ROOT build.
 cmake $SOURCEDIR \
 -G Ninja \
@@ -79,7 +93,7 @@ ${XROOTD_ROOT:+-DXROOTD_ROOT_DIR=$XROOTD_ROOT}            \
 -DCMAKE_CXX_COMPILER=$COMPILER_CXX                        \
 -DCMAKE_C_COMPILER=$COMPILER_CC                           \
 -DCMAKE_LINKER=$COMPILER_LD                               \
-${GCC_TOOLCHAIN_VERSION:+-DCMAKE_EXE_LINKER_FLAGS="-L$GCC_TOOLCHAIN_ROOT/lib64"} \
+${GCC_LIB_DIR:+-DCMAKE_EXE_LINKER_FLAGS="-L$GCC_LIB_DIR"} \
 ${GSL_ROOT:+-DGSL_DIR=$GSL_ROOT}                          \
 ${PYTHIA_ROOT:+-DPYTHIA8_DIR=$PYTHIA_ROOT}                \
 ${PYTHIA_ROOT:+-Dpythia8=ON}                \
