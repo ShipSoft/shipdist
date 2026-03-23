@@ -39,6 +39,7 @@ prepend_path:
 append_path:
   ROOT_INCLUDE_PATH: "$GEANT4_ROOT/include:$GEANT4_ROOT/include/Geant4:$PYTHIA_ROOT/include:$PYTHIA_ROOT/include/Pythia8:$GEANT4_VMC_ROOT/include:$GEANT4_VMC_ROOT/include/geant4vmc"
 incremental_recipe: |
+  pushd $SOURCEDIR && git lfs install --local && git lfs pull && popd
   rsync -ar $SOURCEDIR/ $INSTALLROOT/
   cmake --build . ${JOBS+-j$JOBS} --target install
   #Get the current git hash
@@ -76,7 +77,23 @@ incremental_recipe: |
 : ${GEANT4_ROOT:=$(geant4-config --prefix 2>/dev/null)}
 : ${FMT_ROOT:=$(pkg-config --variable=prefix fmt 2>/dev/null)}
 
+# Fetch Git LFS files (field maps etc.) before copying sources
+pushd $SOURCEDIR
+git lfs install --local
+git lfs pull
+popd
+
+# Clean up any stale CMake artifacts in the source directory
+rm -f $SOURCEDIR/CMakeCache.txt
+rm -rf $SOURCEDIR/CMakeFiles
+
 rsync -a $SOURCEDIR/ $INSTALLROOT/
+
+# Geant4 11+ uses external CLHEP, not bundled libG4clhep
+sed -i 's/ROOT.gSystem.Load("libG4clhep")/ROOT.gSystem.Load("libCLHEP")/' \
+  $INSTALLROOT/python/shipRoot_conf.py
+sed -i 's/ROOT.gSystem.Load("libG4clhep.so")/ROOT.gSystem.Load("libCLHEP")/' \
+  $INSTALLROOT/macro/eventDisplay.py
 
 cmake $SOURCEDIR                                                 \
       -DFAIRBASE="$FAIRROOT_ROOT/share/fairbase"                 \
