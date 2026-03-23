@@ -27,12 +27,17 @@ if [ $FVERSION -ge 10 ]; then
    echo "Fortran version $FVERSION"
    SPECIALFFLAGS=1
 fi
+
+# GEANT3's minicern uses K&R-style C declarations (e.g. `char *fchtak()`)
+# that break with GCC 15's default -std=gnu23. Pass -std=gnu11 to restore
+# the old "unspecified arguments" semantics. Harmless on older GCC versions.
 cmake $SOURCEDIR -DCMAKE_INSTALL_PREFIX=$INSTALLROOT      \
                  -DCMAKE_BUILD_TYPE=$CMAKE_BUILD_TYPE     \
                  ${CXXSTD:+-DCMAKE_CXX_STANDARD=$CXXSTD}  \
                  -DCMAKE_SKIP_RPATH=TRUE \
 		 -DCMAKE_POLICY_DEFAULT_CMP0074=NEW \
-                 ${SPECIALFFLAGS:+-DCMAKE_Fortran_FLAGS="-fallow-argument-mismatch -fallow-invalid-boz -fno-tree-loop-distribute-patterns"}
+                 ${SPECIALFFLAGS:+-DCMAKE_Fortran_FLAGS="-fallow-argument-mismatch -fallow-invalid-boz -fno-tree-loop-distribute-patterns"} \
+                 -DCMAKE_C_FLAGS="-std=gnu11"
 make ${JOBS:+-j $JOBS} install
 
 [[ ! -d $INSTALLROOT/lib64 ]] && ln -sf lib $INSTALLROOT/lib64
