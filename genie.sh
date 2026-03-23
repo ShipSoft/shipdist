@@ -30,6 +30,46 @@ prefer_system_check: |
 #!/bin/bash -ex
 export GENIE="$BUILDDIR"
 
+# When using system/LCG packages, the *_ROOT variables may not be set.
+# Detect lib/include paths from config tools, falling back to $PKG_ROOT/{lib,include}.
+PYTHIA8_LIBDIR=${PYTHIA_ROOT:+$PYTHIA_ROOT/lib}
+PYTHIA8_INCDIR=${PYTHIA_ROOT:+$PYTHIA_ROOT/include}
+: ${PYTHIA8_LIBDIR:=$(pythia8-config --libdir 2>/dev/null)}
+: ${PYTHIA8_INCDIR:=$(pythia8-config --includedir 2>/dev/null)}
+
+LHAPDF_LIBDIR=${LHAPDF_ROOT:+$LHAPDF_ROOT/lib}
+LHAPDF_INCDIR=${LHAPDF_ROOT:+$LHAPDF_ROOT/include}
+: ${LHAPDF_LIBDIR:=$(lhapdf-config --libdir 2>/dev/null)}
+: ${LHAPDF_INCDIR:=$(lhapdf-config --incdir 2>/dev/null)}
+
+APFEL_LIBDIR=${APFEL_ROOT:+$APFEL_ROOT/lib}
+APFEL_INCDIR=${APFEL_ROOT:+$APFEL_ROOT/include}
+: ${APFEL_LIBDIR:=$(apfel-config --libdir 2>/dev/null)}
+: ${APFEL_INCDIR:=$(apfel-config --incdir 2>/dev/null)}
+
+LIBXML2_LIBDIR=${LIBXML2_ROOT:+$LIBXML2_ROOT/lib}
+LIBXML2_INCDIR=${LIBXML2_ROOT:+$LIBXML2_ROOT/include/libxml2}
+: ${LIBXML2_LIBDIR:=$(pkg-config --variable=libdir libxml-2.0 2>/dev/null)}
+if [[ -z "$LIBXML2_INCDIR" ]]; then
+  _xml2_incdir=$(pkg-config --variable=includedir libxml-2.0 2>/dev/null)
+  [[ -n "$_xml2_incdir" ]] && LIBXML2_INCDIR=$_xml2_incdir/libxml2
+  unset _xml2_incdir
+fi
+
+LOG4CPP_LIBDIR=${LOG4CPP_ROOT:+$LOG4CPP_ROOT/lib}
+LOG4CPP_INCDIR=${LOG4CPP_ROOT:+$LOG4CPP_ROOT/include}
+# log4cpp has no config tool; search LD_LIBRARY_PATH
+if [[ -z "$LOG4CPP_LIBDIR" ]]; then
+  for _dir in $(echo "$LD_LIBRARY_PATH" | tr ':' '\n'); do
+    if [[ -f "$_dir/liblog4cpp.so" ]]; then
+      LOG4CPP_LIBDIR=$_dir
+      LOG4CPP_INCDIR=$(dirname "$_dir")/include
+      break
+    fi
+  done
+  unset _dir
+fi
+
 rsync -a $SOURCEDIR/* $BUILDDIR
 ls -alh $BUILDDIR
 sed -i 's/libAPFEL.la/libAPFEL.so/' $BUILDDIR/configure
@@ -46,16 +86,16 @@ $BUILDDIR/configure --prefix=$INSTALLROOT \
 		    --disable-pythia6 \
 		    --enable-pythia8 \
 		    --enable-mathmore \
-      		    --with-pythia8-lib=$PYTHIA_ROOT/lib/ \
-      		    --with-pythia8-inc=$PYTHIA_ROOT/include/ \
-		    --with-lhapdf-lib=$LHAPDF_ROOT/lib/ \
-		    --with-lhapdf-inc=$LHAPDF_ROOT/include/ \
-		    --with-libxml2-lib=$LIBXML2_ROOT/lib/ \
-		    --with-libxml2-inc=$LIBXML2_ROOT/include/libxml2 \
-		    --with-log4cpp-inc=$LOG4CPP_ROOT/include/ \
-		    --with-log4cpp-lib=$LOG4CPP_ROOT/lib/ \
-		    --with-apfel-inc=$APFEL_ROOT/include/ \
-		    --with-apfel-lib=$APFEL_ROOT/lib/
+      		    --with-pythia8-lib=$PYTHIA8_LIBDIR/ \
+      		    --with-pythia8-inc=$PYTHIA8_INCDIR/ \
+		    --with-lhapdf6-lib=$LHAPDF_LIBDIR/ \
+		    --with-lhapdf6-inc=$LHAPDF_INCDIR/ \
+		    --with-libxml2-lib=$LIBXML2_LIBDIR/ \
+		    --with-libxml2-inc=$LIBXML2_INCDIR \
+		    --with-log4cpp-inc=$LOG4CPP_INCDIR/ \
+		    --with-log4cpp-lib=$LOG4CPP_LIBDIR/ \
+		    --with-apfel-inc=$APFEL_INCDIR/ \
+		    --with-apfel-lib=$APFEL_LIBDIR/
 
 
 make CXXFLAGS="-Wall $CXXFLAGS" CFLAGS="-Wall $CFLAGS"
