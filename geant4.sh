@@ -28,15 +28,9 @@ env:
 prefer_system: .*
 prefer_system_check: |
   #!/bin/bash -e
-  GEANT4_ROOT_EFF=${GEANT4_ROOT:-${CMAKE_PREFIX_PATH%%:*}}
-  ls $GEANT4_ROOT_EFF/bin > /dev/null && \
-  ls $GEANT4_ROOT_EFF/bin/geant4-config > /dev/null && \
-  ls $GEANT4_ROOT_EFF/bin/geant4.csh > /dev/null && \
-  ls $GEANT4_ROOT_EFF/bin/geant4.sh > /dev/null && \
-  ls $GEANT4_ROOT_EFF/include > /dev/null && \
-  ls $GEANT4_ROOT_EFF/include/Geant4 > /dev/null && \
-  ls $GEANT4_ROOT_EFF/lib/ > /dev/null && \
-  true
+  which geant4-config > /dev/null && \
+  geant4-config --version > /dev/null && \
+  printf "#include \"G4RunManager.hh\"\nint main(){}" | c++ -xc++ - -c -o /dev/null $(geant4-config --cflags 2>/dev/null)
 ---
 #!/bin/bash -e
 export G4DEBUG=1

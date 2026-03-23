@@ -17,7 +17,7 @@ prefer_system_check: |
   ls $GEANT3_ROOT/include > /dev/null && \
   ls $GEANT3_ROOT/include/TGeant3 > /dev/null && \
   ls $GEANT3_ROOT/include/TGeant3/TGeant3.h > /dev/null && \
-  ls $GEANT3_ROOT/lib64/libgeant321.so > /dev/null && \
+  (ls $GEANT3_ROOT/lib64/libgeant321.so > /dev/null 2>&1 || ls $GEANT3_ROOT/lib/libgeant321.so > /dev/null 2>&1) && \
   true
 ---
 #!/bin/bash -e

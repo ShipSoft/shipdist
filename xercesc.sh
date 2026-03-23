@@ -11,10 +11,7 @@ env:
 prefer_system: .*
 prefer_system_check: |
   #!/bin/bash -e
-  XERCESC_ROOT_EFF=${XERCESC_ROOT:-${CMAKE_PREFIX_PATH%%:*}}
-  ls $XERCESC_ROOT_EFF/bin > /dev/null && \
-  ls $XERCESC_ROOT_EFF/include/xercesc/ > /dev/null && \
-  ls $XERCESC_ROOT_EFF/lib/libxerces-c.so > /dev/null
+  pkg-config --exists xerces-c
 ---
 #!/bin/sh
 cd $SOURCEDIR

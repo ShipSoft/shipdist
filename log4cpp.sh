@@ -9,9 +9,8 @@ build_requires:
 env:
   LOG4_ROOT: "$LOG4CPP_ROOT"
 prefer_system_check: |
-  ls $LOG4CPP_ROOT/include/ > /dev/null && \
-  ls $LOG4CPP_ROOT/lib/ > /dev/null && \
-  true
+  #!/bin/bash -e
+  printf "#include \"log4cpp/Category.hh\"\nint main(){}" | c++ -xc++ - -c -o /dev/null
 ---
 #!/bin/bash -ex
 rsync -a $SOURCEDIR/* .
