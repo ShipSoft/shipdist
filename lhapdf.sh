@@ -12,12 +12,8 @@ env:
   LHAPATH: "$LHAPDF_ROOT/share/LHAPDF"
 prefer_system_check: |
   #!/bin/bash -e
-  ls $LHAPDF_ROOT/ > /dev/null && \
-  ls $LHAPDF_ROOT/bin > /dev/null && \
-  ls $LHAPDF_ROOT/include > /dev/null && \
-  ls $LHAPDF_ROOT/include/LHAPDF > /dev/null && \
-  ls $LHAPDF_ROOT/lib > /dev/null && \
-  ls $LHAPDF_ROOT/share/LHAPDF > /dev/null
+  which lhapdf-config > /dev/null && \
+  printf "#include \"LHAPDF/LHAPDF.h\"\nint main(){}" | c++ -xc++ - -c -o /dev/null
 ---
 #!/bin/bash -ex
 case $ARCHITECTURE in

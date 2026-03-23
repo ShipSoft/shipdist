@@ -19,11 +19,11 @@ prefer_system_check: |
   ls $VGM_ROOT/include/VGM > /dev/null && \
   ls $VGM_ROOT/include/XmlVGM > /dev/null && \
   ls $VGM_ROOT/lib > /dev/null && \
-  ls $VGM_ROOT/lib/libBaseVGM.a > /dev/null && \
-  ls $VGM_ROOT/lib/libClhepVGM.a > /dev/null && \
-  ls $VGM_ROOT/lib/libGeant4GM.a > /dev/null && \
-  ls $VGM_ROOT/lib/libRootGM.a > /dev/null && \
-  ls $VGM_ROOT/lib/libXmlVGM.a > /dev/null
+  (ls $VGM_ROOT/lib/libBaseVGM.a > /dev/null 2>&1 || ls $VGM_ROOT/lib/libBaseVGM.so > /dev/null 2>&1) && \
+  (ls $VGM_ROOT/lib/libClhepVGM.a > /dev/null 2>&1 || ls $VGM_ROOT/lib/libClhepVGM.so > /dev/null 2>&1) && \
+  (ls $VGM_ROOT/lib/libGeant4GM.a > /dev/null 2>&1 || ls $VGM_ROOT/lib/libGeant4GM.so > /dev/null 2>&1) && \
+  (ls $VGM_ROOT/lib/libRootGM.a > /dev/null 2>&1 || ls $VGM_ROOT/lib/libRootGM.so > /dev/null 2>&1) && \
+  (ls $VGM_ROOT/lib/libXmlVGM.a > /dev/null 2>&1 || ls $VGM_ROOT/lib/libXmlVGM.so > /dev/null 2>&1)
 ---
 #!/bin/bash -e
 cmake "$SOURCEDIR" \

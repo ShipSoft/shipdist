@@ -27,14 +27,9 @@ env:
   G4SAIDXSDATA: "`find ${G4INSTALL} $G4DATASEARCHOPT  '*data*G4SAIDDATA*'`"
 prefer_system_check: |
   #!/bin/bash -e
-  ls $GEANT4_ROOT/bin > /dev/null && \
-  ls $GEANT4_ROOT/bin/geant4-config > /dev/null && \
-  ls $GEANT4_ROOT/bin/geant4.csh > /dev/null && \
-  ls $GEANT4_ROOT/bin/geant4.sh > /dev/null && \
-  ls $GEANT4_ROOT/include > /dev/null && \
-  ls $GEANT4_ROOT/include/Geant4 > /dev/null && \
-  ls $GEANT4_ROOT/lib/ > /dev/null && \
-  true
+  which geant4-config > /dev/null && \
+  geant4-config --version > /dev/null && \
+  printf "#include \"G4RunManager.hh\"\nint main(){}" | c++ -xc++ - -c -o /dev/null $(geant4-config --cflags 2>/dev/null)
 ---
 #!/bin/bash -e
 export G4DEBUG=1

@@ -11,15 +11,8 @@ env:
   PYTHIA8: "$PYTHIA_ROOT"
 prefer_system_check: |
   #!/bin/bash -e
-  ls $PYTHIA_ROOT/bin > /dev/null && \
-  ls $PYTHIA_ROOT/bin/pythia8-config > /dev/null && \
-  ls $PYTHIA_ROOT/include/ > /dev/null && \
-  ls $PYTHIA_ROOT/include/Pythia8 > /dev/null && \
-  ls $PYTHIA_ROOT/include/Pythia8Plugins > /dev/null && \
-  ls $PYTHIA_ROOT/lib/libpythia8.a > /dev/null && \
-  ls $PYTHIA_ROOT/lib/libpythia8lhapdf6.so > /dev/null && \
-  ls $PYTHIA_ROOT/lib/libpythia8.so > /dev/null && \
-  true
+  which pythia8-config > /dev/null && \
+  printf "#include \"Pythia8/Pythia.h\"\nint main(){}" | c++ -xc++ - -c -o /dev/null
 ---
 #!/bin/bash -e
 rsync -a $SOURCEDIR/ ./

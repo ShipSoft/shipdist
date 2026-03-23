@@ -8,7 +8,11 @@ build_requires:
 prefer_system: "(?!slc5)"
 prefer_system_check: |
   which protoc || { echo "protoc missing"; exit 1; }
-  printf "#include \"google/protobuf/any.h\"\nint main(){}" | c++ -I$(brew --prefix protobuf)/include -Wno-deprecated-declarations -xc++ - -o /dev/null
+  case $(uname) in
+    Darwin) PROTO_INC="-I$(brew --prefix protobuf)/include" ;;
+    *) PROTO_INC="${PROTOBUF_ROOT:+-I$PROTOBUF_ROOT/include}" ;;
+  esac
+  printf "#include \"google/protobuf/any.h\"\nint main(){}" | c++ $PROTO_INC -Wno-deprecated-declarations -xc++ - -o /dev/null
 ---
 
 rsync -av --delete --exclude="**/.git" $SOURCEDIR/ .
