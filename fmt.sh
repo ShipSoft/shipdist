@@ -1,6 +1,6 @@
 package: fmt
 version: "%(tag_basename)s"
-tag: 11.2.0
+tag: 10.2.1
 source: https://github.com/fmtlib/fmt
 requires:
   - GCC-Toolchain

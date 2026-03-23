@@ -1,6 +1,6 @@
 package: python-packaging
 version: "%(tag_basename)s"
-tag: "26.0"
+tag: "24.2"
 source: https://github.com/pypa/packaging
 requires:
   - "Python:(slc|ubuntu)"
