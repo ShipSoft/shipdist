@@ -8,7 +8,12 @@ build_requires:
  - "GCC-Toolchain:(?!osx)"
 prefer_system: "(?!slc5)"
 prefer_system_check: |
-  which flatc && printf "#include \"flatbuffers/flatbuffers.h\"\nint main(){}" | c++ -I$(brew --prefix flatbuffers)/include -xc++ -std=c++11 - -o /dev/null
+  which flatc || exit 1
+  case $(uname) in
+    Darwin) FB_INC="-I$(brew --prefix flatbuffers)/include" ;;
+    *) FB_INC="${FLATBUFFERS_ROOT:+-I$FLATBUFFERS_ROOT/include}" ;;
+  esac
+  printf "#include \"flatbuffers/flatbuffers.h\"\nint main(){}" | c++ $FB_INC -xc++ -std=c++11 - -o /dev/null
 ---
 cmake $SOURCEDIR                          \
       -G "Unix Makefiles"                 \

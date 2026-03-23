@@ -15,9 +15,6 @@ prefer_system_check: |
   ls $PHOTOSPP_ROOT/ > /dev/null && \
   ls $PHOTOSPP_ROOT/include/Photos > /dev/null && \
   ls $PHOTOSPP_ROOT/lib > /dev/null && \
-  ls $PHOTOSPP_ROOT/lib/libPhotospp.a > /dev/null && \
-  ls $PHOTOSPP_ROOT/lib/libPhotosppHEPEVT.so > /dev/null && \
-  ls $PHOTOSPP_ROOT/lib/libPhotosppHepMC.so > /dev/null && \
   ls $PHOTOSPP_ROOT/lib/libPhotospp.so > /dev/null
 ---
 #!/bin/bash -e

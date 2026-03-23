@@ -8,7 +8,11 @@ build_requires:
 prefer_system: (.*)
 prefer_system_check: |
   ZMQ_VERSION=${REQUESTED_VERSION//./0}
-  printf "#include <zmq.h>\n#if(ZMQ_VERSION < ${ZMQ_VERSION//v/})\n#error \"zmq version >= $REQUESTED_VERSION needed\"\n#endif\n int main(){}" | c++ -I$(brew --prefix zeromq)/include -xc++ - -o /dev/null 2>&1
+  case $(uname) in
+    Darwin) ZMQ_INC="-I$(brew --prefix zeromq)/include" ;;
+    *) ZMQ_INC="${ZEROMQ_ROOT:+-I$ZEROMQ_ROOT/include}" ;;
+  esac
+  printf "#include <zmq.h>\n#if(ZMQ_VERSION < ${ZMQ_VERSION//v/})\n#error \"zmq version >= $REQUESTED_VERSION needed\"\n#endif\n int main(){}" | c++ $ZMQ_INC -xc++ - -o /dev/null 2>&1
 ---
 #!/bin/sh
 
