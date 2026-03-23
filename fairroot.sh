@@ -38,6 +38,24 @@ prepend_path:
 # maximum safety.
 unset SIMPATH
 
+# Ensure the GCC runtime library is in LD_LIBRARY_PATH. Needed when using a
+# system/LCG GCC so that executables run during the build (e.g. Catch2 test
+# discovery) can find the correct libstdc++.
+if [[ -z "$GCC_TOOLCHAIN_VERSION" ]]; then
+  _libstdcxx=$(c++ -print-file-name=libstdc++.so 2>/dev/null)
+  if [[ "$_libstdcxx" == /* ]]; then
+    _gcc_lib_dir=$(readlink -f "$(dirname "$_libstdcxx")")
+    export LD_LIBRARY_PATH=$_gcc_lib_dir${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}
+  fi
+  unset _libstdcxx _gcc_lib_dir
+fi
+
+# FairRoot v19.0.0 unconditionally includes fairroot/tools/tests which uses
+# catch_discover_tests, but Catch2 is only found when BUILD_TESTING=ON.
+# Guard it so BUILD_TESTING=OFF works.
+sed -i 's/^add_subdirectory(tests)/if(BUILD_TESTING)\n  add_subdirectory(tests)\nendif()/' \
+  "$SOURCEDIR/fairroot/tools/CMakeLists.txt"
+
 case $ARCHITECTURE in
   osx*)
     # If we preferred system tools, we need to make sure we can pick them up.
@@ -80,7 +98,8 @@ cmake $SOURCEDIR                                                                
       -DCMAKE_POLICY_DEFAULT_CMP0167=NEW \
       -DCMAKE_INSTALL_PREFIX=$INSTALLROOT \
       -DFairCMakeModules_ROOT=$FAIRCMAKEMODULES_ROOT \
-      -DBUILD_BASEMQ=OFF
+      -DBUILD_BASEMQ=OFF \
+      -DBUILD_TESTING=OFF
 
 cmake --build . -- -j$JOBS install
 
