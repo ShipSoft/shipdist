@@ -15,7 +15,8 @@ prefer_system_check: |
   ls $PHOTOSPP_ROOT/ > /dev/null && \
   ls $PHOTOSPP_ROOT/include/Photos > /dev/null && \
   ls $PHOTOSPP_ROOT/lib > /dev/null && \
-  ls $PHOTOSPP_ROOT/lib/libPhotospp.so > /dev/null
+  ls $PHOTOSPP_ROOT/lib/libPhotospp.so > /dev/null && \
+  ls $PHOTOSPP_ROOT/lib/libPhotosppHepMC3.so > /dev/null
 ---
 #!/bin/bash -e
 rsync -a --delete --exclude '**/.git' $SOURCEDIR/ ./

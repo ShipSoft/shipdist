@@ -9,7 +9,7 @@ build_requires:
   - alibuild-recipe-tools
 source: https://github.com/vmc-project/geant3
 prepend_path:
-  LD_LIBRARY_PATH: "$GEANT3_ROOT/lib64"
+  LD_LIBRARY_PATH: "$GEANT3_ROOT/lib"
   ROOT_INCLUDE_PATH: "$GEANT3_ROOT/include/TGeant3"
 prefer_system_check: |
   #!/bin/bash -e
@@ -37,7 +37,7 @@ cmake $SOURCEDIR -DCMAKE_INSTALL_PREFIX=$INSTALLROOT      \
                  -DCMAKE_SKIP_RPATH=TRUE \
 		 -DCMAKE_POLICY_DEFAULT_CMP0074=NEW \
                  ${SPECIALFFLAGS:+-DCMAKE_Fortran_FLAGS="-fallow-argument-mismatch -fallow-invalid-boz -fno-tree-loop-distribute-patterns"} \
-                 -DCMAKE_C_FLAGS="-std=gnu11"
+                 -DCMAKE_C_FLAGS="${CFLAGS:+$CFLAGS }-std=gnu11"
 make ${JOBS:+-j $JOBS} install
 
 [[ ! -d $INSTALLROOT/lib64 ]] && ln -sf lib $INSTALLROOT/lib64
@@ -48,6 +48,5 @@ alibuild-generate-module --lib > "$INSTALLROOT/etc/modulefiles/$PKGNAME"
 cat >> "$INSTALLROOT/etc/modulefiles/$PKGNAME" <<EoF
 setenv GEANT3DIR \$PKG_ROOT
 setenv G3SYS \$PKG_ROOT
-prepend-path LD_LIBRARY_PATH \$PKG_ROOT/lib64
 prepend-path ROOT_INCLUDE_PATH \$PKG_ROOT/include/TGeant3
 EoF
