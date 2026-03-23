@@ -1,6 +1,6 @@
 package: python-uproot
 version: "%(tag_basename)s"
-tag: "v5.7.2"
+tag: "v5.6.0"
 source: https://github.com/scikit-hep/uproot5
 requires:
   - "Python:(slc|ubuntu)"
