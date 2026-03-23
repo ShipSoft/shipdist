@@ -1,6 +1,6 @@
 package: python-pillow
 version: "%(tag_basename)s"
-tag: "12.1.1"
+tag: "11.2.1"
 source: https://github.com/python-pillow/Pillow
 requires:
   - "Python:(slc|ubuntu)"

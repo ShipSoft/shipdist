@@ -1,6 +1,6 @@
 package: python-cramjam
-version: "%(tag_basename)s"
-tag: "v2.11.0"
+version: "v%(tag_basename)s"
+tag: "2.10.0"
 source: https://github.com/milesgranger/pyrus-cramjam
 requires:
   - "Python:(slc|ubuntu)"

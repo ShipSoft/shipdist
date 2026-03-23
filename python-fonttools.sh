@@ -1,6 +1,6 @@
 package: python-fonttools
 version: "%(tag_basename)s"
-tag: "4.61.1"
+tag: "4.40.0"
 source: https://github.com/fonttools/fonttools
 requires:
   - "Python:(slc|ubuntu)"

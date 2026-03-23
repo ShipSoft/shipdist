@@ -1,7 +1,7 @@
 package: python-awkward-cpp
 # awkward-cpp uses integer PyPI versions and is released from the awkward
 # monorepo, so there are no standalone GitHub tags to track.
-version: "52"
+version: "50"
 requires:
   - "Python:(slc|ubuntu)"
   - "Python-system:(?!slc.*|ubuntu)"
@@ -10,8 +10,8 @@ build_requires:
   - uv
   - alibuild-recipe-tools
 prefer_system_check: |
-  python3 -c 'import awkward_cpp; print(awkward_cpp.__version__)' || exit 1
-  SYSTEM_VERSION=$(python3 -c 'import awkward_cpp; print(awkward_cpp.__version__)')
+  python3 -c 'from importlib.metadata import version; print(version("awkward-cpp"))' || exit 1
+  SYSTEM_VERSION=$(python3 -c 'from importlib.metadata import version; print(version("awkward-cpp"))')
   printf '%s\n%s\n' "$PKGVERSION" "$SYSTEM_VERSION" | sort -V -C
 prepend_path:
   PYTHONPATH: "$PYTHON_AWKWARD_CPP_ROOT/lib/python/site-packages"

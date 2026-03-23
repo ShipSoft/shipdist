@@ -1,6 +1,6 @@
 package: python-markupsafe
 version: "%(tag_basename)s"
-tag: "3.0.3"
+tag: "2.1.5"
 source: https://github.com/pallets/markupsafe
 requires:
   - "Python:(slc|ubuntu)"
