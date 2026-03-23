@@ -65,12 +65,12 @@ incremental_recipe: |
   setenv FAIRLIBDIR \$PKG_ROOT/lib
   prepend-path PYTHONPATH \$PKG_ROOT/python
   prepend-path ROOT_INCLUDE_PATH \$PKG_ROOT/include
-  append-path ROOT_INCLUDE_PATH \$::env(GEANT4_ROOT)/include
-  append-path ROOT_INCLUDE_PATH \$::env(GEANT4_ROOT)/include/Geant4
-  append-path ROOT_INCLUDE_PATH \$::env(PYTHIA_ROOT)/include
-  append-path ROOT_INCLUDE_PATH \$::env(PYTHIA_ROOT)/include/Pythia8
-  append-path ROOT_INCLUDE_PATH \$::env(GEANT4_VMC_ROOT)/include
-  append-path ROOT_INCLUDE_PATH \$::env(GEANT4_VMC_ROOT)/include/geant4vmc
+  append-path ROOT_INCLUDE_PATH $GEANT4_ROOT/include
+  append-path ROOT_INCLUDE_PATH $GEANT4_ROOT/include/Geant4
+  append-path ROOT_INCLUDE_PATH $PYTHIA_ROOT/include
+  append-path ROOT_INCLUDE_PATH $PYTHIA_ROOT/include/Pythia8
+  append-path ROOT_INCLUDE_PATH $GEANT4_VMC_ROOT/include
+  append-path ROOT_INCLUDE_PATH $GEANT4_VMC_ROOT/include/geant4vmc
   EoF
 ---
 #!/bin/sh
@@ -131,10 +131,10 @@ setenv GALCONF \$PKG_ROOT/shipgen/genie_config
 setenv FAIRLIBDIR \$PKG_ROOT/lib
 prepend-path PYTHONPATH \$PKG_ROOT/python
 prepend-path ROOT_INCLUDE_PATH \$PKG_ROOT/include
-append-path ROOT_INCLUDE_PATH \$::env(GEANT4_ROOT)/include
-append-path ROOT_INCLUDE_PATH \$::env(GEANT4_ROOT)/include/Geant4
-append-path ROOT_INCLUDE_PATH \$::env(PYTHIA_ROOT)/include
-append-path ROOT_INCLUDE_PATH \$::env(PYTHIA_ROOT)/include/Pythia8
-append-path ROOT_INCLUDE_PATH \$::env(GEANT4_VMC_ROOT)/include
-append-path ROOT_INCLUDE_PATH \$::env(GEANT4_VMC_ROOT)/include/geant4vmc
+append-path ROOT_INCLUDE_PATH $GEANT4_ROOT/include
+append-path ROOT_INCLUDE_PATH $GEANT4_ROOT/include/Geant4
+append-path ROOT_INCLUDE_PATH $PYTHIA_ROOT/include
+append-path ROOT_INCLUDE_PATH $PYTHIA_ROOT/include/Pythia8
+append-path ROOT_INCLUDE_PATH $GEANT4_VMC_ROOT/include
+append-path ROOT_INCLUDE_PATH $GEANT4_VMC_ROOT/include/geant4vmc
 EoF
