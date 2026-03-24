@@ -3,7 +3,7 @@ version: "%(tag_basename)s"
 tag: "v3.64"
 source: https://gitlab.cern.ch/photospp/photospp
 requires:
-  - HepMC
+  - HepMC3
   - ROOT
   - pythia
   - Tauolapp
@@ -15,17 +15,16 @@ prefer_system_check: |
   ls $PHOTOSPP_ROOT/ > /dev/null && \
   ls $PHOTOSPP_ROOT/include/Photos > /dev/null && \
   ls $PHOTOSPP_ROOT/lib > /dev/null && \
-  ls $PHOTOSPP_ROOT/lib/libPhotospp.a > /dev/null && \
+  ls $PHOTOSPP_ROOT/lib/libPhotospp.so > /dev/null && \
   ls $PHOTOSPP_ROOT/lib/libPhotosppHEPEVT.so > /dev/null && \
-  ls $PHOTOSPP_ROOT/lib/libPhotosppHepMC.so > /dev/null && \
-  ls $PHOTOSPP_ROOT/lib/libPhotospp.so > /dev/null
+  ls $PHOTOSPP_ROOT/lib/libPhotosppHepMC3.so > /dev/null
 ---
 #!/bin/bash -e
 rsync -a --delete --exclude '**/.git' $SOURCEDIR/ ./
 
 autoreconf -ifv
 F77=gfortran ./configure --prefix $INSTALLROOT \
-	--with-hepmc="$HEPMC_ROOT" \
+	--with-hepmc3="$HEPMC3_ROOT" --without-hepmc \
 	--with-pythia8=$PYTHIA_ROOT \
 	--with-tauola=$TAUOLAPP_ROOT
 make -j$JOBS
