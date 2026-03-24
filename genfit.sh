@@ -8,6 +8,7 @@ requires:
 build_requires:
   - CMake
   - "GCC-Toolchain:(?!osx)"
+  - alibuild-recipe-tools
 env:
   GENFIT: "$GENFIT_ROOT"
 prepend_path:
@@ -46,29 +47,9 @@ cmake $SOURCEDIR                                                                
 cmake --build . -- -j$JOBS install
 
 # Modulefile
-MODULEDIR="$INSTALLROOT/etc/modulefiles"
-MODULEFILE="$MODULEDIR/$PKGNAME"
-mkdir -p "$MODULEDIR"
-
-
-cat >> "$MODULEFILE" <<EoF
-#%Module1.0
-proc ModulesHelp { } {
-  global version
-  puts stderr "ALICE Modulefile for $PKGNAME $PKGVERSION-@@PKGREVISION@$PKGHASH@@"
-}
-set version $PKGVERSION-@@PKGREVISION@$PKGHASH@@
-module-whatis "ALICE Modulefile for $PKGNAME $PKGVERSION-@@PKGREVISION@$PKGHASH@@"
-# Dependencies
-if ![ is-loaded 'BASE/1.0' ] {
- module load BASE/1.0
-}
-
-set PKG_ROOT $::env(BASEDIR)/GenFit/\$version
-
-# Our environment
-set GENFIT_ROOT \$::env(BASEDIR)/$PKGNAME/\$version
-setenv GENFIT \$GENFIT_ROOT
-prepend-path LD_LIBRARY_PATH \$GENFIT_ROOT/lib
-prepend-path ROOT_INCLUDE_PATH \$GENFIT_ROOT/include
+mkdir -p "$INSTALLROOT/etc/modulefiles"
+alibuild-generate-module --lib > "$INSTALLROOT/etc/modulefiles/$PKGNAME"
+cat >> "$INSTALLROOT/etc/modulefiles/$PKGNAME" <<EoF
+setenv GENFIT \$PKG_ROOT
+prepend-path ROOT_INCLUDE_PATH \$PKG_ROOT/include
 EoF

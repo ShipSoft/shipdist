@@ -26,6 +26,8 @@ prefer_system_check: |
   ls $GENIE_ROOT/genie/lib > /dev/null && \
   ls $GENIE_ROOT/genie/src > /dev/null && \
   true
+build_requires:
+  - alibuild-recipe-tools
 ---
 #!/bin/bash -ex
 export GENIE="$BUILDDIR"
@@ -79,25 +81,12 @@ rsync -a src/*/*/*.h $INSTALLROOT/genie/inc
 #cp $INSTALLROOT/genie/data/evgen/pdfs/GRV98lo_patched.LHgrid $LHAPDF5_ROOT/share/lhapdf
 
 # Modulefile
-MODULEDIR="$INSTALLROOT/etc/modulefiles"
-MODULEFILE="$MODULEDIR/$PKGNAME"
-mkdir -p "$MODULEDIR"
-cat > "$MODULEFILE" <<EoF
-#%Module1.0
-proc ModulesHelp { } {
-  global version
-  puts stderr "ALICE Modulefile for $PKGNAME $PKGVERSION-@@PKGREVISION@$PKGHASH@@"
-}
-set version $PKGVERSION-@@PKGREVISION@$PKGHASH@@
-module-whatis "ALICE Modulefile for $PKGNAME $PKGVERSION-@@PKGREVISION@$PKGHASH@@"
-# Dependencies
-module load BASE/1.0 ROOT/$ROOT_VERSION-$ROOT_REVISION pythia/$PYTHIA_VERSION-$PYTHIA_REVISION lhapdf/$LHAPDF_VERSION-$LHAPDF_REVISION log4cpp/$LOG4CPP_VERSION-$LOG4CPP_REVISION ${LIBXML2:+libxml2/$LIBXML2_VERSION-$LIBXML2_REVISION} ${GSL_VERSION:+GSL/$GSL_VERSION-$GSL_REVISION} apfel/$APFEL_VERSION-$APFEL_REVISION
-# Our environment
-setenv GENIE_ROOT \$::env(BASEDIR)/$PKGNAME/\$version
-setenv GENIE \$::env(GENIE_ROOT)/genie
-prepend-path LD_LIBRARY_PATH \$::env(GENIE_ROOT)/genie/lib
-prepend-path ROOT_INCLUDE_PATH \$::env(GENIE_ROOT)/genie/inc
-prepend-path ROOT_INCLUDE_PATH \$::env(GENIE_ROOT)/genie/src
-$([[ ${ARCHITECTURE:0:3} == osx ]] && echo "prepend-path DYLD_LIBRARY_PATH \$::env(GENIE_ROOT)/lib")
-append-path PATH \$::env(GENIE_ROOT)/genie/bin
+mkdir -p "$INSTALLROOT/etc/modulefiles"
+alibuild-generate-module > "$INSTALLROOT/etc/modulefiles/$PKGNAME"
+cat >> "$INSTALLROOT/etc/modulefiles/$PKGNAME" <<EoF
+setenv GENIE \$PKG_ROOT/genie
+prepend-path LD_LIBRARY_PATH \$PKG_ROOT/genie/lib
+prepend-path ROOT_INCLUDE_PATH \$PKG_ROOT/genie/inc
+prepend-path ROOT_INCLUDE_PATH \$PKG_ROOT/genie/src
+append-path PATH \$PKG_ROOT/genie/bin
 EoF
