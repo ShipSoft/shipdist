@@ -3,8 +3,12 @@ version: "v19.0.0"
 tag: "v19.0.0"
 source: https://github.com/FairRootGroup/FairRoot
 requires:
-  - generators
-  - simulation
+  - pythia
+  - pythia6
+  - EvtGen
+  - GEANT4_VMC
+  - GEANT4
+  - HepMC
   - ROOT
   - VMC
   - boost
