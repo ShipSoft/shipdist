@@ -60,7 +60,7 @@ incremental_recipe: |
   prepend-path PYTHONPATH $PKG_ROOT/lib
   EoF
   cd $INSTALLROOT/test
-  env PATH=$INSTALLROOT/bin:$PATH LD_LIBRARY_PATH=$INSTALLROOT/lib:$LD_LIBRARY_PATH DYLD_LIBRARY_PATH=$INSTALLROOT/lib:$DYLD_LIBRARY_PATH make ${JOBS+-j$JOBS}
+  env PATH=$INSTALLROOT/bin:$PATH LD_LIBRARY_PATH=$INSTALLROOT/lib:$LD_LIBRARY_PATH make ${JOBS+-j$JOBS}
 ---
 #!/bin/bash -e
 unset ROOTSYS
@@ -73,17 +73,6 @@ COMPILER_LD=c++
 [[ "$CXXFLAGS" == *'-std=c++14'* ]] && CMAKE_CXX_STANDARD=14 || true
 [[ "$CXXFLAGS" == *'-std=c++17'* ]] && CMAKE_CXX_STANDARD=17 || true
 
-case $ARCHITECTURE in
-  osx*)
-    ENABLE_COCOA=1
-    COMPILER_CC=clang
-    COMPILER_CXX=clang++
-    COMPILER_LD=clang
-    [[ ! $GSL_ROOT ]] && GSL_ROOT=`brew --prefix gsl`
-    [[ ! $OPENSSL_ROOT ]] && SYS_OPENSSL_ROOT=`brew --prefix openssl`
-  ;;
-esac
-
 # Normal ROOT build.
 cmake $SOURCEDIR \
 -DCMAKE_BUILD_TYPE=$CMAKE_BUILD_TYPE                      \
@@ -92,13 +81,10 @@ ${XROOTD_ROOT:+-DXROOTD_ROOT_DIR=$XROOTD_ROOT}            \
 -DCMAKE_CXX_STANDARD=$CMAKE_CXX_STANDARD                  \
 -Dbuiltin_freetype=OFF                                    \
 -Dbuiltin_pcre=ON                                         \
-${ENABLE_COCOA:+-Dcocoa=ON}                               \
 -DCMAKE_CXX_COMPILER=$COMPILER_CXX                        \
 -DCMAKE_C_COMPILER=$COMPILER_CC                           \
 -DCMAKE_LINKER=$COMPILER_LD                               \
 ${GCC_TOOLCHAIN_VERSION:+-DCMAKE_EXE_LINKER_FLAGS="-L$GCC_TOOLCHAIN_ROOT/lib64"} \
-${SYS_OPENSSL_ROOT:+-DOPENSSL_ROOT=$SYS_OPENSSL_ROOT}     \
-${SYS_OPENSSL_ROOT:+-DOPENSSL_INCLUDE_DIR=$SYS_OPENSSL_ROOT/include} \
 ${GSL_ROOT:+-DGSL_DIR=$GSL_ROOT}                          \
 ${PYTHIA_ROOT:+-DPYTHIA8_DIR=$PYTHIA_ROOT}                \
 ${PYTHIA_ROOT:+-Dpythia8=ON}                \
@@ -110,10 +96,9 @@ ${PYTHIA_ROOT:+-Dpythia8=ON}                \
 -Ddavix=OFF                                                                      \
 ${PYTHON_ROOT:+-DPYTHON_EXECUTABLE=$PYTHONHOME/bin/python3} \
 ${PYTHON_ROOT:+-DPython3_ROOT_DIR=$PYTHON_ROOT} \
--DCMAKE_PREFIX_PATH="$FREETYPE_ROOT;$SYS_OPENSSL_ROOT;$GSL_ROOT;$PYTHON_ROOT"
+-DCMAKE_PREFIX_PATH="$FREETYPE_ROOT;$GSL_ROOT;$PYTHON_ROOT"
 FEATURES="builtin_pcre xml ssl opengl http gdml mathmore ${PYTHIA_ROOT:+pythia8}
-    roofit soversion vdt ${XROOTD_ROOT:+xrootd}
-    ${ENABLE_COCOA:+builtin_freetype}"
+    roofit soversion vdt ${XROOTD_ROOT:+xrootd}"
 NO_FEATURES="${FREETYPE_ROOT:+builtin_freetype}"
 
 # Check if all required features are enabled
@@ -126,7 +111,7 @@ for FEATURE in $NO_FEATURES; do
 done
 
 cmake --build . ${JOBS+-j$JOBS} --target install
-[[ -d $INSTALLROOT/test ]] && ( cd $INSTALLROOT/test && env PATH=$INSTALLROOT/bin:$PATH LD_LIBRARY_PATH=$INSTALLROOT/lib:$LD_LIBRARY_PATH DYLD_LIBRARY_PATH=$INSTALLROOT/lib:$DYLD_LIBRARY_PATH make ${JOBS+-j$JOBS} )
+[[ -d $INSTALLROOT/test ]] && ( cd $INSTALLROOT/test && env PATH=$INSTALLROOT/bin:$PATH LD_LIBRARY_PATH=$INSTALLROOT/lib:$LD_LIBRARY_PATH make ${JOBS+-j$JOBS} )
 
 # Modulefile
 mkdir -p "$INSTALLROOT/etc/modulefiles"

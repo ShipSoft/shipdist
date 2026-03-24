@@ -12,11 +12,6 @@ prefer_system_check: |
   pkg-config --atleast-version=0.6.2 yaml-cpp && printf "#include \"yaml-cpp/yaml.h\"\n" | c++ -std=c++17 -I$BOOST_ROOT/include -xc++ - -c -o /dev/null
 ---
 #!/bin/sh
-case $ARCHITECTURE in
-  osx*) [[ $BOOST_ROOT ]] || BOOST_ROOT=`brew --prefix boost` ;;
-  *) ;;
-esac
-
 cmake $SOURCEDIR                                         \
   -DCMAKE_INSTALL_PREFIX:PATH="$INSTALLROOT"             \
   -DBUILD_SHARED_LIBS=YES                                \

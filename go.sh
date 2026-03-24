@@ -9,20 +9,8 @@ prefer_system_check: |
 ---
 #!/bin/sh
 
-case $ARCHITECTURE in
-	osx*)
-		GOOS=darwin
-		GOARCH=amd64
-	;;
-	*x86-64)
-		GOOS=linux
-		GOARCH=amd64
-	;;
-	*)
-		GOOS=linux
-		GOARCH=amd64
-	;;
-esac
+GOOS=linux
+GOARCH=amd64
 
 mkdir ali-go-tmp
 pushd ali-go-tmp

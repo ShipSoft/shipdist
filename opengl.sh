@@ -7,9 +7,5 @@ system_requirement_missing: |
 system_requirement: ".*"
 system_requirement_check: |
 
-  if [ $(uname) = Darwin ]; then
-   printf "#include <OpenGL/glu.h>\n" | cc -xc - -c -o /dev/null
-  else
-   printf "#include <GL/glu.h>\n" | cc -xc - -c -o /dev/null
-  fi
+  printf "#include <GL/glu.h>\n" | cc -xc - -c -o /dev/null
 ---

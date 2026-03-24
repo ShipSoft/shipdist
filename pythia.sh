@@ -25,12 +25,6 @@ build_requires:
 ---
 #!/bin/bash -e
 rsync -a $SOURCEDIR/ ./
-case $ARCHITECTURE in
-  osx*)
-    # If we preferred system tools, we need to make sure we can pick them up.
-    [[ ! $BOOST_ROOT ]] && BOOST_ROOT=`brew --prefix boost`
-  ;;
-esac
 
 ./configure --prefix=$INSTALLROOT \
             --enable-shared \

@@ -11,12 +11,6 @@ build_requires:
 rsync -a --exclude='**/.git' --delete --delete-excluded \
       $SOURCEDIR/ ./
 
-# On mac we use openssl coming from homebrew.
-case $ARCHITECTURE in
-  osx*)
-    [ ! "X$OPENSSL_ROOT" = X ] || OPENSSL_ROOT=`brew --prefix openssl`
-  ;;
-esac
 export CFLAGS="$CFLAGS ${OPENSSL_ROOT:+-I$OPENSSL_ROOT/include -L$OPENSSL_ROOT/lib} ${ZLIB_ROOT:+-I$ZLIB_ROOT/include -L$ZLIB_ROOT/lib}"
 export CXXFLAGS="$CFLAGS"
 export CPPFLAGS="$CFLAGS"

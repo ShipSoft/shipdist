@@ -19,8 +19,7 @@ prefer_system_check: |
 ---
 BOOST_PYTHON=
 BOOST_CXXFLAGS=
-if [[ $ARCHITECTURE != osx* && $PYTHON_MODULES_VERSION ]]; then
-  # Enable boost_python on platforms other than macOS
+if [[ $PYTHON_MODULES_VERSION ]]; then
   BOOST_PYTHON=1
   if [[ $PYTHON_VERSION ]]; then
     # Our Python. We need to pass the appropriate flags to boost for the includes
@@ -56,10 +55,7 @@ if [[ $CXXSTD && $CXXSTD -ge 17 ]]; then
 fi
 
 TMPB2=$BUILDDIR/tmp-boost-build
-case $ARCHITECTURE in
-  osx*) TOOLSET=clang-darwin ;;
-  *) TOOLSET=gcc ;;
-esac
+TOOLSET=gcc
 
 rsync -a $SOURCEDIR/ $BUILDDIR/
 cd $BUILDDIR/tools/build
@@ -68,10 +64,7 @@ cd $BUILDDIR/tools/build
 # This is causing havok on different combinations of Ubuntu / Anaconda
 # installations.
 bash bootstrap.sh $TOOLSET
-case $ARCHITECTURE in
-  osx*)  ;;
-  *) export CPLUS_INCLUDE_PATH="$CPLUS_INCLUDE_PATH:$(python3 -c 'import sysconfig; print(sysconfig.get_path("include"))')" ;;
-esac
+export CPLUS_INCLUDE_PATH="$CPLUS_INCLUDE_PATH:$(python3 -c 'import sysconfig; print(sysconfig.get_path("include"))')"
 mkdir -p $TMPB2
 ./b2 install --prefix=$TMPB2
 export PATH=$TMPB2/bin:$PATH
@@ -109,15 +102,6 @@ b2 -q                                            \
 
 # If boost_python is enabled, check if it was really compiled
 [[ $BOOST_PYTHON ]] && ls -1 "$INSTALLROOT"/lib/*boost_python* > /dev/null
-
-# We need to tell boost libraries linking other boost libraries to look for them
-# inside the same directory as the main ones, on macOS (@loader_path).
-if [[ $ARCHITECTURE == osx* ]]; then
-  for LIB in $INSTALLROOT/lib/libboost*.dylib; do
-    otool -L $LIB | grep -v $(basename $LIB) | { grep -oE 'libboost_[^ ]+' || true; } | \
-      xargs -I{} install_name_tool -change {} @loader_path/{} "$LIB"
-  done
-fi
 
 # Modulefile
 MODULEDIR="$INSTALLROOT/etc/modulefiles"
