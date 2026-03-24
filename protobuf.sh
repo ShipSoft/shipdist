@@ -5,6 +5,7 @@ source: https://github.com/google/protobuf
 build_requires:
  - autotools
  - "GCC-Toolchain:(?!osx)"
+ - alibuild-recipe-tools
 prefer_system: "(?!slc5)"
 prefer_system_check: |
   which protoc || { echo "protoc missing"; exit 1; }
@@ -17,23 +18,6 @@ autoreconf -ivf
 make ${JOBS:+-j $JOBS}
 make install
 
-#ModuleFile
-MODULEDIR="$INSTALLROOT/etc/modulefiles"
-MODULEFILE="$MODULEDIR/$PKGNAME"
-mkdir -p "$MODULEDIR"
-cat > "$MODULEFILE" <<EoF
-#%Module1.0
-proc ModulesHelp { } {
-  global version
-  puts stderr "ALICE Modulefile for $PKGNAME $PKGVERSION-@@PKGREVISION@$PKGHASH@@"
-}
-set version $PKGVERSION-@@PKGREVISION@$PKGHASH@@
-module-whatis "ALICE Modulefile for $PKGNAME $PKGVERSION-@@PKGREVISION@$PKGHASH@@"
-# Dependencies
-module load BASE/1.0
-# Our environment
-setenv PROTOBUF_ROOT \$::env(BASEDIR)/$PKGNAME/\$version
-prepend-path LD_LIBRARY_PATH \$::env(PROTOBUF_ROOT)/lib
-$([[ ${ARCHITECTURE:0:3} == osx ]] && echo "prepend-path DYLD_LIBRARY_PATH \$::env(PROTOBUF_ROOT)/lib")
-prepend-path PATH \$::env(PROTOBUF_ROOT)/bin
-EoF
+# Modulefile
+mkdir -p "$INSTALLROOT/etc/modulefiles"
+alibuild-generate-module --bin --lib > "$INSTALLROOT/etc/modulefiles/$PKGNAME"
