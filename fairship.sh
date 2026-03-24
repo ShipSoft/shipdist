@@ -24,6 +24,7 @@ requires:
 build_requires:
   - FairCMakeModules
   - alibuild-recipe-tools
+  - ninja
 env:
   FAIRSHIP: "$FAIRSHIP_ROOT"
   EOSSHIP: "root://eospublic.cern.ch/"
@@ -73,6 +74,7 @@ incremental_recipe: |
 rsync -a $SOURCEDIR/ $INSTALLROOT/
 
 cmake $SOURCEDIR                                                 \
+      -G Ninja \
       -DFAIRBASE="$FAIRROOT_ROOT/share/fairbase"                 \
       -DFAIRROOTPATH="$FAIRROOTPATH"                             \
       -DFAIRROOT_INCLUDE_DIR="$FAIRROOT_ROOT/include"            \
