@@ -14,9 +14,6 @@ prefer_system_check: |
   ls $XERCESC_ROOT/include > /dev/null && \
   ls $XERCESC_ROOT/include/xercesc/ > /dev/null && \
   ls $XERCESC_ROOT/lib > /dev/null && \
-  ls $XERCESC_ROOT/lib/libxerces-c-3.1.so > /dev/null && \
-  ls $XERCESC_ROOT/lib/libxerces-c.a > /dev/null && \
-  ls $XERCESC_ROOT/lib/libxerces-c.la > /dev/null && \
   ls $XERCESC_ROOT/lib/libxerces-c.so > /dev/null
 ---
 #!/bin/sh
