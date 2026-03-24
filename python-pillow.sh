@@ -5,7 +5,7 @@ source: https://github.com/python-pillow/Pillow
 requires:
   - "Python:(slc|ubuntu)"
   - "Python-system:(?!slc.*|ubuntu)"
-  - "FreeType:(?!osx)"
+  - FreeType
   - libpng
 build_requires:
   - uv

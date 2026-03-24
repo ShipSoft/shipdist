@@ -3,7 +3,7 @@ version: "%(tag_basename)s"
 tag: "v4.2.3"
 source: https://github.com/Kitware/CMake
 build_requires:
-  - "GCC-Toolchain:(?!osx)"
+  - GCC-Toolchain
   - alibuild-recipe-tools
 prefer_system: .*
 prefer_system_check: |

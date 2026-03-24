@@ -3,14 +3,13 @@ version: "%(tag_basename)s"
 tag: "v5.8.4"
 source: https://github.com/xrootd/xrootd
 requires:
-  - "OpenSSL:(?!osx)"
+  - OpenSSL
   - "Python:(slc|ubuntu)"
   - "Python-system:(?!slc.*|ubuntu)"
   - libxml2
 build_requires:
   - CMake
-  - "osx-system-openssl:(osx.*)"
-  - "GCC-Toolchain:(?!osx)"
+  - GCC-Toolchain
   - UUID
   - alibuild-recipe-tools
 prepend_path:
@@ -36,35 +35,6 @@ COMPILER_CXX=c++
 COMPILER_LD=c++
 SONAME=so
 
-case $ARCHITECTURE in
-  osx_x86-64)
-    export ARCHFLAGS="-arch x86_64"
-    [[ $OPENSSL_ROOT ]] || OPENSSL_ROOT=$(brew --prefix openssl@3)
-
-    # NOTE: Python from Homebrew will have a hardcoded sysroot pointing to Xcode.app directory wchich might not exist.
-    # This seems to be a robust way to discover a working SDK path and present it to Python setuptools.
-    # This fix is needed only on MacOS when building XRootD Python bindings.
-    export CFLAGS="${CFLAGS} -isysroot $(xcrun --show-sdk-path)"
-    COMPILER_CC=clang
-    COMPILER_CXX=clang++
-    COMPILER_LD=clang
-    SONAME=dylib
-  ;;
-  osx_arm64)
-    [[ $OPENSSL_ROOT ]] || OPENSSL_ROOT=$(brew --prefix openssl@3)
-    CMAKE_FRAMEWORK_PATH=$(brew --prefix)/Frameworks
-
-    # NOTE: Python from Homebrew will have a hardcoded sysroot pointing to Xcode.app directory wchich might not exist.
-    # This seems to be a robust way to discover a working SDK path and present it to Python setuptools.
-    # This fix is needed only on MacOS when building XRootD Python bindings.
-    export CFLAGS="${CFLAGS} -isysroot $(xcrun --show-sdk-path)"
-    COMPILER_CC=clang
-    COMPILER_CXX=clang++
-    COMPILER_LD=clang
-    SONAME=dylib
-  ;;
-esac
-
 rsync -a --delete ${SOURCEDIR}/ ${BUILDDIR}
 
 mkdir build
@@ -75,7 +45,6 @@ cmake "${BUILDDIR}"                                                   \
       -DCMAKE_C_COMPILER=$COMPILER_CC                                 \
       -DCMAKE_LINKER=$COMPILER_LD                                     \
       -DCMAKE_INSTALL_PREFIX=${INSTALLROOT}                           \
-      ${CMAKE_FRAMEWORK_PATH+-DCMAKE_FRAMEWORK_PATH=$CMAKE_FRAMEWORK_PATH} \
       -DCMAKE_INSTALL_LIBDIR=lib                                      \
       -DXRDCL_ONLY=ON                                                 \
       ${UUID_ROOT:+-DUUID_LIBRARIES=$UUID_ROOT/lib/libuuid.so}        \
@@ -121,13 +90,6 @@ if [[ x"$XROOTD_PYTHON" == x"True" ]]; then
     popd  # get back from lib
 
     popd  # get back from INSTALLROOT
-
-  case $ARCHITECTURE in
-      osx*)
-        find $INSTALLROOT/lib/python/ -name "*.so" -exec install_name_tool -add_rpath ${INSTALLROOT}/lib {} \;
-        find $INSTALLROOT/lib/ -name "*.dylib" -exec install_name_tool -add_rpath ${INSTALLROOT}/lib {} \;
-      ;;
-  esac
 
     # Print found XRootD python bindings
     # just run the the command as this is under "bash -e"

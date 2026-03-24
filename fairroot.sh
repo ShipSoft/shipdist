@@ -15,7 +15,7 @@ requires:
   - FairLogger
   - yaml-cpp
   - GEANT3
-  - "GCC-Toolchain:(?!osx)"
+  - GCC-Toolchain
 build_requires:
   - FairCMakeModules
   - alibuild-recipe-tools
@@ -38,22 +38,9 @@ prepend_path:
 # maximum safety.
 unset SIMPATH
 
-case $ARCHITECTURE in
-  osx*)
-    # If we preferred system tools, we need to make sure we can pick them up.
-    [[ ! $YAML_CPP_ROOT ]] && YAML_CPP_ROOT=`brew --prefix yaml-cpp`
-    [[ ! $BOOST_ROOT ]] && BOOST_ROOT=`brew --prefix boost`
-    [[ ! $GSL_ROOT ]] && GSL_ROOT=`brew --prefix gsl`
-    MACOSX_RPATH=OFF
-    SONAME=dylib
-  ;;
-  *) SONAME=so ;;
-esac
-
 [[ $BOOST_ROOT ]] && BOOST_NO_SYSTEM_PATHS=ON || BOOST_NO_SYSTEM_PATHS=OFF
 cmake $SOURCEDIR                                                                            \
       ${CMAKE_GENERATOR:+-G "$CMAKE_GENERATOR"}                                             \
-      ${MACOSX_RPATH:+-DMACOSX_RPATH=${MACOSX_RPATH}}                                       \
       -DCMAKE_CXX_FLAGS="$CXXFLAGS"                                                         \
       -DCMAKE_CATCH_DISCOVER_TESTS_DISCOVERY_MODE=PRE_TEST                                   \
       ${CMAKE_BUILD_TYPE:+-DCMAKE_BUILD_TYPE=$CMAKE_BUILD_TYPE}                             \

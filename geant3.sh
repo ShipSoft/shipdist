@@ -6,7 +6,6 @@ requires:
   - VMC
 build_requires:
   - CMake
-  - "Xcode:(osx.*)"
   - alibuild-recipe-tools
 source: https://github.com/vmc-project/geant3
 prepend_path:

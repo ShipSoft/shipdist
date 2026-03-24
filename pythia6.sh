@@ -4,7 +4,7 @@ version: "%(tag_basename)s"
 tag: v6.4.28-snd
 source: https://github.com/SND-LHC/pythia6
 requires:
-  - GCC-Toolchain:(?!osx)
+  - GCC-Toolchain
 prefer_system_check: |
   ls $PYTHIA6_ROOT/lib/libpythia6.so > /dev/null && \
   ls $PYTHIA6_ROOT/lib/libPythia6.so > /dev/null

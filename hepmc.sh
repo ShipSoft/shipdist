@@ -4,7 +4,7 @@ source: https://github.com/alisw/hepmc
 tag: alice/v2.06.09
 build_requires:
   - CMake
-  - GCC-Toolchain:(?!osx.*)
+  - GCC-Toolchain
   - alibuild-recipe-tools
 prefer_system_check: |
   #!/bin/bash -e

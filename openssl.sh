@@ -5,11 +5,7 @@ source: https://github.com/openssl/openssl
 prefer_system: (?!slc5|slc6)
 prefer_system_check: |
   #!/bin/bash -e
-  case $(uname) in
-    Darwin) prefix=$(brew --prefix openssl@3); [ -d "$prefix" ] ;;
-    *) prefix= ;;
-  esac
-  cc -x c - ${prefix:+"-I$prefix/include"} -c -o /dev/null <<\EOF
+  cc -x c - -c -o /dev/null <<\EOF
   #include <openssl/bio.h>
   #include <openssl/opensslv.h>
   #if OPENSSL_VERSION_NUMBER < 0x10101000L
@@ -20,7 +16,7 @@ prefer_system_check: |
 build_requires:
   - zlib
   - alibuild-recipe-tools
-  - "GCC-Toolchain:(?!osx)"
+  - GCC-Toolchain
 prepend_path:
   PKG_CONFIG_PATH: "$OPENSSL_ROOT/lib/pkgconfig"
 ---

@@ -6,7 +6,6 @@ requires:
   - ROOT
 build_requires:
   - CMake
-  - "Xcode:(osx.*)"
   - alibuild-recipe-tools
 prepend_path:
   ROOT_INCLUDE_PATH: "$VMC_ROOT/include/vmc"
@@ -33,14 +32,7 @@ cmake --build . -- ${JOBS:+-j$JOBS} install
 
 # Make backward compatible in case a depending (older) package still needs libVMC.so
 cd $INSTALLROOT/lib
-case $ARCHITECTURE in
-  osx*)
-      ln -s libVMCLibrary.dylib libVMC.dylib
-  ;;
-  *)
-      ln -s libVMCLibrary.so libVMC.so
-  ;;
-esac
+ln -s libVMCLibrary.so libVMC.so
 # update modulefile
 cat >> "$MODULEFILE" <<EoF
 # Our environment

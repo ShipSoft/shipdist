@@ -2,7 +2,7 @@ package: log4cpp
 source: https://git.code.sf.net/p/log4cpp/codegit
 version: 1b9f8f7c031d6947c7468d54bc1da4b2f414558d
 requires:
-  - GCC-Toolchain:(?!osx)
+  - GCC-Toolchain
 build_requires:
   - autotools
   - alibuild-recipe-tools

@@ -4,7 +4,7 @@ tag: v1.0.0
 source: https://github.com/FairRootGroup/FairCMakeModules
 build_requires:
   - CMake
-  - "GCC-Toolchain:(?!osx)"
+  - GCC-Toolchain
   - alibuild-recipe-tools
 prefer_system_check: |
     if [ ! -z "$FAIRCMAKEMODULES_VERSION" ]; then

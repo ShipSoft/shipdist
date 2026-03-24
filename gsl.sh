@@ -3,13 +3,13 @@ version: "v2.8"
 tag: "v2.8"
 source: https://github.com/alisw/gsl
 requires:
-  - "GCC-Toolchain:(?!osx)"
+  - GCC-Toolchain
 build_requires:
   - "autotools:(slc6|slc7)"
   - alibuild-recipe-tools
 prefer_system: (?!slc5)
 prefer_system_check: |
-  printf "#include \"gsl/gsl_version.h\"\n#define GSL_V GSL_MAJOR_VERSION * 100 + GSL_MINOR_VERSION\n# if (GSL_V < 116)\n#error \"Cannot use system's gsl. Notice we only support versions from 1.16 (included)\"\n#endif\nint main(){}" | cc -xc - -I$(brew --prefix gsl)/include  -c -o /dev/null
+  printf "#include \"gsl/gsl_version.h\"\n#define GSL_V GSL_MAJOR_VERSION * 100 + GSL_MINOR_VERSION\n# if (GSL_V < 116)\n#error \"Cannot use system's gsl. Notice we only support versions from 1.16 (included)\"\n#endif\nint main(){}" | cc -xc - ${GSL_ROOT:+-I$GSL_ROOT/include} -c -o /dev/null
 ---
 #!/bin/bash -e
 rsync -a --chmod=ug=rwX --exclude .git --delete-excluded $SOURCEDIR/ $BUILDDIR/
