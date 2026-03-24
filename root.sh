@@ -53,7 +53,14 @@ prefer_system_check: |
   done
 incremental_recipe: |
   make ${JOBS:+-j$JOBS} install
-  mkdir -p $INSTALLROOT/etc/modulefiles && rsync -a --delete etc/modulefiles/ $INSTALLROOT/etc/modulefiles
+  mkdir -p "$INSTALLROOT/etc/modulefiles"
+  alibuild-generate-module --bin --lib > "$INSTALLROOT/etc/modulefiles/$PKGNAME"
+  cat >> "$INSTALLROOT/etc/modulefiles/$PKGNAME" <<\EoF
+  setenv ROOT_RELEASE $version
+  setenv ROOT_BASEDIR $::env(BASEDIR)/ROOT
+  setenv ROOTSYS $PKG_ROOT
+  prepend-path PYTHONPATH $PKG_ROOT/lib
+  EoF
   cd $INSTALLROOT/test
   env PATH=$INSTALLROOT/bin:$PATH LD_LIBRARY_PATH=$INSTALLROOT/lib:$LD_LIBRARY_PATH DYLD_LIBRARY_PATH=$INSTALLROOT/lib:$DYLD_LIBRARY_PATH make ${JOBS+-j$JOBS}
 ---
