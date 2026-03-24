@@ -2,6 +2,7 @@ package: libffi
 version: v3.2.1
 build_requires:
  - autotools
+ - alibuild-recipe-tools
 source: https://github.com/libffi/libffi
 prepend_path:
   LD_LIBRARY_PATH: "$LIBFFI_ROOT/lib64"
@@ -13,21 +14,8 @@ autoreconf -ivf .
 make ${JOBS:+-j $JOBS}
 make install
 
-LIBPATH=$(find $INSTALLROOT -name libffi.so)
+[[ -d $INSTALLROOT/lib64 && ! -d $INSTALLROOT/lib ]] && ln -nfs lib64 $INSTALLROOT/lib
+
 # Modulefile
-MODULEDIR="$INSTALLROOT/etc/modulefiles"
-MODULEFILE="$MODULEDIR/$PKGNAME"
-mkdir -p "$MODULEDIR"
-cat > "$MODULEFILE" <<EoF
-#%Module1.0
-proc ModulesHelp { } {
-  global version
-  puts stderr "ALICE Modulefile for $PKGNAME $PKGVERSION-@@PKGREVISION@$PKGHASH@@"
-}
-set version $PKGVERSION-@@PKGREVISION@$PKGHASH@@
-module-whatis "ALICE Modulefile for $PKGNAME $PKGVERSION-@@PKGREVISION@$PKGHASH@@"
-# Dependencies
-module load BASE/1.0
-# Our environment
-prepend-path LD_LIBRARY_PATH \$::env(BASEDIR)/$PKGNAME/\$version/$(basename $(dirname $LIBPATH))
-EoF
+mkdir -p "$INSTALLROOT/etc/modulefiles"
+alibuild-generate-module --lib > "$INSTALLROOT/etc/modulefiles/$PKGNAME"

@@ -7,6 +7,7 @@ requires:
 build_requires:
  - CMake
  - "GCC-Toolchain:(?!osx)"
+ - alibuild-recipe-tools
 incremental_recipe: |
   cmake --build . --target install ${JOBS:+-- -j$JOBS}
   mkdir -p $INSTALLROOT/etc/modulefiles && rsync -a --delete etc/modulefiles/ $INSTALLROOT/etc/modulefiles
@@ -43,23 +44,9 @@ cmake --build . ${JOBS:+-- -j$JOBS}
 ctest ${JOBS:+-j$JOBS}
 cmake --build . --target install ${JOBS:+-- -j$JOBS}
 
-# ModuleFile
-mkdir -p etc/modulefiles
-cat > etc/modulefiles/$PKGNAME <<EoF
-#%Module1.0
-proc ModulesHelp { } {
-  global version
-  puts stderr "ALICE Modulefile for $PKGNAME $PKGVERSION-@@PKGREVISION@$PKGHASH@@"
-}
-set version $PKGVERSION-@@PKGREVISION@$PKGHASH@@
-module-whatis "ALICE Modulefile for $PKGNAME $PKGVERSION-@@PKGREVISION@$PKGHASH@@"
-# Dependencies
-module load BASE/1.0                                        \
-       ${FMT_REVISION:+fmt/${FMT_VERSION}-${FMT_REVISION}}
-# Our environment
-set FAIRLOGGER_ROOT \$::env(BASEDIR)/$PKGNAME/\$version
-prepend-path LD_LIBRARY_PATH \$FAIRLOGGER_ROOT/lib
-prepend-path ROOT_INCLUDE_PATH \$FAIRLOGGER_ROOT/include
+# Modulefile
+mkdir -p "$INSTALLROOT/etc/modulefiles"
+alibuild-generate-module --lib > "$INSTALLROOT/etc/modulefiles/$PKGNAME"
+cat >> "$INSTALLROOT/etc/modulefiles/$PKGNAME" <<EoF
+prepend-path ROOT_INCLUDE_PATH \$PKG_ROOT/include
 EoF
-MODULEDIR="$INSTALLROOT/etc/modulefiles"
-mkdir -p $MODULEDIR && rsync -a --delete etc/modulefiles/ $MODULEDIR

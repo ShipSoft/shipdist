@@ -5,6 +5,7 @@ requires:
   - GCC-Toolchain:(?!osx)
 build_requires:
   - autotools
+  - alibuild-recipe-tools
 env:
   LOG4_ROOT: "$LOG4CPP_ROOT"
 prefer_system_check: |
@@ -20,22 +21,6 @@ rsync -a $SOURCEDIR/* .
 make ${JOBS+-j$JOBS}
 make install
 
-# Modulefile support
-MODULEDIR="$INSTALLROOT/etc/modulefiles"
-MODULEFILE="$MODULEDIR/$PKGNAME"
-mkdir -p "$MODULEDIR"
-cat > "$MODULEFILE" <<EoF
-#%Module1.0
-proc ModulesHelp { } {
-  global version
-  puts stderr "ALICE Modulefile for $PKGNAME $PKGVERSION-@@PKGREVISION@$PKGHASH@@"
-}
-set version $PKGVERSION-@@PKGREVISION@$PKGHASH@@
-module-whatis "ALICE Modulefile for $PKGNAME $PKGVERSION-@@PKGREVISION@$PKGHASH@@"
-# Dependencies
-module load BASE/1.0
-# Our environment
-setenv LOG4CPP_ROOT \$::env(BASEDIR)/$PKGNAME/\$version
-prepend-path PATH \$::env(LOG4CPP_ROOT)/bin
-prepend-path LD_LIBRARY_PATH \$::env(LOG4CPP_ROOT)/lib
-EoF
+# Modulefile
+mkdir -p "$INSTALLROOT/etc/modulefiles"
+alibuild-generate-module --bin --lib > "$INSTALLROOT/etc/modulefiles/$PKGNAME"

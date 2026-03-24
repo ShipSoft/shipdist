@@ -3,6 +3,7 @@ version: v3.3.0
 source: https://github.com/apache/xerces-c
 build_requires:
   - GCC-Toolchain:(?!osx)
+  - alibuild-recipe-tools
 env:
   XERCESC_INST_DIR: "$XERCESC_ROOT"
   XERCESCINST: "$XERCESC_ROOT"
@@ -26,25 +27,10 @@ make ${JOBS+-j $JOBS}
 make install
 
 # Modulefile
-MODULEDIR="$INSTALLROOT/etc/modulefiles"
-MODULEFILE="$MODULEDIR/$PKGNAME"
-mkdir -p "$MODULEDIR"
-cat > "$MODULEFILE" <<EoF
-#%Module1.0
-proc ModulesHelp { } {
-  global version
-  puts stderr "ALICE Modulefile for $PKGNAME $PKGVERSION-@@PKGREVISION@$PKGHASH@@"
-}
-set version $PKGVERSION-@@PKGREVISION@$PKGHASH@@
-module-whatis "ALICE Modulefile for $PKGNAME $PKGVERSION-@@PKGREVISION@$PKGHASH@@"
-# Dependencies
-module load BASE/1.0
-# Our environment
-setenv XERCESC_ROOT \$::env(BASEDIR)/$PKGNAME/\$version
-setenv XERCESCROOT \$::env(XERCESC_ROOT)
-setenv XERCESC_INST_DIR \$::env(XERCESC_ROOT)
-setenv XERCESCINST \$::env(XERCESC_ROOT)
-prepend-path PATH \$::env(XERCESC_ROOT)/bin
-prepend-path LD_LIBRARY_PATH \$::env(XERCESC_ROOT)/lib
-$([[ ${ARCHITECTURE:0:3} == osx ]] && echo "prepend-path DYLD_LIBRARY_PATH \$::env(XERCESC_ROOT)/lib")
+mkdir -p "$INSTALLROOT/etc/modulefiles"
+alibuild-generate-module --bin --lib > "$INSTALLROOT/etc/modulefiles/$PKGNAME"
+cat >> "$INSTALLROOT/etc/modulefiles/$PKGNAME" <<EoF
+setenv XERCESCROOT \$PKG_ROOT
+setenv XERCESC_INST_DIR \$PKG_ROOT
+setenv XERCESCINST \$PKG_ROOT
 EoF

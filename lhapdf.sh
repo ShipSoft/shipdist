@@ -8,6 +8,7 @@ requires:
  - "GCC-Toolchain:(?!osx)"
 build_requires:
  - autotools
+ - alibuild-recipe-tools
 env:
   LHAPATH: "$LHAPDF_ROOT/share/LHAPDF"
 prefer_system_check: |
@@ -47,22 +48,8 @@ for P in $PDFSETS; do
 done
 
 # Modulefile
-MODULEDIR="$INSTALLROOT/etc/modulefiles"
-MODULEFILE="$MODULEDIR/$PKGNAME"
-mkdir -p "$MODULEDIR"
-cat > "$MODULEFILE" <<EoF
-#%Module1.0
-proc ModulesHelp { } {
-  global version
-  puts stderr "ALICE Modulefile for $PKGNAME $PKGVERSION-@@PKGREVISION@$PKGHASH@@"
-}
-set version $PKGVERSION-@@PKGREVISION@$PKGHASH@@
-module-whatis "ALICE Modulefile for $PKGNAME $PKGVERSION-@@PKGREVISION@$PKGHASH@@"
-# Dependencies
-# Our environment
-setenv LHAPDF_ROOT \$::env(BASEDIR)/$PKGNAME/\$version
-setenv LHAPATH \$::env(LHAPDF_ROOT)/share/LHAPDF
-prepend-path PATH $::env(LHAPDF_ROOT)/bin
-prepend-path LD_LIBRARY_PATH $::env(LHAPDF_ROOT)/lib
-$([[ ${ARCHITECTURE:0:3} == osx ]] && echo "prepend-path DYLD_LIBRARY_PATH $::env(LHAPDF_ROOT)/lib")
+mkdir -p "$INSTALLROOT/etc/modulefiles"
+alibuild-generate-module --bin --lib > "$INSTALLROOT/etc/modulefiles/$PKGNAME"
+cat >> "$INSTALLROOT/etc/modulefiles/$PKGNAME" <<EoF
+setenv LHAPATH \$PKG_ROOT/share/LHAPDF
 EoF
