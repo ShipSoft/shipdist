@@ -7,7 +7,7 @@ requires:
   - boost
 build_requires:
   - CMake
-  - "GCC-Toolchain:(?!osx)"
+  - GCC-Toolchain
   - alibuild-recipe-tools
 env:
   GENFIT: "$GENFIT_ROOT"
@@ -30,7 +30,6 @@ sed -i 's|\${CMAKE_CURRENT_SOURCE_DIR}/[^/]*/include/||g' "$SOURCEDIR/CMakeLists
 : ${BUILD_TESTING:=OFF}
 cmake $SOURCEDIR                                                                            \
       ${CMAKE_GENERATOR:+-G "$CMAKE_GENERATOR"}                                             \
-      ${MACOSX_RPATH:+-DMACOSX_RPATH=${MACOSX_RPATH}}                                       \
       -DCMAKE_CXX_FLAGS="$CXXFLAGS"                                                         \
       ${CMAKE_BUILD_TYPE:+-DCMAKE_BUILD_TYPE=$CMAKE_BUILD_TYPE}                             \
       -DGTEST_ROOT=$GOOGLETEST_ROOT \

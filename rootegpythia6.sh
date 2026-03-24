@@ -4,7 +4,7 @@ tag: main
 source: https://github.com/luketpickering/ROOTEGPythia6
 requires:
   - ROOT
-  - GCC-Toolchain:(?!osx)
+  - GCC-Toolchain
 build_requires:
   - CMake
 env:

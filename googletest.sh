@@ -3,8 +3,8 @@ version: "1.17.0"
 source: https://github.com/google/googletest
 tag: v1.17.0
 build_requires:
- - "GCC-Toolchain:(?!osx)"
- - CMake
+  - GCC-Toolchain
+  - CMake
 prefer_system_check: |
   #!/bin/bash -e
   ls $GOOGLETEST_ROOT/ > /dev/null && \

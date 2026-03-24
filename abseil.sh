@@ -2,7 +2,7 @@ package: abseil
 version: "%(tag_basename)s"
 tag: "20240722.0"
 requires:
-  - "GCC-Toolchain:(?!osx)"
+  - GCC-Toolchain
 source: https://github.com/abseil/abseil-cpp
 build_requires:
   - CMake

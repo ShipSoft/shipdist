@@ -3,7 +3,7 @@ version: "0.2.0"
 tag: "0.2.0"
 source: https://gitlab.cern.ch/ship/computing/npdb
 build_requires:
-  - "GCC-Toolchain:(?!osx)"
+  - GCC-Toolchain
   - CMake
   - rust
   - alibuild-recipe-tools

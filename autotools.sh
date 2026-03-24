@@ -4,9 +4,16 @@ tag: v1.6.4
 source: https://github.com/alisw/autotools
 prefer_system: "(?!slc5|slc6)"
 prefer_system_check: |
-  export PATH=$PATH:$(brew --prefix gettext || true)/bin;
-  which autoconf && which m4 && which automake && which makeinfo && which aclocal && which pkg-config && which autopoint && which libtool;
-  if [ $? -ne 0 ]; then printf "One or more autotools packages are missing on your system.\n * On a RHEL-compatible system you probably need: autoconf automake texinfo gettext gettext-devel libtool\n * On an Ubuntu-like system you probably need: autoconf automake autopoint texinfo gettext libtool libtool-bin pkg-config\n * On macOS you need: brew install autoconf automake gettext pkg-config"; exit 1; fi
+  if ! (which autoconf && which m4 && which automake && which makeinfo && which aclocal && which pkg-config && which autopoint && which libtool); then
+    cat <<\EOF
+  One or more autotools packages are missing on your system.
+   * On a RHEL-compatible system you probably need:
+     autoconf automake texinfo gettext gettext-devel libtool
+   * On an Ubuntu-like system you probably need:
+     autoconf automake autopoint texinfo gettext libtool libtool-bin pkg-config
+  EOF
+    exit 1
+  fi
 prepend_path:
   PKG_CONFIG_PATH: $(pkg-config --debug 2>&1 | grep 'Scanning directory' | sed -e "s/.*'\(.*\)'/\1/" | xargs echo | sed -e 's/ /:/g')
 build_requires:
@@ -133,28 +140,21 @@ esac
 
 # pkgconfig -- requires: nothing special
 pushd pkg-config*
-  OLD_LDFLAGS="$LDFLAGS"
-  [[ ${ARCHITECTURE:0:3} == osx ]] && export LDFLAGS="$LDFLAGS -framework CoreFoundation -framework Carbon"
   ./configure --disable-debug \
               --prefix=$INSTALLROOT \
               --disable-host-tool \
               --with-internal-glib
-  export LDFLAGS="$OLD_LDFLAGS"
   make ${JOBS+-j $JOBS}
   make install
   hash -r
 popd
 
-# We need to detect OSX becase xargs behaves differently there
-XARGS_DO_NOT_FAIL='-r'
-[[ ${ARCHITECTURE:0:3} == osx ]] && XARGS_DO_NOT_FAIL=
-
 # Fix perl location, required on /usr/bin/perl
 grep -l -R -e '^#!.*perl' $INSTALLROOT | \
-  xargs ${XARGS_DO_NOT_FAIL} -n1 sed -ideleteme -e 's;^#!.*perl;#!/usr/bin/perl;'
+  xargs -r -n1 sed -ideleteme -e 's;^#!.*perl;#!/usr/bin/perl;'
 find $INSTALLROOT -name '*deleteme' -delete
 grep -l -R -e 'exec [^ ]*/perl' $INSTALLROOT | \
-  xargs ${XARGS_DO_NOT_FAIL} -n1 sed -ideleteme -e 's;exec [^ ]*/perl;exec /usr/bin/perl;g'
+  xargs -r -n1 sed -ideleteme -e 's;exec [^ ]*/perl;exec /usr/bin/perl;g'
 find $INSTALLROOT -name '*deleteme' -delete
 
 # Pretend we have a modulefile to make the linter happy (don't delete)

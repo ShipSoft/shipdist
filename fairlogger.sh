@@ -6,7 +6,7 @@ requires:
  - fmt
 build_requires:
  - CMake
- - "GCC-Toolchain:(?!osx)"
+ - GCC-Toolchain
  - alibuild-recipe-tools
 incremental_recipe: |
   cmake --build . --target install ${JOBS:+-- -j$JOBS}
@@ -20,14 +20,6 @@ prefer_system_check: |
   verge $REQUESTED_VERSION $FAIRLOGGER_VERSION
 ---
 #!/bin/bash
-
-case $ARCHITECTURE in
-  osx*)
-    # If we preferred system tools, we need to make sure we can pick them up.
-    [[ ! $FMT_ROOT ]] && FMT_ROOT=`brew --prefix fmt`
-  ;;
-  *) ;;
-esac
 
 mkdir -p $INSTALLROOT
 
@@ -47,6 +39,6 @@ cmake --build . --target install ${JOBS:+-- -j$JOBS}
 # Modulefile
 mkdir -p "$INSTALLROOT/etc/modulefiles"
 alibuild-generate-module --lib > "$INSTALLROOT/etc/modulefiles/$PKGNAME"
-cat >> "$INSTALLROOT/etc/modulefiles/$PKGNAME" <<EoF
-prepend-path ROOT_INCLUDE_PATH \$PKG_ROOT/include
+cat >> "$INSTALLROOT/etc/modulefiles/$PKGNAME" <<\EoF
+prepend-path ROOT_INCLUDE_PATH $PKG_ROOT/include
 EoF

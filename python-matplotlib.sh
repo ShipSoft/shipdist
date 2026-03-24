@@ -5,7 +5,7 @@ source: https://github.com/matplotlib/matplotlib
 requires:
   - "Python:(slc|ubuntu)"
   - "Python-system:(?!slc.*|ubuntu)"
-  - "FreeType:(?!osx)"
+  - FreeType
   - libpng
   - python-numpy
   - python-contourpy

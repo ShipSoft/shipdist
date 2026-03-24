@@ -3,14 +3,13 @@ version: "v2021.5.0"
 tag: v2021.5.0
 source: https://github.com/uxlfoundation/oneTBB
 build_requires:
-  - "GCC-Toolchain:(?!osx)"
+  - GCC-Toolchain
   - CMake
   - alibuild-recipe-tools
 prefer_system: .*
 prefer_system_check: |
   #!/bin/bash -e
   c++ -std=c++20 -xc++ - \
-     -I"$(brew --prefix tbb)"/include \
      -c -o /dev/null << 'EOF'
   #include <tbb/concurrent_unordered_map.h>
   static_assert(TBB_INTERFACE_VERSION >= 11009, "min version check failed");

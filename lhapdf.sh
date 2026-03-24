@@ -5,7 +5,7 @@ source:  https://gitlab.com/hepcedar/lhapdf
 requires:
  - "Python:slc.*"
  - "Python-system:(?!slc.*)"
- - "GCC-Toolchain:(?!osx)"
+ - GCC-Toolchain
 build_requires:
  - autotools
  - alibuild-recipe-tools
@@ -21,16 +21,6 @@ prefer_system_check: |
   ls $LHAPDF_ROOT/share/LHAPDF > /dev/null
 ---
 #!/bin/bash -ex
-case $ARCHITECTURE in
-  osx*)
-    # If we preferred system tools, we need to make sure we can pick them up.
-    [[ ! $AUTOTOOLS_ROOT ]] && PATH=$PATH:$(brew --prefix gettext)/bin
-  ;;
-  *)
-    EXTRA_LD_FLAGS="-Wl,--no-as-needed"
-  ;;
-esac
-
 rsync -a --exclude '**/.git' "$SOURCEDIR"/ ./
 
 autoreconf -ivf

@@ -2,7 +2,7 @@ package: Eigen3
 version: 3.4.0
 source: https://gitlab.com/libeigen/eigen.git
 build_requires:
-  - "GCC-Toolchain:(?!osx)"
+  - GCC-Toolchain
   - CMake
   - alibuild-recipe-tools
 prefer_system_check: |

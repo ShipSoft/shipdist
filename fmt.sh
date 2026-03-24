@@ -3,7 +3,7 @@ version: "%(tag_basename)s"
 tag: 11.2.0
 source: https://github.com/fmtlib/fmt
 requires:
-  - "GCC-Toolchain:(?!osx)"
+  - GCC-Toolchain
 build_requires:
   - CMake
   - alibuild-recipe-tools
@@ -24,7 +24,7 @@ make install
 
 # Modulefile
 mkdir -p "$INSTALLROOT/etc/modulefiles"
-alibuild-generate-module > "$INSTALLROOT/etc/modulefiles/$PKGNAME"
+alibuild-generate-module --lib > "$INSTALLROOT/etc/modulefiles/$PKGNAME"
 cat >> "$INSTALLROOT/etc/modulefiles/$PKGNAME" <<EoF
 prepend-path ROOT_INCLUDE_PATH \$PKG_ROOT/include
 EoF

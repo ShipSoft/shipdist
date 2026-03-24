@@ -23,10 +23,6 @@ echo "Building GCC because no compatible version was found on the system. To ski
 
 USE_GOLD=
 case $ARCHITECTURE in
-  osx*)
-    EXTRA_LANGS=',objc,obj-c++'
-    MARCH=
-  ;;
   *x86-64)
     MARCH='x86_64-unknown-linux-gnu'
   ;;
