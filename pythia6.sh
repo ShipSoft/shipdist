@@ -10,6 +10,7 @@ prefer_system_check: |
   ls $PYTHIA6_ROOT/lib/libPythia6.so > /dev/null
 build_requires:
   - CMake
+  - alibuild-recipe-tools
 ---
 #!/bin/sh
 
@@ -24,23 +25,9 @@ make install
 cp $INSTALLROOT/lib/libpythia6.so $INSTALLROOT/lib/libPythia6.so
 
 # Modulefile
-MODULEDIR="$INSTALLROOT/etc/modulefiles"
-MODULEFILE="$MODULEDIR/$PKGNAME"
-mkdir -p "$MODULEDIR"
-cat > "$MODULEFILE" <<EoF
-#%Module1.0
-proc ModulesHelp { } {
-  global version
-  puts stderr "ALICE Modulefile for $PKGNAME $PKGVERSION-@@PKGREVISION@$PKGHASH@@"
-}
-set version $PKGVERSION-@@PKGREVISION@$PKGHASH@@
-module-whatis "ALICE Modulefile for $PKGNAME $PKGVERSION-@@PKGREVISION@$PKGHASH@@"
-# Dependencies
-module load BASE/1.0
-# Our environment
-setenv PYTHIA6_ROOT \$::env(BASEDIR)/$PKGNAME/\$version
-setenv PYTHIA6 \$::env(PYTHIA6_ROOT)
-prepend-path LD_LIBRARY_PATH \$::env(PYTHIA6_ROOT)/lib
-prepend-path AGILE_GEN_PATH \$::env(PYTHIA6_ROOT)
-$([[ ${ARCHITECTURE:0:3} == osx ]] && echo "prepend-path DYLD_LIBRARY_PATH \$::env(PYTHIA6_ROOT)/lib")
+mkdir -p "$INSTALLROOT/etc/modulefiles"
+alibuild-generate-module --lib > "$INSTALLROOT/etc/modulefiles/$PKGNAME"
+cat >> "$INSTALLROOT/etc/modulefiles/$PKGNAME" <<EoF
+setenv PYTHIA6 \$PKG_ROOT
+prepend-path AGILE_GEN_PATH \$PKG_ROOT
 EoF

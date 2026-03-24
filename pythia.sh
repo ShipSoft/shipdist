@@ -20,6 +20,8 @@ prefer_system_check: |
   ls $PYTHIA_ROOT/lib/libpythia8lhapdf6.so > /dev/null && \
   ls $PYTHIA_ROOT/lib/libpythia8.so > /dev/null && \
   true
+build_requires:
+  - alibuild-recipe-tools
 ---
 #!/bin/bash -e
 rsync -a $SOURCEDIR/ ./
@@ -41,24 +43,9 @@ make install
 chmod a+x $INSTALLROOT/bin/pythia8-config
 
 # Modulefile
-MODULEDIR="$INSTALLROOT/etc/modulefiles"
-MODULEFILE="$MODULEDIR/$PKGNAME"
-mkdir -p "$MODULEDIR"
-cat > "$MODULEFILE" <<EoF
-#%Module1.0
-proc ModulesHelp { } {
-  global version
-  puts stderr "ALICE Modulefile for $PKGNAME $PKGVERSION-@@PKGREVISION@$PKGHASH@@"
-}
-set version $PKGVERSION-@@PKGREVISION@$PKGHASH@@
-module-whatis "ALICE Modulefile for $PKGNAME $PKGVERSION-@@PKGREVISION@$PKGHASH@@"
-# Dependencies
-module load BASE/1.0 ${LHAPDF_VERSION:+lhapdf/$LHAPDF_VERSION-$LHAPDF_REVISION} ${BOOST_VERSION:+boost/$BOOST_VERSION-$BOOST_REVISION} HepMC/$HEPMC_VERSION-$HEPMC_REVISION
-# Our environment
-setenv PYTHIA_ROOT \$::env(BASEDIR)/$PKGNAME/\$version
-setenv PYTHIA8DATA \$::env(PYTHIA_ROOT)/share/Pythia8/xmldoc
-setenv PYTHIA8 \$::env(BASEDIR)/$PKGNAME/\$version
-prepend-path PATH \$::env(PYTHIA_ROOT)/bin
-prepend-path LD_LIBRARY_PATH \$::env(PYTHIA_ROOT)/lib
-$([[ ${ARCHITECTURE:0:3} == osx ]] && echo "prepend-path DYLD_LIBRARY_PATH \$::env(PYTHIA_ROOT)/lib")
+mkdir -p "$INSTALLROOT/etc/modulefiles"
+alibuild-generate-module --bin --lib > "$INSTALLROOT/etc/modulefiles/$PKGNAME"
+cat >> "$INSTALLROOT/etc/modulefiles/$PKGNAME" <<EoF
+setenv PYTHIA8DATA \$PKG_ROOT/share/Pythia8/xmldoc
+setenv PYTHIA8 \$PKG_ROOT
 EoF

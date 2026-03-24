@@ -20,6 +20,7 @@ build_requires:
 - "Xcode:(osx.*)"
 - libxml2
 - Python
+- alibuild-recipe-tools
 env:
   ROOTSYS: "$ROOT_ROOT"
 prepend_path:
@@ -123,30 +124,11 @@ cmake --build . ${JOBS+-j$JOBS} --target install
 [[ -d $INSTALLROOT/test ]] && ( cd $INSTALLROOT/test && env PATH=$INSTALLROOT/bin:$PATH LD_LIBRARY_PATH=$INSTALLROOT/lib:$LD_LIBRARY_PATH DYLD_LIBRARY_PATH=$INSTALLROOT/lib:$DYLD_LIBRARY_PATH make ${JOBS+-j$JOBS} )
 
 # Modulefile
-mkdir -p etc/modulefiles
-cat > etc/modulefiles/$PKGNAME <<EoF
-#%Module1.0
-proc ModulesHelp { } {
-  global version
-  puts stderr "ALICE Modulefile for $PKGNAME $PKGVERSION-@@PKGREVISION@$PKGHASH@@"
-}
-set version $PKGVERSION-@@PKGREVISION@$PKGHASH@@
-module-whatis "ALICE Modulefile for $PKGNAME $PKGVERSION-@@PKGREVISION@$PKGHASH@@"
-# Dependencies
-module load BASE/1.0 ${GCC_TOOLCHAIN_VERSION:+GCC-Toolchain/$GCC_TOOLCHAIN_VERSION-$GCC_TOOLCHAIN_REVISION}     \\
-                     ${GSL_VERSION:+GSL/$GSL_VERSION-$GSL_REVISION}                                             \\
-                     ${XROOTD_VERSION:+XRootD/$XROOTD_VERSION-$XROOTD_REVISION}                                 \\
-                     ${FREETYPE_VERSION:+FreeType/$FREETYPE_VERSION-$FREETYPE_REVISION}                         \\
-                     ${PYTHON_VERSION:+Python/$PYTHON_VERSION-$PYTHON_REVISION}                                 \\
-                     ${PYTHON_NUMPY_VERSION:+python-numpy/$PYTHON_NUMPY_VERSION-$PYTHON_NUMPY_REVISION} \\
-                     ${PYTHIA_VERSION:+pythia/$PYTHIA_VERSION-$PYTHIA_REVISION}
-# Our environment
+mkdir -p "$INSTALLROOT/etc/modulefiles"
+alibuild-generate-module --bin --lib > "$INSTALLROOT/etc/modulefiles/$PKGNAME"
+cat >> "$INSTALLROOT/etc/modulefiles/$PKGNAME" <<EoF
 setenv ROOT_RELEASE \$version
-setenv ROOT_BASEDIR \$::env(BASEDIR)/$PKGNAME
-setenv ROOTSYS \$::env(ROOT_BASEDIR)/\$::env(ROOT_RELEASE)
-prepend-path PYTHONPATH \$::env(ROOTSYS)/lib
-prepend-path PATH \$::env(ROOTSYS)/bin
-prepend-path LD_LIBRARY_PATH \$::env(ROOTSYS)/lib
-$([[ ${ARCHITECTURE:0:3} == osx ]] && echo "prepend-path DYLD_LIBRARY_PATH \$::env(ROOTSYS)/lib")
+setenv ROOT_BASEDIR \$::env(BASEDIR)/ROOT
+setenv ROOTSYS \$PKG_ROOT
+prepend-path PYTHONPATH \$PKG_ROOT/lib
 EoF
-mkdir -p $INSTALLROOT/etc/modulefiles && rsync -a --delete etc/modulefiles/ $INSTALLROOT/etc/modulefiles

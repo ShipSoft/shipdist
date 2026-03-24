@@ -9,6 +9,7 @@ requires:
 build_requires:
   - CMake
   - "Xcode:(osx.*)"
+  - alibuild-recipe-tools
 env:
   G4INSTALL: $GEANT4_ROOT
   G4DATASEARCHOPT: "-mindepth 2 -maxdepth 4 -type d -wholename"
@@ -80,25 +81,12 @@ G4SAIDXSDATA=`find ${INSTALLROOT} $G4DATASEARCHOPT  '*data*G4SAIDDATA*'`
 
 
 # Modulefile
-MODULEDIR="$INSTALLROOT/etc/modulefiles"
-MODULEFILE="$MODULEDIR/$PKGNAME"
-mkdir -p "$MODULEDIR"
-cat > "$MODULEFILE" <<EoF
-#%Module1.0
-proc ModulesHelp { } {
-  global version
-  puts stderr "ALICE Modulefile for $PKGNAME $PKGVERSION-@@PKGREVISION@$PKGHASH@@"
-}
-set version $PKGVERSION-@@PKGREVISION@$PKGHASH@@
-module-whatis "ALICE Modulefile for $PKGNAME $PKGVERSION-@@PKGREVISION@$PKGHASH@@"
-# Dependencies
-module load BASE/1.0 ${XERCESC_ROOT:+XercesC/$XERCESC_VERSION-$XERCESC_REVISION}
-# Our environment
+mkdir -p "$INSTALLROOT/etc/modulefiles"
+alibuild-generate-module --bin --lib > "$INSTALLROOT/etc/modulefiles/$PKGNAME"
+cat >> "$INSTALLROOT/etc/modulefiles/$PKGNAME" <<EoF
+setenv G4INSTALL \$PKG_ROOT
+setenv G4INSTALL_DATA \$PKG_ROOT/share/
 set osname [uname sysname]
-set GEANT4_ROOT \$::env(BASEDIR)/$PKGNAME/\$version
-setenv GEANT4_ROOT \$GEANT4_ROOT
-setenv G4INSTALL \$GEANT4_ROOT
-setenv G4INSTALL_DATA \$GEANT4_ROOT/share/
 setenv G4SYSTEM \$osname-g++
 setenv G4ABLADATA ${G4ABLADATA:-not-defined}
 setenv G4ENSDFSTATEDATA ${G4ENSDFSTATEDATA:-not-defined}
@@ -109,13 +97,9 @@ setenv G4NEUTRONHPDATA ${G4NEUTRONHPDATA:-not-defined}
 setenv G4NEUTRONXSDATA ${G4NEUTRONXSDATA:-not-defined}
 setenv G4PARTICLEXSDATA ${G4PARTICLEXSDATA:-not-defined}
 setenv G4PIIDATA ${G4PIIDATA:-not-defined}
-setenv G4RADIOACTIVEDATA  ${G4RADIOACTIVEDATA:-not-defined}
+setenv G4RADIOACTIVEDATA ${G4RADIOACTIVEDATA:-not-defined}
 setenv G4REALSURFACEDATA ${G4REALSURFACEDATA:-not-defined}
 setenv G4SAIDXSDATA ${G4SAIDXSDATA:-not-defined}
-set G4BASE \$GEANT4_ROOT
-prepend-path PATH \$GEANT4_ROOT/bin
-prepend-path ROOT_INCLUDE_PATH \$GEANT4_ROOT/include/Geant4
-prepend-path ROOT_INCLUDE_PATH \$GEANT4_ROOT/include
-prepend-path LD_LIBRARY_PATH \$GEANT4_ROOT/lib
-$([[ ${ARCHITECTURE:0:3} == osx ]] && echo "prepend-path DYLD_LIBRARY_PATH \$::env(GEANT4_ROOT)/lib")
+prepend-path ROOT_INCLUDE_PATH \$PKG_ROOT/include/Geant4
+prepend-path ROOT_INCLUDE_PATH \$PKG_ROOT/include
 EoF
