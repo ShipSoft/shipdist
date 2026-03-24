@@ -50,7 +50,6 @@ cmake $SOURCEDIR                                    \
   -DBUILD_SHARED_LIBS=ON                            \
   -DG4VERBOSE=ON                                    \
   -DGEANT4_INSTALL_EXAMPLES=OFF                     \
-  -DCLHEP_ROOT_DIR:PATH="$CLHEP_ROOT"               \
   -DGEANT4_BUILD_MULTITHREADED=OFF                  \
   -DCMAKE_STATIC_LIBRARY_CXX_FLAGS="-fPIC"          \
   -DCMAKE_STATIC_LIBRARY_C_FLAGS="-fPIC"            \
