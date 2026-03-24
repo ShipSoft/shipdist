@@ -34,7 +34,6 @@ export GENIE="$BUILDDIR"
 
 rsync -a $SOURCEDIR/* $BUILDDIR
 ls -alh $BUILDDIR
-sed -i 's/libAPFEL.la/libAPFEL.so/' $BUILDDIR/configure
 $BUILDDIR/configure --prefix=$INSTALLROOT \
 		    --enable-lhapdf6 \
 		    --enable-apfel \
