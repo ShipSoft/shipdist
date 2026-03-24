@@ -16,7 +16,7 @@ requires:
   - FairLogger
   - yaml-cpp
   - GEANT3
-  - "GCC-Toolchain:(?!osx)"
+  - GCC-Toolchain
 build_requires:
   - FairCMakeModules
   - alibuild-recipe-tools

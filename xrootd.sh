@@ -3,14 +3,13 @@ version: "%(tag_basename)s"
 tag: "v5.8.4"
 source: https://github.com/xrootd/xrootd
 requires:
-  - "OpenSSL:(?!osx)"
+  - OpenSSL
   - "Python:(slc|ubuntu)"
   - "Python-system:(?!slc.*|ubuntu)"
   - libxml2
 build_requires:
   - CMake
-  - "osx-system-openssl:(osx.*)"
-  - "GCC-Toolchain:(?!osx)"
+  - GCC-Toolchain
   - UUID
   - alibuild-recipe-tools
 prepend_path:

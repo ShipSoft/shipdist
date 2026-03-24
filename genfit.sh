@@ -7,7 +7,7 @@ requires:
   - boost
 build_requires:
   - CMake
-  - "GCC-Toolchain:(?!osx)"
+  - GCC-Toolchain
   - alibuild-recipe-tools
 env:
   GENFIT: "$GENFIT_ROOT"

@@ -5,7 +5,7 @@ source:  https://gitlab.com/hepcedar/lhapdf
 requires:
  - "Python:slc.*"
  - "Python-system:(?!slc.*)"
- - "GCC-Toolchain:(?!osx)"
+ - GCC-Toolchain
 build_requires:
  - autotools
  - alibuild-recipe-tools

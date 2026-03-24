@@ -6,7 +6,7 @@ requires:
  - fmt
 build_requires:
  - CMake
- - "GCC-Toolchain:(?!osx)"
+ - GCC-Toolchain
  - alibuild-recipe-tools
 incremental_recipe: |
   cmake --build . --target install ${JOBS:+-- -j$JOBS}

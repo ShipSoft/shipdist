@@ -4,20 +4,18 @@ tag: v6-36-08
 source: https://github.com/root-project/root
 requires:
 - GSL
-- opengl:(?!osx)
-- Xdevel:(?!osx)
-- FreeType:(?!osx)
+- opengl
+- Xdevel
+- FreeType
 - python-numpy
 - zlib
 - libxml2
-- "OpenSSL:(?!osx)"
-- "osx-system-openssl:(osx.*)"
+- OpenSSL
 - XRootD
 - pythia
 - TBB
 build_requires:
 - CMake
-- "Xcode:(osx.*)"
 - libxml2
 - Python
 - alibuild-recipe-tools

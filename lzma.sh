@@ -4,7 +4,7 @@ tag: "v5.2.3"
 source: https://github.com/alisw/liblzma
 build_requires:
   - autotools
-  - "GCC-Toolchain:(?!osx)"
+  - GCC-Toolchain
   - rsync
 prefer_system: "(?!slc5)"
 prefer_system_check: |

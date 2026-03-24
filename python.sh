@@ -6,7 +6,7 @@ requires:
   - FreeType
   - libpng
   - sqlite
-  - "GCC-Toolchain:(?!osx)"
+  - GCC-Toolchain
   - libffi
 build_requires:
   - curl
@@ -20,11 +20,6 @@ prefer_system_check: |
     python3 -c 'from sys import version_info; print(f"alibuild_system_replace: python{version_info.major}.{version_info.minor}")'
     python3 -c 'import sys; import sqlite3; sys.exit(1 if sys.version_info < (3, 12, 12) or sys.version_info > (3, 15) else 0)' && python3 -m pip --help > /dev/null && printf '#include "pyconfig.h"' | cc -c $(python3-config --includes) -xc -o /dev/null -; if [ $? -ne 0 ]; then printf "Python, the Python development packages, and pip must be installed on your system.\nUsually those packages are called python, python-devel (or python-dev) and python-pip.\n"; exit 1; fi
 prefer_system_replacement_specs:
-  "python-brew3.*":
-    version: "%(key)s"
-    env:
-        PYTHON_ROOT: $(brew --prefix python3)
-        PYTHON_REVISION: ""
   "python3.*":
     version: "%(key)s"
     env:

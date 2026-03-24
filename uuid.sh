@@ -3,7 +3,7 @@ version: v2.27.1
 tag: alice/v2.27.1
 source: https://github.com/alisw/uuid
 build_requires:
-  - "GCC-Toolchain:(?!osx)"
+  - GCC-Toolchain
   - "autotools:(slc6|slc7)"
 prepend_path:
   PKG_CONFIG_PATH: "$UUID_ROOT/share/pkgconfig"

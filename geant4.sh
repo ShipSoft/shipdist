@@ -3,12 +3,11 @@ version: "%(tag_basename)s"
 tag: v11.4.0
 source: https://github.com/geant4/geant4.git
 requires:
-  - "GCC-Toolchain:(?!osx)"
+  - GCC-Toolchain
   - opengl
   - XercesC
 build_requires:
   - CMake
-  - "Xcode:(osx.*)"
   - alibuild-recipe-tools
 env:
   G4INSTALL: $GEANT4_ROOT

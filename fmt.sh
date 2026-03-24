@@ -3,7 +3,7 @@ version: "%(tag_basename)s"
 tag: 11.2.0
 source: https://github.com/fmtlib/fmt
 requires:
-  - "GCC-Toolchain:(?!osx)"
+  - GCC-Toolchain
 build_requires:
   - CMake
   - alibuild-recipe-tools

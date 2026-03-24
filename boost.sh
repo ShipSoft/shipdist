@@ -3,7 +3,7 @@ version: "%(tag_basename)s"
 tag: "v1.75.0"
 source: https://github.com/alisw/boost.git
 requires:
-  - "GCC-Toolchain:(?!osx)"
+  - GCC-Toolchain
   - Python
   - libpng
   - zlib

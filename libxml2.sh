@@ -4,7 +4,7 @@ tag: v2.9.3
 build_requires:
   - "autotools:(slc6|slc7)"
   - zlib
-  - "GCC-Toolchain:(?!osx)"
+  - GCC-Toolchain
   - alibuild-recipe-tools
 source: https://github.com/alisw/libxml2.git
 prefer_system: "(?!slc5)"
