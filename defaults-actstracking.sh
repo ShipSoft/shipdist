@@ -25,8 +25,10 @@ overrides:
     tag: master
     source: https://github.com/ShipSoft/FairShip
     requires:
-      - generators
-      - simulation
+      - pythia
+      - pythia6
+      - GEANT4_VMC
+      - HepMC
       - FairRoot
       - FairLogger
       - GENIE

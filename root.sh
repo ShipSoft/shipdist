@@ -102,9 +102,8 @@ ${PYTHIA_ROOT:+-Dpythia8=ON}                \
 -Dbuiltin_vdt=ON                                          \
 -Dbuiltin_davix=OFF                                                              \
 -Ddavix=OFF                                                                      \
-${PYTHON_ROOT:+-DPYTHON_EXECUTABLE=$PYTHONHOME/bin/python} \
-${PYTHON_ROOT:+-DPYTHON_INCLUDE_DIR=$PYTHONHOME/include/python3.6m} \
-${PYTHON_ROOT:+-DPYTHON_LIBRARY=$PYTHONHOME/lib/libpython3.6m.so} \
+${PYTHON_ROOT:+-DPYTHON_EXECUTABLE=$PYTHONHOME/bin/python3} \
+${PYTHON_ROOT:+-DPython3_ROOT_DIR=$PYTHON_ROOT} \
 -DCMAKE_PREFIX_PATH="$FREETYPE_ROOT;$SYS_OPENSSL_ROOT;$GSL_ROOT;$PYTHON_ROOT"
 FEATURES="builtin_pcre xml ssl opengl http gdml mathmore ${PYTHIA_ROOT:+pythia8}
     roofit soversion vdt ${XROOTD_ROOT:+xrootd}
