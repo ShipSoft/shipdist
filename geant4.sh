@@ -8,6 +8,7 @@ requires:
   - XercesC
 build_requires:
   - CMake
+  - ninja
   - "Xcode:(osx.*)"
 env:
   G4INSTALL: $GEANT4_ROOT
@@ -38,6 +39,7 @@ prefer_system_check: |
 #!/bin/bash -e
 export G4DEBUG=1
 cmake $SOURCEDIR                                    \
+  -G Ninja \
   -DGEANT4_INSTALL_DATA_TIMEOUT=1500                \
   -DCMAKE_CXX_FLAGS="-fPIC"                         \
   -DCMAKE_INSTALL_PREFIX:PATH="$INSTALLROOT"        \
@@ -57,8 +59,7 @@ cmake $SOURCEDIR                                    \
   -DGEANT4_USE_SYSTEM_EXPAT=OFF                     \
   ${XERCESC_ROOT:+-DGEANT4_USE_OPENGL_X11=ON -DGEANT4_USE_GDML=ON -DXERCESC_ROOT_DIR=$XERCESC_ROOT}
 
-make ${JOBS+-j $JOBS}
-make install
+cmake --build . ${JOBS+-j$JOBS} --target install
 
 ln -s lib $INSTALLROOT/lib64
 
