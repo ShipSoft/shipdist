@@ -20,6 +20,7 @@ build_requires:
 - "Xcode:(osx.*)"
 - libxml2
 - Python
+- ninja
 env:
   ROOTSYS: "$ROOT_ROOT"
 prepend_path:
@@ -80,6 +81,7 @@ esac
 
 # Normal ROOT build.
 cmake $SOURCEDIR \
+-G Ninja \
 -DCMAKE_BUILD_TYPE=$CMAKE_BUILD_TYPE                      \
 -DCMAKE_INSTALL_PREFIX=$INSTALLROOT                       \
 ${XROOTD_ROOT:+-DXROOTD_ROOT_DIR=$XROOTD_ROOT}            \
