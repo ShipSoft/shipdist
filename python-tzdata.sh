@@ -1,29 +1,25 @@
-package: python-pandas
+package: python-tzdata
 version: "%(tag_basename)s"
-tag: "v2.2.3"
-source: https://github.com/pandas-dev/pandas
+tag: "2024.2"
+source: https://github.com/python/tzdata
 requires:
   - "Python:(slc|ubuntu)"
   - "Python-system:(?!slc.*|ubuntu)"
-  - python-numpy
-  - python-dateutil
-  - python-tzdata
 build_requires:
   - uv
   - alibuild-recipe-tools
 prefer_system_check: |
-  python3 -c 'import pandas; print(pandas.__version__)' || exit 1
-  SYSTEM_VERSION=$(python3 -c 'import pandas; print(pandas.__version__)')
+  SYSTEM_VERSION=$(python3 -c 'from importlib.metadata import version; print(version("tzdata"))') || exit 1
   printf '%s\n%s\n' "$PKGVERSION" "$SYSTEM_VERSION" | sort -V -C
 prepend_path:
-  PYTHONPATH: "$PYTHON_PANDAS_ROOT/lib/python/site-packages"
+  PYTHONPATH: "$PYTHON_TZDATA_ROOT/lib/python/site-packages"
 ---
 #!/bin/bash -e
 pyver=$(python3 -c 'import sysconfig; print(sysconfig.get_python_version())')
 TARGET="$INSTALLROOT/lib/python$pyver/site-packages"
 mkdir -p "$TARGET"
 
-uv pip install --no-deps --no-cache-dir --target="$TARGET" --python="$(command -v python3)" "pandas==$PKGVERSION"
+uv pip install --no-deps --no-cache-dir --target="$TARGET" --python="$(command -v python3)" "tzdata==$PKGVERSION"
 
 ln -snf "python$pyver" "$INSTALLROOT/lib/python"
 
