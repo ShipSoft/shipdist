@@ -12,7 +12,7 @@ env:
 prefer_system_check: |
   #!/bin/bash -e
   which pythia8-config > /dev/null && \
-  printf "#include \"Pythia8/Pythia.h\"\nint main(){}" | c++ -xc++ - -c -o /dev/null
+  printf "#include \"Pythia8/Pythia.h\"\nint main(){}" | c++ -I"$PYTHIA_ROOT/include" -xc++ - -c -o /dev/null
 ---
 #!/bin/bash -e
 rsync -a $SOURCEDIR/ ./
