@@ -13,7 +13,7 @@ env:
 prefer_system_check: |
   #!/bin/bash -e
   which lhapdf-config > /dev/null && \
-  printf "#include \"LHAPDF/LHAPDF.h\"\nint main(){}" | c++ -xc++ - -c -o /dev/null
+  printf "#include \"LHAPDF/LHAPDF.h\"\nint main(){}" | c++ -I"$LHAPDF_ROOT/include" -xc++ - -c -o /dev/null
 ---
 #!/bin/bash -ex
 case $ARCHITECTURE in
