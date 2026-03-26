@@ -10,10 +10,17 @@ requires:
 env:
   EVTGENDATA: "$EVTGEN_ROOT/share/EvtGen"
 prefer_system_check: |
-    if [ ! -z "$EVTGEN_VERSION" ]; then
-        exit 0
-    fi
-    exit 1
+  if [ -z "$EVTGEN_ROOT" ]; then
+    for d in $(echo "$CMAKE_PREFIX_PATH" | tr : '\n'); do
+      if [ -d "$d/include/EvtGen" ]; then
+        export EVTGEN_ROOT="$d"
+        break
+      fi
+    done
+  fi
+  ls "$EVTGEN_ROOT"/include/EvtGen > /dev/null && \
+  (ls "$EVTGEN_ROOT"/lib/libEvtGen.so > /dev/null 2>&1 || \
+   ls "$EVTGEN_ROOT"/lib64/libEvtGen.so > /dev/null)
 ---
 #!/bin/sh
 
