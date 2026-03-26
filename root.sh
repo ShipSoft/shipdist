@@ -107,6 +107,7 @@ ${ENABLE_COCOA:+-Dcocoa=ON}                               \
 -DCMAKE_C_COMPILER=$COMPILER_CC                           \
 -DCMAKE_LINKER=$COMPILER_LD                               \
 ${GCC_LIB_DIR:+-DCMAKE_EXE_LINKER_FLAGS="-L$GCC_LIB_DIR"} \
+${GCC_LIB_DIR:+-DCMAKE_SHARED_LINKER_FLAGS="-L$GCC_LIB_DIR"} \
 ${SYS_OPENSSL_ROOT:+-DOPENSSL_ROOT=$SYS_OPENSSL_ROOT}     \
 ${SYS_OPENSSL_ROOT:+-DOPENSSL_INCLUDE_DIR=$SYS_OPENSSL_ROOT/include} \
 ${GSL_ROOT:+-DGSL_DIR=$GSL_ROOT}                          \
