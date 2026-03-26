@@ -7,7 +7,7 @@ build_requires:
   - GCC-Toolchain:(?!osx.*)
 prefer_system_check: |
   #!/bin/bash -e
-  printf "#include \"HepMC/HepMCDefs.h\"\nint main(){}" | c++ -xc++ - -c -o /dev/null
+  printf "#include \"HepMC/HepMCDefs.h\"\nint main(){}" | c++ -I"$HEPMC_ROOT/include" -xc++ - -c -o /dev/null
 ---
 #!/bin/bash -e
 
