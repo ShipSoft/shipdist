@@ -13,7 +13,17 @@ env:
 prepend_path:
   "ROOT_INCLUDE_PATH": "$HEPMC3_ROOT/include"
 prefer_system_check: |
-  ls $HEPMC3_ROOT/include/HepMC3 && ls $HEPMC3_ROOT/lib/libHepMC3.so
+  if [ -z "$HEPMC3_ROOT" ]; then
+    for d in $(echo "$CMAKE_PREFIX_PATH" | tr : '\n'); do
+      if [ -d "$d/include/HepMC3" ]; then
+        export HEPMC3_ROOT="$d"
+        break
+      fi
+    done
+  fi
+  ls "$HEPMC3_ROOT/include/HepMC3" > /dev/null && \
+  (ls "$HEPMC3_ROOT/lib/libHepMC3.so" > /dev/null 2>&1 || \
+   ls "$HEPMC3_ROOT/lib64/libHepMC3.so" > /dev/null)
 ---
 #!/bin/bash -e
 MODULEDIR="$INSTALLROOT/etc/modulefiles"

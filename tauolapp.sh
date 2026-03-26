@@ -7,6 +7,14 @@ requires:
   - ROOT
   - pythia
 prefer_system_check: |
+  if [ -z "$TAUOLAPP_ROOT" ]; then
+    for d in $(echo "$CMAKE_PREFIX_PATH" | tr : '\n'); do
+      if [ -d "$d/include/Tauola" ]; then
+        export TAUOLAPP_ROOT="$d"
+        break
+      fi
+    done
+  fi
   ls "$TAUOLAPP_ROOT"/lib/libTauolaHepMC3.so > /dev/null && \
   ls "$TAUOLAPP_ROOT"/lib/libTauolaCxxInterface.so > /dev/null && \
   ls "$TAUOLAPP_ROOT"/lib/libTauolaFortran.so > /dev/null && \
