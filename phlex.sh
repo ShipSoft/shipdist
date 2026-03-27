@@ -1,4 +1,4 @@
-package: PHLEX
+package: phlex
 version: "%(tag_basename)s"
 tag: v0.1.0
 source: https://github.com/Framework-R-D/phlex
