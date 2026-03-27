@@ -1,7 +1,7 @@
 package: sqlite
-source: https://github.com/sqlite/sqlite
 version: "%(tag_basename)s%(defaults_upper)s"
 tag: "version-3.49.1"
+source: https://github.com/sqlite/sqlite
 prefer_system: (?!slc5)
 prefer_system_check: |
   printf '#include <sqlite3.h>\nint main(){}\n' | cc -xc - -lsqlite3 -o /dev/null
