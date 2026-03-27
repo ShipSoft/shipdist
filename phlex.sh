@@ -1,4 +1,4 @@
-package: PHLEX
+package: phlex
 version: "%(tag_basename)s"
 tag: v0.1.0
 source: https://github.com/Framework-R-D/phlex
@@ -23,10 +23,13 @@ prepend_path:
 ---
 #!/bin/bash -e
 
+# PHLEX requires C++23 regardless of defaults
+export CXXFLAGS="${CXXFLAGS//-std=c++*/-std=c++23}"
+
 cmake "$SOURCEDIR" \
   -DCMAKE_INSTALL_PREFIX="$INSTALLROOT" \
   -DCMAKE_BUILD_TYPE="$CMAKE_BUILD_TYPE" \
-  -DCMAKE_CXX_STANDARD="${CMAKE_CXX_STANDARD:-23}" \
+  -DCMAKE_CXX_STANDARD=23 \
   -DCMAKE_INSTALL_LIBDIR=lib \
   -DCMAKE_PREFIX_PATH="$CETMODULES_ROOT" \
   -DPHLEX_USE_FORM=ON \
