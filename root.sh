@@ -13,7 +13,6 @@ requires:
 - "OpenSSL:(?!osx)"
 - "osx-system-openssl:(osx.*)"
 - XRootD
-- pythia
 - TBB
 build_requires:
 - CMake
@@ -47,7 +46,7 @@ prefer_system_check: |
       echo "ROOT version $VERSION insufficient ($REQUESTED_VERSION requested)"
       exit 1
   fi
-  FEATURES="builtin_pcre mathmore xml ssl opengl http gdml pythia8 roofit soversion vdt xrootd"
+  FEATURES="builtin_pcre mathmore xml ssl opengl http gdml roofit soversion vdt xrootd"
   for FEATURE in $FEATURES; do
       root-config --has-$FEATURE | grep -q yes || { echo "$FEATURE missing"; exit 1; }
   done
@@ -96,8 +95,6 @@ ${GCC_TOOLCHAIN_VERSION:+-DCMAKE_EXE_LINKER_FLAGS="-L$GCC_TOOLCHAIN_ROOT/lib64"}
 ${SYS_OPENSSL_ROOT:+-DOPENSSL_ROOT=$SYS_OPENSSL_ROOT}     \
 ${SYS_OPENSSL_ROOT:+-DOPENSSL_INCLUDE_DIR=$SYS_OPENSSL_ROOT/include} \
 ${GSL_ROOT:+-DGSL_DIR=$GSL_ROOT}                          \
-${PYTHIA_ROOT:+-DPYTHIA8_DIR=$PYTHIA_ROOT}                \
-${PYTHIA_ROOT:+-Dpythia8=ON}                \
 -Dmathmore=ON \
 -Dsoversion=ON                                            \
 -Dshadowpw=OFF                                            \
@@ -107,7 +104,7 @@ ${PYTHIA_ROOT:+-Dpythia8=ON}                \
 ${PYTHON_ROOT:+-DPYTHON_EXECUTABLE=$PYTHONHOME/bin/python3} \
 ${PYTHON_ROOT:+-DPython3_ROOT_DIR=$PYTHON_ROOT} \
 -DCMAKE_PREFIX_PATH="$FREETYPE_ROOT;$SYS_OPENSSL_ROOT;$GSL_ROOT;$PYTHON_ROOT"
-FEATURES="builtin_pcre xml ssl opengl http gdml mathmore ${PYTHIA_ROOT:+pythia8}
+FEATURES="builtin_pcre xml ssl opengl http gdml mathmore
     roofit soversion vdt ${XROOTD_ROOT:+xrootd}
     ${ENABLE_COCOA:+builtin_freetype}"
 NO_FEATURES="${FREETYPE_ROOT:+builtin_freetype}"
@@ -140,8 +137,7 @@ module load BASE/1.0 ${GCC_TOOLCHAIN_VERSION:+GCC-Toolchain/$GCC_TOOLCHAIN_VERSI
                      ${XROOTD_VERSION:+XRootD/$XROOTD_VERSION-$XROOTD_REVISION}                                 \\
                      ${FREETYPE_VERSION:+FreeType/$FREETYPE_VERSION-$FREETYPE_REVISION}                         \\
                      ${PYTHON_VERSION:+Python/$PYTHON_VERSION-$PYTHON_REVISION}                                 \\
-                     ${PYTHON_NUMPY_VERSION:+python-numpy/$PYTHON_NUMPY_VERSION-$PYTHON_NUMPY_REVISION} \\
-                     ${PYTHIA_VERSION:+pythia/$PYTHIA_VERSION-$PYTHIA_REVISION}
+                     ${PYTHON_NUMPY_VERSION:+python-numpy/$PYTHON_NUMPY_VERSION-$PYTHON_NUMPY_REVISION}
 # Our environment
 setenv ROOT_RELEASE \$version
 setenv ROOT_BASEDIR \$::env(BASEDIR)/$PKGNAME
