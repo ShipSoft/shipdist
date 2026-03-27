@@ -1,6 +1,6 @@
 package: python-awkward
 version: "%(tag_basename)s"
-tag: "v2.9.0"
+tag: "v2.8.9"
 source: https://github.com/scikit-hep/awkward
 requires:
   - "Python:(slc|ubuntu)"

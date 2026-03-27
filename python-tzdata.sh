@@ -1,27 +1,25 @@
-package: python-awkward-cpp
-# awkward-cpp uses integer PyPI versions and is released from the awkward
-# monorepo, so there are no standalone GitHub tags to track.
-version: "50"
+package: python-tzdata
+version: "%(tag_basename)s"
+tag: "2024.2"
+source: https://github.com/python/tzdata
 requires:
   - "Python:(slc|ubuntu)"
   - "Python-system:(?!slc.*|ubuntu)"
-  - python-numpy
 build_requires:
   - uv
   - alibuild-recipe-tools
 prefer_system_check: |
-  python3 -c 'from importlib.metadata import version; print(version("awkward-cpp"))' || exit 1
-  SYSTEM_VERSION=$(python3 -c 'from importlib.metadata import version; print(version("awkward-cpp"))')
+  SYSTEM_VERSION=$(python3 -c 'from importlib.metadata import version; print(version("tzdata"))') || exit 1
   printf '%s\n%s\n' "$PKGVERSION" "$SYSTEM_VERSION" | sort -V -C
 prepend_path:
-  PYTHONPATH: "$PYTHON_AWKWARD_CPP_ROOT/lib/python/site-packages"
+  PYTHONPATH: "$PYTHON_TZDATA_ROOT/lib/python/site-packages"
 ---
 #!/bin/bash -e
 pyver=$(python3 -c 'import sysconfig; print(sysconfig.get_python_version())')
 TARGET="$INSTALLROOT/lib/python$pyver/site-packages"
 mkdir -p "$TARGET"
 
-uv pip install --no-deps --no-cache-dir --target="$TARGET" --python="$(command -v python3)" "awkward-cpp==$PKGVERSION"
+uv pip install --no-deps --no-cache-dir --target="$TARGET" --python="$(command -v python3)" "tzdata==$PKGVERSION"
 
 ln -snf "python$pyver" "$INSTALLROOT/lib/python"
 

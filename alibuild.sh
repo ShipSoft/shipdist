@@ -1,6 +1,6 @@
 package: alibuild
 version: "%(tag_basename)s"
-tag: "v1.9.9"
+tag: "v1.17.41"
 source: https://github.com/alisw/alibuild
 requires:
   - "Python:(slc|ubuntu)"
@@ -32,7 +32,7 @@ ln -snf "python$pyver" "$INSTALLROOT/lib/python"
 
 # Move scripts installed into the target to the bin directory
 mkdir -p "$INSTALLROOT/bin"
-mv "$TARGET/../../../bin"/* "$INSTALLROOT/bin/"
+mv "$TARGET/bin"/* "$INSTALLROOT/bin/"
 
 mkdir -p "$INSTALLROOT/etc/modulefiles"
 alibuild-generate-module > "$INSTALLROOT/etc/modulefiles/$PKGNAME"

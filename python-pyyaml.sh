@@ -1,6 +1,6 @@
 package: python-pyyaml
 version: "%(tag_basename)s"
-tag: "6.0.3"
+tag: "6.0.2"
 source: https://github.com/yaml/pyyaml
 requires:
   - "Python:(slc|ubuntu)"

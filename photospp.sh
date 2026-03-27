@@ -12,12 +12,18 @@ build_requires:
   - alibuild-recipe-tools
 prefer_system_check: |
   #!/bin/bash -e
-  ls $PHOTOSPP_ROOT/ > /dev/null && \
-  ls $PHOTOSPP_ROOT/include/Photos > /dev/null && \
-  ls $PHOTOSPP_ROOT/lib > /dev/null && \
-  ls $PHOTOSPP_ROOT/lib/libPhotospp.so > /dev/null && \
-  ls $PHOTOSPP_ROOT/lib/libPhotosppHEPEVT.so > /dev/null && \
-  ls $PHOTOSPP_ROOT/lib/libPhotosppHepMC3.so > /dev/null
+  if [ -z "$PHOTOSPP_ROOT" ]; then
+    for d in $(echo "$CMAKE_PREFIX_PATH" | tr : '\n'); do
+      if [ -d "$d/include/Photos" ]; then
+        export PHOTOSPP_ROOT="$d"
+        break
+      fi
+    done
+  fi
+  ls "$PHOTOSPP_ROOT"/include/Photos > /dev/null && \
+  ls "$PHOTOSPP_ROOT"/lib/libPhotospp.so > /dev/null && \
+  ls "$PHOTOSPP_ROOT"/lib/libPhotosppHEPEVT.so > /dev/null && \
+  ls "$PHOTOSPP_ROOT"/lib/libPhotosppHepMC3.so > /dev/null
 ---
 #!/bin/bash -e
 rsync -a --delete --exclude '**/.git' $SOURCEDIR/ ./

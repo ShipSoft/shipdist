@@ -1,6 +1,6 @@
 package: python-tabulate
 version: "%(tag_basename)s"
-tag: "v0.10.0"
+tag: "v0.9.0"
 source: https://github.com/astanin/python-tabulate
 requires:
   - "Python:(slc|ubuntu)"

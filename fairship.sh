@@ -44,6 +44,7 @@ prepend_path:
 append_path:
   ROOT_INCLUDE_PATH: "$GEANT4_ROOT/include:$GEANT4_ROOT/include/Geant4:$PYTHIA_ROOT/include:$PYTHIA_ROOT/include/Pythia8:$GEANT4_VMC_ROOT/include:$GEANT4_VMC_ROOT/include/geant4vmc"
 incremental_recipe: |
+  pushd $SOURCEDIR && git lfs install --local && git lfs pull && popd
   rsync -ar $SOURCEDIR/ $INSTALLROOT/
   cmake --build . ${JOBS+-j$JOBS} --target install
   #Get the current git hash
@@ -65,17 +66,39 @@ incremental_recipe: |
   setenv FAIRLIBDIR \$PKG_ROOT/lib
   prepend-path PYTHONPATH \$PKG_ROOT/python
   prepend-path ROOT_INCLUDE_PATH \$PKG_ROOT/include
-  append-path ROOT_INCLUDE_PATH \$::env(GEANT4_ROOT)/include
-  append-path ROOT_INCLUDE_PATH \$::env(GEANT4_ROOT)/include/Geant4
-  append-path ROOT_INCLUDE_PATH \$::env(PYTHIA_ROOT)/include
-  append-path ROOT_INCLUDE_PATH \$::env(PYTHIA_ROOT)/include/Pythia8
-  append-path ROOT_INCLUDE_PATH \$::env(GEANT4_VMC_ROOT)/include
-  append-path ROOT_INCLUDE_PATH \$::env(GEANT4_VMC_ROOT)/include/geant4vmc
+  append-path ROOT_INCLUDE_PATH $GEANT4_ROOT/include
+  append-path ROOT_INCLUDE_PATH $GEANT4_ROOT/include/Geant4
+  append-path ROOT_INCLUDE_PATH $PYTHIA_ROOT/include
+  append-path ROOT_INCLUDE_PATH $PYTHIA_ROOT/include/Pythia8
+  append-path ROOT_INCLUDE_PATH $GEANT4_VMC_ROOT/include
+  append-path ROOT_INCLUDE_PATH $GEANT4_VMC_ROOT/include/geant4vmc
   EoF
 ---
 #!/bin/sh
 
+# When using system/LCG packages, *_ROOT variables may not be set.
+# Detect paths from config tools.
+: ${PYTHIA_ROOT:=$(pythia8-config --prefix 2>/dev/null)}
+: ${GEANT4_ROOT:=$(geant4-config --prefix 2>/dev/null)}
+: ${FMT_ROOT:=$(pkg-config --variable=prefix fmt 2>/dev/null)}
+
+# Fetch Git LFS files (field maps etc.) before copying sources
+pushd $SOURCEDIR
+git lfs install --local
+git lfs pull
+popd
+
+# Clean up any stale CMake artifacts in the source directory
+rm -f $SOURCEDIR/CMakeCache.txt
+rm -rf $SOURCEDIR/CMakeFiles
+
 rsync -a $SOURCEDIR/ $INSTALLROOT/
+
+# Geant4 11+ uses external CLHEP, not bundled libG4clhep
+sed -i 's/ROOT.gSystem.Load("libG4clhep")/ROOT.gSystem.Load("libCLHEP")/' \
+  $INSTALLROOT/python/shipRoot_conf.py
+sed -i 's/ROOT.gSystem.Load("libG4clhep.so")/ROOT.gSystem.Load("libCLHEP")/' \
+  $INSTALLROOT/macro/eventDisplay.py
 
 cmake $SOURCEDIR                                                 \
       -G Ninja \
@@ -83,19 +106,19 @@ cmake $SOURCEDIR                                                 \
       -DFAIRROOTPATH="$FAIRROOTPATH"                             \
       -DFAIRROOT_INCLUDE_DIR="$FAIRROOT_ROOT/include"            \
       -DFAIRROOT_LIBRARY_DIR="$FAIRROOT_ROOT/lib"                \
-      -DFMT_INCLUDE_DIR="$FMT_ROOT/include"                      \
+      ${FMT_ROOT:+-DFMT_INCLUDE_DIR="$FMT_ROOT/include"}         \
       -DCMAKE_CXX_FLAGS="$CXXFLAGS"                              \
       -DCMAKE_BUILD_TYPE=$CMAKE_BUILD_TYPE                       \
       -DROOT_DIR=$ROOT_ROOT                                      \
       -DROOTEGPythia6_ROOT=$ROOTEGPYTHIA6_ROOT                   \
-      -DHEPMC_DIR=$HEPMC_ROOT                                    \
-      -DHEPMC_INCLUDE_DIR=$HEPMC_ROOT/include/HepMC              \
+      ${HEPMC_ROOT:+-DHEPMC_DIR=$HEPMC_ROOT}                     \
+      ${HEPMC_ROOT:+-DHEPMC_INCLUDE_DIR=$HEPMC_ROOT/include/HepMC} \
       -DEVTGEN_INCLUDE_DIR=$EVTGEN_ROOT/include                  \
       -DEVTGEN_LIBRARY_DIR=$EVTGEN_ROOT/lib                      \
-      -DPYTHIA8_DIR=$PYTHIA_ROOT                                 \
-      -DPYTHIA8_INCLUDE_DIR=$PYTHIA_ROOT/include                 \
-      -DGEANT4_ROOT=$GEANT4_ROOT                                 \
-      -DGEANT4_INCLUDE_DIR=$GEANT4_ROOT/include/Geant4           \
+      ${PYTHIA_ROOT:+-DPYTHIA8_DIR=$PYTHIA_ROOT}                  \
+      ${PYTHIA_ROOT:+-DPYTHIA8_INCLUDE_DIR=$PYTHIA_ROOT/include}  \
+      ${GEANT4_ROOT:+-DGEANT4_ROOT=$GEANT4_ROOT}                  \
+      ${GEANT4_ROOT:+-DGEANT4_INCLUDE_DIR=$GEANT4_ROOT/include/Geant4} \
       -DGEANT4_VMC_INCLUDE_DIR=$GEANT4_VMC_ROOT/include/geant4vmc \
       ${CMAKE_VERBOSE_MAKEFILE:+-DCMAKE_VERBOSE_MAKEFILE=ON}     \
       -DFairCMakeModules_ROOT=$FAIRCMAKEMODULES_ROOT \
@@ -125,10 +148,10 @@ setenv GALCONF \$PKG_ROOT/shipgen/genie_config
 setenv FAIRLIBDIR \$PKG_ROOT/lib
 prepend-path PYTHONPATH \$PKG_ROOT/python
 prepend-path ROOT_INCLUDE_PATH \$PKG_ROOT/include
-append-path ROOT_INCLUDE_PATH \$::env(GEANT4_ROOT)/include
-append-path ROOT_INCLUDE_PATH \$::env(GEANT4_ROOT)/include/Geant4
-append-path ROOT_INCLUDE_PATH \$::env(PYTHIA_ROOT)/include
-append-path ROOT_INCLUDE_PATH \$::env(PYTHIA_ROOT)/include/Pythia8
-append-path ROOT_INCLUDE_PATH \$::env(GEANT4_VMC_ROOT)/include
-append-path ROOT_INCLUDE_PATH \$::env(GEANT4_VMC_ROOT)/include/geant4vmc
+append-path ROOT_INCLUDE_PATH $GEANT4_ROOT/include
+append-path ROOT_INCLUDE_PATH $GEANT4_ROOT/include/Geant4
+append-path ROOT_INCLUDE_PATH $PYTHIA_ROOT/include
+append-path ROOT_INCLUDE_PATH $PYTHIA_ROOT/include/Pythia8
+append-path ROOT_INCLUDE_PATH $GEANT4_VMC_ROOT/include
+append-path ROOT_INCLUDE_PATH $GEANT4_VMC_ROOT/include/geant4vmc
 EoF

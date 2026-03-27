@@ -1,6 +1,6 @@
 package: python-contourpy
 version: "%(tag_basename)s"
-tag: "v1.3.3"
+tag: "v1.0.7"
 source: https://github.com/contourpy/contourpy
 requires:
   - "Python:(slc|ubuntu)"

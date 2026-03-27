@@ -7,6 +7,14 @@ requires:
   - ROOT
   - pythia
 prefer_system_check: |
+  if [ -z "$TAUOLAPP_ROOT" ]; then
+    for d in $(echo "$CMAKE_PREFIX_PATH" | tr : '\n'); do
+      if [ -d "$d/include/Tauola" ]; then
+        export TAUOLAPP_ROOT="$d"
+        break
+      fi
+    done
+  fi
   ls "$TAUOLAPP_ROOT"/lib/libTauolaHepMC3.so > /dev/null && \
   ls "$TAUOLAPP_ROOT"/lib/libTauolaCxxInterface.so > /dev/null && \
   ls "$TAUOLAPP_ROOT"/lib/libTauolaFortran.so > /dev/null && \
@@ -36,7 +44,7 @@ proc ModulesHelp { } {
 set version $PKGVERSION-@@PKGREVISION@$PKGHASH@@
 module-whatis "ALICE Modulefile for $PKGNAME $PKGVERSION-@@PKGREVISION@$PKGHASH@@"
 # Dependencies
-module load BASE/1.0 ROOT/$ROOT_VERSION-$ROOT_REVISION pythia/$PYTHIA_VERSION-$PYTHIA_REVISION HepMC3/$HEPMC3_VERSION-$HEPMC3_REVISION
+module load BASE/1.0 ${ROOT_REVISION:+ROOT/$ROOT_VERSION-$ROOT_REVISION} ${PYTHIA_REVISION:+pythia/$PYTHIA_VERSION-$PYTHIA_REVISION} ${HEPMC3_REVISION:+HepMC3/$HEPMC3_VERSION-$HEPMC3_REVISION}
 # Our environment
 setenv TAUOLA_ROOT \$::env(BASEDIR)/$PKGNAME/\$version
 prepend-path LD_LIBRARY_PATH \$::env(TAUOLA_ROOT)/lib

@@ -1,12 +1,13 @@
 package: python-pandas
 version: "%(tag_basename)s"
-tag: "v3.0.1"
+tag: "v2.2.3"
 source: https://github.com/pandas-dev/pandas
 requires:
   - "Python:(slc|ubuntu)"
   - "Python-system:(?!slc.*|ubuntu)"
   - python-numpy
   - python-dateutil
+  - python-tzdata
 build_requires:
   - uv
   - alibuild-recipe-tools

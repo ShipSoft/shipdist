@@ -9,12 +9,7 @@ env:
   XERCESCROOT: "$XERCESC_ROOT"
 prefer_system_check: |
   #!/bin/bash -e
-  ls $XERCESC_ROOT/ > /dev/null && \
-  ls $XERCESC_ROOT/bin > /dev/null && \
-  ls $XERCESC_ROOT/include > /dev/null && \
-  ls $XERCESC_ROOT/include/xercesc/ > /dev/null && \
-  ls $XERCESC_ROOT/lib > /dev/null && \
-  ls $XERCESC_ROOT/lib/libxerces-c.so > /dev/null
+  pkg-config --exists xerces-c
 ---
 #!/bin/sh
 cd $SOURCEDIR

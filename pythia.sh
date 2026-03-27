@@ -11,15 +11,8 @@ env:
   PYTHIA8: "$PYTHIA_ROOT"
 prefer_system_check: |
   #!/bin/bash -e
-  ls $PYTHIA_ROOT/bin > /dev/null && \
-  ls $PYTHIA_ROOT/bin/pythia8-config > /dev/null && \
-  ls $PYTHIA_ROOT/include/ > /dev/null && \
-  ls $PYTHIA_ROOT/include/Pythia8 > /dev/null && \
-  ls $PYTHIA_ROOT/include/Pythia8Plugins > /dev/null && \
-  ls $PYTHIA_ROOT/lib/libpythia8.a > /dev/null && \
-  ls $PYTHIA_ROOT/lib/libpythia8lhapdf6.so > /dev/null && \
-  ls $PYTHIA_ROOT/lib/libpythia8.so > /dev/null && \
-  true
+  which pythia8-config > /dev/null && \
+  printf "#include \"Pythia8/Pythia.h\"\nint main(){}" | c++ -I"$PYTHIA_ROOT/include" -xc++ - -c -o /dev/null
 ---
 #!/bin/bash -e
 rsync -a $SOURCEDIR/ ./
@@ -53,7 +46,7 @@ proc ModulesHelp { } {
 set version $PKGVERSION-@@PKGREVISION@$PKGHASH@@
 module-whatis "ALICE Modulefile for $PKGNAME $PKGVERSION-@@PKGREVISION@$PKGHASH@@"
 # Dependencies
-module load BASE/1.0 ${LHAPDF_VERSION:+lhapdf/$LHAPDF_VERSION-$LHAPDF_REVISION} ${BOOST_VERSION:+boost/$BOOST_VERSION-$BOOST_REVISION} HepMC/$HEPMC_VERSION-$HEPMC_REVISION
+module load BASE/1.0 ${LHAPDF_VERSION:+lhapdf/$LHAPDF_VERSION-$LHAPDF_REVISION} ${BOOST_VERSION:+boost/$BOOST_VERSION-$BOOST_REVISION} ${HEPMC_REVISION:+HepMC/$HEPMC_VERSION-$HEPMC_REVISION}
 # Our environment
 setenv PYTHIA_ROOT \$::env(BASEDIR)/$PKGNAME/\$version
 setenv PYTHIA8DATA \$::env(PYTHIA_ROOT)/share/Pythia8/xmldoc

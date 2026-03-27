@@ -8,7 +8,12 @@ build_requires:
   - CMake
 prefer_system: (?!slc5)
 prefer_system_check: |
-  pkg-config --atleast-version=0.6.2 yaml-cpp && printf "#include \"yaml-cpp/yaml.h\"\n" | c++ -std=c++17 -I`brew --prefix yaml-cpp`/include -I`brew --prefix boost`/include -xc++ - -c -o /dev/null
+  pkg-config --atleast-version=0.6.2 yaml-cpp || exit 1
+  case $(uname) in
+    Darwin) YAMLCPP_INC="-I$(brew --prefix yaml-cpp)/include -I$(brew --prefix boost)/include" ;;
+    *) YAMLCPP_INC="${YAML_CPP_ROOT:+-I$YAML_CPP_ROOT/include} ${BOOST_ROOT:+-I$BOOST_ROOT/include}" ;;
+  esac
+  printf "#include \"yaml-cpp/yaml.h\"\n" | c++ -std=c++17 $YAMLCPP_INC -xc++ - -c -o /dev/null
 ---
 #!/bin/sh
 case $ARCHITECTURE in

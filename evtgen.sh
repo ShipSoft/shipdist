@@ -10,10 +10,17 @@ requires:
 env:
   EVTGENDATA: "$EVTGEN_ROOT/share/EvtGen"
 prefer_system_check: |
-    if [ ! -z "$EVTGEN_VERSION" ]; then
-        exit 0
-    fi
-    exit 1
+  if [ -z "$EVTGEN_ROOT" ]; then
+    for d in $(echo "$CMAKE_PREFIX_PATH" | tr : '\n'); do
+      if [ -d "$d/include/EvtGen" ]; then
+        export EVTGEN_ROOT="$d"
+        break
+      fi
+    done
+  fi
+  ls "$EVTGEN_ROOT"/include/EvtGen > /dev/null && \
+  (ls "$EVTGEN_ROOT"/lib/libEvtGen.so > /dev/null 2>&1 || \
+   ls "$EVTGEN_ROOT"/lib64/libEvtGen.so > /dev/null)
 ---
 #!/bin/sh
 
@@ -47,7 +54,7 @@ proc ModulesHelp { } {
 set version $PKGVERSION-@@PKGREVISION@$PKGHASH@@
 module-whatis "ALICE Modulefile for $PKGNAME $PKGVERSION-@@PKGREVISION@$PKGHASH@@"
 # Dependencies
-module load BASE/1.0 pythia/$PYTHIA_VERSION-$PYTHIA_REVISION ${HEPMC3_VERSION:+HepMC3/$HEPMC3_VERSION-$HEPMC3_REVISION} ${TAUOLAPP_VERSION:+Tauolapp/$TAUOLAPP_VERSION-$TAUOLAPP_REVISION} ${PHOTOSPP_VERSION:+PHOTOSPP/$PHOTOSPP_VERSION-$PHOTOSPP_REVISION}
+module load BASE/1.0 ${PYTHIA_REVISION:+pythia/$PYTHIA_VERSION-$PYTHIA_REVISION} ${HEPMC3_REVISION:+HepMC3/$HEPMC3_VERSION-$HEPMC3_REVISION} ${TAUOLAPP_REVISION:+Tauolapp/$TAUOLAPP_VERSION-$TAUOLAPP_REVISION} ${PHOTOSPP_REVISION:+PHOTOSPP/$PHOTOSPP_VERSION-$PHOTOSPP_REVISION}
 # Our environment
 setenv EVTGEN_ROOT \$::env(BASEDIR)/$PKGNAME/\$version
 setenv EVTGENDATA \$::env(EVTGEN_ROOT)/share/EvtGen
