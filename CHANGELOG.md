@@ -10,23 +10,74 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 
 ### Added
 
-* Add pre-commit to python modules
+* uv: Add recipe for fast Python package installation
+* Replace monolithic Python-modules with individual package recipes
+* alibuild, bitsorg: Add recipes
+* python-jinja2, python-requests: Add recipes
+* Add level-0 dependency recipes for alibuild
+
+### Fixed
+
+* HepMC3: Disable Python bindings to avoid installing into system prefix
+* FairShip: Fix modulefile env vars and paths, use $PKG_ROOT
+* GENIE: Check .so not .la for APFEL
+* CMake: Only require v3.20.0 from system (FairShip minimum)
+* Python: Tighten PATH filter in recipe
+* Remove orphaned recipes (clhep, lz4, messagepack, rapidjson, vc, sas, lhapdf5)
+  and stale CLHEP flag
+* Inline meta-packages and fix stale hardcoded values
+* Make ACTS and FairRoot build with current GCC+CMake
+
+### Changed
+
+* EvtGen: Upgrade to R02-02-03 with HepMC3 support
+* PHOTOSPP, Tauolapp: Build with HepMC3 support
+* APFEL: Upgrade to 3.1.1 and switch to CMake build
+* ROOT, Geant4: Build with Ninja
+* FairShip: Build with Ninja
+* Refactor modulefiles to use alibuild-generate-module
+* FairRoot: Remove unused FairMQ dependency
+
+### Removed
+
+* Remove recipes only needed for FairMQ
+* Remove monolithic Python-modules recipes
+
+## [26.03](https://github.com/ShipSoft/shipdist/tree/26.03)
+
+### Added
+
 * abseil: Add recipe for protobuf dependency
+* ACTS, Eigen3, HepMC3: Add prefer_system_check
+
+### Fixed
+
+* Specify minimum CMake policy version where needed
+* ACTS: Add env/paths to YAML header
+
+### Changed
+
+* CMake: Update to v4.2.3
+* GenFit: Update to upstream 2.3.0
+* Merge ACTS defaults into release defaults
+
+## [26.02](https://github.com/ShipSoft/shipdist/tree/26.02)
+
+### Added
+
+* Add pre-commit to python modules
 
 ### Fixed
 
 * FairRoot: Make sure Geant4-VMC and XercesC are found
+* Python: Require at least 3.12.12 in prefer_system_check
 
 ### Changed
 
-* CMake: Update to v4.2.3, but only require v3.20.0 from system (FairShip
-  minimum)
-* python: Require at least 3.12.12 in prefer_system_check
-* ROOT: Update to 6.36.08
-* defaults-actstracking: Removed all overrides unrelated to ACTS or C++20.
-* ACTS: Disabled all GEANT4 build options required for examples.
 * Move to C++20
-* Genfit: Update to upstream 2.3.0
+* ROOT: Update to 6.36.08
+* defaults-actstracking: Remove all overrides unrelated to ACTS or C++20
+* ACTS: Disable all GEANT4 build options required for examples
 
 ### Removed
 
