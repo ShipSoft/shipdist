@@ -10,7 +10,8 @@ prefer_system_check: |
 ---
 #!/bin/bash -e
 cmake "$SOURCEDIR" -DCMAKE_INSTALL_PREFIX="$INSTALLROOT" \
-                   -DCMAKE_BUILD_TYPE="$CMAKE_BUILD_TYPE"
+	-DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
+	-DCMAKE_BUILD_TYPE="$CMAKE_BUILD_TYPE"
 
 cmake --build . ${JOBS:+-j$JOBS} --target install
 
