@@ -38,6 +38,7 @@ cmake $SOURCEDIR                                                                
       -DCMAKE_INSTALL_LIBDIR=lib                                                            \
       -DCMAKE_INSTALL_PREFIX=$INSTALLROOT \
       -DCMAKE_POLICY_DEFAULT_CMP0074=NEW \
+      -DCMAKE_POLICY_DEFAULT_CMP0144=NEW \
       -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
       -DROOT_DIR="${ROOT_ROOT}" \
       -DBUILD_TESTING=${BUILD_TESTING}
