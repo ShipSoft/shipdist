@@ -17,6 +17,8 @@ requires:
   - giflib
   - zstd
   - gl2ps
+  - PCRE2
+  - vdt
 build_requires:
   - CMake
   - libxml2
@@ -49,7 +51,7 @@ prefer_system_check: |
       echo "ROOT version $VERSION insufficient ($REQUESTED_VERSION requested)"
       exit 1
   fi
-  FEATURES="builtin_pcre mathmore xml ssl opengl http gdml pythia8 roofit soversion vdt xrootd"
+  FEATURES="mathmore xml ssl opengl http gdml pythia8 roofit soversion vdt xrootd"
   for FEATURE in $FEATURES; do
       root-config --has-$FEATURE | grep -q yes || { echo "$FEATURE missing"; exit 1; }
   done
@@ -73,7 +75,7 @@ cmake $SOURCEDIR \
 ${XROOTD_ROOT:+-DXROOTD_ROOT_DIR=$XROOTD_ROOT}            \
 -DCMAKE_CXX_STANDARD=$CMAKE_CXX_STANDARD                  \
 -Dbuiltin_freetype=OFF                                    \
--Dbuiltin_pcre=ON                                         \
+-Dbuiltin_pcre=OFF                                        \
 -DCMAKE_CXX_COMPILER=$COMPILER_CXX                        \
 -DCMAKE_C_COMPILER=$COMPILER_CC                           \
 -DCMAKE_LINKER=$COMPILER_LD                               \
@@ -84,15 +86,15 @@ ${PYTHIA_ROOT:+-Dpythia8=ON}                \
 -Dmathmore=ON \
 -Dsoversion=ON                                            \
 -Dshadowpw=OFF                                            \
--Dbuiltin_vdt=ON                                          \
+-Dbuiltin_vdt=OFF                                         \
 ${PYTHON_ROOT:+-DPYTHON_EXECUTABLE=$PYTHONHOME/bin/python3} \
 ${PYTHON_ROOT:+-DPython3_ROOT_DIR=$PYTHON_ROOT} \
 ${GIFLIB_ROOT:+-DGIF_INCLUDE_DIR=$GIFLIB_ROOT/include} \
 ${GIFLIB_ROOT:+-DGIF_LIBRARY=$GIFLIB_ROOT/lib/libgif.so} \
--DCMAKE_PREFIX_PATH="$FREETYPE_ROOT;$GSL_ROOT;$PYTHON_ROOT;$ZSTD_ROOT;$GL2PS_ROOT"
-FEATURES="builtin_pcre xml ssl opengl http gdml mathmore ${PYTHIA_ROOT:+pythia8}
+-DCMAKE_PREFIX_PATH="$FREETYPE_ROOT;$GSL_ROOT;$PYTHON_ROOT;$ZSTD_ROOT;$GL2PS_ROOT;$PCRE2_ROOT;$VDT_ROOT"
+FEATURES="xml ssl opengl http gdml mathmore ${PYTHIA_ROOT:+pythia8}
     roofit soversion vdt ${XROOTD_ROOT:+xrootd}"
-NO_FEATURES="${FREETYPE_ROOT:+builtin_freetype}"
+NO_FEATURES="builtin_pcre builtin_vdt ${FREETYPE_ROOT:+builtin_freetype}"
 
 # Check if all required features are enabled
 bin/root-config --features
