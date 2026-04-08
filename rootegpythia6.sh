@@ -47,6 +47,7 @@ cmake "$SOURCEDIR" \
       -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} \
       -DROOTEGPythia6_Pythia6_BUILTIN=OFF \
       -DPYTHIA6_LIB_DIR="$PYTHIA6_ROOT/lib" \
+      -DCMAKE_POLICY_DEFAULT_CMP0144=NEW \
       -DCMAKE_INSTALL_LIBDIR=lib
 
 cmake --build . ${JOBS:+-j$JOBS}
