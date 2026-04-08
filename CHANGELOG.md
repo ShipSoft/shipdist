@@ -10,6 +10,7 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 
 ### Added
 
+* PCRE2, vdt: Add recipes to replace ROOT builtins
 * uv: Add recipe for fast Python package installation
 * Replace monolithic Python-modules with individual package recipes
 * alibuild, bitsorg: Add recipes
@@ -30,6 +31,7 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 
 ### Changed
 
+* ROOT: Build against external PCRE2 and VDT instead of builtins
 * EvtGen: Upgrade to R02-02-03 with HepMC3 support
 * PHOTOSPP, Tauolapp: Build with HepMC3 support
 * APFEL: Upgrade to 3.1.1 and switch to CMake build
