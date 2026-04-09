@@ -84,7 +84,7 @@ jobs:
         run: |
           IMAGE=registry.cern.ch/ship/ship-sim
           TAG="${{ steps.tag.outputs.tag }}"
-          podman build -t "$IMAGE:$TAG" .
+          podman build -t "$IMAGE:$TAG" container/
           podman push "$IMAGE:$TAG"
           if [ "${{ steps.tag.outputs.latest }}" = "true" ]; then
             podman tag "$IMAGE:$TAG" "$IMAGE:latest"
