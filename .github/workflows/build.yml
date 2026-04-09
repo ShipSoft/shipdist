@@ -1,0 +1,92 @@
+---
+name: Build packages
+
+'on':
+  push:
+    branches: [main]
+    paths:
+      - '*.sh'
+  pull_request:
+    paths:
+      - '*.sh'
+  schedule:
+    # Weekly rebuild on Monday at 04:00 UTC
+    - cron: '0 4 * * 1'
+  workflow_dispatch:
+    inputs:
+      package:
+        description: Package to build
+        default: FairShip
+      defaults:
+        description: Defaults to use
+        default: release
+
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  REMOTE_STORE: https://s3.cern.ch/swift/v1/ship-packages
+  WORK_DIR: /opt/ship
+  DEFAULTS: release
+
+jobs:
+  build:
+    name: Build ${{ inputs.package || 'FairShip' }}
+    runs-on: [self-hosted, alma9, x86_64]
+    container:
+      image: registry.cern.ch/ship/gha-runner:latest
+      volumes:
+        - /cvmfs:/cvmfs:ro
+        - shipbuild:/opt/ship
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.S3_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.S3_SECRET_ACCESS_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build
+        run: |
+          PACKAGE="${{ inputs.package || 'FairShip' }}"
+          DEFAULTS="${{ inputs.defaults || env.DEFAULTS }}"
+          STORE_MODE=""
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            STORE_MODE=""
+          else
+            STORE_MODE="::rw"
+          fi
+          aliBuild build "$PACKAGE" \
+            --defaults "$DEFAULTS" \
+            --remote-store "${REMOTE_STORE}${STORE_MODE}" \
+            --work-dir "$WORK_DIR" \
+            -j "$(nproc)"
+
+  build-container:
+    name: Build container image
+    needs: build
+    if: github.event_name == 'push' || startsWith(github.ref, 'refs/tags/')
+    runs-on: [self-hosted, alma9, x86_64]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Determine image tag
+        id: tag
+        run: |
+          if [[ "$GITHUB_REF" == refs/tags/* ]]; then
+            echo "tag=${GITHUB_REF#refs/tags/}" >> "$GITHUB_OUTPUT"
+            echo "latest=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "tag=main-${GITHUB_SHA::8}" >> "$GITHUB_OUTPUT"
+            echo "latest=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Build and push
+        run: |
+          IMAGE=registry.cern.ch/ship/ship-sim
+          TAG="${{ steps.tag.outputs.tag }}"
+          podman build -t "$IMAGE:$TAG" .
+          podman push "$IMAGE:$TAG"
+          if [ "${{ steps.tag.outputs.latest }}" = "true" ]; then
+            podman tag "$IMAGE:$TAG" "$IMAGE:latest"
+            podman push "$IMAGE:latest"
+          fi
