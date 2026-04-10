@@ -40,6 +40,7 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 
 ### Removed
 
+* protobuf: Remove recipe and FairRoot dependency (no longer needed)
 * Remove recipes only needed for FairMQ
 * Remove monolithic Python-modules recipes
 
