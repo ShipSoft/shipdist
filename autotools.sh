@@ -4,16 +4,18 @@ tag: v1.6.4
 source: https://github.com/alisw/autotools
 prefer_system: "(?!slc5|slc6)"
 prefer_system_check: |
-  if ! (which autoconf && which m4 && which automake && which makeinfo && which aclocal && which pkg-config && which autopoint && which libtool); then
-    cat <<\EOF
+  for bin in autoconf m4 automake makeinfo aclocal pkg-config autopoint libtool; do
+    if ! command -v "$bin" >/dev/null 2>&1; then
+      cat <<\EOF
   One or more autotools packages are missing on your system.
    * On a RHEL-compatible system you probably need:
      autoconf automake texinfo gettext gettext-devel libtool
    * On an Ubuntu-like system you probably need:
      autoconf automake autopoint texinfo gettext libtool libtool-bin pkg-config
   EOF
-    exit 1
-  fi
+      exit 1
+    fi
+  done
 prepend_path:
   PKG_CONFIG_PATH: $(pkg-config --debug 2>&1 | grep 'Scanning directory' | sed -e "s/.*'\(.*\)'/\1/" | xargs echo | sed -e 's/ /:/g')
 build_requires:
@@ -150,11 +152,11 @@ pushd pkg-config*
 popd
 
 # Fix perl location, required on /usr/bin/perl
-grep -l -R -e '^#!.*perl' $INSTALLROOT | \
-  xargs -r -n1 sed -ideleteme -e 's;^#!.*perl;#!/usr/bin/perl;'
+grep -rlZ -e '^#!.*perl' $INSTALLROOT | \
+  xargs -r -0 -n1 sed -ideleteme -e 's;^#!.*perl;#!/usr/bin/perl;'
 find $INSTALLROOT -name '*deleteme' -delete
-grep -l -R -e 'exec [^ ]*/perl' $INSTALLROOT | \
-  xargs -r -n1 sed -ideleteme -e 's;exec [^ ]*/perl;exec /usr/bin/perl;g'
+grep -rlZ -e 'exec [^ ]*/perl' $INSTALLROOT | \
+  xargs -r -0 -n1 sed -ideleteme -e 's;exec [^ ]*/perl;exec /usr/bin/perl;g'
 find $INSTALLROOT -name '*deleteme' -delete
 
 # Pretend we have a modulefile to make the linter happy (don't delete)
