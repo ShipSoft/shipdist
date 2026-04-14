@@ -33,8 +33,8 @@ Defaults in use:
 
 ### Setup required before first use
 
-1. **S3 credentials**: add `S3_ACCESS_KEY_ID` and `S3_SECRET_ACCESS_KEY` as GitHub Actions secrets (for `s3.cern.ch/swift/v1/ship-packages`)
-2. **Seed the remote store**: run a full build with `--remote-store https://s3.cern.ch/swift/v1/ship-packages::rw` to populate the cache
+1. **S3 credentials**: add `S3_ACCESS_KEY_ID`, `S3_SECRET_ACCESS_KEY` as GitHub Actions secrets (EC2 credentials for `s3.cern.ch`)
+2. **Seed the remote store**: run a full build with `S3_ENDPOINT_URL=https://s3.cern.ch aliBuild build FairShip --remote-store s3://ship-packages::rw` to populate the cache
 3. **Container registry**: authenticate the runner to push to `registry.cern.ch/ship/ship-sim`
 
 ### Remaining work

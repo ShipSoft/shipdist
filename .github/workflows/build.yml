@@ -26,7 +26,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  REMOTE_STORE: https://s3.cern.ch/swift/v1/ship-packages
+  REMOTE_STORE: s3://ship-packages
   WORK_DIR: /opt/ship
   DEFAULTS: release
 
@@ -42,6 +42,7 @@ jobs:
     env:
       AWS_ACCESS_KEY_ID: ${{ secrets.S3_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.S3_SECRET_ACCESS_KEY }}
+      S3_ENDPOINT_URL: https://s3.cern.ch
     steps:
       - uses: actions/checkout@v4
 
