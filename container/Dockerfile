@@ -10,5 +10,8 @@ COPY cvmfs-ship.conf /etc/cvmfs/default.d/ship.conf
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
+RUN useradd -m -u 1000 shipuser
+USER shipuser
+
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["/bin/bash"]
