@@ -74,6 +74,17 @@ jobs:
             -c . \
             -j "$(nproc)"
 
+      - name: Print build log on failure
+        if: failure()
+        run: |
+          log=$(find "$WORK_DIR/BUILD" -name log -printf '%T@ %p\n' 2>/dev/null |
+                sort -rn | head -1 | cut -d' ' -f2-)
+          if [ -n "$log" ]; then
+            echo "::group::Build log: $log"
+            cat "$log"
+            echo "::endgroup::"
+          fi
+
   build-container:
     name: Build container image
     needs: build
