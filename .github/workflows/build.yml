@@ -77,9 +77,8 @@ jobs:
       - name: Print build log on failure
         if: failure()
         run: |
-          log=$(find "$WORK_DIR/BUILD" -name log -printf '%T@ %p\n' 2>/dev/null |
-                sort -rn | head -1 | cut -d' ' -f2-)
-          if [ -n "$log" ]; then
+          log=$(ls -t "$WORK_DIR"/BUILD/*/log 2>/dev/null | head -1)
+          if [ -f "$log" ]; then
             echo "::group::Build log: $log"
             cat "$log"
             echo "::endgroup::"
