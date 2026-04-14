@@ -71,7 +71,6 @@ jobs:
             --defaults "$DEFAULTS" \
             --remote-store "${REMOTE_STORE}${STORE_MODE}" \
             --work-dir "$WORK_DIR" \
-            --debug \
             -c . \
             -j "$(nproc)"
 
