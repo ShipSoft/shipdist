@@ -72,20 +72,14 @@ jobs:
             --remote-store "${REMOTE_STORE}${STORE_MODE}" \
             --work-dir "$WORK_DIR" \
             -c . \
-            -j "$(nproc)" \
-            --debug > "$WORK_DIR/aliBuild.log" 2>&1
+            -j "$(nproc)"
 
-      - name: Print debug log on failure
+      - name: Print build log on failure
         if: failure()
         run: |
-          if [ -f "$WORK_DIR/aliBuild.log" ]; then
-            echo "::group::aliBuild debug output (last 3000 lines)"
-            tail -3000 "$WORK_DIR/aliBuild.log"
-            echo "::endgroup::"
-          fi
           log=$(ls -t "$WORK_DIR"/BUILD/*/log 2>/dev/null | head -1)
           if [ -f "$log" ]; then
-            echo "::group::Package build log: $log"
+            echo "::group::Build log: $log"
             cat "$log"
             echo "::endgroup::"
           fi
