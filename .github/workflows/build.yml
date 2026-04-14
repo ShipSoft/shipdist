@@ -46,6 +46,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Configure S3 credentials
+        run: |
+          printf 'host_base = s3.cern.ch\nhost_bucket = %%(bucket)s.s3.cern.ch\naccess_key = %s\nsecret_key = %s\n' \
+            "$AWS_ACCESS_KEY_ID" "$AWS_SECRET_ACCESS_KEY" > ~/.s3cfg
+
       - name: Build
         run: |
           PACKAGE="${{ inputs.package || 'FairShip' }}"
