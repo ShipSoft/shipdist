@@ -46,6 +46,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Install uv and aliBuild
+        run: |
+          curl -LsSf https://astral.sh/uv/install.sh | sh
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+          "$HOME/.local/bin/uvx" --from alibuild aliBuild version
+
       - name: Configure S3 credentials
         run: |
           echo "::add-mask::${AWS_ACCESS_KEY_ID}"
@@ -61,10 +67,11 @@ jobs:
           if [ "${{ github.event_name }}" = "pull_request" ]; then
             STORE_MODE=""
           fi
-          aliBuild build "$PACKAGE" \
+          uvx --from alibuild aliBuild build "$PACKAGE" \
             --defaults "$DEFAULTS" \
             --remote-store "${REMOTE_STORE}${STORE_MODE}" \
             --work-dir "$WORK_DIR" \
+            -c . \
             -j "$(nproc)"
 
   build-container:
