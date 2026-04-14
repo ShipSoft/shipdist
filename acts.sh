@@ -41,7 +41,7 @@ cmake "$SOURCEDIR" -DCMAKE_INSTALL_PREFIX="$INSTALLROOT" \
 
 cmake --build . -- ${JOBS:+-j$JOBS} install
 
-[[ -d "$INSTALLROOT/lib64" ]] && [[ ! -d "$INSTALLROOT/lib" ]] && ln -sf "${INSTALLROOT}/lib64" "$INSTALLROOT/lib"
+[[ -d "$INSTALLROOT/lib64" ]] && [[ ! -d "$INSTALLROOT/lib" ]] && ln -sf lib64 "$INSTALLROOT/lib"
 
 # Modulefile
 MODULEDIR="$INSTALLROOT/etc/modulefiles"
