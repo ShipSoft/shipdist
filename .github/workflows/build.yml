@@ -77,12 +77,15 @@ jobs:
       - name: Print build log on failure
         if: failure()
         run: |
-          log=$(ls -t "$WORK_DIR"/BUILD/*/log 2>/dev/null | head -1)
-          if [ -f "$log" ]; then
-            echo "::group::Build log: $log"
-            cat "$log"
-            echo "::endgroup::"
-          fi
+          echo "Searching for build logs in $WORK_DIR/BUILD/"
+          ls -la "$WORK_DIR/BUILD/" 2>&1 || true
+          for log in "$WORK_DIR"/BUILD/*-latest/log; do
+            if [ -f "$log" ]; then
+              echo "::group::Build log: $log"
+              cat "$log"
+              echo "::endgroup::"
+            fi
+          done
 
   build-container:
     name: Build container image
