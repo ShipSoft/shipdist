@@ -21,6 +21,15 @@ prefer_system_check: |
 ---
 #!/bin/bash -e
 
+# Patch CMakeLists.txt to pass bare header names to ROOT_GENERATE_DICTIONARY
+# instead of absolute paths. Absolute paths get embedded in the dictionary's
+# $clingAutoload$ annotations, causing errors at runtime when the source
+# directory no longer exists (e.g. on CVMFS).
+sed -i \
+  -e 's|${CMAKE_CURRENT_LIST_DIR}/inc/\(.*\.h\)|\1|g' \
+  -e '/^ROOT_GENERATE_DICTIONARY/i include_directories(${CMAKE_CURRENT_LIST_DIR}/inc)' \
+  "$SOURCEDIR/CMakeLists.txt"
+
 cmake "$SOURCEDIR" \
       -DCMAKE_INSTALL_PREFIX="$INSTALLROOT" \
       -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} \
