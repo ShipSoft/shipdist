@@ -10,6 +10,7 @@ name: Check recipes
   pull_request:
     paths:
       - '*.sh'
+  merge_group:
 
 permissions: {}
 
