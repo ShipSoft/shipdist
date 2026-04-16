@@ -26,7 +26,8 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  REMOTE_STORE: s3://ship-packages
+  REMOTE_STORE: /cvmfs/ship-nightlies.cern.ch/main/sw
+  WRITE_STORE: s3://ship-packages
   WORK_DIR: /opt/ship
   DEFAULTS: release
 
@@ -63,13 +64,14 @@ jobs:
         run: |
           PACKAGE="${{ inputs.package || 'FairShip' }}"
           DEFAULTS="${{ inputs.defaults || env.DEFAULTS }}"
-          STORE_MODE="::rw"
-          if [ "${{ github.event_name }}" = "pull_request" ]; then
-            STORE_MODE=""
+          WRITE_STORE_FLAG=""
+          if [ "${{ github.event_name }}" != "pull_request" ]; then
+            WRITE_STORE_FLAG="--write-store ${WRITE_STORE}"
           fi
           uvx --from alibuild aliBuild build "$PACKAGE" \
             --defaults "$DEFAULTS" \
-            --remote-store "${REMOTE_STORE}${STORE_MODE}" \
+            --remote-store "${REMOTE_STORE}" \
+            $WRITE_STORE_FLAG \
             --work-dir "$WORK_DIR" \
             -c . \
             -j "$(nproc)"
