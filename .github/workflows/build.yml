@@ -71,8 +71,7 @@ jobs:
             --remote-store "${REMOTE_STORE}" \
             --work-dir "$WORK_DIR" \
             -c . \
-            -j "$(nproc)" \
-            --debug
+            -j "$(nproc)"
 
       - name: Print build log on failure
         if: failure()
