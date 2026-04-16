@@ -53,7 +53,7 @@ jobs:
           curl -LsSf https://astral.sh/uv/install.sh | sh
           echo "$HOME/.local/bin" >> "$GITHUB_PATH"
           # Use branch with fix for alisw/alibuild#1023
-          "$HOME/.local/bin/uvx" --from "alibuild @ git+https://github.com/alisw/alibuild@format_find_argument" aliBuild version
+          "$HOME/.local/bin/uvx" --from "alibuild @ git+https://github.com/m-fol/alibuild@format_find_argument" aliBuild version
 
       - name: Configure S3 credentials
         run: |
