@@ -18,6 +18,14 @@ prefer_system_check: |
     ls $GENFIT_ROOT/lib
 ---
 #!/bin/bash -e
+
+# Patch CMakeLists.txt to pass bare header names to ROOT_GENERATE_DICTIONARY
+# instead of absolute paths. Absolute paths get embedded in the dictionary's
+# $clingAutoload$ annotations, causing errors at runtime when the source
+# directory no longer exists (e.g. on CVMFS). The existing INCLUDE_DIRECTORIES
+# call already ensures rootcling can find the bare header names.
+sed -i 's|\${CMAKE_CURRENT_SOURCE_DIR}/[^/]*/include/||g' "$SOURCEDIR/CMakeLists.txt"
+
 : ${BUILD_TESTING:=OFF}
 cmake $SOURCEDIR                                                                            \
       ${CMAKE_GENERATOR:+-G "$CMAKE_GENERATOR"}                                             \
