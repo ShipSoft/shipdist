@@ -62,6 +62,12 @@ jobs:
           printf 'host_base = s3.cern.ch\nhost_bucket = %%(bucket)s.s3.cern.ch\naccess_key = %s\nsecret_key = %s\n' \
             "$AWS_ACCESS_KEY_ID" "$AWS_SECRET_ACCESS_KEY" > ~/.s3cfg
 
+      - name: Pre-populate CVMFS cache
+        run: |
+          # Force CVMFS to load directory listings (lazy mount won't
+          # populate them until accessed, causing find to return nothing).
+          ls /cvmfs/ship-nightlies.cern.ch/main/el9-x86_64/Packages/*/
+
       - name: Build
         run: |
           PACKAGE="${{ inputs.package || 'FairShip' }}"
