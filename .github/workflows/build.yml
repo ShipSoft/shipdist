@@ -66,7 +66,8 @@ jobs:
         run: |
           # Force CVMFS to load directory listings (lazy mount won't
           # populate them until accessed, causing find to return nothing).
-          ls /cvmfs/ship-nightlies.cern.ch/main/el9-x86_64/Packages/*/
+          find /cvmfs/ship-nightlies.cern.ch/main/el9-x86_64/Packages \
+            -maxdepth 2 -mindepth 2 -type d > /dev/null
 
       - name: Build
         run: |
