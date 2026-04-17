@@ -71,8 +71,9 @@ jobs:
         run: |
           # Force CVMFS to load directory listings (lazy mount won't
           # populate them until accessed, causing find to return nothing).
+          # Ignore errors from symlink loops inside packages.
           find /cvmfs/ship-nightlies.cern.ch/main/el9-x86_64/Packages \
-            -maxdepth 2 -mindepth 2 -type d > /dev/null
+            -maxdepth 2 -mindepth 2 -type d > /dev/null 2>&1 || true
 
       - name: Build
         run: |
