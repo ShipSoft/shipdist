@@ -54,6 +54,11 @@ jobs:
           echo "$HOME/.local/bin" >> "$GITHUB_PATH"
           # Use branch with fix for alisw/alibuild#1023
           "$HOME/.local/bin/uvx" --reinstall --from "alibuild @ git+https://github.com/m-fol/alibuild@format_find_argument" aliBuild version
+          # Patch alisw/alibuild#1025: dummy tarball missing version dir
+          SYNC=$(find "$HOME/.cache/uv" -path "*/alibuild_helpers/sync.py" -newer "$HOME/.local/bin/uv" | head -1)
+          sed -i 's|{architecture}/{package}"|{architecture}/{package}/$full_version"|g;
+                  s|{architecture}/{package}/"|{architecture}/{package}/$full_version/"|g;
+                  s|{architecture}/{package}/etc"|{architecture}/{package}/$full_version/etc"|g' "$SYNC"
 
       - name: Configure S3 credentials
         run: |
