@@ -26,10 +26,8 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  # cvmfs:// scheme uses CVMFSRemoteSync which reads the aliPublish layout
-  # (el9-x86_64/Packages/<pkg>/<ver>/ with .meta.json) from CVMFS directly.
-  # Note: cvmfs:// does not support --write-store.
   REMOTE_STORE: cvmfs:///cvmfs/ship-nightlies.cern.ch/main
+  WRITE_STORE: s3://ship-packages
   WORK_DIR: /opt/ship
   DEFAULTS: release
 
@@ -48,17 +46,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install uv and aliBuild
+      - name: Install uv and bits
         run: |
           curl -LsSf https://astral.sh/uv/install.sh | sh
           echo "$HOME/.local/bin" >> "$GITHUB_PATH"
-          # Use branch with fix for alisw/alibuild#1023
-          "$HOME/.local/bin/uvx" --reinstall --from "alibuild @ git+https://github.com/m-fol/alibuild@format_find_argument" aliBuild version
-          # Patch alisw/alibuild#1025: dummy tarball missing version dir
-          SYNC=$(find "$HOME/.cache/uv" -path "*/alibuild_helpers/sync.py" -newer "$HOME/.local/bin/uv" | head -1)
-          sed -i 's|{architecture}/{package}"|{architecture}/{package}/$full_version"|g;
-                  s|{architecture}/{package}/"|{architecture}/{package}/$full_version/"|g;
-                  s|{architecture}/{package}/etc"|{architecture}/{package}/$full_version/etc"|g' "$SYNC"
+          "$HOME/.local/bin/uvx" --reinstall \
+            --from "bitsorg @ git+https://github.com/ShipSoft/bits@cvmfs-write-store" \
+            bits version
 
       - name: Configure S3 credentials
         run: |
@@ -79,13 +73,18 @@ jobs:
         run: |
           PACKAGE="${{ inputs.package || 'FairShip' }}"
           DEFAULTS="${{ inputs.defaults || env.DEFAULTS }}"
-          uvx --from "alibuild @ git+https://github.com/m-fol/alibuild@format_find_argument" aliBuild build "$PACKAGE" \
+          WRITE_STORE_FLAG=""
+          if [ "${{ github.event_name }}" != "pull_request" ]; then
+            WRITE_STORE_FLAG="--write-store ${WRITE_STORE}"
+          fi
+          uvx --from "bitsorg @ git+https://github.com/ShipSoft/bits@cvmfs-write-store" \
+            bits build "$PACKAGE" \
             --defaults "$DEFAULTS" \
             --remote-store "${REMOTE_STORE}" \
+            $WRITE_STORE_FLAG \
             --work-dir "$WORK_DIR" \
             -c . \
-            -j "$(nproc)" \
-            --debug
+            -j "$(nproc)"
 
       - name: Print build log on failure
         if: failure()
