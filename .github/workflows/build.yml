@@ -80,7 +80,8 @@ jobs:
             --write-store "${WRITE_STORE}" \
             --work-dir "$WORK_DIR" \
             -c . \
-            -j "$(nproc)"
+            -j "$(nproc)" \
+            --debug
 
       - name: Print build log on failure
         if: failure()
