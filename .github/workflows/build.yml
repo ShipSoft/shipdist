@@ -61,13 +61,16 @@ jobs:
           printf 'host_base = s3.cern.ch\nhost_bucket = %%(bucket)s.s3.cern.ch\naccess_key = %s\nsecret_key = %s\n' \
             "$AWS_ACCESS_KEY_ID" "$AWS_SECRET_ACCESS_KEY" > ~/.s3cfg
 
-      - name: Pre-populate CVMFS cache
+      - name: Verify CVMFS access
         run: |
-          # Force CVMFS to load directory listings (lazy mount won't
-          # populate them until accessed, causing find to return nothing).
-          # Ignore errors from symlink loops inside packages.
-          find /cvmfs/ship-nightlies.cern.ch/main/el9-x86_64/Packages \
-            -maxdepth 2 -mindepth 2 -type d > /dev/null 2>&1 || true
+          echo "Checking CVMFS mount..."
+          ls /cvmfs/ || { echo "ERROR: /cvmfs not mounted"; exit 1; }
+          echo "Checking ship-nightlies.cern.ch..."
+          ls /cvmfs/ship-nightlies.cern.ch/ || { echo "ERROR: ship-nightlies.cern.ch not accessible"; exit 1; }
+          echo "Checking Packages directory..."
+          ls /cvmfs/ship-nightlies.cern.ch/main/el9-x86_64/Packages/ | head -5
+          echo "Checking defaults-release..."
+          ls /cvmfs/ship-nightlies.cern.ch/main/el9-x86_64/Packages/defaults-release/
 
       - name: Build
         run: |
