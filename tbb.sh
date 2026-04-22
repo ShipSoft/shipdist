@@ -10,9 +10,11 @@ prefer_system: .*
 prefer_system_check: |
   #!/bin/bash -e
   c++ -std=c++20 -xc++ - \
+     ${TBB_ROOT:+-I$TBB_ROOT/include} \
      -c -o /dev/null << 'EOF'
+  #include <oneapi/tbb/version.h>
   #include <tbb/concurrent_unordered_map.h>
-  static_assert(TBB_INTERFACE_VERSION >= 11009, "min version check failed");
+  static_assert(TBB_VERSION_MAJOR >= 2021, "min version check failed");
   EOF
 prepend_path:
   ROOT_INCLUDE_PATH: "$TBB_ROOT/include"

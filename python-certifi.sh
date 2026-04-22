@@ -1,6 +1,6 @@
 package: python-certifi
 version: "%(tag_basename)s"
-tag: "2026.02.25"
+tag: "2024.08.30"
 source: https://github.com/certifi/python-certifi
 requires:
   - "Python:(slc|ubuntu)"

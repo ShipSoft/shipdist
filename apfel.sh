@@ -1,6 +1,6 @@
 package: apfel
-version: 3.1.1
-tag: 3.1.1
+version: 3.0.7
+tag: 3.0.7
 source: https://github.com/scarrazza/apfel.git
 requires:
   - lhapdf
@@ -11,10 +11,8 @@ env:
   LD_LIBRARY_PATH: "$LD_LIBRARY_PATH:$APFEL_ROOT/lib"
 prefer_system_check: |
   #!/bin/bash -e
-  ls $APFEL_ROOT/bin > /dev/null && \
-  ls $APFEL_ROOT/lib > /dev/null && \
-  ls $APFEL_ROOT/include > /dev/null && \
-  true
+  apfel-config --version > /dev/null
+  printf '#include "APFEL/APFEL.h"\nint main(){}' | c++ -xc++ - -c -o /dev/null
 ---
 #!/bin/bash -ex
 

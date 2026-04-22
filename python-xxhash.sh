@@ -1,6 +1,6 @@
 package: python-xxhash
 version: "%(tag_basename)s"
-tag: "v3.6.0"
+tag: "v3.5.0"
 source: https://github.com/ifduyue/python-xxhash
 requires:
   - "Python:(slc|ubuntu)"
@@ -9,8 +9,8 @@ build_requires:
   - uv
   - alibuild-recipe-tools
 prefer_system_check: |
-  python3 -c 'import xxhash; print(xxhash.__version__)' || exit 1
-  SYSTEM_VERSION=$(python3 -c 'import xxhash; print(xxhash.__version__)')
+  python3 -c 'import xxhash; print(xxhash.VERSION)' || exit 1
+  SYSTEM_VERSION=$(python3 -c 'import xxhash; print(xxhash.VERSION)')
   printf '%s\n%s\n' "$PKGVERSION" "$SYSTEM_VERSION" | sort -V -C
 prepend_path:
   PYTHONPATH: "$PYTHON_XXHASH_ROOT/lib/python/site-packages"

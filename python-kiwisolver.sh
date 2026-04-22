@@ -1,6 +1,6 @@
 package: python-kiwisolver
 version: "%(tag_basename)s"
-tag: "1.4.9"
+tag: "1.4.5"
 source: https://github.com/nucleic/kiwi
 requires:
   - "Python:(slc|ubuntu)"

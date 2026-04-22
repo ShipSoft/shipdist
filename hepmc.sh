@@ -8,17 +8,7 @@ build_requires:
   - alibuild-recipe-tools
 prefer_system_check: |
   #!/bin/bash -e
-  ls $HEPMC_ROOT/lib > /dev/null && \
-  ls $HEPMC_ROOT/lib/libHepMC.so > /dev/null && \
-  ls $HEPMC_ROOT/lib/libHepMC.so.4 > /dev/null && \
-  ls $HEPMC_ROOT/lib/libHepMC.a > /dev/null && \
-  ls $HEPMC_ROOT/lib/libHepMCfio.so > /dev/null && \
-  ls $HEPMC_ROOT/lib/libHepMCfio.so.4 > /dev/null && \
-  ls $HEPMC_ROOT/lib/libHepMCfio.a > /dev/null && \
-  ls $HEPMC_ROOT/include > /dev/null && \
-  ls $HEPMC_ROOT/include/HepMC > /dev/null && \
-  ls $HEPMC_ROOT/include/HepMC/HepMCDefs.h > /dev/null && \
-  grep "2.06" $HEPMC_ROOT/include/HepMC/HepMCDefs.h > /dev/null
+  printf "#include \"HepMC/HepMCDefs.h\"\nint main(){}" | c++ -xc++ - -c -o /dev/null
 ---
 #!/bin/bash -e
 

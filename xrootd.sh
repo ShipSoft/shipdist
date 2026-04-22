@@ -14,6 +14,10 @@ build_requires:
   - alibuild-recipe-tools
 prepend_path:
   PYTHONPATH: "${XROOTD_ROOT}/lib/python/site-packages"
+prefer_system_check: |
+  #!/bin/bash -e
+  which xrdcp > /dev/null && \
+  which xrootd-config > /dev/null
 ---
 #!/bin/bash -e
 

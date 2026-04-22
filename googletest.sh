@@ -7,15 +7,7 @@ build_requires:
   - CMake
 prefer_system_check: |
   #!/bin/bash -e
-  ls $GOOGLETEST_ROOT/ > /dev/null && \
-  ls $GOOGLETEST_ROOT/include > /dev/null && \
-  ls $GOOGLETEST_ROOT/include/gmock > /dev/null && \
-  ls $GOOGLETEST_ROOT/include/gtest > /dev/null && \
-  ls $GOOGLETEST_ROOT/lib/libgmock.a > /dev/null && \
-  ls $GOOGLETEST_ROOT/lib/libgmock_main.a > /dev/null && \
-  ls $GOOGLETEST_ROOT/lib/libgtest.a > /dev/null && \
-  ls $GOOGLETEST_ROOT/lib/libgtest_main.a > /dev/null && \
-  true
+  pkg-config --exists gtest gmock
 ---
 #!/bin/sh
 cmake $SOURCEDIR                           \
