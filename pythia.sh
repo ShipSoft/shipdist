@@ -40,6 +40,7 @@ chmod a+x $INSTALLROOT/bin/pythia8-config
 mkdir -p "$INSTALLROOT/etc/modulefiles"
 alibuild-generate-module --bin --lib > "$INSTALLROOT/etc/modulefiles/$PKGNAME"
 cat >> "$INSTALLROOT/etc/modulefiles/$PKGNAME" <<EoF
+setenv PYTHIA_ROOT \$PKG_ROOT
 setenv PYTHIA8DATA \$PKG_ROOT/share/Pythia8/xmldoc
 setenv PYTHIA8 \$PKG_ROOT
 EoF
