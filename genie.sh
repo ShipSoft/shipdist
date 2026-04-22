@@ -82,7 +82,7 @@ rsync -a src/*/*/*.h $INSTALLROOT/genie/inc
 
 # Modulefile
 mkdir -p "$INSTALLROOT/etc/modulefiles"
-alibuild-generate-module > "$INSTALLROOT/etc/modulefiles/$PKGNAME"
+alibuild-generate-module --bin --lib > "$INSTALLROOT/etc/modulefiles/$PKGNAME"
 cat >> "$INSTALLROOT/etc/modulefiles/$PKGNAME" <<EoF
 setenv GENIE \$PKG_ROOT/genie
 prepend-path LD_LIBRARY_PATH \$PKG_ROOT/genie/lib
