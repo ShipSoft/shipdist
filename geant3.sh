@@ -32,6 +32,7 @@ cmake $SOURCEDIR -DCMAKE_INSTALL_PREFIX=$INSTALLROOT      \
                  ${CXXSTD:+-DCMAKE_CXX_STANDARD=$CXXSTD}  \
                  -DCMAKE_SKIP_RPATH=TRUE \
 		 -DCMAKE_POLICY_DEFAULT_CMP0074=NEW \
+		 -DCMAKE_POLICY_DEFAULT_CMP0144=NEW \
                  ${SPECIALFFLAGS:+-DCMAKE_Fortran_FLAGS="-fallow-argument-mismatch -fallow-invalid-boz -fno-tree-loop-distribute-patterns"}
 make ${JOBS:+-j $JOBS} install
 
