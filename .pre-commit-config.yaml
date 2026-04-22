@@ -18,6 +18,8 @@ repos:
   hooks:
   - id: alidistlint
     verbose: true
+    additional_dependencies: [yamllint]
+
 ci:
   autofix_prs: true
   autoupdate_commit_msg: "chore(deps): update pre-commit hooks"
