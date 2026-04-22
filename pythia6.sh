@@ -29,5 +29,6 @@ mkdir -p "$INSTALLROOT/etc/modulefiles"
 alibuild-generate-module --lib > "$INSTALLROOT/etc/modulefiles/$PKGNAME"
 cat >> "$INSTALLROOT/etc/modulefiles/$PKGNAME" <<EoF
 setenv PYTHIA6 \$PKG_ROOT
+setenv PYTHIA6_ROOT \$PKG_ROOT
 prepend-path AGILE_GEN_PATH \$PKG_ROOT
 EoF

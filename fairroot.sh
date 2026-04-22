@@ -80,6 +80,7 @@ mkdir -p "$INSTALLROOT/etc/modulefiles"
 alibuild-generate-module --bin --lib > "$INSTALLROOT/etc/modulefiles/$PKGNAME"
 cat >> "$INSTALLROOT/etc/modulefiles/$PKGNAME" <<EoF
 setenv FAIRROOT_HASH $FAIRROOT_HASH
+setenv FAIRROOTPATH \$PKG_ROOT
 setenv VMCWORKDIR \$PKG_ROOT/share/fairbase/examples
 setenv GEOMPATH \$::env(VMCWORKDIR)/common/geometry
 setenv CONFIG_DIR \$::env(VMCWORKDIR)/common/gconfig

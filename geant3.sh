@@ -43,5 +43,6 @@ alibuild-generate-module --lib > "$INSTALLROOT/etc/modulefiles/$PKGNAME"
 cat >> "$INSTALLROOT/etc/modulefiles/$PKGNAME" <<EoF
 setenv GEANT3DIR \$PKG_ROOT
 setenv G3SYS \$PKG_ROOT
+prepend-path LD_LIBRARY_PATH \$PKG_ROOT/lib64
 prepend-path ROOT_INCLUDE_PATH \$PKG_ROOT/include/TGeant3
 EoF
