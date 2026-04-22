@@ -19,3 +19,6 @@ make install
 # Modulefile
 mkdir -p "$INSTALLROOT/etc/modulefiles"
 alibuild-generate-module --lib > "$INSTALLROOT/etc/modulefiles/$PKGNAME"
+cat >> "$INSTALLROOT/etc/modulefiles/$PKGNAME" <<EoF
+prepend-path LD_LIBRARY_PATH \$PKG_ROOT/lib64
+EoF
