@@ -42,6 +42,7 @@ ln -nfs "$G4VMC_SHARE/examples" "$INSTALLROOT/share/examples"
 mkdir -p "$INSTALLROOT/etc/modulefiles"
 alibuild-generate-module --bin --lib > "$INSTALLROOT/etc/modulefiles/$PKGNAME"
 cat >> "$INSTALLROOT/etc/modulefiles/$PKGNAME" <<EoF
+setenv GEANT4_VMC_ROOT \$PKG_ROOT
 setenv G4VMCINSTALL \$PKG_ROOT
 setenv GEANT4VMC_MACRO_DIR \$PKG_ROOT/share/examples/macro
 setenv USE_VGM 1

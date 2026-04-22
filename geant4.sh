@@ -84,6 +84,7 @@ G4SAIDXSDATA=`find ${INSTALLROOT} $G4DATASEARCHOPT  '*data*G4SAIDDATA*'`
 mkdir -p "$INSTALLROOT/etc/modulefiles"
 alibuild-generate-module --bin --lib > "$INSTALLROOT/etc/modulefiles/$PKGNAME"
 cat >> "$INSTALLROOT/etc/modulefiles/$PKGNAME" <<EoF
+setenv GEANT4_ROOT \$PKG_ROOT
 setenv G4INSTALL \$PKG_ROOT
 setenv G4INSTALL_DATA \$PKG_ROOT/share/
 set osname [uname sysname]
