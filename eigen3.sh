@@ -3,6 +3,7 @@ version: 3.4.0
 source: https://gitlab.com/libeigen/eigen.git
 prefer_system: .*
 prefer_system_check: |
+  #!/bin/bash -e
   EIGEN3_ROOT_EFF=${EIGEN3_ROOT:-${CMAKE_PREFIX_PATH%%:*}}
   printf '#include <Eigen/Dense>\nint main(){}\n' | \
     c++ -std=c++20 -xc++ - \

@@ -51,8 +51,10 @@ prefer_system_check: |
       root-config --has-$FEATURE | grep -q yes || { echo "$FEATURE missing"; exit 1; }
   done
 incremental_recipe: |
+  #!/bin/bash -e
   make ${JOBS:+-j$JOBS} install
-  mkdir -p $INSTALLROOT/etc/modulefiles && rsync -a --delete etc/modulefiles/ $INSTALLROOT/etc/modulefiles
+  mkdir -p $INSTALLROOT/etc/modulefiles
+  rsync -a --delete etc/modulefiles/ $INSTALLROOT/etc/modulefiles
   cd $INSTALLROOT/test
   env PATH=$INSTALLROOT/bin:$PATH LD_LIBRARY_PATH=$INSTALLROOT/lib:$LD_LIBRARY_PATH make ${JOBS+-j$JOBS}
 ---
