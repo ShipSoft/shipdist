@@ -1,8 +1,8 @@
 package: libffi
 version: v3.2.1
 build_requires:
- - autotools
- - alibuild-recipe-tools
+  - autotools
+  - alibuild-recipe-tools
 source: https://github.com/libffi/libffi
 prepend_path:
   LD_LIBRARY_PATH: "$LIBFFI_ROOT/lib64"
