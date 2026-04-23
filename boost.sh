@@ -11,48 +11,17 @@ build_requires:
   - alibuild-recipe-tools
 prepend_path:
   ROOT_INCLUDE_PATH: "$BOOST_ROOT/include"
+prefer_system: ".*"
 prefer_system_check: |
   #!/bin/bash -e
   printf "%s\n" \
     "#include \"boost/version.hpp\"" \
-    "#if (BOOST_VERSION < 107700)" \
-    "#error \"Cannot use system boost. Need > 1.77.\"" \
+    "#if (BOOST_VERSION < 108800)" \
+    "#error \"Cannot use system boost. Boost >= 1.88.0 required.\"" \
     "#endif" \
     "int main(){}" |
     gcc -I"$BOOST_ROOT"/include -xc++ - -o /dev/null
 ---
-BOOST_PYTHON=
-BOOST_CXXFLAGS=
-if [[ -n $PYTHON_MODULES_VERSION ]]; then
-  BOOST_PYTHON=1
-  if [[ -n $PYTHON_VERSION ]]; then
-    # Our Python. We need to pass the appropriate flags to boost for the includes
-    BOOST_CXXFLAGS="$(python3-config --includes)"
-  else
-    # Using system's Python. We want to make sure `python-config` is available in $PATH and points
-    # to the Python 3 version. Note that a symlink will not work due to the automatic prefix
-    # calculation of the python-config script. Our own Python does not require tricks
-    if ! type python3-config &> /dev/null; then
-      echo "FATAL: cannot find python3-config in your \$PATH. Cannot enable boost_python"
-      exit 1
-    fi
-    mkdir fake_bin
-    cat > fake_bin/python-config <<\EOF
-#!/bin/bash
-exec python3-config "$@"
-EOF
-    chmod +x fake_bin/python-config
-    ln -nfs "$(which python3)" fake_bin/python
-    ln -nfs "$(which pip3)" fake_bin/pip
-    export PATH="$PWD/fake_bin:$PATH"
-  fi
-fi
-
-BOOST_NO_PYTHON=
-if [[ -z $BOOST_PYTHON ]]; then
-  BOOST_NO_PYTHON=1
-fi
-
 if [[ -n $CXXSTD && $CXXSTD -ge 17 ]]; then
   # Use C++17: https://github.com/boostorg/system/issues/26#issuecomment-413631998
   CXXSTD=17
@@ -87,7 +56,7 @@ b2 -q                                            \
    --without-locale                              \
    --without-math                                \
    --without-mpi                                 \
-   ${BOOST_NO_PYTHON:+--without-python}          \
+   --without-python                              \
    --without-wave                                \
    --debug-configuration                         \
    -sNO_ZSTD=1                                   \
@@ -101,12 +70,8 @@ b2 -q                                            \
    link=shared                                   \
    threading=multi                               \
    variant=release                               \
-   ${BOOST_CXXFLAGS:+cxxflags="$BOOST_CXXFLAGS"} \
    ${CXXSTD:+cxxstd=$CXXSTD}                     \
    install
-
-# If boost_python is enabled, check if it was really compiled
-[[ -n $BOOST_PYTHON ]] && ls -1 "$INSTALLROOT"/lib/*boost_python* > /dev/null
 
 # Modulefile
 mkdir -p "$INSTALLROOT/etc/modulefiles"
