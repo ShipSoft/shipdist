@@ -1,7 +1,7 @@
 package: EvtGen
 version: "%(tag_basename)s-ship%(defaults_upper)s"
-source: https://gitlab.cern.ch/evtgen/evtgen
 tag: R02-02-03
+source: https://gitlab.cern.ch/evtgen/evtgen
 requires:
   - HepMC3
   - pythia

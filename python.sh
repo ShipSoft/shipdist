@@ -23,10 +23,10 @@ prefer_system_replacement_specs:
   "python3.*":
     version: "%(key)s"
     env:
-        # Python is in path, so we need a dummy placeholder for PYTHON_ROOT
-        # to avoid having /bin in the middle of the path.
-        PYTHON_ROOT: "/dummy-python-folder"
-        PYTHON_REVISION: ""
+      # Python is in path, so we need a dummy placeholder for PYTHON_ROOT
+      # to avoid having /bin in the middle of the path.
+      PYTHON_ROOT: "/dummy-python-folder"
+      PYTHON_REVISION: ""
 ---
 rsync -av --exclude '**/.git' $SOURCEDIR/ $BUILDDIR/
 
