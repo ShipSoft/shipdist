@@ -21,7 +21,7 @@ build_requires:
   - alibuild-recipe-tools
 env:
   VMCWORKDIR: "$FAIRROOT_ROOT/share/fairbase/examples"
-  GEOMPATH:   "$FAIRROOT_ROOT/share/fairbase/examples/common/geometry"
+  GEOMPATH: "$FAIRROOT_ROOT/share/fairbase/examples/common/geometry"
   CONFIG_DIR: "$FAIRROOT_ROOT/share/fairbase/examples/common/gconfig"
   FAIRROOTPATH: "$FAIRROOT_ROOT"
 prefer_system_check: |

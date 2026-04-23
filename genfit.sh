@@ -3,7 +3,6 @@ version: 02-03-00
 source: https://github.com/GenFit/GenFit
 requires:
   - ROOT
-  - googletest # should be build dep?
   - boost
 build_requires:
   - CMake

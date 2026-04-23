@@ -1,14 +1,14 @@
 package: lhapdf
 version: "%(tag_basename)s%(defaults_upper)s"
 tag: lhapdf-6.5.5
-source:  https://gitlab.com/hepcedar/lhapdf
+source: https://gitlab.com/hepcedar/lhapdf
 requires:
- - "Python:slc.*"
- - "Python-system:(?!slc.*)"
- - GCC-Toolchain
+  - "Python:slc.*"
+  - "Python-system:(?!slc.*)"
+  - GCC-Toolchain
 build_requires:
- - autotools
- - alibuild-recipe-tools
+  - autotools
+  - alibuild-recipe-tools
 env:
   LHAPATH: "$LHAPDF_ROOT/share/LHAPDF"
 prefer_system_check: |
