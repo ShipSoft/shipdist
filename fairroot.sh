@@ -38,7 +38,7 @@ prepend_path:
 # maximum safety.
 unset SIMPATH
 
-[[ $BOOST_ROOT ]] && BOOST_NO_SYSTEM_PATHS=ON || BOOST_NO_SYSTEM_PATHS=OFF
+[[ -n $BOOST_ROOT ]] && BOOST_NO_SYSTEM_PATHS=ON || BOOST_NO_SYSTEM_PATHS=OFF
 cmake $SOURCEDIR                                                                            \
       ${CMAKE_GENERATOR:+-G "$CMAKE_GENERATOR"}                                             \
       -DCMAKE_CXX_FLAGS="$CXXFLAGS"                                                         \
@@ -71,9 +71,9 @@ for DIR in source sink field event sim steer; do
 done
 
 #Get current git hash, needed by FairShip
-cd $SOURCEDIR
+cd "$SOURCEDIR" || exit
 FAIRROOT_HASH=$(git rev-parse HEAD)
-cd $BUILDDIR
+cd "$BUILDDIR" || exit
 
 # Modulefile
 mkdir -p "$INSTALLROOT/etc/modulefiles"

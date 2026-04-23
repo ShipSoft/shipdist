@@ -25,6 +25,7 @@ prefer_system_check: |
 # instead of absolute paths. Absolute paths get embedded in the dictionary's
 # $clingAutoload$ annotations, causing errors at runtime when the source
 # directory no longer exists (e.g. on CVMFS).
+# shellcheck disable=SC2016
 sed -i \
   -e 's|${CMAKE_CURRENT_LIST_DIR}/inc/\(.*\.h\)|\1|g' \
   -e '/^ROOT_GENERATE_DICTIONARY/i include_directories(${CMAKE_CURRENT_LIST_DIR}/inc)' \

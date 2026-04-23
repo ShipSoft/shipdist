@@ -37,6 +37,7 @@ make install
 
 # Modulefile
 MODULEDIR="$INSTALLROOT/etc/modulefiles"
+# shellcheck disable=SC2034
 MODULEFILE="$MODULEDIR/$PKGNAME"
 
 mkdir -p etc/modulefiles

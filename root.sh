@@ -55,7 +55,7 @@ incremental_recipe: |
   make ${JOBS:+-j$JOBS} install
   mkdir -p $INSTALLROOT/etc/modulefiles
   rsync -a --delete etc/modulefiles/ $INSTALLROOT/etc/modulefiles
-  cd $INSTALLROOT/test
+  cd $INSTALLROOT/test || exit
   env PATH=$INSTALLROOT/bin:$PATH LD_LIBRARY_PATH=$INSTALLROOT/lib:$LD_LIBRARY_PATH make ${JOBS+-j$JOBS}
 ---
 #!/bin/bash -e
