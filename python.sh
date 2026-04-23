@@ -12,13 +12,29 @@ build_requires:
   - curl
   - alibuild-recipe-tools
 env:
-  SSL_CERT_FILE: "$(export PATH=$PYTHON_ROOT/bin:$PATH; export LD_LIBRARY_PATH=$PYTHON_ROOT/lib:$LD_LIBRARY_PATH; python -c \"import certifi; print(certifi.where())\")"
+  SSL_CERT_FILE: >-
+    $(export PATH=$PYTHON_ROOT/bin:$PATH;
+    export LD_LIBRARY_PATH=$PYTHON_ROOT/lib:$LD_LIBRARY_PATH;
+    python -c "import certifi; print(certifi.where())")
   PYTHONHOME: "$PYTHON_ROOT"
   PYTHONPATH: "$PYTHON_ROOT/lib/python/site-packages"
 prefer_system: "(?!slc5|ubuntu)"
 prefer_system_check: |
-    python3 -c 'from sys import version_info; print(f"alibuild_system_replace: python{version_info.major}.{version_info.minor}")'
-    python3 -c 'import sys; import sqlite3; sys.exit(1 if sys.version_info < (3, 12, 12) or sys.version_info > (3, 15) else 0)' && python3 -m pip --help > /dev/null && printf '#include "pyconfig.h"' | cc -c $(python3-config --includes) -xc -o /dev/null -; if [ $? -ne 0 ]; then printf "Python, the Python development packages, and pip must be installed on your system.\nUsually those packages are called python, python-devel (or python-dev) and python-pip.\n"; exit 1; fi
+    python3 -c 'from sys import version_info; \
+      print(f"alibuild_system_replace: python{version_info.major}.{version_info.minor}")'
+    # shellcheck disable=SC2046
+    if ! python3 -c 'import sys; import sqlite3; \
+          sys.exit(1 if sys.version_info < (3, 12, 12) \
+                     or sys.version_info > (3, 15) else 0)' ||
+       ! python3 -m pip --help > /dev/null ||
+       ! printf '#include "pyconfig.h"' |
+          cc -c $(python3-config --includes) -xc -o /dev/null -; then
+      printf "%s\n" \
+        "Python, the Python development packages, and pip" \
+        "must be installed on your system." \
+        "Usually: python, python-devel (or python-dev), python-pip."
+      exit 1
+    fi
 prefer_system_replacement_specs:
   "python3.*":
     version: "%(key)s"

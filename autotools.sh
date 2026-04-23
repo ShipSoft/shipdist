@@ -17,7 +17,11 @@ prefer_system_check: |
     fi
   done
 prepend_path:
-  PKG_CONFIG_PATH: $(pkg-config --debug 2>&1 | grep 'Scanning directory' | sed -e "s/.*'\(.*\)'/\1/" | xargs echo | sed -e 's/ /:/g')
+  PKG_CONFIG_PATH: >-
+    $(pkg-config --debug 2>&1 |
+    grep 'Scanning directory' |
+    sed -e "s/.*'\(.*\)'/\1/" |
+    xargs echo | sed -e 's/ /:/g')
 build_requires:
   - termcap
   - make

@@ -12,8 +12,14 @@ build_requires:
 prepend_path:
   ROOT_INCLUDE_PATH: "$BOOST_ROOT/include"
 prefer_system_check: |
- printf "#include \"boost/version.hpp\"\n# if (BOOST_VERSION < 107700)\n#error \"Cannot use system's boost. Boost > 1.77.00 required.\"\n#endif\nint main(){}" \
- | gcc -I$BOOST_ROOT/include -xc++ - -o /dev/null
+  #!/bin/bash -e
+  printf "%s\n" \
+    "#include \"boost/version.hpp\"" \
+    "#if (BOOST_VERSION < 107700)" \
+    "#error \"Cannot use system boost. Need > 1.77.\"" \
+    "#endif" \
+    "int main(){}" |
+    gcc -I$BOOST_ROOT/include -xc++ - -o /dev/null
 ---
 BOOST_PYTHON=
 BOOST_CXXFLAGS=
