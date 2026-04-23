@@ -19,6 +19,7 @@ repos:
   - id: alidistlint
     verbose: true
     additional_dependencies: [yamllint]
+    exclude: ^container/
 
 ci:
   autofix_prs: true

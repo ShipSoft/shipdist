@@ -23,6 +23,27 @@ Defaults in use:
 
 #### `aliBuild init` and local development packages
 
+## CI
+
+### What's in place
+
+- **Recipe linting** (`.github/workflows/recipe-checks.yml`): runs on every push/PR
+- **Build workflow** (`.github/workflows/build.yml`): builds FairShip on self-hosted runners with S3 remote store caching
+- **Container image** (`container/`): minimal AlmaLinux 9 image with CVMFS client, loads FairShip from `/cvmfs/ship.cern.ch`
+
+### Setup required before first use
+
+1. **S3 credentials**: add `S3_ACCESS_KEY_ID`, `S3_SECRET_ACCESS_KEY` as GitHub Actions secrets (EC2 credentials for `s3.cern.ch`)
+2. **Seed the remote store**: run a full build with `S3_ENDPOINT_URL=https://s3.cern.ch aliBuild build FairShip --remote-store s3://ship-packages::rw` to populate the cache
+3. **Container registry**: authenticate the runner to push to `registry.cern.ch/ship/ship-sim`
+
+### Remaining work
+
+4. **CVMFS publishing**: set up `ship-cvmfs-builder-slc9` as a CVMFS Stratum-0 publisher for `ship.cern.ch`, then add a publish job to the workflow (following the LCG bits pattern: fetch tarballs from S3, unpack to CVMFS, `cvmfs_server transaction`/`publish`)
+5. **unpacked.cern.ch**: submit `registry.cern.ch/ship/ship-sim` to the DUCC wishlist for CVMFS distribution of the container image
+6. **Branch protection**: require the `build` check to pass before merging
+7. **Failure notifications**: add alerting for scheduled build failures
+
 ## Platform specific information
 
 Information for different platforms available below.

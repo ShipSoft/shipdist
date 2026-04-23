@@ -1,0 +1,129 @@
+---
+name: Build packages
+
+'on':
+  push:
+    branches: [main]
+    paths:
+      - '*.sh'
+  pull_request:
+    paths:
+      - '*.sh'
+  schedule:
+    # Weekly rebuild on Monday at 04:00 UTC
+    - cron: '0 4 * * 1'
+  workflow_dispatch:
+    inputs:
+      package:
+        description: Package to build
+        default: FairShip
+      defaults:
+        description: Defaults to use
+        default: release
+
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  REMOTE_STORE: cvmfs:///cvmfs/ship-nightlies.cern.ch/main
+  WRITE_STORE: s3://ship-packages
+  WORK_DIR: /opt/ship
+  DEFAULTS: release
+
+jobs:
+  build:
+    name: Build ${{ inputs.package || 'FairShip' }}
+    runs-on: [self-hosted, alma9, x86_64]
+    container:
+      image: registry.cern.ch/ship/gha-runner:latest
+      volumes:
+        - /cvmfs/ship-nightlies.cern.ch:/cvmfs/ship-nightlies.cern.ch:ro
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.S3_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.S3_SECRET_ACCESS_KEY }}
+      S3_ENDPOINT_URL: https://s3.cern.ch
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv and bits
+        run: |
+          curl -LsSf https://astral.sh/uv/install.sh | sh
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+          "$HOME/.local/bin/uvx" --reinstall \
+            --from "bitsorg @ git+https://github.com/ShipSoft/bits@cvmfs-write-store" \
+            bits version
+
+      - name: Configure S3 credentials
+        run: |
+          echo "::add-mask::${AWS_ACCESS_KEY_ID}"
+          echo "::add-mask::${AWS_SECRET_ACCESS_KEY}"
+          printf 'host_base = s3.cern.ch\nhost_bucket = %%(bucket)s.s3.cern.ch\naccess_key = %s\nsecret_key = %s\n' \
+            "$AWS_ACCESS_KEY_ID" "$AWS_SECRET_ACCESS_KEY" > ~/.s3cfg
+
+      - name: Verify CVMFS access
+        run: |
+          echo "Checking CVMFS mount..."
+          ls /cvmfs/ || { echo "ERROR: /cvmfs not mounted"; exit 1; }
+          echo "Checking ship-nightlies.cern.ch..."
+          ls /cvmfs/ship-nightlies.cern.ch/ || { echo "ERROR: ship-nightlies.cern.ch not accessible"; exit 1; }
+          echo "Checking Packages directory..."
+          ls /cvmfs/ship-nightlies.cern.ch/main/el9-x86_64/Packages/ | head -5
+          echo "Checking defaults-release..."
+          ls /cvmfs/ship-nightlies.cern.ch/main/el9-x86_64/Packages/defaults-release/
+
+      - name: Build
+        run: |
+          PACKAGE="${{ inputs.package || 'FairShip' }}"
+          DEFAULTS="${{ inputs.defaults || env.DEFAULTS }}"
+          uvx --from "bitsorg @ git+https://github.com/ShipSoft/bits@cvmfs-write-store" \
+            bits build "$PACKAGE" \
+            --defaults "$DEFAULTS" \
+            --remote-store "${REMOTE_STORE}" \
+            --write-store "${WRITE_STORE}" \
+            --work-dir "$WORK_DIR" \
+            -c . \
+            -j "$(nproc)"
+
+      - name: Print build log on failure
+        if: failure()
+        run: |
+          echo "Searching for build logs in $WORK_DIR/BUILD/"
+          ls -la "$WORK_DIR/BUILD/" 2>&1 || true
+          for log in "$WORK_DIR"/BUILD/*-latest/log; do
+            if [ -f "$log" ]; then
+              echo "::group::Build log: $log"
+              cat "$log"
+              echo "::endgroup::"
+            fi
+          done
+
+  build-container:
+    name: Build container image
+    needs: build
+    if: github.event_name == 'push' || startsWith(github.ref, 'refs/tags/')
+    runs-on: [self-hosted, alma9, x86_64]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Determine image tag
+        id: tag
+        run: |
+          if [[ "$GITHUB_REF" == refs/tags/* ]]; then
+            echo "tag=${GITHUB_REF#refs/tags/}" >> "$GITHUB_OUTPUT"
+            echo "latest=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "tag=main-${GITHUB_SHA::8}" >> "$GITHUB_OUTPUT"
+            echo "latest=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Build and push
+        run: |
+          IMAGE=registry.cern.ch/ship/ship-sim
+          TAG="${{ steps.tag.outputs.tag }}"
+          podman build -t "$IMAGE:$TAG" container/
+          podman push "$IMAGE:$TAG"
+          if [ "${{ steps.tag.outputs.latest }}" = "true" ]; then
+            podman tag "$IMAGE:$TAG" "$IMAGE:latest"
+            podman push "$IMAGE:latest"
+          fi

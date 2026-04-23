@@ -9,7 +9,7 @@ requires:
   - python-requests
   - python-distro
   - python-jinja2
-  # boto3 is not included; remote store support is unavailable.
+  - python-dateutil
 build_requires:
   - uv
   - alibuild-recipe-tools
@@ -24,7 +24,8 @@ pyver=$(python3 -c 'import sysconfig; print(sysconfig.get_python_version())')
 TARGET="$INSTALLROOT/lib/python$pyver/site-packages"
 mkdir -p "$TARGET"
 
-uv pip install --no-deps --no-cache-dir --target="$TARGET" --python="$(command -v python3)" "bitsorg==$PKGVERSION"
+uv pip install --no-deps --no-cache-dir --target="$TARGET" --python="$(command -v python3)" \
+  "bitsorg==$PKGVERSION" boto3 botocore s3transfer jmespath
 
 ln -snf "python$pyver" "$INSTALLROOT/lib/python"
 
