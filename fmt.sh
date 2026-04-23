@@ -9,6 +9,7 @@ build_requires:
   - alibuild-recipe-tools
 prepend_path:
   ROOT_INCLUDE_PATH: "$FMT_ROOT/include"
+prefer_system: "(?!slc5)"
 prefer_system_check: |
     if [ -z "$FMT_VERSION" ]; then
         FMT_VERSION=$(pkg-config --modversion fmt 2>/dev/null)
@@ -17,7 +18,7 @@ prefer_system_check: |
     verge $REQUESTED_VERSION $FMT_VERSION
 ---
 #!/bin/bash -e
-cmake $SOURCEDIR -DCMAKE_INSTALL_PREFIX=$INSTALLROOT -DFMT_TEST=OFF
+cmake $SOURCEDIR -DCMAKE_INSTALL_PREFIX=$INSTALLROOT -DFMT_TEST=OFF -DBUILD_SHARED_LIBS=ON
 
 make ${JOBS+-j $JOBS}
 make install
