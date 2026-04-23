@@ -44,6 +44,7 @@ prepend_path:
 append_path:
   ROOT_INCLUDE_PATH: "$GEANT4_ROOT/include:$GEANT4_ROOT/include/Geant4:$PYTHIA_ROOT/include:$PYTHIA_ROOT/include/Pythia8:$GEANT4_VMC_ROOT/include:$GEANT4_VMC_ROOT/include/geant4vmc"
 incremental_recipe: |
+  #!/bin/bash -e
   rsync -ar $SOURCEDIR/ $INSTALLROOT/
   cmake --build . ${JOBS+-j$JOBS} --target install
   #Get the current git hash
@@ -73,7 +74,7 @@ incremental_recipe: |
   append-path ROOT_INCLUDE_PATH $GEANT4_VMC_ROOT/include/geant4vmc
   EoF
 ---
-#!/bin/sh
+#!/bin/bash -e
 
 rsync -a $SOURCEDIR/ $INSTALLROOT/
 

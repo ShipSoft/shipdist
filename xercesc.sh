@@ -16,7 +16,7 @@ prefer_system_check: |
   ls $XERCESC_ROOT_EFF/include/xercesc/ > /dev/null && \
   ls $XERCESC_ROOT_EFF/lib/libxerces-c.so > /dev/null
 ---
-#!/bin/sh
+#!/bin/bash -e
 cd $SOURCEDIR
 autoreconf -i
 cd -
