@@ -54,9 +54,9 @@ incremental_recipe: |
   rsync -ar $SOURCEDIR/ $INSTALLROOT/
   cmake --build . ${JOBS+-j$JOBS} --target install
   #Get the current git hash
-  cd $SOURCEDIR
+  cd "$SOURCEDIR" || exit
   FAIRSHIP_HASH=$(git rev-parse HEAD)
-  cd $BUILDDIR
+  cd "$BUILDDIR" || exit
   # Modulefile
   mkdir -p "$INSTALLROOT/etc/modulefiles"
   alibuild-generate-module --bin --lib > "$INSTALLROOT/etc/modulefiles/$PKGNAME"
@@ -113,9 +113,9 @@ cmake $SOURCEDIR                                                 \
 cmake --build . ${JOBS+-j$JOBS} --target install
 
 #Get the current git hash
-cd $SOURCEDIR
+cd "$SOURCEDIR" || exit
 FAIRSHIP_HASH=$(git rev-parse HEAD)
-cd $BUILDDIR
+cd "$BUILDDIR" || exit
 
 # Modulefile
 mkdir -p "$INSTALLROOT/etc/modulefiles"

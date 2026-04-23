@@ -21,7 +21,7 @@ prefer_system_check: |
   true
 ---
 #!/bin/bash -e
-FVERSION=`gfortran --version | grep -i fortran | sed -e 's/.* //' | cut -d. -f1`
+FVERSION=$(gfortran --version | grep -i fortran | sed -e 's/.* //' | cut -d. -f1)
 SPECIALFFLAGS=""
 if [ $FVERSION -ge 10 ]; then
    echo "Fortran version $FVERSION"

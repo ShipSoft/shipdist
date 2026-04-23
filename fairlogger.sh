@@ -13,7 +13,7 @@ prepend_path:
 prefer_system_check: |
   #!/bin/bash -e
   REQUESTED_VERSION=${REQUESTED_VERSION#v}
-  verge() { [[  "$1" = "`echo -e "$1\n$2" | sort -V | head -n1`" ]]; }
+  verge() { [[  "$1" = "$(echo -e "$1\n$2" | sort -V | head -n1)" ]]; }
   verge $REQUESTED_VERSION $FAIRLOGGER_VERSION
 ---
 #!/bin/bash
