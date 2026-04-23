@@ -23,9 +23,9 @@ prefer_system_check: |
 ---
 BOOST_PYTHON=
 BOOST_CXXFLAGS=
-if [[ $PYTHON_MODULES_VERSION ]]; then
+if [[ -n $PYTHON_MODULES_VERSION ]]; then
   BOOST_PYTHON=1
-  if [[ $PYTHON_VERSION ]]; then
+  if [[ -n $PYTHON_VERSION ]]; then
     # Our Python. We need to pass the appropriate flags to boost for the includes
     BOOST_CXXFLAGS="$(python3-config --includes)"
   else
@@ -49,11 +49,11 @@ EOF
 fi
 
 BOOST_NO_PYTHON=
-if [[ ! $BOOST_PYTHON ]]; then
+if [[ -z $BOOST_PYTHON ]]; then
   BOOST_NO_PYTHON=1
 fi
 
-if [[ $CXXSTD && $CXXSTD -ge 17 ]]; then
+if [[ -n $CXXSTD && $CXXSTD -ge 17 ]]; then
   # Use C++17: https://github.com/boostorg/system/issues/26#issuecomment-413631998
   CXXSTD=17
 fi
@@ -61,19 +61,19 @@ fi
 TMPB2=$BUILDDIR/tmp-boost-build
 TOOLSET=gcc
 
-rsync -a $SOURCEDIR/ $BUILDDIR/
-cd $BUILDDIR/tools/build
+rsync -a "$SOURCEDIR"/ "$BUILDDIR"/
+cd "$BUILDDIR/tools/build" || exit
 # This is to work around an issue in boost < 1.70 where the include path misses
 # the ABI suffix. E.g. ../include/python3 rather than ../include/python3m.
 # This is causing havok on different combinations of Ubuntu / Anaconda
 # installations.
-bash bootstrap.sh $TOOLSET
+bash bootstrap.sh "$TOOLSET"
 PYINCPATH=$(python3 -c 'import sysconfig; print(sysconfig.get_path("include"))')
 export CPLUS_INCLUDE_PATH="${CPLUS_INCLUDE_PATH:+$CPLUS_INCLUDE_PATH:}$PYINCPATH"
-mkdir -p $TMPB2
-./b2 install --prefix=$TMPB2
-export PATH=$TMPB2/bin:$PATH
-cd $BUILDDIR
+mkdir -p "$TMPB2"
+./b2 install --prefix="$TMPB2"
+export PATH="$TMPB2/bin:$PATH"
+cd "$BUILDDIR" || exit
 b2 -q                                            \
    -d2                                           \
    ${JOBS+-j $JOBS}                              \
@@ -106,7 +106,7 @@ b2 -q                                            \
    install
 
 # If boost_python is enabled, check if it was really compiled
-[[ $BOOST_PYTHON ]] && ls -1 "$INSTALLROOT"/lib/*boost_python* > /dev/null
+[[ -n $BOOST_PYTHON ]] && ls -1 "$INSTALLROOT"/lib/*boost_python* > /dev/null
 
 # Modulefile
 mkdir -p "$INSTALLROOT/etc/modulefiles"

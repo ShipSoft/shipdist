@@ -17,9 +17,7 @@ prefer_system_check: |
   ls $XERCESC_ROOT_EFF/lib/libxerces-c.so > /dev/null
 ---
 #!/bin/bash -e
-cd $SOURCEDIR
-autoreconf -i
-cd -
+(cd "$SOURCEDIR" || exit; autoreconf -i) || exit
 echo "command $SOURCEDIR configure --prefix $INSTALLROOT CFLAGS $CFLAGS CXXFLAGS=$CFLAGS"
 $SOURCEDIR/configure --prefix=$INSTALLROOT CFLAGS="$CFLAGS" CXXFLAGS="$CFLAGS"
 make ${JOBS+-j $JOBS}

@@ -69,7 +69,7 @@ cmake "${BUILDDIR}"                                                   \
 cmake --build . -- ${JOBS:+-j$JOBS} install
 popd
 
-if [[ x"$XROOTD_PYTHON" == x"True" ]]; then
+if [[ "$XROOTD_PYTHON" == "True" ]]; then
     pushd ${INSTALLROOT}
 
     # there are cases where python bindings are installed as relative to INSTALLROOT
