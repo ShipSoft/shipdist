@@ -12,7 +12,13 @@ prefer_system: .*
 prefer_system_check: |
   set -e
   which gfortran || { echo "gfortran missing"; exit 1; }
-  which gcc && test -f $(dirname $(which gcc))/c++ && printf "#define GCCVER ((__GNUC__ * 10000)+(__GNUC_MINOR__ * 100)+(__GNUC_PATCHLEVEL__))\n#if (GCCVER < 130000)\n#error \"System's GCC cannot be used: we need at least GCC $REQUESTED_VERSION We are going to compile our own version.\"\n#endif\n" | gcc -xc++ - -c -o /dev/null
+  which gcc && test -f "$(dirname "$(which gcc)")"/c++ &&
+    printf "%s\n" \
+      "#define GCCVER ((__GNUC__*10000)+(__GNUC_MINOR__*100)+(__GNUC_PATCHLEVEL__))" \
+      "#if (GCCVER < 130000)" \
+      "#error \"Need at least GCC 13. Will compile our own.\"" \
+      "#endif" |
+    gcc -xc++ - -c -o /dev/null
 ---
 #!/bin/bash -e
 
