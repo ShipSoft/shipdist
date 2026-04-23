@@ -3,23 +3,23 @@ version: "%(tag_basename)s%(defaults_upper)s"
 tag: v6-36-08
 source: https://github.com/root-project/root
 requires:
-- GSL
-- opengl
-- Xdevel
-- FreeType
-- python-numpy
-- zlib
-- libxml2
-- OpenSSL
-- XRootD
-- pythia
-- TBB
+  - GSL
+  - opengl
+  - Xdevel
+  - FreeType
+  - python-numpy
+  - zlib
+  - libxml2
+  - OpenSSL
+  - XRootD
+  - pythia
+  - TBB
 build_requires:
-- CMake
-- libxml2
-- Python
-- ninja
-- alibuild-recipe-tools
+  - CMake
+  - libxml2
+  - Python
+  - ninja
+  - alibuild-recipe-tools
 env:
   ROOTSYS: "$ROOT_ROOT"
 prepend_path:
