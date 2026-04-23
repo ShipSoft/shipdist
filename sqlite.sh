@@ -1,14 +1,14 @@
 package: sqlite
-source: https://github.com/alisw/sqlite
 version: "%(tag_basename)s%(defaults_upper)s"
-tag: "v3.15.0"
+tag: "version-3.49.1"
+source: https://github.com/sqlite/sqlite
 prefer_system: (?!slc5)
 prefer_system_check: |
-  printf '#include <sqlite3.h>\nint main(){}\n' | cc -xc - -lsqlite3 -o /dev/null;
-  if [ $? -ne 0 ]; then printf "SQLite not found.\n * On RHEL-compatible systems you probably need: sqlite sqlite-devel\n * On Ubuntu-compatible systems you probably need: libsqlite3-0 libsqlite3-dev\n"; exit 1; fi
+  printf '#include <sqlite3.h>\nint main(){}\n' | cc -xc - -lsqlite3 -o /dev/null
 build_requires:
-  - curl
+  - "GCC-Toolchain:(?!osx)"
   - autotools
+  - alibuild-recipe-tools
 ---
 #!/bin/bash -ex
 rsync -av $SOURCEDIR/ ./
@@ -23,18 +23,7 @@ rm -rf $INSTALLROOT/share
 MODULEDIR="$INSTALLROOT/etc/modulefiles"
 MODULEFILE="$MODULEDIR/$PKGNAME"
 mkdir -p "$MODULEDIR"
-cat > "$MODULEFILE" <<EoF
-#%Module1.0
-proc ModulesHelp { } {
-  global version
-  puts stderr "ALICE Modulefile for $PKGNAME $PKGVERSION-@@PKGREVISION@$PKGHASH@@"
-}
-set version $PKGVERSION-@@PKGREVISION@$PKGHASH@@
-module-whatis "ALICE Modulefile for $PKGNAME $PKGVERSION-@@PKGREVISION@$PKGHASH@@"
-# Dependencies
-module load BASE/1.0
-# Our environment
-setenv SQLITE_ROOT \$::env(BASEDIR)/$PKGNAME/\$version
-prepend-path PATH $::env(SQLITE_ROOT)/bin
-prepend-path LD_LIBRARY_PATH $::env(SQLITE_ROOT)/lib
+alibuild-generate-module --bin --lib > "$MODULEFILE"
+cat >> "$MODULEFILE" <<EoF
+setenv SQLITE_ROOT \$PKG_ROOT
 EoF
