@@ -9,7 +9,9 @@ build_requires:
   - alibuild-recipe-tools
 prefer_system: (?!slc5)
 prefer_system_check: |
-  pkg-config --atleast-version=0.6.2 yaml-cpp && printf "#include \"yaml-cpp/yaml.h\"\n" | c++ -std=c++17 -I$BOOST_ROOT/include -xc++ - -c -o /dev/null
+  pkg-config --atleast-version=0.6.2 yaml-cpp &&
+    printf "#include \"yaml-cpp/yaml.h\"\n" |
+    c++ -std=c++17 -I$BOOST_ROOT/include -xc++ - -c -o /dev/null
 ---
 #!/bin/sh
 cmake $SOURCEDIR                                         \

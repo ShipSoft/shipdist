@@ -11,7 +11,10 @@ build_requires:
   - CMake
   - alibuild-recipe-tools
 prepend_path:
-  ROOT_INCLUDE_PATH: "$GEANT4_VMC_ROOT/include/g4root:$GEANT4_VMC_ROOT/include/geant4vmc:$GEANT4_VMC_ROOT/include/mtroot"
+  ROOT_INCLUDE_PATH:
+    - "$GEANT4_VMC_ROOT/include/g4root"
+    - "$GEANT4_VMC_ROOT/include/geant4vmc"
+    - "$GEANT4_VMC_ROOT/include/mtroot"
 env:
   G4VMCINSTALL: "$GEANT4_VMC_ROOT"
 prefer_system_check: |

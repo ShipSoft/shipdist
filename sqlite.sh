@@ -4,8 +4,15 @@ tag: "v3.15.0"
 source: https://github.com/alisw/sqlite
 prefer_system: (?!slc5)
 prefer_system_check: |
-  printf '#include <sqlite3.h>\nint main(){}\n' | cc -xc - -lsqlite3 -o /dev/null;
-  if [ $? -ne 0 ]; then printf "SQLite not found.\n * On RHEL-compatible systems you probably need: sqlite sqlite-devel\n * On Ubuntu-compatible systems you probably need: libsqlite3-0 libsqlite3-dev\n"; exit 1; fi
+  #!/bin/bash -e
+  if ! printf '#include <sqlite3.h>\nint main(){}\n' |
+      cc -xc - -lsqlite3 -o /dev/null; then
+    printf "%s\n" \
+      "SQLite not found." \
+      " * RHEL-compatible: sqlite sqlite-devel" \
+      " * Ubuntu-compatible: libsqlite3-0 libsqlite3-dev"
+    exit 1
+  fi
 build_requires:
   - curl
   - autotools

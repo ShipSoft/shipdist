@@ -9,8 +9,14 @@ build_requires:
 source: https://github.com/alisw/libxml2.git
 prefer_system: "(?!slc5)"
 prefer_system_check: |
-  xml2-config --version;
-  if [ $? -ne 0 ]; then printf "libxml2 not found.\n * On RHEL-compatible systems you probably need: libxml2 libxml2-devel\n * On Ubuntu-compatible systems you probably need: libxml2 libxml2-dev"; exit 1; fi
+  #!/bin/bash -e
+  if ! xml2-config --version; then
+    printf "%s\n" \
+      "libxml2 not found." \
+      " * RHEL-compatible: libxml2 libxml2-devel" \
+      " * Ubuntu-compatible: libxml2 libxml2-dev"
+    exit 1
+  fi
 ---
 #!/bin/sh
 echo "Building ALICE libxml. To avoid this install libxml development package."
