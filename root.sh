@@ -1,6 +1,6 @@
 package: ROOT
 version: "%(tag_basename)s%(defaults_upper)s"
-tag: v6-36-08
+tag: v6-38-02
 source: https://github.com/root-project/root
 requires:
 - GSL
@@ -12,7 +12,6 @@ requires:
 - libxml2
 - OpenSSL
 - XRootD
-- pythia
 - TBB
 build_requires:
 - CMake
@@ -46,7 +45,7 @@ prefer_system_check: |
       echo "ROOT version $VERSION insufficient ($REQUESTED_VERSION requested)"
       exit 1
   fi
-  FEATURES="builtin_pcre mathmore xml ssl opengl http gdml pythia8 roofit soversion vdt xrootd"
+  FEATURES="builtin_pcre mathmore xml ssl opengl http gdml roofit soversion vdt xrootd"
   for FEATURE in $FEATURES; do
       root-config --has-$FEATURE | grep -q yes || { echo "$FEATURE missing"; exit 1; }
   done
@@ -81,18 +80,17 @@ ${XROOTD_ROOT:+-DXROOTD_ROOT_DIR=$XROOTD_ROOT}            \
 -DCMAKE_LINKER=$COMPILER_LD                               \
 ${GCC_TOOLCHAIN_VERSION:+-DCMAKE_EXE_LINKER_FLAGS="-L$GCC_TOOLCHAIN_ROOT/lib64"} \
 ${GSL_ROOT:+-DGSL_DIR=$GSL_ROOT}                          \
-${PYTHIA_ROOT:+-DPYTHIA8_DIR=$PYTHIA_ROOT}                \
-${PYTHIA_ROOT:+-Dpythia8=ON}                \
 -Dmathmore=ON \
 -Dsoversion=ON                                            \
 -Dshadowpw=OFF                                            \
 -Dbuiltin_vdt=ON                                          \
 -Dbuiltin_davix=OFF                                                              \
 -Ddavix=OFF                                                                      \
+-Druntime_cxxmodules=OFF                                                         \
 ${PYTHON_ROOT:+-DPYTHON_EXECUTABLE=$PYTHONHOME/bin/python3} \
 ${PYTHON_ROOT:+-DPython3_ROOT_DIR=$PYTHON_ROOT} \
 -DCMAKE_PREFIX_PATH="$FREETYPE_ROOT;$GSL_ROOT;$PYTHON_ROOT"
-FEATURES="builtin_pcre xml ssl opengl http gdml mathmore ${PYTHIA_ROOT:+pythia8}
+FEATURES="builtin_pcre xml ssl opengl http gdml mathmore
     roofit soversion vdt ${XROOTD_ROOT:+xrootd}"
 NO_FEATURES="${FREETYPE_ROOT:+builtin_freetype}"
 
