@@ -8,6 +8,13 @@ requires:
 build_requires:
   - CMake
   - alibuild-recipe-tools
+prefer_system: .*
+prefer_system_check: |
+  #!/bin/bash -e
+  printf '#include <Inventor/Qt/SoQt.h>\nint main(){}\n' | \
+    c++ -std=c++20 -xc++ - \
+    $(pkg-config --cflags --libs Qt6Core Qt6Widgets Qt6OpenGL) \
+    -lSoQt -lCoin -o /dev/null
 env:
   SOQT_ROOT: "$SOQT_ROOT"
 prepend_path:
@@ -17,23 +24,10 @@ prepend_path:
 
 git -C "$SOURCEDIR" submodule update --init --recursive
 
-# Resolve Qt6 cmake config to its real path so _IMPORT_PREFIX does not follow
-# LCG view symlinks back to the Qt5 include dir.
-IFS=: read -ra _prefixes <<< "${CMAKE_PREFIX_PATH:-}"
-for _prefix in "${_prefixes[@]}"; do
-  _qt6conf="$_prefix/lib/cmake/Qt6/Qt6Config.cmake"
-  if [ -e "$_qt6conf" ]; then
-    QT6_DIR=$(dirname "$(readlink -f "$_qt6conf")")
-    break
-  fi
-done
-
 cmake "$SOURCEDIR" \
   -DCMAKE_INSTALL_PREFIX="$INSTALLROOT" \
   -DCMAKE_BUILD_TYPE="$CMAKE_BUILD_TYPE" \
   -DCMAKE_INSTALL_LIBDIR=lib \
-  ${CMAKE_PREFIX_PATH:+-DCMAKE_PREFIX_PATH="$CMAKE_PREFIX_PATH"} \
-  ${QT6_DIR:+-DQt6_DIR="$QT6_DIR"} \
   -DSOQT_USE_QT6=ON \
   -DSOQT_BUILD_DOCUMENTATION=OFF \
   -DSOQT_BUILD_EXAMPLES=OFF \

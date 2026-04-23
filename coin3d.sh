@@ -7,6 +7,11 @@ requires:
 build_requires:
   - CMake
   - alibuild-recipe-tools
+prefer_system: .*
+prefer_system_check: |
+  #!/bin/bash -e
+  printf '#include <Inventor/SoDB.h>\nint main(){SoDB::init();}\n' | \
+    c++ -std=c++20 -xc++ - -lCoin -o /dev/null
 env:
   COIN3D_ROOT: "$COIN3D_ROOT"
 prepend_path:
