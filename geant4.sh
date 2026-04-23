@@ -6,6 +6,7 @@ requires:
   - GCC-Toolchain
   - opengl
   - XercesC
+  - TBB
 build_requires:
   - CMake
   - ninja
@@ -25,6 +26,7 @@ env:
   G4RADIOACTIVEDATA: "`find ${G4INSTALL} $G4DATASEARCHOPT '*data*RadioactiveDecay*'`"
   G4REALSURFACEDATA: "`find ${G4INSTALL} $G4DATASEARCHOPT '*data*RealSurface*'`"
   G4SAIDXSDATA: "`find ${G4INSTALL} $G4DATASEARCHOPT  '*data*G4SAIDDATA*'`"
+prefer_system: ".*"
 prefer_system_check: |
   #!/bin/bash -e
   ls $GEANT4_ROOT/bin > /dev/null && \
@@ -37,25 +39,26 @@ prefer_system_check: |
   true
 ---
 #!/bin/bash -e
-export G4DEBUG=1
 cmake $SOURCEDIR                                    \
   -G Ninja \
   -DGEANT4_INSTALL_DATA_TIMEOUT=1500                \
   -DCMAKE_CXX_FLAGS="-fPIC"                         \
   -DCMAKE_INSTALL_PREFIX:PATH="$INSTALLROOT"        \
   -DCMAKE_INSTALL_LIBDIR="lib"                      \
-  -DCMAKE_BUILD_TYPE="DEBUG"              \
+  -DCMAKE_BUILD_TYPE=$CMAKE_BUILD_TYPE              \
   -DGEANT4_BUILD_TLS_MODEL:STRING="global-dynamic"  \
   -DGEANT4_ENABLE_TESTING=OFF                       \
   -DBUILD_SHARED_LIBS=ON                            \
   -DG4VERBOSE=ON                                    \
   -DGEANT4_INSTALL_EXAMPLES=OFF                     \
-  -DGEANT4_BUILD_MULTITHREADED=OFF                  \
+  -DGEANT4_BUILD_MULTITHREADED=ON                   \
+  -DGEANT4_USE_TBB=ON                               \
   -DCMAKE_STATIC_LIBRARY_CXX_FLAGS="-fPIC"          \
   -DCMAKE_STATIC_LIBRARY_C_FLAGS="-fPIC"            \
   -DGEANT4_USE_G3TOG4=ON                            \
   -DGEANT4_INSTALL_DATA=ON                          \
   -DGEANT4_USE_SYSTEM_EXPAT=OFF                     \
+  -DGEANT4_USE_SYSTEM_ZLIB=ON                       \
   ${XERCESC_ROOT:+-DGEANT4_USE_OPENGL_X11=ON -DGEANT4_USE_GDML=ON -DXERCESC_ROOT_DIR=$XERCESC_ROOT}
 
 cmake --build . ${JOBS+-j$JOBS} --target install
