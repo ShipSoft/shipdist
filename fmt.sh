@@ -13,7 +13,7 @@ prefer_system_check: |
     if [ -z "$FMT_VERSION" ]; then
         FMT_VERSION=$(pkg-config --modversion fmt 2>/dev/null)
     fi
-    verge() { [[  "$1" = "`echo -e "$1\n$2" | sort -V | head -n1`" ]]; }
+    verge() { [[  "$1" = "$(echo -e "$1\n$2" | sort -V | head -n1)" ]]; }
     verge $REQUESTED_VERSION $FMT_VERSION
 ---
 #!/bin/bash -e
