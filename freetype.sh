@@ -9,8 +9,19 @@ build_requires:
   - alibuild-recipe-tools
 prefer_system: (?!slc5)
 prefer_system_check: |
-  printf "#include <ft2build.h>\n" | c++ -xc++ - `freetype-config --cflags 2>/dev/null` `pkg-config freetype2 --cflags 2>/dev/null` -c -M 2>&1;
-  if [ $? -ne 0 ]; then printf "FreeType is missing on your system.\n * On RHEL-compatible systems you probably need: freetype freetype-devel\n * On Ubuntu-compatible systems you probably need: libfreetype6 libfreetype6-dev\n"; exit 1; fi
+  #!/bin/bash -e
+  # shellcheck disable=SC2046
+  if ! printf "#include <ft2build.h>\n" |
+      c++ -xc++ - \
+        $(freetype-config --cflags 2>/dev/null) \
+        $(pkg-config freetype2 --cflags 2>/dev/null) \
+        -c -M 2>&1; then
+    printf "%s\n" \
+      "FreeType is missing on your system." \
+      " * RHEL-compatible: freetype freetype-devel" \
+      " * Ubuntu-compatible: libfreetype6 libfreetype6-dev"
+    exit 1
+  fi
 ---
 #!/bin/bash -ex
 rsync -a --chmod=ug=rwX --exclude='**/.git' --delete --delete-excluded "$SOURCEDIR/" ./
@@ -26,6 +37,7 @@ make install
 
 # Modulefile
 MODULEDIR="$INSTALLROOT/etc/modulefiles"
+# shellcheck disable=SC2034
 MODULEFILE="$MODULEDIR/$PKGNAME"
 
 mkdir -p etc/modulefiles

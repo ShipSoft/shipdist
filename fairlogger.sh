@@ -3,11 +3,11 @@ version: "%(tag_basename)s"
 tag: v2.3.1
 source: https://github.com/FairRootGroup/FairLogger
 requires:
- - fmt
+  - fmt
 build_requires:
- - CMake
- - GCC-Toolchain
- - alibuild-recipe-tools
+  - CMake
+  - GCC-Toolchain
+  - alibuild-recipe-tools
 incremental_recipe: |
   cmake --build . --target install ${JOBS:+-- -j$JOBS}
   mkdir -p "$INSTALLROOT/etc/modulefiles"
@@ -20,7 +20,7 @@ prepend_path:
 prefer_system_check: |
   #!/bin/bash -e
   REQUESTED_VERSION=${REQUESTED_VERSION#v}
-  verge() { [[  "$1" = "`echo -e "$1\n$2" | sort -V | head -n1`" ]]; }
+  verge() { [[  "$1" = "$(echo -e "$1\n$2" | sort -V | head -n1)" ]]; }
   verge $REQUESTED_VERSION $FAIRLOGGER_VERSION
 ---
 #!/bin/bash

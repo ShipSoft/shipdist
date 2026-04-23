@@ -1,7 +1,7 @@
 package: EvtGen
 version: "%(tag_basename)s-ship%(defaults_upper)s"
-source: https://gitlab.cern.ch/evtgen/evtgen
 tag: R02-02-03
+source: https://gitlab.cern.ch/evtgen/evtgen
 requires:
   - HepMC3
   - pythia
@@ -20,7 +20,7 @@ build_requires:
 #!/bin/sh
 
 # Detect dependency paths from config tools when *_ROOT vars are not set
-: ${PYTHIA_ROOT:=$(pythia8-config --prefix 2>/dev/null)}
+: "${PYTHIA_ROOT:=$(pythia8-config --prefix 2>/dev/null)}"
 
 rsync -a $SOURCEDIR/* .
 

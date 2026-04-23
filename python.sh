@@ -12,21 +12,37 @@ build_requires:
   - curl
   - alibuild-recipe-tools
 env:
-  SSL_CERT_FILE: "$(export PATH=$PYTHON_ROOT/bin:$PATH; export LD_LIBRARY_PATH=$PYTHON_ROOT/lib:$LD_LIBRARY_PATH; python -c \"import certifi; print(certifi.where())\")"
+  SSL_CERT_FILE: >-
+    $(export PATH=$PYTHON_ROOT/bin:$PATH;
+    export LD_LIBRARY_PATH=$PYTHON_ROOT/lib:$LD_LIBRARY_PATH;
+    python -c "import certifi; print(certifi.where())")
   PYTHONHOME: "$PYTHON_ROOT"
   PYTHONPATH: "$PYTHON_ROOT/lib/python/site-packages"
 prefer_system: "(?!slc5|ubuntu)"
 prefer_system_check: |
-    python3 -c 'from sys import version_info; print(f"alibuild_system_replace: python{version_info.major}.{version_info.minor}")'
-    python3 -c 'import sys; import sqlite3; sys.exit(1 if sys.version_info < (3, 12, 12) or sys.version_info > (3, 15) else 0)' && python3 -m pip --help > /dev/null && printf '#include "pyconfig.h"' | cc -c $(python3-config --includes) -xc -o /dev/null -; if [ $? -ne 0 ]; then printf "Python, the Python development packages, and pip must be installed on your system.\nUsually those packages are called python, python-devel (or python-dev) and python-pip.\n"; exit 1; fi
+    python3 -c 'from sys import version_info; \
+      print(f"alibuild_system_replace: python{version_info.major}.{version_info.minor}")'
+    # shellcheck disable=SC2046
+    if ! python3 -c 'import sys; import sqlite3; \
+          sys.exit(1 if sys.version_info < (3, 12, 12) \
+                     or sys.version_info > (3, 15) else 0)' ||
+       ! python3 -m pip --help > /dev/null ||
+       ! printf '#include "pyconfig.h"' |
+          cc -c $(python3-config --includes) -xc -o /dev/null -; then
+      printf "%s\n" \
+        "Python, the Python development packages, and pip" \
+        "must be installed on your system." \
+        "Usually: python, python-devel (or python-dev), python-pip."
+      exit 1
+    fi
 prefer_system_replacement_specs:
   "python3.*":
     version: "%(key)s"
     env:
-        # Python is in path, so we need a dummy placeholder for PYTHON_ROOT
-        # to avoid having /bin in the middle of the path.
-        PYTHON_ROOT: "/dummy-python-folder"
-        PYTHON_REVISION: ""
+      # Python is in path, so we need a dummy placeholder for PYTHON_ROOT
+      # to avoid having /bin in the middle of the path.
+      PYTHON_ROOT: "/dummy-python-folder"
+      PYTHON_REVISION: ""
 ---
 rsync -av --exclude '**/.git' $SOURCEDIR/ $BUILDDIR/
 
@@ -35,7 +51,8 @@ export LIBFFI_ROOT
 export PKG_CONFIG_PATH=/usr/lib64/pkgconfig:${PKG_CONFIG_PATH}
 
 # If the python installer finds another pip, it won't install the new one
-export PATH=$(echo $PATH | awk -v RS=':' -v ORS=':' '!(/(^|\/)[Pp]ython[0-9.]*\//)' | sed 's/:$//')
+PATH=$(echo $PATH | awk -v RS=':' -v ORS=':' '!(/(^|\/)[Pp]ython[0-9.]*\//)' | sed 's/:$//')
+export PATH
 unset PYTHONUSERBASE
 unset PYTHONHOME
 unset PYTHONPATH
@@ -47,8 +64,12 @@ for ext in $ZLIB_ROOT $FREETYPE_ROOT $LIBPNG_ROOT $SQLITE_ROOT $LIBFFI_ROOT; do
   LDFLAGS="$(find $ext -type d \( -name lib -o -name lib64 \) -exec echo -L\{\} \;) $LDFLAGS"
   CPPFLAGS="$(find $ext -type d -name include -exec echo -I\{\} \;) $CPPFLAGS"
 done
-export LDFLAGS=$(echo $LDFLAGS)
-export CPPFLAGS=$(echo $CPPFLAGS)
+# shellcheck disable=SC2116
+LDFLAGS=$(echo $LDFLAGS)
+export LDFLAGS
+# shellcheck disable=SC2116
+CPPFLAGS=$(echo $CPPFLAGS)
+export CPPFLAGS
 
 ./configure --prefix="$INSTALLROOT"  \
             --enable-shared          \
@@ -58,9 +79,9 @@ make ${JOBS:+-j $JOBS}
 make altinstall
 
 # Patch long shebangs (by default max is 128 chars on Linux) and add pip(3)/python(3) symlinks
-pushd "$INSTALLROOT/bin"
-  sed -i.deleteme -e "1 s|^#!${INSTALLROOT}/bin/\(.*\)$|#!/usr/bin/env \1|" * || true
-  rm -f *.deleteme
+pushd "$INSTALLROOT/bin" || exit
+  sed -i.deleteme -e "1 s|^#!${INSTALLROOT}/bin/\(.*\)$|#!/usr/bin/env \1|" ./* || true
+  rm -f ./*.deleteme
   PYTHON_BIN=$(for X in python*; do echo "$X"; done | grep -E '^python[0-9]+\.[0-9]+$' | head -n1)
   PIP_BIN=$(for X in pip*; do echo "$X"; done | grep -E '^pip[0-9]+\.[0-9]+$' | head -n1)
   PYTHON_CONFIG_BIN=$(for X in python*-config; do echo "$X"; done | grep -E '^python[0-9]+\.[0-9]+m?-config$' | head -n1)
@@ -71,7 +92,7 @@ pushd "$INSTALLROOT/bin"
   [[ -x pip3 ]] || ln -nfs "$PIP_BIN" pip3
   [[ -x python-config ]] || ln -nfs "$PYTHON_CONFIG_BIN" python-config
   [[ -x python3-config ]] || ln -nfs "$PYTHON_CONFIG_BIN" python3-config
-popd
+popd || exit
 
 # Install Python SSL certificates right away
 env PATH="$INSTALLROOT/bin:$PATH" \
@@ -84,9 +105,9 @@ env PATH="$INSTALLROOT/bin:$PATH" \
     python3 -m pip install 'certifi==2022.12.7'
 
 # Uniform Python library path
-pushd "$INSTALLROOT/lib"
+pushd "$INSTALLROOT/lib" || exit
   ln -nfs python* python
-popd
+popd || exit
 
 # Remove useless stuff
 rm -rvf "$INSTALLROOT"/share "$INSTALLROOT"/lib/python*/test

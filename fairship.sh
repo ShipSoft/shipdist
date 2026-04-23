@@ -42,20 +42,21 @@ prepend_path:
   ROOT_INCLUDE_PATH: "$FAIRSHIP_ROOT/include"
   LD_LIBRARY_PATH: "$FAIRSHIP_ROOT/lib"
 append_path:
-  ROOT_INCLUDE_PATH: "$GEANT4_ROOT/include:\
-    $GEANT4_ROOT/include/Geant4:\
-    $PYTHIA_ROOT/include:\
-    $PYTHIA_ROOT/include/Pythia8:\
-    $GEANT4_VMC_ROOT/include:\
-    $GEANT4_VMC_ROOT/include/geant4vmc"
+  ROOT_INCLUDE_PATH:
+    - "$GEANT4_ROOT/include"
+    - "$GEANT4_ROOT/include/Geant4"
+    - "$PYTHIA_ROOT/include"
+    - "$PYTHIA_ROOT/include/Pythia8"
+    - "$GEANT4_VMC_ROOT/include"
+    - "$GEANT4_VMC_ROOT/include/geant4vmc"
 incremental_recipe: |
   #!/bin/bash -e
   rsync -ar $SOURCEDIR/ $INSTALLROOT/
   cmake --build . ${JOBS+-j$JOBS} --target install
   #Get the current git hash
-  cd $SOURCEDIR
+  cd "$SOURCEDIR" || exit
   FAIRSHIP_HASH=$(git rev-parse HEAD)
-  cd $BUILDDIR
+  cd "$BUILDDIR" || exit
   # Modulefile
   mkdir -p "$INSTALLROOT/etc/modulefiles"
   alibuild-generate-module --bin --lib > "$INSTALLROOT/etc/modulefiles/$PKGNAME"
@@ -112,9 +113,9 @@ cmake $SOURCEDIR                                                 \
 cmake --build . ${JOBS+-j$JOBS} --target install
 
 #Get the current git hash
-cd $SOURCEDIR
+cd "$SOURCEDIR" || exit
 FAIRSHIP_HASH=$(git rev-parse HEAD)
-cd $BUILDDIR
+cd "$BUILDDIR" || exit
 
 # Modulefile
 mkdir -p "$INSTALLROOT/etc/modulefiles"
