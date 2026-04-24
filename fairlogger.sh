@@ -8,13 +8,6 @@ build_requires:
  - CMake
  - GCC-Toolchain
  - alibuild-recipe-tools
-incremental_recipe: |
-  cmake --build . --target install ${JOBS:+-- -j$JOBS}
-  mkdir -p "$INSTALLROOT/etc/modulefiles"
-  alibuild-generate-module --lib > "$INSTALLROOT/etc/modulefiles/$PKGNAME"
-  cat >> "$INSTALLROOT/etc/modulefiles/$PKGNAME" <<\EoF
-  prepend-path ROOT_INCLUDE_PATH $PKG_ROOT/include
-  EoF
 prepend_path:
   ROOT_INCLUDE_PATH: "$FAIRLOGGER_ROOT/include"
 prefer_system_check: |
