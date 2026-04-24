@@ -180,3 +180,9 @@ MODULEDIR="$INSTALLROOT/etc/modulefiles"
 MODULEFILE="$MODULEDIR/$PKGNAME"
 mkdir -p "$MODULEDIR"
 alibuild-generate-module --bin --lib > "$MODULEFILE"
+# alibuild-generate-module has no --lib64 flag and does not read the YAML
+# prepend_path key, but libstdc++.so.6 lives in lib64 — add it explicitly so
+# `module load` sets LD_LIBRARY_PATH the same way `source setUp.sh` does.
+cat >> "$MODULEFILE" <<EoF
+prepend-path LD_LIBRARY_PATH \$PKG_ROOT/lib64
+EoF
