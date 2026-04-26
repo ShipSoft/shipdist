@@ -29,7 +29,9 @@ prefer_system_check: |
 unset CXXFLAGS
 unset CFLAGS
 
-echo "Building GCC because no compatible version was found on the system. To skip this step, install GCC 4.8 or 4.9, or 5.X (with the exception of 5.0 to 5.2). Make sure you have gfortran installed too."
+GCC_MAJOR=${PKGVERSION#v}
+GCC_MAJOR=${GCC_MAJOR%%.*}
+echo "Building GCC because no compatible version was found on the system. To skip this step, install GCC $GCC_MAJOR or newer. Make sure you have gfortran installed too."
 
 USE_GOLD=
 case $ARCHITECTURE in
