@@ -12,12 +12,15 @@ build_requires:
 prefer_system: .*
 prefer_system_check: |
   set -e
+  STRIPPED=${REQUESTED_VERSION#v}
+  MAJOR=${STRIPPED%%.*}
+  THRESHOLD=$((MAJOR * 10000))
   which gfortran || { echo "gfortran missing"; exit 1; }
   which gcc && test -f "$(dirname "$(which gcc)")"/c++ &&
     printf "%s\n" \
       "#define GCCVER ((__GNUC__*10000)+(__GNUC_MINOR__*100)+(__GNUC_PATCHLEVEL__))" \
-      "#if (GCCVER < 130000)" \
-      "#error \"Need at least GCC 13. Will compile our own.\"" \
+      "#if (GCCVER < ${THRESHOLD})" \
+      "#error \"Need at least GCC ${MAJOR}. Will compile our own.\"" \
       "#endif" |
     gcc -xc++ - -c -o /dev/null
 ---
