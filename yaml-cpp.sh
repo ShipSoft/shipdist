@@ -7,6 +7,7 @@ build_requires:
   - alibuild-recipe-tools
 prefer_system: (?!slc5)
 prefer_system_check: |
+  REQUESTED_VERSION=${REQUESTED_VERSION#v}
   pkg-config --atleast-version=$REQUESTED_VERSION yaml-cpp &&
     printf "#include \"yaml-cpp/yaml.h\"\n" |
     c++ -std=c++17 -xc++ - -c -o /dev/null
@@ -18,7 +19,7 @@ cmake $SOURCEDIR                                         \
   -DBUILD_SHARED_LIBS=YES                                \
   -DCMAKE_SKIP_RPATH=YES                                 \
   -DYAML_CPP_BUILD_TESTS=NO                              \
-  -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
+  -DCMAKE_POLICY_VERSION_MINIMUM=3.5                     \
   -DSKIP_INSTALL_FILES=1
 
 make ${JOBS+-j $JOBS} install
