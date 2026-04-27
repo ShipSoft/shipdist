@@ -19,7 +19,7 @@ prefer_system_check: |
     "#error \"Cannot use system boost. Need > 1.77.\"" \
     "#endif" \
     "int main(){}" |
-    gcc -I$BOOST_ROOT/include -xc++ - -o /dev/null
+    gcc -I"$BOOST_ROOT"/include -xc++ - -o /dev/null
 ---
 BOOST_PYTHON=
 BOOST_CXXFLAGS=
