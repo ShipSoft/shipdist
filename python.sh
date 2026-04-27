@@ -20,6 +20,7 @@ env:
   PYTHONPATH: "$PYTHON_ROOT/lib/python/site-packages"
 prefer_system: "(?!slc5|ubuntu)"
 prefer_system_check: |
+    #!/bin/bash -e
     python3 -c 'from sys import version_info; \
       print(f"alibuild_system_replace: python{version_info.major}.{version_info.minor}")'
     # shellcheck disable=SC2046

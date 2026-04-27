@@ -9,6 +9,7 @@ build_requires:
   - alibuild-recipe-tools
 prefer_system: (?!slc5)
 prefer_system_check: |
+  #!/bin/bash -e
   printf "%s\n" \
     "#include \"gsl/gsl_version.h\"" \
     "#define GSL_V GSL_MAJOR_VERSION * 100 + GSL_MINOR_VERSION" \
