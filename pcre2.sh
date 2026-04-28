@@ -5,6 +5,7 @@ source: https://github.com/PCRE2Project/pcre2
 build_requires:
   - "GCC-Toolchain:(?!osx)"
   - CMake
+  - alibuild-recipe-tools
 prefer_system: (?!slc5)
 prefer_system_check: |
   printf "#include \"pcre2.h\"\n" | c++ -xc++ -DPCRE2_CODE_UNIT_WIDTH=8 - -c -M 2>&1
@@ -20,19 +21,5 @@ cmake "$SOURCEDIR" -DCMAKE_INSTALL_PREFIX="$INSTALLROOT" \
 cmake --build . ${JOBS:+-j$JOBS} --target install
 
 # Modulefile
-MODULEDIR="$INSTALLROOT/etc/modulefiles"
-mkdir -p "$MODULEDIR"
-cat > "$MODULEDIR/$PKGNAME" <<EoF
-#%Module1.0
-proc ModulesHelp { } {
-  global version
-  puts stderr "ALICE Modulefile for $PKGNAME $PKGVERSION-@@PKGREVISION@$PKGHASH@@"
-}
-set version $PKGVERSION-@@PKGREVISION@$PKGHASH@@
-module-whatis "ALICE Modulefile for $PKGNAME $PKGVERSION-@@PKGREVISION@$PKGHASH@@"
-# Dependencies
-module load BASE/1.0 ${GCC_TOOLCHAIN_REVISION:+GCC-Toolchain/$GCC_TOOLCHAIN_VERSION-$GCC_TOOLCHAIN_REVISION}
-# Our environment
-setenv PCRE2_ROOT \$::env(BASEDIR)/$PKGNAME/\$version
-prepend-path LD_LIBRARY_PATH \$::env(PCRE2_ROOT)/lib
-EoF
+mkdir -p "$INSTALLROOT/etc/modulefiles"
+alibuild-generate-module --lib > "$INSTALLROOT/etc/modulefiles/$PKGNAME"
