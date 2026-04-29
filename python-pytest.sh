@@ -22,15 +22,6 @@ mkdir -p "$TARGET"
 uv pip install --no-cache-dir --target="$TARGET" --python="$(command -v python3)" "pytest==$PKGVERSION"
 ln -snf "python$pyver" "$INSTALLROOT/lib/python"
 
-# Install stable entrypoint wrappers that always use the loaded aliBuild Python.
-mkdir -p "$INSTALLROOT/bin"
-cat > "$INSTALLROOT/bin/pytest" <<'EOF'
-#!/bin/sh
-exec python3 -m pytest "$@"
-EOF
-chmod +x "$INSTALLROOT/bin/pytest"
-ln -snf pytest "$INSTALLROOT/bin/py.test"
-
 mkdir -p "$INSTALLROOT/etc/modulefiles"
 alibuild-generate-module --bin > "$INSTALLROOT/etc/modulefiles/$PKGNAME"
 cat >> "$INSTALLROOT/etc/modulefiles/$PKGNAME" <<EOF
