@@ -8,6 +8,8 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 
 ## Unreleased
 
+## [26.04](https://github.com/ShipSoft/shipdist/tree/26.04)
+
 ### Added
 
 * uv: Add recipe for fast Python package installation
@@ -15,18 +17,31 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 * alibuild, bitsorg: Add recipes
 * python-jinja2, python-requests: Add recipes
 * Add level-0 dependency recipes for alibuild
+* Coin3D 4.0.7, SoQt 1.6.4, GeoModel 6.24.0: Add recipes
+* nlohmann_json: Add recipe with prefer_system
+* defaults-lcg: Add defaults for LCG_109 system packages
+* Eigen3, XercesC, Geant4: Add prefer_system
 
 ### Fixed
 
 * HepMC3: Disable Python bindings to avoid installing into system prefix
 * FairShip: Fix modulefile env vars and paths, use $PKG_ROOT
 * GENIE: Check .so not .la for APFEL
-* CMake: Only require v3.20.0 from system (FairShip minimum)
+* CMake: Only require v3.20.0 from system, robust version extraction
 * Python: Tighten PATH filter in recipe
-* Remove orphaned recipes (clhep, lz4, messagepack, rapidjson, vc, sas, lhapdf5)
-  and stale CLHEP flag
+* Remove orphaned and unused recipes (clhep, lz4, messagepack, rapidjson, vc,
+  sas, lhapdf5, go, gsoap, thrift, lcov) and stale CLHEP flag
 * Inline meta-packages and fix stale hardcoded values
 * Make ACTS and FairRoot build with current GCC+CMake
+* gcc-toolchain: generate modulefile, derive version threshold, prepend lib64
+* Geant3: pin C standard to gnu17 for GCC 15
+* ROOT: use gcc instead of cc for C compiler
+* Eigen3: drop duplicate prefer_system_check key
+* Fix env vars and paths in generated modulefiles across recipes
+* autotools: harden recipe and name missing binary in error
+* GenFit, ROOTEGPythia6: patch absolute paths in dictionary autoload annotations
+* ACTS: use relative symlink for lib -> lib64
+* Quote variables and add missing shebangs across recipes
 
 ### Changed
 
@@ -39,12 +54,16 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 * FairShip: Build with Ninja
 * Refactor modulefiles to use alibuild-generate-module
 * FairRoot: Remove unused FairMQ dependency
+* Use `#!/bin/bash -e` for recipe scripts
+* Drop incremental_recipe from recipes
+* Improve YAML formatting and fix key ordering across recipes
 
 ### Removed
 
 * protobuf: Remove recipe and FairRoot dependency (no longer needed)
 * Remove recipes only needed for FairMQ
 * Remove monolithic Python-modules recipes
+* Remove macOS support
 
 ## [26.03](https://github.com/ShipSoft/shipdist/tree/26.03)
 
