@@ -36,6 +36,19 @@ cmake $SOURCEDIR -DCMAKE_INSTALL_PREFIX=$INSTALLROOT \
       ${TAUOLAPP_ROOT:+-DTAUOLAPP_ROOT_DIR=$TAUOLAPP_ROOT}
 make ${JOBS:+-j$JOBS} install
 
+# Make the exported CMake targets relocatable across CVMFS prefixes.
+# Upstream EvtGen bakes absolute build-time paths to HepMC3/pythia/PHOTOSPP/
+# Tauolapp into share/EvtGen/cmake/EvtGenTargets.cmake; replace each
+# dependency's install prefix with a $ENV{...}_ROOT reference so the tarball
+# can be consumed under any CVMFS prefix where alibuild's runtime env is set.
+TARGETS_CMAKE="$INSTALLROOT/share/EvtGen/cmake/EvtGenTargets.cmake"
+if [ -f "$TARGETS_CMAKE" ]; then
+    [ -n "$HEPMC3_ROOT" ]   && sed -i "s|${HEPMC3_ROOT}|\$ENV{HEPMC3_ROOT}|g"     "$TARGETS_CMAKE"
+    [ -n "$PYTHIA_ROOT" ]   && sed -i "s|${PYTHIA_ROOT}|\$ENV{PYTHIA_ROOT}|g"     "$TARGETS_CMAKE"
+    [ -n "$PHOTOSPP_ROOT" ] && sed -i "s|${PHOTOSPP_ROOT}|\$ENV{PHOTOSPP_ROOT}|g" "$TARGETS_CMAKE"
+    [ -n "$TAUOLAPP_ROOT" ] && sed -i "s|${TAUOLAPP_ROOT}|\$ENV{TAUOLAPP_ROOT}|g" "$TARGETS_CMAKE"
+fi
+
 # Modulefile
 mkdir -p "$INSTALLROOT/etc/modulefiles"
 alibuild-generate-module --lib > "$INSTALLROOT/etc/modulefiles/$PKGNAME"
