@@ -59,7 +59,18 @@ incremental_recipe: |
   cd "$BUILDDIR" || exit
   # Modulefile
   mkdir -p "$INSTALLROOT/etc/modulefiles"
-  alibuild-generate-module --bin --lib > "$INSTALLROOT/etc/modulefiles/$PKGNAME"
+  # Drop deps with empty *_VERSION (happens for some deps when building
+  # locally on top of CVMFS) so we don't emit broken `module load pkg/-N`
+  # lines. Pre-filter unsets *_REVISION so alibuild-generate-module skips
+  # them; sed is a defense-in-depth post-filter.
+  ( for __v in $(compgen -A variable | grep '_REVISION$'); do
+      __p=${__v%_REVISION}
+      eval "__ver=\${${__p}_VERSION-}"
+      [ -z "$__ver" ] && unset "$__v"
+    done
+    alibuild-generate-module --bin --lib
+  ) | sed -E '/is-loaded "[^"\/]+\/-[0-9]+"/d' \
+      > "$INSTALLROOT/etc/modulefiles/$PKGNAME"
   cat >> "$INSTALLROOT/etc/modulefiles/$PKGNAME" <<EoF
   setenv FAIRSHIP_HASH $FAIRSHIP_HASH
   setenv FAIRSHIP \$PKG_ROOT
@@ -119,7 +130,18 @@ cd "$BUILDDIR" || exit
 
 # Modulefile
 mkdir -p "$INSTALLROOT/etc/modulefiles"
-alibuild-generate-module --bin --lib > "$INSTALLROOT/etc/modulefiles/$PKGNAME"
+# Drop deps with empty *_VERSION (happens for some deps when building
+# locally on top of CVMFS) so we don't emit broken `module load pkg/-N`
+# lines. Pre-filter unsets *_REVISION so alibuild-generate-module skips
+# them; sed is a defense-in-depth post-filter.
+( for __v in $(compgen -A variable | grep '_REVISION$'); do
+    __p=${__v%_REVISION}
+    eval "__ver=\${${__p}_VERSION-}"
+    [ -z "$__ver" ] && unset "$__v"
+  done
+  alibuild-generate-module --bin --lib
+) | sed -E '/is-loaded "[^"\/]+\/-[0-9]+"/d' \
+    > "$INSTALLROOT/etc/modulefiles/$PKGNAME"
 cat >> "$INSTALLROOT/etc/modulefiles/$PKGNAME" <<EoF
 setenv FAIRSHIP_HASH $FAIRSHIP_HASH
 setenv FAIRSHIP \$PKG_ROOT
