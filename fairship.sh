@@ -20,6 +20,7 @@ requires:
   - python-matplotlib
   - python-pandas
   - python-pyyaml
+  - python-pytest-xdist
   - python-scipy
   - python-tabulate
   - python-uproot
