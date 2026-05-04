@@ -60,14 +60,21 @@ incremental_recipe: |
   cd "$BUILDDIR" || exit
   # Modulefile
   mkdir -p "$INSTALLROOT/etc/modulefiles"
-  # Drop deps with empty *_VERSION (happens for some deps when building
-  # locally on top of CVMFS) so we don't emit broken `module load pkg/-N`
-  # lines. Pre-filter unsets *_REVISION so alibuild-generate-module skips
-  # them; sed is a defense-in-depth post-filter.
+  # Drop dep `module load` lines for packages that live outside $WORK_DIR
+  # (typically CVMFS prefer-system installs). `alienv load` only ever puts
+  # $WORK_DIR/MODULES/<arch> on MODULEPATH, so loads for paths elsewhere
+  # fail with "Unable to locate a modulefile". This also subsumes the
+  # alibuild rebuild-on-CVMFS bug where alibuild itself clears *_VERSION
+  # vars (pruneVersionEnvVars) and overrides ALIBUILD_VERSION to a value
+  # that doesn't match the on-disk install path. Sed strips any leftover
+  # pkg/-N lines as belt-and-braces.
   ( for __v in $(compgen -A variable | grep '_REVISION$'); do
       __p=${__v%_REVISION}
-      eval "__ver=\${${__p}_VERSION-}"
-      [ -z "$__ver" ] && unset "$__v"
+      eval "__root=\${${__p}_ROOT-}"
+      case "$__root" in
+        "$WORK_DIR"/*) ;;
+        *) unset "$__v" ;;
+      esac
     done
     alibuild-generate-module --bin --lib
   ) | sed -E '/is-loaded "[^"\/]+\/-[0-9]+"/d' \
@@ -131,14 +138,21 @@ cd "$BUILDDIR" || exit
 
 # Modulefile
 mkdir -p "$INSTALLROOT/etc/modulefiles"
-# Drop deps with empty *_VERSION (happens for some deps when building
-# locally on top of CVMFS) so we don't emit broken `module load pkg/-N`
-# lines. Pre-filter unsets *_REVISION so alibuild-generate-module skips
-# them; sed is a defense-in-depth post-filter.
+# Drop dep `module load` lines for packages that live outside $WORK_DIR
+# (typically CVMFS prefer-system installs). `alienv load` only ever puts
+# $WORK_DIR/MODULES/<arch> on MODULEPATH, so loads for paths elsewhere
+# fail with "Unable to locate a modulefile". This also subsumes the
+# alibuild rebuild-on-CVMFS bug where alibuild itself clears *_VERSION
+# vars (pruneVersionEnvVars) and overrides ALIBUILD_VERSION to a value
+# that doesn't match the on-disk install path. Sed strips any leftover
+# pkg/-N lines as belt-and-braces.
 ( for __v in $(compgen -A variable | grep '_REVISION$'); do
     __p=${__v%_REVISION}
-    eval "__ver=\${${__p}_VERSION-}"
-    [ -z "$__ver" ] && unset "$__v"
+    eval "__root=\${${__p}_ROOT-}"
+    case "$__root" in
+      "$WORK_DIR"/*) ;;
+      *) unset "$__v" ;;
+    esac
   done
   alibuild-generate-module --bin --lib
 ) | sed -E '/is-loaded "[^"\/]+\/-[0-9]+"/d' \
