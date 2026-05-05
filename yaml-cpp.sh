@@ -1,6 +1,6 @@
 package: yaml-cpp
 version: "%(tag_basename)s"
-tag: 0.8.0
+tag: yaml-cpp-0.9.0
 source: https://github.com/jbeder/yaml-cpp
 build_requires:
   - CMake

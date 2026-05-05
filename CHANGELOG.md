@@ -8,6 +8,11 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 
 ## Unreleased
 
+### Changed
+
+* yaml-cpp: Upgrade to 0.9.0 to fix issue with modern gcc https://github.com/jbeder/yaml-cpp/issues/1307
+* xrootd: Add dist-packages as a possible location for python bindings
+
 ## [26.04](https://github.com/ShipSoft/shipdist/tree/26.04)
 
 ### Added
