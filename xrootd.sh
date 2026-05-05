@@ -94,14 +94,13 @@ if [[ "$XROOTD_PYTHON" == "True" ]]; then
     # Print found XRootD python bindings
     # just run the the command as this is under "bash -e"
     if [ -d "$INSTALLROOT/lib/python/dist-packages" ]; then
-     echo -ne ">>>>>>   Found XRootD python bindings: "
-     LD_LIBRARY_PATH="$INSTALLROOT/lib${LD_LIBRARY_PATH:+:}$LD_LIBRARY_PATH" PYTHONPATH="$INSTALLROOT/lib/python/dist-packages${PYTHONPATH:+:}$PYTHONPATH" ${PYTHON_EXECUTABLE} -c 'from XRootD import client as xrd_client;print(f"{xrd_client.__version__}\n{xrd_client.__file__}");'
-     echo
+     XROOTD_PYTHON_PKG_DIR="dist-packages"
     else
-     echo -ne ">>>>>>   Found XRootD python bindings: "
-     LD_LIBRARY_PATH="$INSTALLROOT/lib${LD_LIBRARY_PATH:+:}$LD_LIBRARY_PATH" PYTHONPATH="$INSTALLROOT/lib/python/site-packages${PYTHONPATH:+:}$PYTHONPATH" ${PYTHON_EXECUTABLE} -c 'from XRootD import client as xrd_client;print(f"{xrd_client.__version__}\n{xrd_client.__file__}");'
-     echo
+     XROOTD_PYTHON_PKG_DIR="site-packages"
     fi
+     echo -ne ">>>>>>   Found XRootD python bindings: "
+     LD_LIBRARY_PATH="$INSTALLROOT/lib${LD_LIBRARY_PATH:+:}$LD_LIBRARY_PATH" PYTHONPATH="$INSTALLROOT/lib/python/${XROOTD_PYTHON_PKG_DIR}${PYTHONPATH:+:}$PYTHONPATH" ${PYTHON_EXECUTABLE} -c 'from XRootD import client as xrd_client;print(f"{xrd_client.__version__}\n{xrd_client.__file__}");'
+     echo
 
 fi  # end of PYTHON part
 
@@ -114,7 +113,7 @@ alibuild-generate-module --bin --lib > "$MODULEFILE"
 
 cat >> "$MODULEFILE" <<EoF
 if { $XROOTD_PYTHON } {
-  prepend-path PYTHONPATH \$PKG_ROOT/lib/python/site-packages
+  prepend-path PYTHONPATH \$PKG_ROOT/lib/python/${XROOTD_PYTHON_PKG_DIR}
   module load ${PYTHON_REVISION:+Python/$PYTHON_VERSION-$PYTHON_REVISION}
 }
 EoF
