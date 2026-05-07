@@ -25,10 +25,15 @@ prepend_path:
 ---
 #!/bin/bash -e
 
+# PHLEX requires C++23 regardless of defaults.
+# -Wno-error=cpp tolerates ROOT's C++-standard-mismatch #warning when ROOT is
+# built at a different standard (e.g. C++20 under defaults-release).
+export CXXFLAGS="${CXXFLAGS//-std=c++*/-std=c++23} -Wno-error=cpp"
+
 cmake "$SOURCEDIR" \
   -DCMAKE_INSTALL_PREFIX="$INSTALLROOT" \
   -DCMAKE_BUILD_TYPE="$CMAKE_BUILD_TYPE" \
-  -DCMAKE_CXX_STANDARD="${CMAKE_CXX_STANDARD:-23}" \
+  -DCMAKE_CXX_STANDARD=23 \
   -DCMAKE_INSTALL_LIBDIR=lib \
   -DCMAKE_PREFIX_PATH="$CETMODULES_ROOT" \
   -DPHLEX_USE_FORM=ON \
