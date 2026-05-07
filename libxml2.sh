@@ -21,6 +21,12 @@ prefer_system_check: |
 #!/bin/sh
 echo "Building ALICE libxml. To avoid this install libxml development package."
 rsync -a $SOURCEDIR/ ./
+
+# libxml2 v2.9.3 has K&R-style empty () declarations in threads.c that GCC 15
+# rejects under its default C23 dialect. Force gnu17 until the recipe is bumped
+# to a C23-clean upstream release.
+export CFLAGS="${CFLAGS} -std=gnu17"
+
 autoreconf -i
 ./configure --disable-static \
             --prefix=$INSTALLROOT \
