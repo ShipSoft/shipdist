@@ -1,11 +1,10 @@
 package: GCC-Toolchain
-version: "%(tag_basename)s"
-tag: v13.2.0-alice1
-source: https://github.com/alisw/gcc-toolchain
+version: "v15.2.0"
+tag: "releases/gcc-15.2.0"
+source: https://github.com/gcc-mirror/gcc.git
 prepend_path:
   "LD_LIBRARY_PATH": "$GCC_TOOLCHAIN_ROOT/lib64"
 build_requires:
-  - "autotools:(slc6|slc7)"
   - yacc-like
   - make
   - alibuild-recipe-tools
@@ -33,7 +32,6 @@ GCC_MAJOR=${PKGVERSION#v}
 GCC_MAJOR=${GCC_MAJOR%%.*}
 echo "Building GCC because no compatible version was found on the system. To skip this step, install GCC $GCC_MAJOR or newer. Make sure you have gfortran installed too."
 
-USE_GOLD=
 case $ARCHITECTURE in
   *x86-64)
     MARCH='x86_64-unknown-linux-gnu'
@@ -45,67 +43,25 @@ esac
 
 rsync -a --exclude='**/.git' --delete --delete-excluded "$SOURCEDIR/" ./
 
-if [ -e autoconf-archive ]; then
-  (cd autoconf-archive && autoreconf -ivf )
-  mkdir build-autoconf-archive
-  pushd build-autoconf-archive
-    ../autoconf-archive/configure --prefix="$INSTALLROOT"
-    make install
-  popd
-  export ACLOCAL_PATH=$INSTALLROOT/share/aclocal
-fi
+# Fetch GMP, MPFR, MPC, ISL into the source tree (canonical upstream method).
+# Requires network access during the build phase, same as the source git clone.
+./contrib/download_prerequisites
 
-# Binutils
-mkdir build-binutils
-pushd build-binutils
-  ../binutils/configure --prefix="$INSTALLROOT"                \
-                        ${MARCH:+--build=$MARCH --host=$MARCH} \
-                        ${USE_GOLD:+--enable-gold=yes}         \
-                        --enable-ld=default                    \
-                        --enable-lto                           \
-                        --enable-plugins                       \
-                        --enable-threads                       \
-                        --enable-gprofng=no                    \
-                        --disable-nls
-  make ${JOBS:+-j$JOBS} MAKEINFO=":"
-  make install MAKEINFO=":"
-  hash -r
-popd
-
-# Test program
+# Test program used after install
 cat > test.c <<EOF
 #include <string.h>
 #include <stdio.h>
 int main(void) { printf("The answer is 42.\n"); }
 EOF
 
-# We will need to rebuild them with the final GCC
-rsync -a gcc/mpfr/ mpfr
-rsync -a gcc/gmp/ gmp
-
-pushd gcc
-[ -e mpfr ] && (cd mpfr && autoreconf -ivf)
-[ -e mpc ] && (cd mpc && autoreconf -ivf)
-[ -e gmp ] && (cd gmp && autoreconf -ivf)
-[ -e isl ] && (cd isl && autoreconf -ivf)
-[ -e cloog ] && (cd cloog && autoreconf -ivf)
-popd
-[ -e mpfr ] && (cd mpfr && autoreconf -ivf)
-[ -e mpc ] && (cd mpc && autoreconf -ivf)
-[ -e gmp ] && (cd gmp && autoreconf -ivf)
-[ -e isl ] && (cd isl && autoreconf -ivf)
-[ -e cloog ] && (cd cloog && autoreconf -ivf)
-
 mkdir build-gcc
 pushd build-gcc
-  ../gcc/configure --prefix="$INSTALLROOT"                          \
-                   ${MARCH:+--build=$MARCH --host=$MARCH}           \
-                   --enable-languages="c,c++,fortran${EXTRA_LANGS}" \
-                   --disable-multilib                               \
-                   ${USE_GOLD:+--enable-gold=yes}                   \
-                   --enable-ld=default                              \
-                   --enable-lto                                     \
-                   --disable-nls
+  ../configure --prefix="$INSTALLROOT"                          \
+               ${MARCH:+--build=$MARCH --host=$MARCH}           \
+               --enable-languages="c,c++,fortran${EXTRA_LANGS}" \
+               --disable-multilib                               \
+               --enable-lto                                     \
+               --disable-nls
   make ${JOBS+-j $JOBS} bootstrap-lean MAKEINFO=":"
   make install MAKEINFO=":"
   hash -r
@@ -114,71 +70,20 @@ pushd build-gcc
   ln -nfs gcc "$INSTALLROOT/bin/cc"
   rm -rf "$INSTALLROOT/lib/pkg-config"
 
-  # Provide a custom specs file if needed
-  #SPEC="$(dirname $(gcc -print-libgcc-file-name))/specs"
-  #gcc -dumpspecs > $SPEC
-  #perl -pe '++$x and next if /^\*link:/; $x-- and s/^(.*)$/\1 -rpath-link \/lib64:\/lib/ if $x' $SPEC > $SPEC.0
-  #mv $SPEC.0 $SPEC
-
   rm -f $INSTALLROOT/lib/*.la \
         $INSTALLROOT/lib64/*.la
 popd
 
-# From now on, use own linker and GCC
+# From now on, use own GCC
 export PATH="$INSTALLROOT/bin:$PATH"
 export LD_LIBRARY_PATH="$INSTALLROOT/lib64:$INSTALLROOT/lib:$LD_LIBRARY_PATH"
 hash -r
 
-# Test own linker and own GCC
-which ld
+# Smoke test the freshly installed compiler
 which g++
 g++ test.c
 ./a.out
 rm -f a.out
-
-# We rebuild mpfr, gmp to be used with gdb. We do so because
-# we want to make sure they were actually built with the GCC we
-# use, not with the bootstrap xgcc.
-[ -d mpfr ] && (cd mpfr && autoreconf -ivf)
-[ -d gmp ] && (cd gmp && autoreconf -ivf)
-mkdir -p build-gmp
-mkdir -p build-mpfr
-
-pushd build-gmp
-  ../gmp/configure --prefix="$INSTALLROOT/libexec/extra"  \
-                   --disable-shared                       \
-                   --enable-static
-  make ${JOBS:+-j$JOBS} MAKEINFO=":"
-  make install MAKEINFO=":"
-popd
-
-pushd build-mpfr
-  ../mpfr/configure --prefix="$INSTALLROOT/libexec/extra"  \
-                   --disable-shared                        \
-                   --with-gmp="$INSTALLROOT/libexec/extra" \
-                   --enable-static
-  make ${JOBS:+-j$JOBS} MAKEINFO=":"
-  make install MAKEINFO=":"
-popd
-
-# GDB
-mkdir build-gdb
-pushd build-gdb
-  ../gdb/configure --prefix="$INSTALLROOT"                \
-                   ${MARCH:+--build=$MARCH --host=$MARCH} \
-                   --with-gmp=$INSTALLROOT/libexec/extra  \
-                   --with-mpfr=$INSTALLROOT/libexec/extra \
-                   --without-python                       \
-                   --disable-multilib
-  make ${JOBS:+-j$JOBS} MAKEINFO=":"
-  make install MAKEINFO=":"
-  hash -r
-  rm -f $INSTALLROOT/lib/*.la
-popd
-
-# If fixincludes is not desired, see:
-# http://ewontfix.com/12/
-# https://sources.gentoo.org/cgi-bin/viewvc.cgi/gentoo-x86/eclass/toolchain.eclass?view=markup&sortby=log#l1524
 
 # Modulefile
 MODULEDIR="$INSTALLROOT/etc/modulefiles"
