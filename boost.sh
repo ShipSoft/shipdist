@@ -1,6 +1,6 @@
 package: boost
 version: "%(tag_basename)s"
-tag: "v1.83.0"
+tag: "v1.90.0-alice1"
 source: https://github.com/alisw/boost.git
 requires:
   - GCC-Toolchain
@@ -16,8 +16,8 @@ prefer_system_check: |
   #!/bin/bash -e
   printf "%s\n" \
     "#include \"boost/version.hpp\"" \
-    "#if (BOOST_VERSION < 108800)" \
-    "#error \"Cannot use system boost. Boost >= 1.88.0 required.\"" \
+    "#if (BOOST_VERSION < 109000)" \
+    "#error \"Cannot use system boost. Boost >= 1.90.0 required.\"" \
     "#endif" \
     "int main(){}" |
     gcc -I"$BOOST_ROOT"/include -xc++ - -o /dev/null
