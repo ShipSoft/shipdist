@@ -11,7 +11,7 @@
       "matchStringsStrategy": "combination",
       "matchStrings": [
         "tag:\\s*\"?(?<currentValue>[^\"\\s\\n]+)\"?",
-        "source:\\s*https://github\\.com/(?<packageName>[^/\\s]+/[^\\s]+?)(?:\\.git)?\\s*$"
+        "source:\\s*https://github\\.com/(?<packageName>[^/\\s]+/[^\\s]+?)(?:\\.git)?\\s*\\n"
       ],
       "datasourceTemplate": "github-tags"
     },
@@ -22,7 +22,7 @@
       "matchStringsStrategy": "combination",
       "matchStrings": [
         "tag:\\s*\"?(?<currentValue>[^\"\\s\\n]+)\"?",
-        "source:\\s*https://gitlab\\.cern\\.ch/(?<packageName>[^/\\s]+/[^\\s]+?)(?:\\.git)?\\s*$"
+        "source:\\s*https://gitlab\\.cern\\.ch/(?<packageName>[^/\\s]+/[^\\s]+?)(?:\\.git)?\\s*\\n"
       ],
       "datasourceTemplate": "gitlab-tags",
       "registryUrlTemplate": "https://gitlab.cern.ch"
@@ -34,7 +34,7 @@
       "matchStringsStrategy": "combination",
       "matchStrings": [
         "tag:\\s*\"?(?<currentValue>[^\"\\s\\n]+)\"?",
-        "source:\\s*https://gitlab\\.com/(?<packageName>[^/\\s]+/[^\\s]+?)(?:\\.git)?\\s*$"
+        "source:\\s*https://gitlab\\.com/(?<packageName>[^/\\s]+/[^\\s]+?)(?:\\.git)?\\s*\\n"
       ],
       "datasourceTemplate": "gitlab-tags",
       "registryUrlTemplate": "https://gitlab.com"
