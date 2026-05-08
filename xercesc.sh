@@ -1,5 +1,6 @@
 package: XercesC
-version: v3.3.0
+version: "%(tag_basename)s"
+tag: v3.3.0
 source: https://github.com/apache/xerces-c
 build_requires:
   - GCC-Toolchain

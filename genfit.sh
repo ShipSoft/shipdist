@@ -1,5 +1,6 @@
 package: GenFit
-version: 02-03-00
+version: "%(tag_basename)s"
+tag: 02-03-00
 source: https://github.com/GenFit/GenFit
 requires:
   - ROOT
