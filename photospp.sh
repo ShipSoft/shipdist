@@ -8,7 +8,7 @@ requires:
   - pythia
   - Tauolapp
 build_requires:
-  - "autotools:(slc6|slc7)"
+  - autotools
   - alibuild-recipe-tools
 prefer_system_check: |
   #!/bin/bash -e

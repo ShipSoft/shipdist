@@ -5,7 +5,7 @@ source: https://github.com/alisw/gsl
 requires:
   - GCC-Toolchain
 build_requires:
-  - "autotools:(slc6|slc7)"
+  - autotools
   - alibuild-recipe-tools
 prefer_system: (?!slc5)
 prefer_system_check: |

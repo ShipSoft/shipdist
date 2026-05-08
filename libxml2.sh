@@ -2,7 +2,7 @@ package: libxml2
 version: "%(tag_basename)s"
 tag: v2.9.3
 build_requires:
-  - "autotools:(slc6|slc7)"
+  - autotools
   - zlib
   - GCC-Toolchain
   - alibuild-recipe-tools
