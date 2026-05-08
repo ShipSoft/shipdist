@@ -1,5 +1,6 @@
 package: libffi
-version: v3.2.1
+version: "%(tag_basename)s"
+tag: v3.2.1
 build_requires:
   - autotools
   - alibuild-recipe-tools
