@@ -1,0 +1,82 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended"],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "description": "Update tags in alibuild recipes (GitHub sources)",
+      "fileMatch": ["\\.sh$"],
+      "matchStringsStrategy": "combination",
+      "matchStrings": [
+        "tag:\\s*\"?(?<currentValue>[^\"\\s\\n]+)\"?",
+        "source:\\s*https://github\\.com/(?<packageName>[^/\\s]+/[^\\s]+?)(?:\\.git)?\\s*$"
+      ],
+      "datasourceTemplate": "github-tags"
+    },
+    {
+      "customType": "regex",
+      "description": "Update tags in alibuild recipes (GitLab CERN sources)",
+      "fileMatch": ["\\.sh$"],
+      "matchStringsStrategy": "combination",
+      "matchStrings": [
+        "tag:\\s*\"?(?<currentValue>[^\"\\s\\n]+)\"?",
+        "source:\\s*https://gitlab\\.cern\\.ch/(?<packageName>[^/\\s]+/[^\\s]+?)(?:\\.git)?\\s*$"
+      ],
+      "datasourceTemplate": "gitlab-tags",
+      "registryUrlTemplate": "https://gitlab.cern.ch"
+    },
+    {
+      "customType": "regex",
+      "description": "Update tags in alibuild recipes (GitLab.com sources)",
+      "fileMatch": ["\\.sh$"],
+      "matchStringsStrategy": "combination",
+      "matchStrings": [
+        "tag:\\s*\"?(?<currentValue>[^\"\\s\\n]+)\"?",
+        "source:\\s*https://gitlab\\.com/(?<packageName>[^/\\s]+/[^\\s]+?)(?:\\.git)?\\s*$"
+      ],
+      "datasourceTemplate": "gitlab-tags",
+      "registryUrlTemplate": "https://gitlab.com"
+    }
+  ],
+  "packageRules": [
+    {
+      "description": "Use loose versioning for alibuild recipes",
+      "matchManagers": ["custom.regex"],
+      "versioning": "loose"
+    },
+    {
+      "description": "Packages tracking branches, not release tags",
+      "matchPackageNames": [
+        "ShipSoft/FairShip",
+        "luketpickering/ROOTEGPythia6",
+        "ktf/pcre",
+        "hepmc/HepMC3"
+      ],
+      "enabled": false
+    },
+    {
+      "description": "Forks with custom tag schemes that don't match upstream",
+      "matchPackageNames": [
+        "alisw/boost",
+        "alisw/hepmc",
+        "alisw/gsl",
+        "alisw/libxml2",
+        "alisw/uuid",
+        "alisw/sqlite",
+        "alisw/liblzma",
+        "alisw/autotools",
+        "alisw/gcc-toolchain",
+        "star-externals/zlib",
+        "SND-LHC/pythia6",
+        "webbjm/acts",
+        "Kitware/ninja"
+      ],
+      "enabled": false
+    },
+    {
+      "description": "Group all Python package updates together",
+      "matchFileNames": ["python-*.sh"],
+      "groupName": "python packages"
+    }
+  ]
+}
