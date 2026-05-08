@@ -5,7 +5,7 @@
     {
       "customType": "regex",
       "description": "Update tags in alibuild recipes (GitHub sources)",
-      "fileMatch": ["\\.sh$"],
+      "managerFilePatterns": ["/\\.sh$/"],
       "matchStringsStrategy": "combination",
       "matchStrings": [
         "tag:\\s*\"?(?<currentValue>[^\"\\s\\n]+)\"?",
@@ -16,7 +16,7 @@
     {
       "customType": "regex",
       "description": "Update tags in alibuild recipes (GitLab CERN sources)",
-      "fileMatch": ["\\.sh$"],
+      "managerFilePatterns": ["/\\.sh$/"],
       "matchStringsStrategy": "combination",
       "matchStrings": [
         "tag:\\s*\"?(?<currentValue>[^\"\\s\\n]+)\"?",
@@ -28,7 +28,7 @@
     {
       "customType": "regex",
       "description": "Update tags in alibuild recipes (GitLab.com sources)",
-      "fileMatch": ["\\.sh$"],
+      "managerFilePatterns": ["/\\.sh$/"],
       "matchStringsStrategy": "combination",
       "matchStrings": [
         "tag:\\s*\"?(?<currentValue>[^\"\\s\\n]+)\"?",
