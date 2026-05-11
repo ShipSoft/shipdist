@@ -46,7 +46,7 @@ if [ -f "$TARGETS_CMAKE" ]; then
     [ -n "$HEPMC3_ROOT" ]   && sed -i "s|${HEPMC3_ROOT}|\$ENV{HEPMC3_ROOT}|g"     "$TARGETS_CMAKE"
     [ -n "$PYTHIA_ROOT" ]   && sed -i "s|${PYTHIA_ROOT}|\$ENV{PYTHIA_ROOT}|g"     "$TARGETS_CMAKE"
     [ -n "$PHOTOSPP_ROOT" ] && sed -i "s|${PHOTOSPP_ROOT}|\$ENV{PHOTOSPP_ROOT}|g" "$TARGETS_CMAKE"
-    [ -n "$TAUOLAPP_ROOT" ] && sed -i "s|${TAUOLAPP_ROOT}|\$ENV{TAUOLA_ROOT}|g" "$TARGETS_CMAKE"
+    [ -n "$TAUOLAPP_ROOT" ] && sed -i "s|${TAUOLAPP_ROOT}|\$ENV{TAUOLAPP_ROOT}|g" "$TARGETS_CMAKE"
 fi
 
 # Modulefile
