@@ -38,6 +38,17 @@ prepend_path:
 # maximum safety.
 unset SIMPATH
 
+# Upstream FairRoot bug (≤ v19.0.1, also on master/dev): the propagator example
+# unconditionally links Boost::serialization, but the top-level CMakeLists.txt
+# only requests the `serialization` component via find_package when
+# BUILD_BASEMQ=ON. With BUILD_BASEMQ=OFF + BUILD_EXAMPLES=ON and CMP0167=NEW
+# (BoostConfig.cmake only defines requested targets), the Boost::serialization
+# imported target is missing and CMake configure fails.
+# Fix proposed upstream: https://github.com/FairRootGroup/FairRoot/pull/1631
+# Drop this sed once a FairRoot release including the fix is in use.
+sed -i 's|list(APPEND boost_dependencies program_options)|list(APPEND boost_dependencies program_options serialization)|' \
+    "$SOURCEDIR/CMakeLists.txt"
+
 [[ -n $BOOST_ROOT ]] && BOOST_NO_SYSTEM_PATHS=ON || BOOST_NO_SYSTEM_PATHS=OFF
 cmake $SOURCEDIR                                                                            \
       ${CMAKE_GENERATOR:+-G "$CMAKE_GENERATOR"}                                             \
