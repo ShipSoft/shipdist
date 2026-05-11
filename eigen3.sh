@@ -1,6 +1,6 @@
 package: Eigen3
 version: "%(tag_basename)s"
-tag: 3.4.0
+tag: 3.4.1
 source: https://gitlab.com/libeigen/eigen.git
 prefer_system: .*
 prefer_system_check: |
