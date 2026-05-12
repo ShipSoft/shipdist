@@ -1,6 +1,6 @@
 package: GEANT4
 version: "%(tag_basename)s"
-tag: v11.4.0
+tag: v11.4.1
 source: https://github.com/geant4/geant4.git
 requires:
   - GCC-Toolchain
