@@ -36,3 +36,8 @@ MODULEDIR="$INSTALLROOT/etc/modulefiles"
 MODULEFILE="$MODULEDIR/$PKGNAME"
 mkdir -p "$MODULEDIR"
 alibuild-generate-module --bin --lib > "$MODULEFILE"
+cat >> "$MODULEFILE" <<EoF
+# Our environment
+set GEOMETRY_ROOT \$::env(BASEDIR)/$PKGNAME/\$version
+setenv SHIPGEOMETRY_ROOT \$GEOMETRY_ROOT
+EoF
