@@ -1,6 +1,6 @@
 package: geometry
 version: "%(tag_basename)s"
-tag: "v0.1.0"
+tag: main
 source: https://github.com/ShipSoft/Geometry.git
 requires:
   - GeoModel

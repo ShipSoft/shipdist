@@ -1,7 +1,7 @@
 package: geometry_service
 version: "%(tag_basename)s"
 tag: main
-source: https://github.com/ShipSoft/GeometryService.git
+source: https://github.com/ShipSoft/geometry_service.git
 requires:
   - geometry
   - GeoModel
