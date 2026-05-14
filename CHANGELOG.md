@@ -48,6 +48,7 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 * EvtGen: Upgrade to R02-02-03 with HepMC3 support
 * PHOTOSPP, Tauolapp: Build with HepMC3 support
 * APFEL: Upgrade to 3.1.1 and switch to CMake build
+* ROOT: Update to v6-38-04 (bundled LLVM 20) for compatibility with libstdc++ from GCC 16.1.1
 * ROOT, Geant4: Build with Ninja
 * FairLogger: Update to v2.3.1
 * yaml-cpp: Update to 0.8.0, remove obsolete boost dependency
