@@ -1,6 +1,6 @@
 package: zlib
 version: "%(tag_basename)s"
-tag: v1.3.1
+tag: v1.3.2
 source: https://github.com/madler/zlib.git
 build_requires:
   - GCC-Toolchain
