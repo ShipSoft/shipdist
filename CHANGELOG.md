@@ -8,6 +8,11 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 
 ## Unreleased
 
+### Fixed
+
+* log4cpp: Bump to upstream stable 1.1.6 to fix build on GCC 13+
+  (missing `#include <ctime>` in DailyRollingFileAppender.hh)
+
 ## [26.04](https://github.com/ShipSoft/shipdist/tree/26.04)
 
 ### Added
