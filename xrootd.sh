@@ -1,6 +1,6 @@
 package: XRootD
 version: "%(tag_basename)s"
-tag: "v5.8.4"
+tag: "v6.0.1"
 source: https://github.com/xrootd/xrootd
 requires:
   - OpenSSL
@@ -54,7 +54,7 @@ cmake "${BUILDDIR}"                                                   \
       -DENABLE_KRB5=ON \
       -DENABLE_FUSE=OFF                                               \
       -DENABLE_VOMS=OFF                                               \
-      -DENABLE_XRDCLHTTP=OFF                                          \
+      -DENABLE_HTTP=OFF                                               \
       -DENABLE_READLINE=OFF                                           \
       -DCMAKE_BUILD_TYPE=RelWithDebInfo                               \
       ${OPENSSL_ROOT:+-DOPENSSL_ROOT_DIR=$OPENSSL_ROOT}               \

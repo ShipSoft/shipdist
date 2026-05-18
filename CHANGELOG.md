@@ -55,6 +55,10 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 * APFEL: Upgrade to 3.1.1 and switch to CMake build
 * ROOT: Update to v6-38-04 (bundled LLVM 20) for compatibility with libstdc++ from GCC 16.1.1
 * ROOT, Geant4: Build with Ninja
+* XRootD: Update to v6.0.1 (was v5.8.4) so the build no longer trips GCC 13+'s
+  -Werror=null-dereference on the bundled tinyxml (upstream demoted it to a
+  plain warning from v5.9.0 onwards). Renamed ENABLE_XRDCLHTTP to ENABLE_HTTP
+  to match v6.0's CMake option layout.
 * FairLogger: Update to v2.3.1
 * yaml-cpp: Update to 0.8.0, remove obsolete boost dependency
 * FairShip: Build with Ninja
