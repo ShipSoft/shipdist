@@ -1,5 +1,5 @@
 package: SWIG
-version: 3.0.7
+version: "%(tag_basename)s"
 tag: rel-3.0.7
 source: https://github.com/swig/swig
 build_requires:

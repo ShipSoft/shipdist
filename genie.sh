@@ -1,5 +1,5 @@
 package: GENIE
-version: v3.6.2
+version: "%(tag_basename)s"
 tag: R-3_06_02
 source: https://github.com/GENIE-MC/Generator.git
 requires:

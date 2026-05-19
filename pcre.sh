@@ -1,5 +1,5 @@
 package: PCRE
-version: master
+version: "%(tag_basename)s"
 tag: master
 source: https://github.com/ktf/pcre
 prefer_system: (?!slc5)

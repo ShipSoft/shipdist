@@ -1,5 +1,5 @@
 package: googletest
-version: "1.17.0"
+version: "%(tag_basename)s"
 tag: v1.17.0
 source: https://github.com/google/googletest
 build_requires:

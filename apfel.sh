@@ -1,5 +1,5 @@
 package: apfel
-version: 3.1.1
+version: "%(tag_basename)s"
 tag: 3.1.1
 source: https://github.com/scarrazza/apfel.git
 requires:

@@ -1,5 +1,5 @@
 package: FairRoot
-version: "v19.0.0"
+version: "%(tag_basename)s"
 tag: "v19.0.1"
 source: https://github.com/FairRootGroup/FairRoot
 requires:

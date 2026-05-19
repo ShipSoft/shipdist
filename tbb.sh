@@ -1,5 +1,5 @@
 package: TBB
-version: "v2021.5.0"
+version: "%(tag_basename)s"
 tag: v2021.5.0
 source: https://github.com/uxlfoundation/oneTBB
 build_requires:

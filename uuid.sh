@@ -1,5 +1,5 @@
 package: UUID
-version: v2.27.1
+version: "%(tag_basename)s"
 tag: alice/v2.27.1
 source: https://github.com/alisw/uuid
 build_requires:
