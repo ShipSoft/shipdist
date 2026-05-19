@@ -1,6 +1,6 @@
 package: ROOTEGPythia6
 version: "%(tag_basename)s"
-tag: main
+tag: feb7c7eb8d368aee20bf1cb01f1bbfb9cfaeb6b5
 source: https://github.com/luketpickering/ROOTEGPythia6
 requires:
   - ROOT
