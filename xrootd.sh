@@ -18,7 +18,7 @@ prepend_path:
 #!/bin/bash -e
 
 XROOTD_PYTHON=""
-[[ -e ${SOURCEDIR}/bindings ]] && XROOTD_PYTHON=True;
+[[ -e ${SOURCEDIR}/bindings || -e ${SOURCEDIR}/python ]] && XROOTD_PYTHON=True;
 PYTHON_EXECUTABLE=$(/usr/bin/env python3 -c 'import sys; print(sys.executable)')
 PYTHON_VER=$( ${PYTHON_EXECUTABLE} -c 'import sys; print(f"{sys.version_info.major}.{sys.version_info.minor}")' )
 
@@ -106,9 +106,9 @@ mkdir -p "$MODULEDIR"
 
 alibuild-generate-module --bin --lib > "$MODULEFILE"
 
-cat >> "$MODULEFILE" <<EoF
-if { $XROOTD_PYTHON } {
-  prepend-path PYTHONPATH \$PKG_ROOT/lib/python/site-packages
-  module load ${PYTHON_REVISION:+Python/$PYTHON_VERSION-$PYTHON_REVISION}
-}
+if [[ "$XROOTD_PYTHON" == "True" ]]; then
+  cat >> "$MODULEFILE" <<EoF
+prepend-path PYTHONPATH \$PKG_ROOT/lib/python/site-packages
+${PYTHON_REVISION:+module load Python/$PYTHON_VERSION-$PYTHON_REVISION}
 EoF
+fi
