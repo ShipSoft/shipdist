@@ -23,15 +23,8 @@ prepend_path:
 #!/bin/bash -e
 
 rsync -av --delete --exclude="**/.git" "$SOURCEDIR/" .
-case ${PKG_VERSION} in
-  v1.1*)
-    OPTS=""
-    OPENSSLDIRPREFIX="" ;;
-  *)
-    OPTS="no-krb5"
-    OPENSSLDIRPREFIX="etc/ssl"
-  ;;
-esac
+OPTS=""
+OPENSSLDIRPREFIX=""
 
 ./config --prefix="$INSTALLROOT"                   \
          --openssldir="$INSTALLROOT/$OPENSSLDIRPREFIX"       \
