@@ -16,6 +16,9 @@ prefer_system_check: |
 ---
 #!/bin/bash -ex
 rsync -a $SOURCEDIR/* .
+# automake's default GNU strictness requires a top-level README;
+# the 1.1.6 tarball ships only README.md.
+cp -f README.md README
 ./autogen.sh
 ./configure          --prefix=$INSTALLROOT  \
 		     --enable-shared
