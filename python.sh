@@ -17,7 +17,7 @@ env:
     export LD_LIBRARY_PATH=$PYTHON_ROOT/lib:$LD_LIBRARY_PATH;
     python -c "import certifi; print(certifi.where())")
   PYTHONHOME: "$PYTHON_ROOT"
-  PYTHONPATH: "$PYTHON_ROOT/lib/python/site-packages"
+  PYTHONPATH: "$PYTHON_ROOT/lib/python$(python3 -c 'import sysconfig; print(sysconfig.get_python_version())')/site-packages"
 prefer_system: "(?!slc5|ubuntu)"
 prefer_system_check: |
     #!/bin/bash -e
@@ -105,10 +105,6 @@ env PATH="$INSTALLROOT/bin:$PATH" \
     PYTHONHOME="$INSTALLROOT" \
     python3 -m pip install 'certifi==2022.12.7'
 
-# Uniform Python library path
-pushd "$INSTALLROOT/lib" || exit
-  ln -nfs python* python
-popd || exit
 
 # Remove useless stuff
 rm -rvf "$INSTALLROOT"/share "$INSTALLROOT"/lib/python*/test
@@ -117,6 +113,8 @@ find "$INSTALLROOT"/lib/python* \
      -exec rm -rvf '{}' \;
 
 
+pyver=$("$INSTALLROOT/bin/python3" -c 'import sysconfig; print(sysconfig.get_python_version())')
+
 # Modulefile
 MODULEDIR="$INSTALLROOT/etc/modulefiles"
 MODULEFILE="$MODULEDIR/$PKGNAME"
@@ -124,7 +122,7 @@ mkdir -p "$MODULEDIR"
 alibuild-generate-module --bin --lib > "$MODULEFILE"
 cat >> "$MODULEFILE" <<EoF
 setenv PYTHONHOME \$PKG_ROOT
-prepend-path PYTHONPATH \$PKG_ROOT/lib/python/site-packages
+prepend-path PYTHONPATH \$PKG_ROOT/lib/python$pyver/site-packages
 if { [module-info mode load] } {
   setenv SSL_CERT_FILE  [exec \$PKG_ROOT/bin/python3 -c "import certifi; print(certifi.where())"]
 }

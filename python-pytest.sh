@@ -15,7 +15,7 @@ prefer_system_check: |
   SYSTEM_VERSION=$(python3 -c 'import pytest; print(pytest.__version__)')
   printf '%s\n%s\n' "$PKGVERSION" "$SYSTEM_VERSION" | sort -V -C
 prepend_path:
-  PYTHONPATH: "$PYTHON_PYTEST_ROOT/lib/python/site-packages"
+  PYTHONPATH: "$PYTHON_PYTEST_ROOT/lib/python$(python3 -c 'import sysconfig; print(sysconfig.get_python_version())')/site-packages"
   PATH: "$PYTHON_PYTEST_ROOT/bin"
 ---
 #!/bin/bash -e
@@ -24,7 +24,6 @@ TARGET="$INSTALLROOT/lib/python$pyver/site-packages"
 mkdir -p "$TARGET"
 
 uv pip install --no-deps --no-cache-dir --target="$TARGET" --python="$(command -v python3)" "pytest==$PKGVERSION"
-ln -snf "python$pyver" "$INSTALLROOT/lib/python"
 
 # Install stable entrypoint wrappers that always use the loaded aliBuild Python.
 mkdir -p "$INSTALLROOT/bin"
@@ -39,6 +38,6 @@ mkdir -p "$INSTALLROOT/etc/modulefiles"
 alibuild-generate-module --bin > "$INSTALLROOT/etc/modulefiles/$PKGNAME"
 cat >> "$INSTALLROOT/etc/modulefiles/$PKGNAME" <<EOF
 set PKG_ROOT \$::env(BASEDIR)/$PKGNAME/\$version
-prepend-path PYTHONPATH \$PKG_ROOT/lib/python/site-packages
+prepend-path PYTHONPATH \$PKG_ROOT/lib/python$pyver/site-packages
 prepend-path PATH \$PKG_ROOT/bin
 EOF

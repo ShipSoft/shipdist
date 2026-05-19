@@ -14,7 +14,7 @@ prefer_system_check: |
   SYSTEM_VERSION=$(python3 -c 'import contourpy; print(contourpy.__version__)')
   printf '%s\n%s\n' "$PKGVERSION" "$SYSTEM_VERSION" | sort -V -C
 prepend_path:
-  PYTHONPATH: "$PYTHON_CONTOURPY_ROOT/lib/python/site-packages"
+  PYTHONPATH: "$PYTHON_CONTOURPY_ROOT/lib/python$(python3 -c 'import sysconfig; print(sysconfig.get_python_version())')/site-packages"
 ---
 #!/bin/bash -e
 pyver=$(python3 -c 'import sysconfig; print(sysconfig.get_python_version())')
@@ -23,11 +23,9 @@ mkdir -p "$TARGET"
 
 uv pip install --no-deps --no-cache-dir --target="$TARGET" --python="$(command -v python3)" "contourpy==$PKGVERSION"
 
-ln -snf "python$pyver" "$INSTALLROOT/lib/python"
-
 mkdir -p "$INSTALLROOT/etc/modulefiles"
 alibuild-generate-module > "$INSTALLROOT/etc/modulefiles/$PKGNAME"
 cat >> "$INSTALLROOT/etc/modulefiles/$PKGNAME" <<EOF
 set PKG_ROOT \$::env(BASEDIR)/$PKGNAME/\$version
-prepend-path PYTHONPATH \$PKG_ROOT/lib/python/site-packages
+prepend-path PYTHONPATH \$PKG_ROOT/lib/python$pyver/site-packages
 EOF

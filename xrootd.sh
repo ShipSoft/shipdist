@@ -13,7 +13,7 @@ build_requires:
   - UUID
   - alibuild-recipe-tools
 prepend_path:
-  PYTHONPATH: "${XROOTD_ROOT}/lib/python/site-packages"
+  PYTHONPATH: "${XROOTD_ROOT}/lib/python$(python3 -c 'import sysconfig; print(sysconfig.get_python_version())')/site-packages"
 ---
 #!/bin/bash -e
 
@@ -82,11 +82,9 @@ if [[ "$XROOTD_PYTHON" == "True" ]]; then
 
     pushd lib
     if [ -d ../lib64/python${PYTHON_VER} ]; then
-      ln -s ../lib64/python${PYTHON_VER} python
-    elif [[ -d python${PYTHON_VER} ]]; then
-      ln -s python${PYTHON_VER} python
+      mv ../lib64/python${PYTHON_VER} .
     fi
-    [[ ! -e python ]] && echo "NO PYTHON SYMLINK CREATED in: $(pwd -P)"
+    [[ ! -d python${PYTHON_VER} ]] && echo "NO PYTHON${PYTHON_VER} DIRECTORY in: $(pwd -P)"
     popd  # get back from lib
 
     popd  # get back from INSTALLROOT
@@ -94,7 +92,7 @@ if [[ "$XROOTD_PYTHON" == "True" ]]; then
     # Print found XRootD python bindings
     # just run the the command as this is under "bash -e"
     echo -ne ">>>>>>   Found XRootD python bindings: "
-    LD_LIBRARY_PATH="$INSTALLROOT/lib${LD_LIBRARY_PATH:+:}$LD_LIBRARY_PATH" PYTHONPATH="$INSTALLROOT/lib/python/site-packages${PYTHONPATH:+:}$PYTHONPATH" ${PYTHON_EXECUTABLE} -c 'from XRootD import client as xrd_client;print(f"{xrd_client.__version__}\n{xrd_client.__file__}");'
+    LD_LIBRARY_PATH="$INSTALLROOT/lib${LD_LIBRARY_PATH:+:}$LD_LIBRARY_PATH" PYTHONPATH="$INSTALLROOT/lib/python${PYTHON_VER}/site-packages${PYTHONPATH:+:}$PYTHONPATH" ${PYTHON_EXECUTABLE} -c 'from XRootD import client as xrd_client;print(f"{xrd_client.__version__}\n{xrd_client.__file__}");'
     echo
 
 fi  # end of PYTHON part
@@ -108,7 +106,7 @@ alibuild-generate-module --bin --lib > "$MODULEFILE"
 
 cat >> "$MODULEFILE" <<EoF
 if { $XROOTD_PYTHON } {
-  prepend-path PYTHONPATH \$PKG_ROOT/lib/python/site-packages
+  prepend-path PYTHONPATH \$PKG_ROOT/lib/python$PYTHON_VER/site-packages
   module load ${PYTHON_REVISION:+Python/$PYTHON_VERSION-$PYTHON_REVISION}
 }
 EoF
