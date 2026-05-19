@@ -1,5 +1,5 @@
 package: FairShip
-version: master
+version: "%(tag_basename)s"
 tag: master
 source: https://github.com/ShipSoft/FairShip
 requires:

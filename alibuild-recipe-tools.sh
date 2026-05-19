@@ -1,5 +1,5 @@
 package: alibuild-recipe-tools
-version: "0.2.5"
+version: "%(tag_basename)s"
 tag: "v0.3.0"
 source: https://github.com/alisw/alibuild-recipe-tools
 ---

@@ -1,5 +1,5 @@
 package: log4cpp
-version: "1.1.6"
+version: "%(tag_basename)s"
 tag: "REL_1.1.6_Mar_12_2026"
 source: https://git.code.sf.net/p/log4cpp/codegit
 requires:

@@ -1,5 +1,5 @@
 package: FreeType
-version: v2.10.1
+version: "%(tag_basename)s"
 tag: VER-2-10-1
 source: https://github.com/freetype/freetype
 requires:

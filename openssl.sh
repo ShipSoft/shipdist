@@ -1,5 +1,5 @@
 package: OpenSSL
-version: v1.1.1m
+version: "%(tag_basename)s"
 tag: OpenSSL_1_1_1m
 source: https://github.com/openssl/openssl
 prefer_system: (?!slc5|slc6)

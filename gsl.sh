@@ -1,5 +1,5 @@
 package: GSL
-version: "v2.8"
+version: "%(tag_basename)s"
 tag: "v2.8"
 source: https://github.com/alisw/gsl
 requires:

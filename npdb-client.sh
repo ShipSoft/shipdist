@@ -1,5 +1,5 @@
 package: npdb-client
-version: "0.2.0"
+version: "%(tag_basename)s"
 tag: "0.2.0"
 source: https://gitlab.cern.ch/ship/computing/npdb
 build_requires:
