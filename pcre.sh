@@ -1,6 +1,6 @@
 package: PCRE
 version: "%(tag_basename)s"
-tag: master
+tag: v8.36
 source: https://github.com/ktf/pcre
 prefer_system: (?!slc5)
 prefer_system_check: |

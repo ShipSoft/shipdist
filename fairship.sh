@@ -1,6 +1,6 @@
 package: FairShip
 version: "%(tag_basename)s"
-tag: master
+tag: "26.04"
 source: https://github.com/ShipSoft/FairShip
 requires:
   - pythia

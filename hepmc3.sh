@@ -1,6 +1,6 @@
 package: HepMC3
 version: "%(tag_basename)s"
-tag: master
+tag: e81837df0966975b81448deb9fffd3b52c1dcc8a
 source: https://gitlab.cern.ch/hepmc/HepMC3.git
 requires:
   - ROOT
