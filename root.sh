@@ -1,6 +1,6 @@
 package: ROOT
 version: "%(tag_basename)s%(defaults_upper)s"
-tag: v6-38-04
+tag: v6-40-00
 source: https://github.com/root-project/root
 requires:
   - GSL
@@ -82,8 +82,6 @@ ${PYTHIA_ROOT:+-Dpythia8=ON}                \
 -Dsoversion=ON                                            \
 -Dshadowpw=OFF                                            \
 -Dbuiltin_vdt=ON                                          \
--Dbuiltin_davix=OFF                                                              \
--Ddavix=OFF                                                                      \
 ${PYTHON_ROOT:+-DPYTHON_EXECUTABLE=$PYTHONHOME/bin/python3} \
 ${PYTHON_ROOT:+-DPython3_ROOT_DIR=$PYTHON_ROOT} \
 -DCMAKE_PREFIX_PATH="$FREETYPE_ROOT;$GSL_ROOT;$PYTHON_ROOT"
