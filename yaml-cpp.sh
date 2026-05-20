@@ -1,18 +1,20 @@
 package: yaml-cpp
 version: "%(tag_basename)s"
-tag: 0.8.0
+tag: yaml-cpp-0.9.0
 source: https://github.com/jbeder/yaml-cpp
 build_requires:
   - CMake
   - alibuild-recipe-tools
 prefer_system: (?!slc5)
 prefer_system_check: |
+  #!/bin/bash -e
+  REQUESTED_VERSION=${REQUESTED_VERSION#yaml-cpp-}
   REQUESTED_VERSION=${REQUESTED_VERSION#v}
   pkg-config --atleast-version=$REQUESTED_VERSION yaml-cpp &&
     printf "#include \"yaml-cpp/yaml.h\"\n" |
     c++ -std=c++17 -xc++ - -c -o /dev/null
 ---
-#!/bin/sh
+#!/bin/bash -e
 
 cmake $SOURCEDIR                                         \
   -DCMAKE_INSTALL_PREFIX:PATH="$INSTALLROOT"             \
