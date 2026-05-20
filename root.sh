@@ -14,6 +14,9 @@ requires:
   - XRootD
   - pythia
   - TBB
+  - giflib
+  - zstd
+  - gl2ps
 build_requires:
   - CMake
   - libxml2
@@ -84,7 +87,9 @@ ${PYTHIA_ROOT:+-Dpythia8=ON}                \
 -Dbuiltin_vdt=ON                                          \
 ${PYTHON_ROOT:+-DPYTHON_EXECUTABLE=$PYTHONHOME/bin/python3} \
 ${PYTHON_ROOT:+-DPython3_ROOT_DIR=$PYTHON_ROOT} \
--DCMAKE_PREFIX_PATH="$FREETYPE_ROOT;$GSL_ROOT;$PYTHON_ROOT"
+${GIFLIB_ROOT:+-DGIF_INCLUDE_DIR=$GIFLIB_ROOT/include} \
+${GIFLIB_ROOT:+-DGIF_LIBRARY=$GIFLIB_ROOT/lib/libgif.so} \
+-DCMAKE_PREFIX_PATH="$FREETYPE_ROOT;$GSL_ROOT;$PYTHON_ROOT;$ZSTD_ROOT;$GL2PS_ROOT"
 FEATURES="builtin_pcre xml ssl opengl http gdml mathmore ${PYTHIA_ROOT:+pythia8}
     roofit soversion vdt ${XROOTD_ROOT:+xrootd}"
 NO_FEATURES="${FREETYPE_ROOT:+builtin_freetype}"
