@@ -6,14 +6,47 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it in future.
 
-## Unreleased
+## [26.05](https://github.com/ShipSoft/shipdist/tree/26.05)
+
+### Added
+
+* giflib, zstd, gl2ps: Add recipes for ROOT v6-40-00 external dependencies
+* pytest: Add recipe and dependencies
 
 ### Fixed
 
-* log4cpp: Bump to upstream stable 1.1.6 to fix build on GCC 13+
-  (missing `#include <ctime>` in DailyRollingFileAppender.hh)
-* yaml-cpp: Bump to upstream 0.9.0 to fix build on GCC 13+
-  (missing `#include <cstdint>` in `src/emitterutils.cpp`)
+* log4cpp: Bump to upstream 1.1.6 for modern GCC compatibility
+  (missing `#include <ctime>`)
+* yaml-cpp: Bump to 0.9.0 for modern GCC compatibility
+  (missing `#include <cstdint>`)
+* XRootD: Repair v6.0.1 modulefile generation
+* libxml2: Force gnu17 dialect for GCC 15
+* zlib: Bump to upstream madler/zlib v1.3.1
+* FairRoot: Add missing Boost::serialization
+* EvtGen: Use TAUOLAPP_ROOT in relocated CMake targets, make exported CMake
+  targets relocatable
+* FairShip: Fix modulefile — skip empty-version dep loads, only emit module
+  loads for deps in WORK_DIR
+* alibuild: Correct script path for uv pip install --target
+* openssl: Drop dead PKG_VERSION case
+* ACTS, FairShip, HepMC3, PCRE, ROOTEGPythia6: Pin branches
+* Derive version from tag via `%(tag_basename)s` across recipes
+
+### Changed
+
+* ROOT: Update to v6-40-00 (was v6-36-08, via v6-38-04)
+* XRootD: Update to v6.0.1 for modern GCC compatibility
+* Geant4: Update to v11.4.1
+* Geant4_VMC: Update to v6-8
+* VMC: Update to v2-2
+* VGM: Update to v5-4
+* zlib: Update to v1.3.2
+* FairRoot: Update to v19.0.1
+* FairLogger: Update to v2.3.2
+* fmt: Update to v12
+* Eigen3: Update to v3.4.1
+* alibuild-recipe-tools: Update to v0.3.0
+* alibuild: Update to v1.17.42
 
 ## [26.04](https://github.com/ShipSoft/shipdist/tree/26.04)
 
@@ -55,12 +88,7 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 * EvtGen: Upgrade to R02-02-03 with HepMC3 support
 * PHOTOSPP, Tauolapp: Build with HepMC3 support
 * APFEL: Upgrade to 3.1.1 and switch to CMake build
-* ROOT: Update to v6-38-04 (bundled LLVM 20) for compatibility with libstdc++ from GCC 16.1.1
 * ROOT, Geant4: Build with Ninja
-* XRootD: Update to v6.0.1 (was v5.8.4) so the build no longer trips GCC 13+'s
-  -Werror=null-dereference on the bundled tinyxml (upstream demoted it to a
-  plain warning from v5.9.0 onwards). Renamed ENABLE_XRDCLHTTP to ENABLE_HTTP
-  to match v6.0's CMake option layout.
 * FairLogger: Update to v2.3.1
 * yaml-cpp: Update to 0.8.0, remove obsolete boost dependency
 * FairShip: Build with Ninja
