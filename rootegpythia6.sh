@@ -4,6 +4,7 @@ tag: feb7c7eb8d368aee20bf1cb01f1bbfb9cfaeb6b5
 source: https://github.com/luketpickering/ROOTEGPythia6
 requires:
   - ROOT
+  - pythia6
   - GCC-Toolchain
 build_requires:
   - CMake
@@ -31,10 +32,21 @@ sed -i \
   -e '/^ROOT_GENERATE_DICTIONARY/i include_directories(${CMAKE_CURRENT_LIST_DIR}/inc)' \
   "$SOURCEDIR/CMakeLists.txt"
 
+# Patch the exported package config so downstream consumers (e.g. FairShip,
+# which has FairRoot's FindPythia6 on CMAKE_MODULE_PATH) get the
+# Pythia6::Pythia6 IMPORTED target that ROOTEGPythia6Targets.cmake links
+# against. FairRoot's FindPythia6 creates a non-namespaced "Pythia6" target;
+# upstream ROOTEGPythia6 expects "Pythia6::Pythia6". Define the namespaced
+# target directly so we don't depend on whichever FindPythia6 module the
+# consumer picks up first.
+sed -i 's|find_package(Pythia6 REQUIRED)|if(NOT TARGET Pythia6::Pythia6)\n  if(NOT DEFINED ENV{PYTHIA6_ROOT} OR NOT EXISTS "$ENV{PYTHIA6_ROOT}/lib/libPythia6.so")\n    message(FATAL_ERROR "ROOTEGPythia6 requires PYTHIA6_ROOT to point to a directory containing lib/libPythia6.so")\n  endif()\n  add_library(Pythia6::Pythia6 SHARED IMPORTED)\n  set_target_properties(Pythia6::Pythia6 PROPERTIES IMPORTED_LOCATION "$ENV{PYTHIA6_ROOT}/lib/libPythia6.so")\nendif()|' \
+  "$SOURCEDIR/cmake/Templates/ROOTEGPythia6Config.cmake.in"
+
 cmake "$SOURCEDIR" \
       -DCMAKE_INSTALL_PREFIX="$INSTALLROOT" \
       -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} \
-      -DROOTEGPythia6_Pythia6_BUILTIN=ON \
+      -DROOTEGPythia6_Pythia6_BUILTIN=OFF \
+      -DPYTHIA6_LIB_DIR="$PYTHIA6_ROOT/lib" \
       -DCMAKE_INSTALL_LIBDIR=lib
 
 cmake --build . ${JOBS:+-j$JOBS}
