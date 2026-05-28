@@ -1,6 +1,6 @@
 package: python-fsspec
 version: "%(tag_basename)s"
-tag: "2026.2.0"
+tag: "2026.4.0"
 source: https://github.com/fsspec/filesystem_spec
 requires:
   - "Python:(slc|ubuntu)"

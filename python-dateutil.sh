@@ -1,6 +1,6 @@
 package: python-dateutil
 version: "%(tag_basename)s"
-tag: "2.9.0.post0"
+tag: "2.9.0"
 source: https://github.com/dateutil/dateutil
 requires:
   - "Python:(slc|ubuntu)"
