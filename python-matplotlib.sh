@@ -1,6 +1,6 @@
 package: python-matplotlib
 version: "%(tag_basename)s"
-tag: "v3.10.8"
+tag: "v3.10.9"
 source: https://github.com/matplotlib/matplotlib
 requires:
   - "Python:(slc|ubuntu)"

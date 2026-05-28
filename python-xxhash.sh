@@ -1,6 +1,6 @@
 package: python-xxhash
 version: "%(tag_basename)s"
-tag: "v3.6.0"
+tag: "v3.7.0"
 source: https://github.com/ifduyue/python-xxhash
 requires:
   - "Python:(slc|ubuntu)"

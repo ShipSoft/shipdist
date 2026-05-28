@@ -1,6 +1,6 @@
 package: python-urllib3
 version: "%(tag_basename)s"
-tag: "2.6.3"
+tag: "2.7.0"
 source: https://github.com/urllib3/urllib3
 requires:
   - "Python:(slc|ubuntu)"

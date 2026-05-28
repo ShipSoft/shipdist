@@ -1,6 +1,6 @@
 package: python-requests
 version: "%(tag_basename)s"
-tag: "v2.32.5"
+tag: "v2.34.2"
 source: https://github.com/psf/requests
 requires:
   - "Python:(slc|ubuntu)"
