@@ -1,6 +1,6 @@
 package: abseil
 version: "%(tag_basename)s"
-tag: "20240722.0"
+tag: "20240722.2"
 requires:
   - GCC-Toolchain
 source: https://github.com/abseil/abseil-cpp
