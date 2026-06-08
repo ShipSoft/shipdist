@@ -1,6 +1,6 @@
 package: GeoModel
 version: "%(tag_basename)s"
-tag: "6.24.0"
+tag: "6.27.0"
 source: https://gitlab.cern.ch/GeoModelDev/GeoModel.git
 requires:
   - sqlite
