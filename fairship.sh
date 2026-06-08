@@ -114,8 +114,6 @@ cmake $SOURCEDIR                                                 \
       -DCMAKE_BUILD_TYPE=$CMAKE_BUILD_TYPE                       \
       -DROOT_DIR=$ROOT_ROOT                                      \
       -DROOTEGPythia6_ROOT=$ROOTEGPYTHIA6_ROOT                   \
-      -DHEPMC_DIR=$HEPMC_ROOT                                    \
-      -DHEPMC_INCLUDE_DIR=$HEPMC_ROOT/include/HepMC              \
       -DEVTGEN_INCLUDE_DIR=$EVTGEN_ROOT/include                  \
       -DEVTGEN_LIBRARY_DIR=$EVTGEN_ROOT/lib                      \
       -DPYTHIA8_DIR=$PYTHIA_ROOT                                 \
