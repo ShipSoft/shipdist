@@ -1,6 +1,6 @@
 package: npdb-client
 version: "%(tag_basename)s"
-tag: "0.2.0"
+tag: "0.2.10"
 source: https://gitlab.cern.ch/ship/computing/npdb
 build_requires:
   - GCC-Toolchain
