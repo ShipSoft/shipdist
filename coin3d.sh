@@ -1,6 +1,6 @@
 package: Coin3D
 version: "%(tag_basename)s"
-tag: "v4.0.7"
+tag: "v4.0.9"
 source: https://github.com/coin3d/coin.git
 requires:
   - "GCC-Toolchain:(?!osx)"
