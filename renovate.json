@@ -51,7 +51,6 @@
       "matchPackageNames": [
         "ShipSoft/FairShip",
         "luketpickering/ROOTEGPythia6",
-        "ktf/pcre",
         "hepmc/HepMC3"
       ],
       "enabled": false

@@ -8,7 +8,6 @@ env:
   CMAKE_PREFIX_PATH: "/cvmfs/sft.cern.ch/lcg/views/LCG_109/x86_64-el9-gcc15-opt"
   XERCESC_ROOT: "/cvmfs/sft.cern.ch/lcg/views/LCG_109/x86_64-el9-gcc15-opt"
   EIGEN3_ROOT: "/cvmfs/sft.cern.ch/lcg/views/LCG_109/x86_64-el9-gcc15-opt"
-  NLOHMANN_JSON_ROOT: "/cvmfs/sft.cern.ch/lcg/views/LCG_109/x86_64-el9-gcc15-opt"
   BOOST_ROOT: "/cvmfs/sft.cern.ch/lcg/views/LCG_109/x86_64-el9-gcc15-opt"
   GEANT4_ROOT: "/cvmfs/sft.cern.ch/lcg/views/LCG_109/x86_64-el9-gcc15-opt"
 ---
