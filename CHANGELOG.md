@@ -6,6 +6,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it in future.
 
+## [Unreleased]
+
+### Removed
+
+* GeoModel, Coin3D, SoQt, nlohmann_json: Drop recipes that are not part of
+  the FairShip build closure
+* bitsorg: Drop recipe (not part of the FairShip build closure)
+* python-uproot and exclusive deps (python-awkward, python-awkward-cpp,
+  python-cramjam, python-fsspec, python-xxhash): Drop recipes; FairShip
+  switched to PyROOT
+* abseil, libperl, npdb-client, PCRE, perl-modules, rust, SWIG: Drop
+  orphan recipes that no remaining recipe references
+
 ## [26.05](https://github.com/ShipSoft/shipdist/tree/26.05)
 
 ### Added
