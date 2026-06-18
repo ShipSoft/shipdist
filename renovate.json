@@ -49,7 +49,6 @@
     {
       "description": "Packages tracking branches, not release tags",
       "matchPackageNames": [
-        "ShipSoft/FairShip",
         "luketpickering/ROOTEGPythia6",
         "hepmc/HepMC3"
       ],
