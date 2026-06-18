@@ -1,6 +1,6 @@
 package: zstd
 version: "%(tag_basename)s"
-tag: v1.5.6
+tag: v1.5.7
 source: https://github.com/facebook/zstd
 build_requires:
   - GCC-Toolchain
