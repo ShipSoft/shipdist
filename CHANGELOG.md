@@ -6,7 +6,37 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it in future.
 
-## [Unreleased]
+## [26.06](https://github.com/ShipSoft/shipdist/tree/26.06)
+
+### Added
+
+* PCRE2, vdt: Add recipes for ROOT external dependencies (ROOT plans to
+  drop its bundled copies)
+
+### Fixed
+
+* ROOTEGPythia6: Switch to external pythia6 recipe; fix rootmap naming
+  mismatch (libTPythia6 vs libEGPythia6); keep TPythia6 PCM filename so
+  ROOT's auto-loading still finds it
+* FairRoot: Support fmt 11.1+
+* PCRE2, VDT: Export PCRE2_ROOT and VDT_ROOT and set CMP0144 so dependents
+  resolve them
+
+### Changed
+
+* ROOT: Update to v6-40-02, build against external PCRE2 and VDT instead
+  of builtins
+* GCC-Toolchain: Switch to upstream GCC 15.2.0 (was alisw/gcc-toolchain
+  v13.2.0-alice1); required for `std::from_range` (C++23) used by PHLEX
+* Geant4: Update to v11.4.2
+* XRootD: Update to v6.0.3
+* fmt: Update to v12.2.0
+* zstd: Update to v1.5.7
+* libffi: Update to v3.5.2
+* Refresh pinned versions of python packages
+* FairShip: Update to 26.06; drop unused python-uproot requirement and
+  stale HEPMC_DIR / HEPMC_INCLUDE_DIR flags
+* PCRE2, vdt: Use alibuild-generate-module for the modulefile
 
 ### Removed
 
@@ -65,7 +95,6 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 
 ### Added
 
-* PCRE2, vdt: Add recipes to replace ROOT builtins
 * uv: Add recipe for fast Python package installation
 * Replace monolithic Python-modules with individual package recipes
 * alibuild, bitsorg: Add recipes
@@ -99,7 +128,6 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
 
 ### Changed
 
-* ROOT: Build against external PCRE2 and VDT instead of builtins
 * EvtGen: Upgrade to R02-02-03 with HepMC3 support
 * PHOTOSPP, Tauolapp: Build with HepMC3 support
 * APFEL: Upgrade to 3.1.1 and switch to CMake build
