@@ -49,6 +49,15 @@ unset SIMPATH
 sed -i 's|list(APPEND boost_dependencies program_options)|list(APPEND boost_dependencies program_options serialization)|' \
     "$SOURCEDIR/CMakeLists.txt"
 
+# Upstream FairRoot (≤ v19.0.1) includes <fmt/core.h> but calls fmt::format.
+# Since fmt 11.1/12.0, <fmt/core.h> is equivalent to <fmt/base.h> and no longer
+# provides fmt::format, which now requires <fmt/format.h>. We build against
+# fmt 12.2.0 (shipdist/fmt.sh), so compilation fails with
+# "'format' is not a member of 'fmt'". Rewrite the includes to the heavy header.
+# Drop this sed once a FairRoot release that includes <fmt/format.h> is in use.
+grep -rl '#include <fmt/core.h>' "$SOURCEDIR" \
+  | xargs --no-run-if-empty sed -i 's|#include <fmt/core.h>|#include <fmt/format.h>|'
+
 [[ -n $BOOST_ROOT ]] && BOOST_NO_SYSTEM_PATHS=ON || BOOST_NO_SYSTEM_PATHS=OFF
 cmake $SOURCEDIR                                                                            \
       ${CMAKE_GENERATOR:+-G "$CMAKE_GENERATOR"}                                             \
