@@ -54,10 +54,15 @@ cmake --build . ${JOBS:+-j$JOBS}
 cmake --install .
 
 # Fix rootmap: dictionary is named TPythia6 but library is EGPythia6
-# (upstream bug — contribute fix, keep this patch until merged)
+# (upstream bug — contribute fix, keep this patch until merged).
+# ROOT scans *.rootmap by content, so the filename is cosmetic.
 sed -i 's/libTPythia6\.so/libEGPythia6.so/' "$INSTALLROOT/lib/libTPythia6.rootmap"
 mv "$INSTALLROOT/lib/libTPythia6.rootmap" "$INSTALLROOT/lib/libEGPythia6.rootmap"
-mv "$INSTALLROOT/lib/libTPythia6_rdict.pcm" "$INSTALLROOT/lib/libEGPythia6_rdict.pcm"
+
+# Do NOT rename libTPythia6_rdict.pcm: ROOT_GENERATE_DICTIONARY(TPythia6 ...)
+# bakes the literal filename libTPythia6_rdict.pcm into libEGPythia6.so's
+# dictionary registration. TCling::LoadPCM looks it up by the dictionary
+# name (TPythia6), not the library name (EGPythia6).
 
 # Modulefile
 MODULEDIR="$INSTALLROOT/etc/modulefiles"
