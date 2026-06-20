@@ -1,6 +1,6 @@
 package: python-idna
 version: "%(tag_basename)s"
-tag: "v3.17"
+tag: "v3.18"
 source: https://github.com/kjd/idna
 requires:
   - "Python:(slc|ubuntu)"
