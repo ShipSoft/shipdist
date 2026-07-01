@@ -1,6 +1,6 @@
 package: python-scipy
 version: "%(tag_basename)s"
-tag: "v1.17.1"
+tag: "v1.18.0"
 source: https://github.com/scipy/scipy
 requires:
   - "Python:(slc|ubuntu)"
