@@ -1,26 +1,29 @@
-# See https://pre-commit.com for more information
-# See https://pre-commit.com/hooks.html for more hooks
-default_install_hook_types: ["pre-commit", "commit-msg"]
-default_stages: [pre-commit, manual]
+# Run with prek (https://github.com/j178/prek), a drop-in pre-commit replacement.
+# The hook tools are provided by the pixi `lint` environment (see pixi.toml), so
+# versions are tracked in pixi.lock and the hooks run identically everywhere.
+#
+#   pixi run install-hooks   # one-off: install the git hooks
+#   pixi run lint            # run all hooks on all files
 repos:
-- repo: https://github.com/pre-commit/pre-commit-hooks
-  rev: v6.0.0
-  hooks:
-  - id: trailing-whitespace
-  - id: end-of-file-fixer
-- repo: https://github.com/crate-ci/committed
-  rev: v1.1.11
-  hooks:
-  - id: committed
-    name: check commit message formatting
-- repo: https://github.com/alisw/alidistlint
-  rev: v1.7.5
-  hooks:
-  - id: alidistlint
-    verbose: true
-    additional_dependencies: [yamllint, shellcheck-py]
+  # prek runs these as native Rust builtins (no environment, fully portable).
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
 
-ci:
-  autofix_prs: true
-  autoupdate_commit_msg: "chore(deps): update pre-commit hooks"
-  autofix_commit_msg: "style: pre-commit fixes"
+  # Tools below come from the pixi `lint` environment via language: system.
+  - repo: local
+    hooks:
+      - id: alidistlint
+        name: alidistlint
+        language: system
+        entry: alidistlint
+        verbose: true
+        files: \.sh$
+
+      - id: commitizen
+        name: commitizen (conventional commits)
+        language: system
+        entry: cz check --commit-msg-file
+        stages: [commit-msg]
