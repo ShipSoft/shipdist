@@ -1,0 +1,37 @@
+# Lint-only pixi workspace. shipdist holds alidist recipes; this manifest exists
+# solely to provide the prek hook tools (see .pre-commit-config.yaml) reproducibly,
+# including on NixOS.
+[workspace]
+name = "shipdist"
+description = "alidist recipes for building SHiP software"
+channels = ["conda-forge"]
+platforms = ["linux-64"]
+
+[feature.lint.dependencies]
+prek = "*"
+python = ">=3.11"
+# alidistlint shells out to shellcheck; provide the binary on PATH.
+shellcheck = "*"
+commitizen = "*"
+
+# alidistlint is PyPI-only. Pinned to match the previous pre-commit rev exactly;
+# yamllint was one of its additional_dependencies and it imports it at runtime.
+[feature.lint.pypi-dependencies]
+alidistlint = "==1.7.5"
+yamllint = "*"
+
+[feature.lint.tasks]
+lint = "prek run --all-files"
+# Install the git hooks and route them through `pixi run` so the conda-provided
+# hook tools are on PATH at commit time (required on NixOS, where the tools are
+# not runnable without pixi activation).
+install-hooks = '''
+prek install --hook-type pre-commit --hook-type commit-msg
+hooks=$(git rev-parse --git-path hooks)
+for h in pre-commit commit-msg; do
+  sed -i 's#"$PREK" hook-impl#pixi run -e lint prek hook-impl#' "$hooks/$h"
+done
+'''
+
+[environments]
+lint = { features = ["lint"] }
