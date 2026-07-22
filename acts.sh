@@ -1,6 +1,6 @@
 package: acts
 version: shipdist-build
-tag: 7bc78ecd82ff4469dd6f688392539928735a111a
+tag: 946fd01b881b01c37cfd40a6880517ea8356ab6a
 source: https://github.com/webbjm/acts.git
 requires:
   - ROOT
