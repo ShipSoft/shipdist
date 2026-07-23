@@ -1,6 +1,6 @@
 package: python-charset-normalizer
 version: "%(tag_basename)s"
-tag: "3.4.7"
+tag: "3.4.9"
 source: https://github.com/Ousret/charset_normalizer
 requires:
   - "Python:(slc|ubuntu)"
