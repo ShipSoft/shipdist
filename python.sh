@@ -1,6 +1,6 @@
 package: Python
 version: "%(tag_basename)s"
-tag: v3.12.12
+tag: v3.15.0b4
 source: https://github.com/python/cpython
 requires:
   - FreeType
