@@ -6,6 +6,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it in future.
 
+## [26.07](https://github.com/ShipSoft/shipdist/tree/26.07)
+
+### Changed
+
+* FairShip: Update to 26.07
+
+### Fixed
+
+* ACTS: Bump shipdist-build pin to 946fd01
+
 ## [26.06](https://github.com/ShipSoft/shipdist/tree/26.06)
 
 ### Added
