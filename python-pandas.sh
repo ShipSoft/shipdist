@@ -1,6 +1,6 @@
 package: python-pandas
 version: "%(tag_basename)s"
-tag: "v3.0.3"
+tag: "v3.1.0.dev0"
 source: https://github.com/pandas-dev/pandas
 requires:
   - "Python:(slc|ubuntu)"
