@@ -1,6 +1,6 @@
 package: python-numpy
 version: "%(tag_basename)s"
-tag: "v2.4.6"
+tag: "v2.6.0.dev0"
 source: https://github.com/numpy/numpy
 requires:
   - "Python:(slc|ubuntu)"
