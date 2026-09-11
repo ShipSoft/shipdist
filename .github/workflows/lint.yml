@@ -1,6 +1,7 @@
 name: Lint
 
 on:
+  merge_group:
   push:
     branches: [main]
   pull_request:
@@ -15,3 +16,16 @@ jobs:
       contents: read
       pull-requests: write
     uses: ShipSoft/.github/.github/workflows/commit-check.yml@main
+
+  all-checks:
+    name: Lint passed
+    if: always()
+    runs-on: ubuntu-latest
+    needs: [prek, commit-check]
+    steps:
+      - name: Check status of all jobs
+        run: |
+          if [[ "${{ contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled') }}" == "true" ]]; then
+            echo "One or more jobs failed or were cancelled"
+            exit 1
+          fi
