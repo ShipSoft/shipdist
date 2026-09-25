@@ -1,6 +1,6 @@
 package: googletest
 version: "%(tag_basename)s"
-tag: v1.17.0
+tag: v1.18.0
 source: https://github.com/google/googletest
 build_requires:
   - GCC-Toolchain
