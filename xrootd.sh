@@ -11,6 +11,7 @@ build_requires:
   - CMake
   - GCC-Toolchain
   - UUID
+  - uv
   - alibuild-recipe-tools
 prepend_path:
   PYTHONPATH: "${XROOTD_ROOT}/lib/python/site-packages"
@@ -36,6 +37,14 @@ COMPILER_LD=c++
 SONAME=so
 
 rsync -a --delete ${SOURCEDIR}/ ${BUILDDIR}
+
+# XRootD >= 6.2 imports setuptools at configure time to name and build the
+# wheel of the Python bindings. Python >= 3.12 no longer bundles it, so
+# provide a build-only copy.
+if [[ -n "$XROOTD_PYTHON" ]] && ! ${PYTHON_EXECUTABLE} -c 'import setuptools.command.bdist_wheel' 2> /dev/null; then
+  uv pip install --no-cache-dir --target="$BUILDDIR/build-python" --python="$PYTHON_EXECUTABLE" setuptools
+  export PYTHONPATH="$BUILDDIR/build-python${PYTHONPATH:+:$PYTHONPATH}"
+fi
 
 mkdir build
 pushd build
