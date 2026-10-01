@@ -67,6 +67,12 @@ COMPILER_LD=c++
 [[ "$CXXFLAGS" == *'-std=c++14'* ]] && CMAKE_CXX_STANDARD=14 || true
 [[ "$CXXFLAGS" == *'-std=c++17'* ]] && CMAKE_CXX_STANDARD=17 || true
 
+# CMake >= 4.4 rejects the unquoted expansion of list-valued cache variables
+# (e.g. CLANG_INCLUDE_DIRS) in the if() that collects the root-config
+# arguments. Quote it; drop once fixed in the ROOT version we build.
+# shellcheck disable=SC2016
+sed -i 's|(NOT ${${var}} STREQUAL "")|(NOT "${${var}}" STREQUAL "")|' "$SOURCEDIR/CMakeLists.txt"
+
 # Normal ROOT build.
 cmake $SOURCEDIR \
 -G Ninja \
