@@ -1,8 +1,8 @@
 # a pythia6 recipe based on the one from FairROOT
 package: pythia6
 version: "%(tag_basename)s"
-tag: v6.4.28-snd
-source: https://github.com/SND-LHC/pythia6
+tag: v6.4.28-ship1
+source: https://github.com/ShipSoft/pythia6
 requires:
   - GCC-Toolchain
 prefer_system_check: |

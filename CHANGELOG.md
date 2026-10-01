@@ -6,6 +6,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it in future.
 
+## Unreleased
+
+### Fixed
+
+* pythia6: Build from ShipSoft/pythia6, which restores the PDFLIB dummy
+  routines (`PDFSET`, `STRUCTM`, `STRUCTP`); `libPythia6.so` had them as
+  undefined symbols, so executables could not link against it
+
 ## [26.07](https://github.com/ShipSoft/shipdist/tree/26.07)
 
 ### Changed
