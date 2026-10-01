@@ -45,6 +45,11 @@
       "versioning": "loose"
     },
     {
+      "description": "Loose versioning treats every tag as stable, so reject pre-releases (a1, b2, rc1, beta89, .dev0, ...) explicitly",
+      "matchManagers": ["custom.regex"],
+      "allowedVersions": "!/\\d[._-]?(?:[ab]\\d+|(?:rc|alpha|beta|dev|pre|preview)[._-]?\\d*)$/i"
+    },
+    {
       "description": "Packages tracking branches, not release tags",
       "matchPackageNames": [
         "luketpickering/ROOTEGPythia6",
