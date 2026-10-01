@@ -6,19 +6,34 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it in future.
 
-## Unreleased
+## [26.10](https://github.com/ShipSoft/shipdist/tree/26.10)
 
 ### Fixed
 
 * pythia6: Build from ShipSoft/pythia6, which restores the PDFLIB dummy
   routines (`PDFSET`, `STRUCTM`, `STRUCTP`); `libPythia6.so` had them as
   undefined symbols, so executables could not link against it
+* XRootD: Provide setuptools for the build of the Python bindings, which
+  XRootD 6.2 needs at configure time
+* ROOT: Quote list-valued cache variables when collecting the `root-config`
+  arguments, so that ROOT 6.40.02 configures with CMake 4.4
 
 ### Changed
 
 * ROOTEGPythia6: Build from ShipSoft/ROOTEGPythia6, which carries the
   dictionary path, rootmap and Pythia6 link fixes that the recipe used to
   patch in; the dictionary PCM is now `libEGPythia6_rdict.pcm`
+* FairShip: Update to 26.09
+* CMake: Update to v4.4.3
+* XRootD: Update to v6.2.0
+* TBB: Update to v2021.13.4
+* libffi: Update to v3.8.0
+* googletest: Update to v1.18.0
+* alibuild: Update to v1.17.44
+* alibuild-recipe-tools: Update to v0.4.0
+* Python packages: Update certifi, charset-normalizer, contourpy, fonttools,
+  idna, kiwisolver, matplotlib, packaging, pillow, pyparsing, scipy and
+  urllib3
 
 ## [26.07](https://github.com/ShipSoft/shipdist/tree/26.07)
 
