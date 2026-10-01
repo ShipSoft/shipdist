@@ -1,6 +1,6 @@
 package: python-pyparsing
 version: "%(tag_basename)s"
-tag: "3.3.2"
+tag: "3.3.3"
 source: https://github.com/pyparsing/pyparsing
 requires:
   - "Python:(slc|ubuntu)"
