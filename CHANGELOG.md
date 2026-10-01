@@ -14,6 +14,12 @@ Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it
   routines (`PDFSET`, `STRUCTM`, `STRUCTP`); `libPythia6.so` had them as
   undefined symbols, so executables could not link against it
 
+### Changed
+
+* ROOTEGPythia6: Build from ShipSoft/ROOTEGPythia6, which carries the
+  dictionary path, rootmap and Pythia6 link fixes that the recipe used to
+  patch in; the dictionary PCM is now `libEGPythia6_rdict.pcm`
+
 ## [26.07](https://github.com/ShipSoft/shipdist/tree/26.07)
 
 ### Changed
