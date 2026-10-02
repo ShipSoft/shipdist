@@ -1,6 +1,6 @@
 package: libpng
 version: "%(tag_basename)s"
-tag: v1.6.47
+tag: v1.7.0beta89
 requires:
   - zlib
 build_requires:
