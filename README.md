@@ -10,8 +10,15 @@ For general documentation, please refer to the `alisw/alibuild` documentation pa
 
 Defaults in use:
 
-- `release`: Default for use with `FairShip/master`
-- `fairship-2018`: Default for use with `FairShip/muflux` and legacy branches
+- `release`: Default for use with `FairShip/main`
+- `lcg`: Takes system packages (Boost, Eigen3, Geant4, XercesC) from the
+  LCG_109 view on CVMFS. Source
+  `/cvmfs/sft.cern.ch/lcg/views/LCG_109/x86_64-el9-gcc15-opt/setup.sh` before
+  running `aliBuild --defaults lcg`.
+
+The `fairship-2018` defaults for the `SHiP-2018` and `muflux` branches of
+FairShip were removed in 2022. They are still available at the `SHiP-BDF-2020`
+tag.
 
 ### Troubleshooting tips
 
