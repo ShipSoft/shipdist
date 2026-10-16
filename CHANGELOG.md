@@ -6,6 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 Until May 2022 (inclusive) no changelog was kept. We might try to reconstruct it in future.
 
+## Unreleased
+
+### Removed
+
+* defaults-lcg: Remove the LCG_109 defaults, which never worked and were
+  never used in production
+
 ## [26.10](https://github.com/ShipSoft/shipdist/tree/26.10)
 
 ### Fixed
