@@ -1,6 +1,6 @@
 package: alibuild
 version: "%(tag_basename)s"
-tag: "v1.17.47"
+tag: "v1.17.48"
 source: https://github.com/alisw/alibuild
 requires:
   - "Python:(slc|ubuntu)"
